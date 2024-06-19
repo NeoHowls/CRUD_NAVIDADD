@@ -32,6 +32,9 @@
                 </div>
 					</li>
 					<li class="nav-item">
+						<a class="nav-link" href="tipo_u.php">Tipo Usuario</a>
+					</li>
+					<li class="nav-item">
 					<a class="btn btn-danger nav-link"  onclick="myFunction()">
 						CERRAR  
             </a>
