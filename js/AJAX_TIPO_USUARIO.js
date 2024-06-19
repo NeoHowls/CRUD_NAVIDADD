@@ -36,6 +36,11 @@ let table = $('#myTable2').DataTable( {
         {"data": "checkReadP"},
         {"data": "checkDeleteP"},
 
+        { "data": "checkCreatePer" },
+        { "data": "checkUpdatePer" },
+        { "data": "checkReadPer" },
+        { "data": "checkDeletePer" },
+
         {"data": "estado"},
         
         
@@ -120,7 +125,9 @@ $('#formUsuarios').submit(function(e){
             CheckOC: CheckOC, CheckOE: CheckOE,
             CheckOL: CheckOL, CheckOB: CheckOB,
             CheckPC: CheckPC, CheckPE: CheckPE,
-            CheckPL: CheckPL, CheckPB: CheckPB
+            CheckPL: CheckPL, CheckPB: CheckPB,
+            CheckPPC: CheckPPC, CheckPPE: CheckPPE,
+            CheckPPL: CheckPPL, CheckPPB: CheckPPB
 
             
 
@@ -161,6 +168,11 @@ $("#btnNuevo").click(function(){
     CheckPE = "";
     CheckPL = "";
     CheckPB = "";
+
+    CheckPPC = "";
+    CheckPPE = "";
+    CheckPPL = "";
+    CheckPPB = "";
     checkbox = document.getElementById('NC');
     checkbox.addEventListener('change', function () {
         // Verifica si el checkbox está marcado o no
@@ -316,10 +328,60 @@ $("#btnNuevo").click(function(){
         }
     });
 
+    checkboxPC = document.getElementById('PPC');
+    checkboxPC.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            CheckPC = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            CheckPC = 0;
+        }
+    });
+
+    checkboxPE = document.getElementById('PPE');
+    checkboxPE.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            CheckPE = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            CheckPE = 0;
+        }
+    });
+    checkboxPL = document.getElementById('PPL');
+    checkboxPL.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            CheckPL = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            CheckPL = 0;
+        }
+    });
+    checkboxPB = document.getElementById('PPB');
+    checkboxPB.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            CheckPB = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            CheckPB = 0;
+        }
+    });
+
     $("#formUsuarios").trigger("reset");
-    $(".modal-header").css( "background-color", "#17a2b8");
-    $(".modal-header").css("color", "#000000" );
-    $(".modal-title").text("Añadir Persona");
+    $(".modal-header").css("background-color", "#bd0000");
+    $(".modal-header").css("color", "white");
+    $(".modal-title").text("Añadir Perfil");		
     $('#modalCRUD').modal('show');	    
 });
 
@@ -350,7 +412,12 @@ $(document).on("click", ".btnEditar", function(){
     CheckPL = fila.find('td:eq(13)').text();
     CheckPB = fila.find('td:eq(14)').text();
 
-    Estado = fila.find('td:eq(15)').text();
+    CheckPPC = fila.find('td:eq(15)').text();
+    CheckPPE = fila.find('td:eq(16)').text();
+    CheckPPL = fila.find('td:eq(17)').text();
+    CheckPPB = fila.find('td:eq(18)').text();
+
+    Estado = fila.find('td:eq(19)').text();
     $("#perfil").val(perfil);
     $("#tipo").val(tipo);
     $("#estado").val(Estado);
@@ -584,12 +651,89 @@ $(document).on("click", ".btnEditar", function(){
         }
     });
     //------------------------------
+    //PERFILES
+    if (CheckPPC == 1) {
+        document.getElementById('PPC').checked = true
+    }
+    else {
+        document.getElementById('PPC').checked = false;
+    }
+    checkboxPPC = document.getElementById('PPC');
+    checkboxPPC.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            CheckPPC = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            CheckPPC = 0;
+        }
+    });
+    //------------------------------
+    if (CheckPPE == 1) {
+        document.getElementById('PPE').checked = true
+    }
+    else {
+        document.getElementById('PPE').checked = false;
+    }
+    checkboxPPE = document.getElementById('PPE');
+    checkboxPPE.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            CheckPPE = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            CheckPPE = 0;
+        }
+    });
+
+    if (CheckPPL == 1) {
+        document.getElementById('PPL').checked = true
+    }
+    else {
+        document.getElementById('PPL').checked = false;
+    }
+    checkboxPPL = document.getElementById('PPL');
+    checkboxPPL.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            CheckPPL = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            CheckPPL = 0;
+        }
+    });
+    if (CheckPPB == 1) {
+        document.getElementById('PPB').checked = true
+    }
+    else {
+        document.getElementById('PPB').checked = false;
+    }
+    checkboxPPB = document.getElementById('PPB');
+    checkboxPPB.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            CheckPPB = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            CheckPPB = 0;
+        }
+    });
+    //------------------------------
+
 
 
     
-    $(".modal-header").css("background-color", "#007bff");
+    $(".modal-header").css("background-color", "#bd0000");
     $(".modal-header").css("color", "white" );
-    $(".modal-title").text("Editar Persona");		
+    $(".modal-title").text("Editar Perfil");		
     $('#modalCRUD').modal('show');		   
 });
 

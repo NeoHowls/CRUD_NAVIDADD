@@ -24,6 +24,12 @@
   $CheckPL = (isset($_POST['CheckPL'])) ? $_POST['CheckPL'] : '';
   $CheckPB = (isset($_POST['CheckPB'])) ? $_POST['CheckPB'] : '';
 
+  $CheckPPC = (isset($_POST['CheckPPC'])) ? $_POST['CheckPPC'] : '';
+  $CheckPPE = (isset($_POST['CheckPPE'])) ? $_POST['CheckPPE'] : '';
+  $CheckPPL = (isset($_POST['CheckPPL'])) ? $_POST['CheckPPL'] : '';
+  $CheckPPB = (isset($_POST['CheckPPB'])) ? $_POST['CheckPPB'] : '';
+
+
 
   //Armo un GET "op" donde OP signific operacion
   switch($_GET["op"]){
@@ -50,6 +56,7 @@ FROM [dbo].[A_PERFIL]";
       '$CheckNC', '$CheckNE', '$CheckNL', '$CheckNB', 
       '$CheckOC', '$CheckOE', '$CheckOL', '$CheckOB', 
       '$CheckPC', '$CheckPE' , '$CheckPC', '$CheckPE', 
+       '$CheckPPC', '$CheckPPE' , '$CheckPPC', '$ChecKPPE',
       '$Estado')";
       //llamo al metodo listar y le doy la variable CONSULTA
 
@@ -83,6 +90,11 @@ FROM [dbo].[A_PERFIL]";
         checkUpdateP = '$CheckPE',
         checkReadP = '$CheckPL',
         checkDeleteP = '$CheckPB',
+
+        checkCreatePer = '$CheckPPC',
+        checkUpdatePer = '$CheckPPE',
+        checkReadPer = '$CheckPPL',
+        checkDeletePer = '$CheckPPB',
         estado= '$Estado'
         WHERE id = '$user_id'
       
