@@ -33,14 +33,14 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
 
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       
                 </button>
             </div>
-        <form id="formUsuarios">    
-		<div class="modal-body">
+          <form id="formUsuarios">    
+		    <div class="modal-body" style="background: #E7E7E7">
                 <div class="row">
-                    <div class="col-lg-12">
+    <div class="col-lg-12" style = "text-align: center;">
                     <div class="form-group">
                     <label for="" class="col-form-label">dni:</label>
                     <input type="text" class="form-control" id="dni">
@@ -102,7 +102,7 @@
                     
                     
                 </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="justify-content: center">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
             </div>
@@ -112,38 +112,37 @@
 </div>   
 
       </div>
+<div class="table-responsive mx-3 text-center">
+        <table id="myTable1" class="table table-striped nowrap" style="width:100%">
+              <thead>
+                  <tr>
+                      
+                      <th class ='never'>id</th>
+                      <th>dni</th>
+                      <th>nombre</th>
+                      <th>direccion</th>
+                      <th>telefono</th>
+                      <th>mail</th>
+                      <th class ='never'>idPerfil</th>
+                      <th class ='never'>estado</th>
+                      <th class ='never'>Habilitado</th>
+                      <th class ='never'>usuario</th>
+                      <th class ='never'>contraseña</th>
+                      <th class ='never'>idOrganizacion</th>
+                      <th>Nombre Organizacion</th>
+                      <th class='all'>Acciones</th>  
+                  </tr>
+              </thead>
+              <tbody>
+              </tbody>
+        </div>
+          </table>
+          <script type="text/javascript" src="../datatables.js"></script>
+          <script type="text/javascript" src="../js/idioma.js"></script>>
+          <script type="text/javascript" src="../js/AJAX_PERSONA.js">
+          <script type="text/javascript" src="nacionalidad.js"></script>    
+          </script>
 
-<table id="myTable1" class="table table-striped nowrap" style="width:100%">
-        <thead>
-            <tr>
-                
-                <th class ='never'>id</th>
-                <th>dni</th>
-                <th>nombre</th>
-                <th>direccion</th>
-                <th>telefono</th>
-                <th>mail</th>
-                <th class ='never'>idPerfil</th>
-                <th class ='never'>estado</th>
-                <th class ='never'>Habilitado</th>
-                <th class ='never'>usuario</th>
-                <th class ='never'>contraseña</th>
-                <th class ='never'>idOrganizacion</th>
-                <th>Nombre Organizacion</th>
-                <th class='all'>Acciones</th>
-               
-              
-                
-                
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-
-    </table>
-    <script type="text/javascript" src="../datatables.js"></script>
-    <script type="text/javascript" src="../js/idioma.js"></script>>
-    <script type="text/javascript" src="../js/AJAX_PERSONA.js">
-    <script type="text/javascript" src="nacionalidad.js"></script>    
-    </script>
+    </div>
+  </div>
+</div>
