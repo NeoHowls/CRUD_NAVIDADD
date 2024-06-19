@@ -1,11 +1,30 @@
+$('#more_info').change(function() {
+    if(this.checked != true){
+          $("#conditional_part").hide();
+     }
+  else{
+        $("#conditional_part").show();
+  }
+});
 
- 
+$('#more_infos').change(function() {
+    if(this.checked != true){
+          $("#conditional_parts").hide();
+     }
+  else{
+        $("#conditional_parts").show();
+  }
+});
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
 
 let table = $('#myTable1').DataTable( {
     // destroy : true,
 
 
-    pageLength: 5,
+    pageLength: 20,
     
     //TENGO QUE SEPARAR ESTO EN OTRO ARCHIVO
     "ajax":{
@@ -19,33 +38,49 @@ let table = $('#myTable1').DataTable( {
     "columns":[
 
         {"data": "id"},
-        {"data": "correlativo"},
         {"data": "dni"},
         {"data": "nombre"},
         {"data": "direccion"},
         {"data": "telefono"},
         {"data": "mail"},
         {"data": "idPerfil"},
-        {"data": "estado"},
-        {"data": "habilitado"},
-        {"data": "idOrganizacion"},
+        {"data": "estadoP"},
+        {"data": "checkHabilitado"},
         {"data": "usuario"},
         {"data": "contrasena"},
+        {"data": "idOrganizacion"},
+        {"data": "NOMBRE_O"},
+        {
+            "data": null,
+            "render": function(data, type, row) {
+                // data es null ya que no especificamos una propiedad específica de data para esta columna
+                let estadoPButton = '';
+                if (row.estadoP == '1') {
+                    estadoPButton = '<button type="button" class="btn btn-danger btnBorrar me-2"><i class="bi bi-person-dash-fill"></i> </button>';
+                } else {
+                    estadoPButton = '<button type="button" class="btn btn-success btnHabilitar me-2"><i class="bi bi-person-plus-fill"></i> </button>';
+                }
         
+                let checkHabilitadoButton = '';
+                if (row.checkHabilitado == '1') {
+                    checkHabilitadoButton = '<button type="button" class="btn btn-danger btnDeshabilitar me-2"><i class="bi bi-x-square"></i> </button>';
+                } else {
+                    checkHabilitadoButton = '<button type="button" class="btn btn-success btnAutorizar me-2"><i class="bi bi-check-square"></i> </button>';
+                }
         
-        {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'><svg xmlns=http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'><path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/><path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/></svg></i>"},
-
+                // Botón de editar con modal
+                let editarButton = '<button type="button" class="btn btn-primary btnEditar" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro"><i class="bi bi-pencil-square"></i></button>';
         
-       
-
-    ] , 
+                // Combinamos los botones en una sola columna
+                return estadoPButton + checkHabilitadoButton + editarButton;
+            }
+        }
+    ], 
 
     //ESTO DEBERIA INVOCARSE EN BASE A UN ID
     language : idioma_espanol,
-    autoWidth: false,
     responsive : true,
     aaSorting:[],
-    
     pagingType: 'simple',
     layout: {
         topStart: {
@@ -91,7 +126,6 @@ var fila; //captura la fila, para editar o eliminar
 $('#formUsuarios').submit(function(e){                         
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     //CAPTURA EL DATO DEL FORMULARIO
-    correlativo = $.trim($('#correlativo').val());
     dni = $.trim($('#dni').val());
     nombre = $.trim($('#nombre').val());
     direccion = $.trim($('#direccion').val());
@@ -99,10 +133,10 @@ $('#formUsuarios').submit(function(e){
     mail = $.trim($('#mail').val());
     idPerfil = $.trim($('#idPerfil').val());
     estado = $.trim($('#estado').val());
-    habilitado = $.trim($('#habilitado').val());
-    idOrganizacion = $.trim($('#idOrganizacion').val());
+    checkHabilitado = $.trim($('#checkHabilitado').val());
     usuario = $.trim($('#usuario').val());
     contrasena = $.trim($('#contrasena').val());
+    idOrganizacion= $.trim($('#O_ID').val());
     //console.log(opcion)                            
     //EJECUTA EL AJAX
     $.ajax({
@@ -111,7 +145,8 @@ $('#formUsuarios').submit(function(e){
           type: "POST",
           datatype:"json", 
           //La prueba al solo la tabla ETNIA CAPTURA SOLO 2 VALORES, EL ID Y LA ETNIA, el ID es en caso que se quiera editar   
-          data:  {user_id:user_id, correlativo:correlativo,dni:dni,nombre:nombre,direccion:direccion,telefono:telefono,mail:mail,idPerfil:idPerfil,estado:estado,habilitado:habilitado,idOrganizacion:idOrganizacion,usuario:usuario,contrasena:contrasena},    
+          data:  {user_id:user_id,dni:dni,nombre:nombre,direccion:direccion,telefono:telefono,mail:mail,idPerfil:idPerfil,estado:estado,
+            checkHabilitado:checkHabilitado,usuario:usuario,contrasena:contrasena,checkOrganizacion:checkOrganizacion, idOrganizacion:idOrganizacion},    
           //Si todo funiona recarga el AJAX
           success: function(data) {
             table.ajax.reload(null, false);
@@ -129,6 +164,30 @@ $('#formUsuarios').submit(function(e){
 $("#btnNuevo").click(function(){
     opcion = "add_persona"; //alta           
     user_id=null;
+    idOrganizacion = 0
+    if (idOrganizacion >= 1) {
+        document.getElementById('more_infos').checked = true;
+        $("#conditional_parts").show();
+    }
+    else {
+        document.getElementById('more_infos').checked = false;
+        $("#conditional_parts").hide();
+    }
+    checkOrganizacion = 0
+    // Comprueba si el Check esta ON u OFF 
+    checkboxNC = document.getElementById('more_infos');
+    checkboxNC.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            checkOrganizacion = 1;
+            $("#conditional_part").show();
+        } else {
+            console.log('El checkbox está desactivado.');
+            checkOrganizacion = 0;
+        }
+    });
+    
     $("#formUsuarios").trigger("reset");
     $(".modal-header").css( "background-color", "#17a2b8");
     $(".modal-header").css( "color", "white" );
@@ -141,20 +200,20 @@ $("#btnNuevo").click(function(){
 $(document).on("click", ".btnEditar", function(){		        
     opcion = "edit_persona";//editar
     fila = $(this).closest("tr");	        
-    user_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
-    correlativo = fila.find('td:eq(1)').text();
-    dni = fila.find('td:eq(2)').text();
-    nombre = fila.find('td:eq(3)').text();
-    direccion = fila.find('td:eq(4)').text();
-    telefono = fila.find('td:eq(5)').text();
-    mail = fila.find('td:eq(6)').text();
-    idPerfil = fila.find('td:eq(7)').text();
-    estado = fila.find('td:eq(8)').text();
-    habilitado = fila.find('td:eq(9)').text();
-    idOrganizacion = fila.find('td:eq(10)').text();
-    usuario = fila.find('td:eq(11)').text();
-    contrasena = fila.find('td:eq(12)').text();
-    $("#correlativo").val(correlativo);
+    user_id = fila.find('td:eq(0)').text(); //capturo el ID		            
+    dni = fila.find('td:eq(1)').text();
+    nombre = fila.find('td:eq(2)').text();
+    direccion = fila.find('td:eq(3)').text();
+    telefono = fila.find('td:eq(4)').text();
+    mail = fila.find('td:eq(5)').text();
+    idPerfil = fila.find('td:eq(6)').text();
+    estado = fila.find('td:eq(7)').text();
+    checkHabilitado = fila.find('td:eq(8)').text();
+    usuario = fila.find('td:eq(9)').text();
+    contrasena = fila.find('td:eq(10)').text();
+    idOrganizacion = fila.find('td:eq(11)').text();
+    checkOrganizacion = fila.find('td:eq(12)').text();
+    
     $("#dni").val(dni);
     $("#nombre").val(nombre);
     $("#direccion").val(direccion);
@@ -162,34 +221,107 @@ $(document).on("click", ".btnEditar", function(){
     $("#mail").val(mail);
     $("#idPerfil").val(idPerfil);
     $("#estado").val(estado);
-    $("#habilitado").val(habilitado);
-    $("#idOrganizacion").val(idOrganizacion);
     $("#usuario").val(usuario);
     $("#contrasena").val(contrasena);
+    $("#contrasena").val(contrasena)
+    $("#O_ID").val(idOrganizacion);
     $(".modal-header").css("background-color", "#007bff");
     $(".modal-header").css("color", "white" );
     $(".modal-title").text("Editar Usuario");		
-    $('#modalCRUD').modal('show');		   
+    $('#modalCRUD').modal('show');
+    
+    //AUTO DETECTOR DE CHECK CUANDO SE LEE LOS DATOS DEVUELTA CUANDO SE EDITA
+    //Se comprueba si la variable CHECKCREATE  1, en caso de serlo simplemente auto levanta el Check en caso de que no sea asi baja el check 
+    //
+
+if (idOrganizacion >= 1) {
+    document.getElementById('more_infos').checked = true;
+    $("#conditional_parts").show();
+    checkOrganizacion = 1
+}
+else {
+    document.getElementById('more_infos').checked = false;
+    $("#conditional_parts").hide();
+    checkOrganizacion = 0
+}
+
+// Comprueba si el Check esta ON u OFF 
+checkboxNC = document.getElementById('more_infos');
+checkboxNC.addEventListener('change', function () {
+    // Verifica si el checkbox está marcado o no
+    if (this.checked) {
+        console.log('El checkbox está activado.');
+        checkOrganizacion = 1;
+        $("#conditional_part").show();
+    } else {
+        console.log('El checkbox está desactivado.');
+        checkOrganizacion = 0;
+    }
+});
 });
 
-//Borrar
-$(document).on("click", ".btnBorrar", function(){
-    fila = $(this);           
-    user_id = parseInt($(this).closest('tr').find('td:eq(0)').text()) ;		
-    opcion = 3; //eliminar        
-    var respuesta = confirm("¿Está seguro de borrar el registro "+user_id+"?");                
+//Borrar/activar estado
+$(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
+    e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+    fila = $(this).closest('tr');           
+    user_id = $(this).closest('tr').find('td:eq(0)').text() ;
+    nombre = $(this).closest('tr').find('td:eq(2)').text() ;
+    estado = $(this).closest('tr').find('td:eq(7)').text() ;
+    dni = $(this).closest('tr').find('td:eq(1)').text();
+    let action = estado == '1' ? 'borrar_persona' : 'habilitar_persona';
+    let confirmMessage = estado == '1' ? "¿Está seguro de borrar el registro de "+nombre+"?" : "¿Quieres activar al usuario "+nombre+"?"  ;
+    let respuesta = confirm(confirmMessage);
+    console.log("funciona")
+    console.log(dni)
     if (respuesta) {            
         $.ajax({
-          url: "bd/crud.php",
+          url: "../controller/controllerP.php?op=borrar_persona",
           type: "POST",
           datatype:"json",    
-          data:  {opcion:opcion, user_id:user_id},    
-          success: function() {
-            table.row(fila.parents('tr')).remove().draw();                  
-           }
-        });	
+            data: { user_id: user_id, estado: estado, dni: dni },
+          success: function(data) {
+            table.ajax.reload(null, false);
+           },
+           error: function(xhr, status, error) {
+            console.error("Error en la operación:", error);
+        }
+        });	    	    
     }
  });
+
+ //DESHABILIDAR/habiliar 
+$(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
+    e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+    fila = $(this).closest('tr');           
+    user_id = $(this).closest('tr').find('td:eq(0)').text() ;
+    nombre = $(this).closest('tr').find('td:eq(2)').text() ;
+    dni = $(this).closest('tr').find('td:eq(1)').text();
+    checkHabilitado = $(this).closest('tr').find('td:eq(8)').text() ;
+    let action = checkHabilitado == '1' ? 'borrar_persona' : 'habilitar_persona';
+    let confirmMessage =  checkHabilitado== '1' ? "¿Está seguro que desesa deshabilitar el registro de "+nombre+"?" : "¿Quieres habilitar el registro de "+nombre+"?"  ;
+    let respuesta = confirm(confirmMessage);
+  
+    if (respuesta) {            
+        $.ajax({
+          url: "../controller/controllerP.php?op=Habilitar_persona",
+          type: "POST",
+          datatype:"json",    
+            data: { user_id: user_id, checkHabilitado: checkHabilitado, dni: dni } ,
+          success: function(data) {
+            table.ajax.reload(null, false);
+           },
+           error: function(xhr, status, error) {
+            console.error("Error en la operación:", error);
+        }
+        });	    	    
+    }
+ });
+
+  
+
+
+    
+
 
  function cerrarModal() {
     $('#fondo-modal').hide();

@@ -15,7 +15,7 @@
 						<a class="nav-link" href="../index.php" id ="1" value = 1 name = "insert">Ver niños</a>
 					</li>
           <li class="nav-item">
-						<a class="nav-link" href="./persona.php">Ver Persona</a>
+						<a class="nav-link" href="persona.php">Ver Persona</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="organizacion.php">Ver Organizacion</a>

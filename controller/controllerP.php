@@ -1,4 +1,5 @@
 <?php
+session_start();
   //llama al MenuModel
   require_once("../model/MenuModel.php");
   
@@ -6,7 +7,6 @@
   $menu= new MenuModel();
   $persona = (isset($_POST['persona'])) ? $_POST['persona'] : '';
   $user_id = (isset($_POST['user_id'])) ? $_POST['user_id'] : '';
-  $correlativo = (isset($_POST['correlativo'])) ? $_POST['correlativo'] : '';
   $dni = (isset($_POST['dni'])) ? $_POST['dni'] : '';
   $nombre = (isset($_POST['nombre'])) ? $_POST['nombre'] : '';
   $direccion = (isset($_POST['direccion'])) ? $_POST['direccion'] : '';
@@ -14,66 +14,339 @@
   $mail = (isset($_POST['mail']))? $_POST['mail'] : '';
   $idPerfil = (isset($_POST['idPerfil'])) ? $_POST['idPerfil'] : '';
   $estado = (isset($_POST['estado'])) ? $_POST['estado'] : '';
-  $habilitado = (isset($_POST['habilitado'])) ? $_POST['habilitado'] : '';
-  $idOrganizacion = (isset($_POST['idOrganizacion'])) ? $_POST['idOrganizacion'] : '';
+  $checkHabilitado = (isset($_POST['checkHabilitado'])) ? $_POST['checkHabilitado'] : '';
   $usuario = (isset($_POST['usuario'])) ? $_POST['usuario'] : '';
   $contrasena = (isset($_POST['contrasena'])) ? $_POST['contrasena'] : '';
+  $checkOrganizacion=(isset($_POST['checkOrganizacion'])) ? $_POST['checkOrganizacion'] : '';
+  $idOrganizacion=(isset($_POST['idOrganizacion'])) ? $_POST['idOrganizacion'] : '';
+  $checkOrganizacion=intval($checkOrganizacion);
+
+  
+
   //Armo un GET "op" donde OP signific operacion
   switch($_GET["op"]){
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
   case "persona":
     //define la consulta
-    $CONSULTA = "SELECT  
-A_PERSONA.id,
-A_PERSONA.correlativo,
-A_PERSONA.dni,
-A_PERSONA.nombre,
-A_PERSONA.direccion,
-A_PERSONA.telefono,
-A_PERSONA.mail,
-A_PERSONA.idPerfil,
-A_PERSONA.estado,
-A_PERSONA.habilitado,
-A_PERSONA.idOrganizacion,
-A_PERSONA.usuario,
-A_PERSONA.contrasena
-
-
-FROM [dbo].[A_PERSONA]";
+    $CONSULTA = 
+    "SELECT 
+	P.id as id, 
+    P.dni as dni, 
+    P.nombre as nombre, 
+    P.direccion as direccion, 
+    P.telefono as telefono, 
+    P.mail as mail, 
+    P.idPerfil as idPerfil, 
+    P.estado as estadoP, 
+    P.usuario as usuario, 
+    P.contrasena as contrasena, 
+    P.checkHabilitado as checkHabilitado,
+	P.checkOrganizacion,
+    PO.idOrganizacion as idOrganizacion, 
+    O.nombre AS NOMBRE_O,
+    PO.fechaIngreso as fechaIngreso,
+	PO.fechaTermino as fechaTermino,
+	PO.estado as estado
+FROM A_PERSONA P
+JOIN A_DETALLE_PO PO ON P.id=PO.idPersona
+JOIN A_ORGANIZACION O ON PO.idOrganizacion=O.id
+WHERE PO.estado=1
+UNION
+SELECT 
+	P.id as id, 
+    P.dni as dni, 
+    P.nombre as nombre, 
+    P.direccion as direccion, 
+    P.telefono as telefono, 
+    P.mail as mail, 
+    P.idPerfil as idPerfil, 
+    P.estado as estadoP, 
+    P.usuario as usuario, 
+    P.contrasena as contrasena, 
+    P.checkHabilitado as checkHabilitado,
+	P.checkOrganizacion,
+    idOrganizacion = 0, 
+    NOMBRE_O = NULL,
+    fechaIngreso = NULL,
+	fechaTermino = NULL,
+	estado = 0
+FROM A_PERSONA P
+WHERE P.checkOrganizacion=0"; 
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
     //imprimir los datos en JSON
     print($datos);
     break;
   
+    
     case "add_persona":
+      echo ($_GET["op"]);
+      if($checkOrganizacion == 1){
+        echo "funciona el if de anadir";
       //define la consulta
-      echo $persona;
-      $CONSULTA = "INSERT INTO A_PERSONA (correlativo, dni, nombre, direccion, telefono, mail, idPerfil, estado, habilitado, idOrganizacion, usuario, contrasena) VALUES ('$correlativo', '$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$habilitado', '$idOrganizacion', '$usuario', '$contrasena')";
+      $CONSULTA = "INSERT INTO A_PERSONA (dni, nombre, direccion, telefono, mail, idPerfil, estado, usuario, contrasena,checkOrganizacion) 
+      VALUES ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena',1)";
       //llamo al metodo listar y le doy la variable CONSULTA
-      echo $persona;
+
+      $datos=$menu->listar($CONSULTA);
+        $CONSULTA = "SELECT * FROM A_PERSONA";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+        //imprimir los datos en JSON
+  
+      //imprimir los datos en JSON
+      
+      $CONSULTA = "SELECT id FROM A_PERSONA WHERE dni='$dni'";
+      $datos=$menu->array_conver($CONSULTA);
+      $user_id=$datos[0]['id'];
+      $CONSULTA2 = "SELECT id,fechaIngreso  FROM A_ORGANIZACION WHERE id='$idOrganizacion'";
+      $datos=$menu->array_conver($CONSULTA2);
+      $fechaIngreso=$datos[0]['fechaIngreso'];    
+      $fechaIngreso = date('Y-m-d H:i');
+
+      $dato_org=$menu->array_conver($CONSULTA2);
+      $CONSULTA ="INSERT INTO A_DETALLE_PO (idPersona, idOrganizacion, estado,fechaIngreso) VALUES ('$user_id','$idOrganizacion' , 1,'$fechaIngreso')";
+      $menu->listar($CONSULTA);
+
+      $usuarioCambio = $_SESSION["test"];
+      $CONSULTAH = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+      ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Añadir Usuario Nuevo con Organizacion')";
+      $datos=$menu->listar($CONSULTAH);
+      $CONSULTAH = "SELECT * FROM A_PERSONA_HISTORIAL";
+      $datos=$menu->listar($CONSULTAH);
+      print($datos);
+      
+
+        }else {
+          echo "funciona el else de anadir";
+          //define la consulta
+      $CONSULTA = "INSERT INTO A_PERSONA (dni, nombre, direccion, telefono, mail, idPerfil, estado, usuario, contrasena) VALUES ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena')";
+      //llamo al metodo listar y le doy la variable CONSULTA
       $datos=$menu->listar($CONSULTA);
         $CONSULTA = "SELECT * FROM A_PERSONA";
         //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
         //imprimir los datos en JSON
         print($datos);
-      //imprimir los datos en JSON
+      //imprimir los datos en JSON 
+
+      $usuarioCambio = $_SESSION["test"];
+      $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+      ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Añadir Usuario Nuevo Sin Organizacion')";
+      $datos=$menu->listar($CONSULTA);
+      $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
+      $datos=$menu->listar($CONSULTA);
+      print($datos);
+      
+
+    }
+    break;
 
         //edita 1 dato selecionable de la tabla A_ETNIA
     case "edit_persona":
+      if($checkOrganizacion == 1){
+        echo "funciona el if de editar";
       //define la consulta
-      echo $persona;
-      $CONSULTA = "UPDATE A_PERSONA SET correlativo ='$correlativo',dni = '$dni',nombre ='$nombre',direccion ='$direccion',telefono ='$telefono',mail ='$mail',idPerfil ='$idPerfil',estado = '$estado',habilitado ='$habilitado',idOrganizacion ='$idOrganizacion',usuario ='$usuario',contrasena ='$contrasena' WHERE id='$user_id'";
+      $CONSULTA = "UPDATE A_PERSONA SET dni = '$dni',nombre ='$nombre',direccion ='$direccion',telefono ='$telefono',mail ='$mail',
+      idPerfil ='$idPerfil',estado = '$estado',usuario ='$usuario',contrasena ='$contrasena', checkOrganizacion=1 WHERE id='$user_id'";
       //llamo al metodo listar y le doy la variable CONSULTA
-      echo $persona;
       $datos=$menu->listar($CONSULTA);
         $CONSULTA = "SELECT * FROM A_PERSONA";
         //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
         //imprimir los datos en JSON
+        //print($datos);
+      $CONSULTA = "SELECT id FROM A_PERSONA WHERE dni='$dni'";
+      $datos=$menu->array_conver($CONSULTA);
+      $user_id=$datos[0]['id'];
+      $CONSULTA2 = "SELECT id,fechaIngreso  FROM A_ORGANIZACION WHERE id='$idOrganizacion'";
+      $datos=$menu->array_conver($CONSULTA2);
+      $fechaIngreso=$datos[0]['fechaIngreso'];    
+      $fechaIngreso = date('Y-m-d H:i');
+
+      $dato_org=$menu->array_conver($CONSULTA2);
+
+      $CONSULTA="UPDATE A_DETALLE_PO SET estado=0,fechaTermino='$fechaIngreso' WHERE idPersona='$user_id'";
+      $menu->listar($CONSULTA);
+
+      $CONSULTA ="INSERT INTO A_DETALLE_PO (idPersona, idOrganizacion, estado,fechaIngreso) VALUES ('$user_id','$idOrganizacion' , 1,'$fechaIngreso')";
+      $menu->listar($CONSULTA);
+
+      $usuarioCambio = $_SESSION["test"];
+      $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+      ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Editar Usuario con Organizacion')";
+      $datos=$menu->listar($CONSULTA);
+      $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
+      $datos=$menu->listar($CONSULTA);
+      print($datos);
+      
+ 
+
+      }else {
+        $CONSULTA1 = "UPDATE A_PERSONA SET dni = '$dni',nombre ='$nombre',direccion ='$direccion',telefono ='$telefono',mail ='$mail',idPerfil ='$idPerfil'
+        ,estado = '$estado',usuario ='$usuario',contrasena ='$contrasena',checkOrganizacion=0 WHERE id='$user_id'";
+      //llamo al metodo listar y le doy la variable CONSULTA
+        $fechaIngreso = date('Y-m-d H:i');
+        $CONSULTA="UPDATE A_DETALLE_PO SET estado=0,fechaTermino='$fechaIngreso' WHERE idPersona='$user_id'";
+        $menu->listar($CONSULTA1);
+        $datos=$menu->listar($CONSULTA);
+        $CONSULTA = "SELECT * FROM A_PERSONA";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+        //imprimir los datos en JSON
+         print($datos);
+
+         $usuarioCambio = $_SESSION["test"];
+        $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+        ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Editar Usuario Sin Organizacion')";
+        $datos=$menu->listar($CONSULTA);
+        $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
+        $datos=$menu->listar($CONSULTA);
         print($datos);
+
+      }
+
       break;
+      case "borrar_persona":
+        echo($estado);
+        if($estado == 1){
+          echo "funciona el if de editar";
+        //define la consulta
+        $CONSULTA = "UPDATE A_PERSONA SET estado = 0 WHERE id='$user_id'";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+          $CONSULTA = "SELECT * FROM A_PERSONA";
+          //llamo al metodo listar y le doy la variable CONSULTA
+          $datos=$menu->listar($CONSULTA);
+          //imprimir los datos en JSON
+          //print($datos);
+  
+        $usuarioCambio = $_SESSION["test"];
+        $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+        ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Eliminar Usuario')";
+        $datos=$menu->listar($CONSULTA);
+        $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
+        $datos=$menu->listar($CONSULTA);
+        print($datos);
+        
+   
+        
+        }else {
+          $CONSULTA1 = "UPDATE A_PERSONA SET estado = 1 WHERE id='$user_id'";
+        //llamo al metodo listar y le doy la variable CONSULTA
+          $menu->listar($CONSULTA1);
+          $datos=$menu->listar($CONSULTA1);
+          $CONSULTA = "SELECT * FROM A_PERSONA";
+          //llamo al metodo listar y le doy la variable CONSULTA
+          $datos=$menu->listar($CONSULTA);
+          //imprimir los datos en JSON
+           print($datos);
+  
+           $usuarioCambio = $_SESSION["test"];
+          $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+          ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Activar nuevamente a un usuario')";
+          $datos=$menu->listar($CONSULTA);
+          $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
+          $datos=$menu->listar($CONSULTA);
+          print($datos);
+    
+  }
+  break;
+
+  case "Habilitar_persona":
+    echo($checkHabilitado);
+    if($checkHabilitado == 1){
+      echo "funciona el if de editar";
+      
+    //define la consulta
+    $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 0 WHERE id='$user_id'";
+    //llamo al metodo listar y le doy la variable CONSULTA
+    $datos=$menu->listar($CONSULTA);
+      $CONSULTA = "SELECT * FROM A_PERSONA";
+      //llamo al metodo listar y le doy la variable CONSULTA
+      $datos=$menu->listar($CONSULTA);
+      //imprimir los datos en JSON
+      //print($datos);
+
+    $usuarioCambio = $_SESSION["test"];
+    $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+    ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Deshabilitar a un  Usuario')";
+    $datos=$menu->listar($CONSULTA);
+    $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
+    $datos=$menu->listar($CONSULTA);
+    print($datos);
+    
+
+    
+    }else {
+      $CONSULTA1 = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE id='$user_id'";
+    //llamo al metodo listar y le doy la variable CONSULTA
+      $menu->listar($CONSULTA1);
+      $datos=$menu->listar($CONSULTA1);
+      $CONSULTA = "SELECT * FROM A_PERSONA";
+      //llamo al metodo listar y le doy la variable CONSULTA
+      $datos=$menu->listar($CONSULTA);
+      //imprimir los datos en JSON
+       print($datos);
+
+       $usuarioCambio = $_SESSION["test"];
+      $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+      ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Habilitar nuevamente a un usuario')";
+      $datos=$menu->listar($CONSULTA);
+      $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
+      $datos=$menu->listar($CONSULTA);
+      print($datos);
+
+}
+break;
+
+
+case "habGeneral":
+  if($checkHabilitado == 1){
+    echo "funciona el if de editar";
+    
+  //define la consulta
+  $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 0 WHERE idPerfil !=5 ";
+  //llamo al metodo listar y le doy la variable CONSULTA
+  $datos=$menu->listar($CONSULTA);
+    $CONSULTA = "SELECT * FROM A_PERSONA";
+    //llamo al metodo listar y le doy la variable CONSULTA
+    $datos=$menu->listar($CONSULTA);
+    //imprimir los datos en JSON
+    //print($datos);
+
+  $usuarioCambio = $_SESSION["test"];
+  $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+  ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Deshabilitar a un  Usuario')";
+  $datos=$menu->listar($CONSULTA);
+  $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
+  $datos=$menu->listar($CONSULTA);
+  print($datos);
+  
+
+  
+  }else {
+    $CONSULTA1 = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil !=5 ";
+  //llamo al metodo listar y le doy la variable CONSULTA
+    $menu->listar($CONSULTA1);
+    $datos=$menu->listar($CONSULTA1);
+    $CONSULTA = "SELECT * FROM A_PERSONA";
+    //llamo al metodo listar y le doy la variable CONSULTA
+    $datos=$menu->listar($CONSULTA);
+    //imprimir los datos en JSON
+     print($datos);
+
+     $usuarioCambio = $_SESSION["test"];
+    $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+    ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Habilitar nuevamente a un usuario')";
+    $datos=$menu->listar($CONSULTA);
+    $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
+    $datos=$menu->listar($CONSULTA);
+    print($datos);
+
+}
+break;
+
   }
   
 ?>
