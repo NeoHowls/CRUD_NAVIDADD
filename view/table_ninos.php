@@ -55,7 +55,7 @@
                         <option value=3>2024</option>
                         <option value=4>2025</option>
                       </select>
-                      <br>
+                      
  
     <label for="" class="col-form-label">Sexo:</label>
                       <select name="cars" id="periodo" class = "form-control">
