@@ -27,6 +27,11 @@ if($datos === TRUE){ ;
   $_SESSION["CRP"]=$datos[0]['checkReadP'];
   $_SESSION["CDP"]=$datos[0]['checkDeleteP']; 
 
+
+
+
+  $_SESSION["tipo_usuario"]=$datos[0]['tipo'];
+
   if ($_SESSION["id_p"] == 4) {
              echo '</div>
           <script type="text/javascript"> 

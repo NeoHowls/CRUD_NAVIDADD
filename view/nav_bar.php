@@ -1,3 +1,5 @@
+
+
 <nav class="navbar navbar-expand-lg navbar-dark baanner_bg">
 		<div class="container-fluid">
 			<a class="navbar-brand" href=""><img src="../images/multicultural para fondos color - blanco.png" alt="image"> <!--img src="images/NAVIDAD LOGO YO AMO.png"--></a>
@@ -8,18 +10,27 @@
 			
 
 			<!-- Barra de navegador  realizar cambio para que tenga campos relaciondos con la id -->
-
-			<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+			 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 				<ul class="navbar-nav ms-auto">
+				
+			<?php
+    if ($_SESSION["tipo_usuario"] != 2) {
+		echo '
+				
 				<li class="nav-item">
 						<a class="nav-link" href="ninos.php" id ="1" value = 1 name = "insert">Ver niños</a>
 					</li>
-          <li class="nav-item">
+					<li class="nav-item">
 						<a class="nav-link" href="persona.php">Ver Persona</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="organizacion.php">Ver Organizacion</a>
 					</li>
+
+
+
+
+
           <li class="nav-item">
 						<a class="nav-link" href="po.php">Ver Detalle PO</a>
 					</li>
@@ -34,6 +45,22 @@
 					<li class="nav-item">
 						<a class="nav-link" href="tipo_u.php">Tipo Usuario</a>
 					</li>
+
+					';
+	}
+    ?>
+
+
+
+
+
+          
+
+
+
+
+
+
 					<li class="nav-item">
 					<a class="btn btn-danger nav-link"  onclick="myFunction()">
 						CERRAR  
