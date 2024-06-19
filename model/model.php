@@ -28,7 +28,7 @@
         //NO SE USARA AUN
         public function loginPersonal(){
    
-            $sql ="SELECT id, nacionalidad FROM A_NACIONALIDAD";
+            $sql ="SELECT id, nacionalidad FROM A_NACIONALIDAD WHERE estado = 1";
             $this->connect();
             $query = $this->iniciar($sql);
             

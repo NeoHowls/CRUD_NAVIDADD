@@ -35,7 +35,7 @@ function test8(){
 }
 
 function test9(){
-    require_once ('../view/table_etnia.php');
+    require_once ('../view/table_ninos.php');
 }
 
 
