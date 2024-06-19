@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark baanner_bg">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="index.php"><img src="../images/multicultural para fondos color - blanco.png" alt="image"> <!--img src="images/NAVIDAD LOGO YO AMO.png"--></a>
+			<a class="navbar-brand" href=""><img src="../images/multicultural para fondos color - blanco.png" alt="image"> <!--img src="images/NAVIDAD LOGO YO AMO.png"--></a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -12,10 +12,10 @@
 			<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 				<ul class="navbar-nav ms-auto">
 				<li class="nav-item">
-						<a class="nav-link" href="../index.php" id ="1" value = 1 name = "insert">Ver niños</a>
+						<a class="nav-link" href="ninos.php" id ="1" value = 1 name = "insert">Ver niños</a>
 					</li>
           <li class="nav-item">
-						<a class="nav-link" href="./persona.php">Ver Persona</a>
+						<a class="nav-link" href="persona.php">Ver Persona</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="organizacion.php">Ver Organizacion</a>
