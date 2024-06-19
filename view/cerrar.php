@@ -19,7 +19,7 @@ if(isset($_SESSION['test'])){
     session_destroy();
     ?>
     <script type="text/javascript"> 
-    window.location.href="../../PAGINA_PRINCIPAL/index.php"
+    window.location.href="../../PAGINA_PRINCIPALL/index.php"
     </script> 
 <?php
 }
