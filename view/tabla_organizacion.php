@@ -20,7 +20,7 @@
 
     </table>
     <script type="text/javascript" src="../datatables.js"></script>
-    <script type="text/javascript" src="../js/ajax/idioma.js"></script>>
-    <script type="text/javascript" src="../index4.js">
+    <script type="text/javascript" src="../js/idioma.js"></script>>
+    <script type="text/javascript" src="../js/AJAX_ORGANIZACION.js">
         
     </script>

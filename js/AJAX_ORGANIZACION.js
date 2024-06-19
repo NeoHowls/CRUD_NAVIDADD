@@ -1,6 +1,3 @@
-
- 
-
 let table = $('#myTable2').DataTable( {
     // destroy : true,
 
