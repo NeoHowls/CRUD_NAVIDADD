@@ -128,6 +128,33 @@
                         <input class="form-check-input" type="checkbox" id="PB" name="more" value= 1>
                     </div>
                         </div>
+                        <hr>
+                        <!--PERFIL-->
+    <div class="col-lg-12">
+        
+                      <h5 style = "text-align: center;">PERFIL</h5>
+</div>
+    <div class="col-lg-6"  style = "text-align: center;">
+                      <label for="" class="col-form-label">Crear:</label>
+                      <div class=" form-check form-switch" style= "display: flex;justify-content: center;">
+                        <input class="form-check-input" type="checkbox" id="PPC" name="more" value= 1>
+                    </div>
+                        <label for="" class="col-form-label">Editar:</label>
+                      <div class=" form-check form-switch" style= "display: flex;justify-content: center;">
+                        <input class="form-check-input" type="checkbox" id="PPE" name="more" value= 1>
+                    </div>
+                    </div>
+                    <div class="col-lg-6" style = "text-align: center;">
+                      <label for="" class="col-form-label">Lectura:</label>
+  
+                      <div class=" form-check form-switch" style= "display: flex;justify-content: center;">
+                        <input class="form-check-input" type="checkbox" id="PPL" name="more" value= 1>
+                    </div>
+                      <label for="" class="col-form-label">Eliminar:</label>
+                      <div class=" form-check form-switch" style= "display: flex;justify-content: center;">
+                        <input class="form-check-input" type="checkbox" id="PPB" name="more" value= 1>
+                    </div>
+                        </div>
                   </div>
               <div class="modal-footer" style="justify-content: center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -159,9 +186,14 @@
                 <th class="none">Eliminar Organizacion</th>
 
                 <th class="none">Crear Persona</th>
-                <th class="none">checkUpdateP</th>
-                <th class="none">checkReadP</th>
-                <th class="none">checkDeleteP</th>
+                <th class="none">Editar Person</th>
+                <th class="none">Visulizar Persona</th>
+                <th class="none">Eliminar Persona</th>
+
+                <th class="none">Crear Perfiles</th>
+                <th class="none">Editar Perfiles</th>
+                <th class="none">Visulizar Perfiles</th>
+                <th class="none">Eliminar Perfiles</th>
                 <th class="none">estado</th>
                 <th class='all'>acciones</th>
             </tr>

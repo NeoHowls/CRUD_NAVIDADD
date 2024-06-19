@@ -75,7 +75,8 @@
             A_PERFIL.checkCreateP,	
             A_PERFIL.checkUpdateP,	
             A_PERFIL.checkReadP,	
-            A_PERFIL.checkDeleteP	
+            A_PERFIL.checkDeleteP,
+            A_PERFIL.tipo		
             FROM [dbo].[A_PERSONA]
             INNER JOIN A_PERFIL ON A_PERSONA.idPerfil = A_PERFIL.id
             WHERE A_PERSONA.usuario = :rut AND A_PERSONA.contrasena = :pass AND A_PERSONA.checkHabilitado = 1
