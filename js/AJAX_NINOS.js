@@ -183,11 +183,10 @@ $("#btnNuevo").click(function(){
         document.getElementById('more_info').checked = false
         $("#conditional_part").hide();
     }
-    window.alert('FUNCIONA');
     $("#formUsuarios").trigger("reset");
     $(".modal-header").css( "background-color", "#17a2b8");
     $(".modal-header").css( "color", "white" );
-    $(".modal-title").text("Añadir Etnia");
+    $(".modal-title").text("Añadir Niño");
     $('#modalCRUD').modal('show');	    
 });
 

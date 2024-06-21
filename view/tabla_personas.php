@@ -42,7 +42,7 @@
                 <div class="row">
     <div class="col-lg-12" style = "text-align: center;">
                     <div class="form-group">
-                    <label for="" class="col-form-label">dni:</label>
+                    <label for="" class="col-form-label">DNI/RUT:</label>
                     <input type="text" class="form-control" id="dni">
                     </div>
                     <div class="form-group">
@@ -54,43 +54,66 @@
                     <input type="text" class="form-control" id="direccion">
                     </div>
                     <div class="form-group">
-                    <label for="" class="col-form-label">telefono:</label>
-                    <input type="number" class="form-control" id="telefono">
-                    </div>
-                    <div class="form-group">
                     <label for="" class="col-form-label">mail:</label>
                     <input type="text" class="form-control" id="mail">
                     </div>
-                    <div class="form-group">
-                    <label for="" class="col-form-label">idPerfil:</label>
-                    <input type="text" class="form-control" id="idPerfil">
+                    <div class="form-group row">
+                      <div class="col-md-6">
+                          <label for="telefono" class="col-form-label text-center">Teléfono:</label>
+                          <div class="text-center">
+                              <input type="number" class="form-control" id="telefono">
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                          <label for="telefono" class="col-form-label text-center">Perfil:</label>
+                        </div>
+                      </div>
+                      <div id="conditional_parts">
+                      <div class="form-group row">
+                      <div class="col-lg-6">
+                      <?php 
+                      //include_once("../controller/controller_mostrarPerfil.php")
+                      ?>
+                      <select name="carsd" id="P_ID" class = "form-control">              
+                        <?php
+                        foreach($datos as $key => $value){
+                            echo '<option value="'.$value['id'].'">'.$value['perfil'].'</option>'; 
+                          }
+                        ?>
+                      </select>
+                      </div>
                     </div>
-                    <div class="form-group">
-                    <label for="" class="col-form-label">estado:</label>
-                    <input type="text" class="form-control" id="estado">
+                      </div>
                     </div>
-                    <div class="form-group">
-                    <label for="" class="col-form-label">usuario:</label>
-                    <input type="text" class="form-control" id="usuario">
-                    </div>
-                    <div class="form-group">
-                    <label for="" class="col-form-label">contraseña:</label>
-                    <input type="text" class="form-control" id="contrasena">
-                    </div>
-                    <label class="col-form-label" for="flexSwitchCheckDefault">Desea agregar Organizacion:</label>
-                      <div class="elnt_container form-check form-switch">
+                    <!-- <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="usuario" class="col-form-label text-center">usuario:</label>
+                            <div class="text-center">
+                                <input type="text" class="form-control" id="usuario">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="contrasena" class="col-form-label text-center">contrasena:</label>
+                            <div class="text-center">
+                                <input type="text" class="form-control" id="contrasena">
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="form-group row">
+                    <label class="col-form-label col-md-auto" for="flexSwitchCheckDefault">Desea agregar Organizacion:</label>
+                      <div class="col-md-auto elnt_container form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="more_infos" name="more" value = 1>
                     </div>
+                    </div>
                       <div id="conditional_parts">
+                      <div class="form-group row">
                       <div class="col-lg-6">
                       <?php 
                       include_once("../controller/controller_mostrarO.php")
                       ?>
                       <select name="cars" id="O_ID" class = "form-control">              
                         <?php
-
                         foreach($datos as $key => $value){
-                          
                             echo '<option value="'.$value['id'].'">'.$value['nombre'].'</option>'; 
                           }
                         ?>
@@ -99,8 +122,6 @@
                     </div>
                       </div>
                     </div>
-                    
-                    
                 </div>
             <div class="modal-footer" style="justify-content: center">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
