@@ -194,13 +194,190 @@ $("#btnNuevo").click(function(){
 
     selections.addEventListener('change', function () {
         // Verifica si el checkbox está marcado o no
-        if (this.checked) {
-            console.log('El checkbox está activado.');
-            CheckNC = 1;
+        if (selections.value == 0) {
+            
+            document.getElementById('NC').checked = true
+            document.getElementById('NE').checked = true
+            document.getElementById('NL').checked = true
+            document.getElementById('NB').checked = true
 
-        } else {
-            console.log('El checkbox está desactivado.');
-            CheckNC = 0;
+            document.getElementById('OC').disabled = false
+            document.getElementById('OE').disabled = false
+            document.getElementById('OL').disabled = false
+            document.getElementById('OB').disabled = false
+            CheckNC = 1;
+            CheckNE = 1;
+            CheckNL = 1;
+            CheckNB = 1;
+
+            document.getElementById('OC').checked = true
+            document.getElementById('OE').checked = true
+            document.getElementById('OL').checked = true
+            document.getElementById('OB').checked = true
+
+            document.getElementById('OC').disabled = false
+            document.getElementById('OE').disabled = false
+            document.getElementById('OL').disabled = false
+            document.getElementById('OB').disabled = false
+            CheckOC = 1;
+            CheckOE = 1;
+            CheckOL = 1;
+            CheckOB = 1;
+
+            document.getElementById('PC').checked = true
+            document.getElementById('PE').checked = true
+            document.getElementById('PL').checked = true
+            document.getElementById('PB').checked = true
+
+            document.getElementById('PC').disabled = false
+            document.getElementById('PE').disabled = false
+            document.getElementById('PL').disabled = false
+            document.getElementById('PB').disabled = false
+
+            CheckPC = 1;
+            CheckPE = 1;
+            CheckPL = 1;
+            CheckPB = 1;
+
+            document.getElementById('PPC').checked = true
+            document.getElementById('PPE').checked = true
+            document.getElementById('PPL').checked = true
+            document.getElementById('PPB').checked = true
+
+            
+
+            CheckPPC = 1;
+            CheckPPE = 1;
+            CheckPPL = 1;
+            CheckPPB = 1;
+
+            document.getElementById('PPC').disabled = false
+            document.getElementById('PPE').disabled = false
+            document.getElementById('PPL').disabled = false
+            document.getElementById('PPB').disabled = false
+
+        } else if (selections.value == 1) {
+            document.getElementById('NC').checked = true
+            document.getElementById('NE').checked = true
+            document.getElementById('NL').checked = true
+            document.getElementById('NB').checked = true
+
+            document.getElementById('OC').disabled = false
+            document.getElementById('OE').disabled = false
+            document.getElementById('OL').disabled = false
+            document.getElementById('OB').disabled = false
+            CheckNC = 1;
+            CheckNE = 1;
+            CheckNL = 1;
+            CheckNB = 1;
+
+            document.getElementById('OC').checked = true
+            document.getElementById('OE').checked = true
+            document.getElementById('OL').checked = true
+            document.getElementById('OB').checked = true
+
+            document.getElementById('OC').disabled = false
+            document.getElementById('OE').disabled = false
+            document.getElementById('OL').disabled = false
+            document.getElementById('OB').disabled = false
+            CheckOC = 1;
+            CheckOE = 1;
+            CheckOL = 1;
+            CheckOB = 1;
+
+            document.getElementById('PC').checked = true
+            document.getElementById('PE').checked = true
+            document.getElementById('PL').checked = true
+            document.getElementById('PB').checked = true
+
+            document.getElementById('PC').disabled = false
+            document.getElementById('PE').disabled = false
+            document.getElementById('PL').disabled = false
+            document.getElementById('PB').disabled = false
+
+            CheckPC = 1;
+            CheckPE = 1;
+            CheckPL = 1;
+            CheckPB = 1;
+
+
+            document.getElementById('PPC').checked = false
+            document.getElementById('PPE').checked = false
+            document.getElementById('PPL').checked = false
+            document.getElementById('PPB').checked = false
+
+            document.getElementById('PPC').disabled = true
+            document.getElementById('PPE').disabled = true
+            document.getElementById('PPL').disabled = true
+            document.getElementById('PPB').disabled = true
+            CheckPPC = 0;
+            CheckPPE = 0;
+            CheckPPL = 0;
+            CheckPPB = 0;
+                
+            
+        }
+        else if (selections.value == 2){
+            document.getElementById('NC').checked = true
+            document.getElementById('NE').checked = false
+            document.getElementById('NL').checked = true
+            document.getElementById('NB').checked = false
+
+            document.getElementById('NC').disabled = true
+            document.getElementById('NE').disabled = true
+            document.getElementById('NL').disabled = true
+            document.getElementById('NB').disabled = true
+            CheckNC = 1;
+            CheckNE = 0;
+            CheckNL = 1;
+            CheckNB = 0;
+
+            document.getElementById('OC').checked = false
+            document.getElementById('OE').checked = false
+            document.getElementById('OL').checked = false
+            document.getElementById('OB').checked = false
+
+            document.getElementById('OC').disabled = true
+            document.getElementById('OE').disabled = true
+            document.getElementById('OL').disabled = true
+            document.getElementById('OB').disabled = true
+            CheckOC = 0;
+            CheckOE = 0;
+            CheckOL = 0;
+            CheckOB = 0;
+
+            document.getElementById('PC').checked = false
+            document.getElementById('PE').checked = false
+            document.getElementById('PL').checked = false
+            document.getElementById('PB').checked = false
+
+            document.getElementById('PC').disabled = true
+            document.getElementById('PE').disabled = true
+            document.getElementById('PL').disabled = true
+            document.getElementById('PB').disabled = true
+
+            CheckPC = 0;
+            CheckPE = 0;
+            CheckPL = 0;
+            CheckPB = 0;
+
+            document.getElementById('PPC').checked = false
+            document.getElementById('PPE').checked = false
+            document.getElementById('PPL').checked = false
+            document.getElementById('PPB').checked = false
+
+
+
+            CheckPPC = 0;
+            CheckPPE = 0;
+            CheckPPL = 0;
+            CheckPPB = 0;
+
+            document.getElementById('PPC').disabled = true
+            document.getElementById('PPE').disabled = true
+            document.getElementById('PPL').disabled = true
+            document.getElementById('PPB').disabled = true
+
         }
     });
 
