@@ -50,10 +50,15 @@
     <div class="col-lg-6" style = "text-align: center;">   
     <label for="" class="col-form-label">periodo:</label>
                       <select name="cars" id="periodo" class = "form-control">
-                        <option value=1>2022</option>
+                        <?php
+                          for($i=2023;$i<=date("Y");$i++){
+                            echo ("<option value=".$i.">".$i."</option>");
+                          }
+                        ?>
+                        <!-- <option value=1>2022</option>
                         <option value=2>2023</option>
                         <option value=3>2024</option>
-                        <option value=4>2025</option>
+                        <option value=4>2025</option> -->
                       </select>
                       
  
@@ -215,8 +220,17 @@
         </tbody>
 
     </table>
+    <script>
+    // A $( document ).ready() block.
+    let userTipo;
+    $( document ).ready(function() {
+        
+        userTipo = <?php echo($_SESSION['tipo_usuario']); ?>;
+        alert( userTipo );
+    });
+    </script>
     <script type="text/javascript" src="../datatables.js"></script>
     <script type="text/javascript" src="../js/ajax/idioma.js"></script>>
     <script type="text/javascript" src="../js/AJAX_NINOS.js"> </script>
         
-    </script>
+   

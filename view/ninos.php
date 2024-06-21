@@ -17,6 +17,7 @@
 
     <?php
     session_start();
+    
     ?>
 
     <title>Navidad</title>
@@ -25,6 +26,7 @@
   <body id = "bodyt">
 <!--NAV BAR NEW -->
 <?php
+
 include_once("./nav_bar.php");
 ?>
 
@@ -40,6 +42,7 @@ include_once("./nav_bar.php");
 
 	
 	  require_once '../controller/controller_vista.php';
+    var_dump($_SESSION);
       $nu = 3;
 	  //permisos
 	  if($nu == 1){
@@ -67,4 +70,5 @@ include_once("./nav_bar.php");
     
     
   </body>
+ 
 </html>

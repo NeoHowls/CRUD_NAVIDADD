@@ -1,3 +1,5 @@
+
+
 $('#more_info').change(function() {
     if(this.checked != true){
           $("#conditional_part").hide();
@@ -161,7 +163,7 @@ $('#formUsuarios').submit(function(e){
  
 
 //para limpiar los campos antes de dar de Alta una Persona
-$("#btnNuevo").click(function(){
+$("#btnNuevo").click(function(userTipo){
     opcion = "add_etnia"; //alta           
     user_id=null;
     check_nac = 0;
@@ -183,7 +185,16 @@ $("#btnNuevo").click(function(){
         document.getElementById('more_info').checked = false
         $("#conditional_part").hide();
     }
+
+    let fecha = new Date();
+	let anio = fecha.getFullYear();
+    alert(userTipo);
+    
+    
     $("#formUsuarios").trigger("reset");
+
+    $('#periodo').val(anio);
+
     $(".modal-header").css( "background-color", "#17a2b8");
     $(".modal-header").css( "color", "white" );
     $(".modal-title").text("Añadir Niño");
