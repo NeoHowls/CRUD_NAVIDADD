@@ -220,17 +220,17 @@
         </tbody>
 
     </table>
+    
+    <script type="text/javascript" src="../datatables.js"></script>
+    <script type="text/javascript" src="../js/ajax/idioma.js"></script>
+    <script type="text/javascript" src="../js/AJAX_NINOS.js"> </script>
+        
     <script>
     // A $( document ).ready() block.
     let userTipo;
-    $( document ).ready(function() {
+    
         
         userTipo = <?php echo($_SESSION['tipo_usuario']); ?>;
-        alert( userTipo );
-    });
-    </script>
-    <script type="text/javascript" src="../datatables.js"></script>
-    <script type="text/javascript" src="../js/ajax/idioma.js"></script>>
-    <script type="text/javascript" src="../js/AJAX_NINOS.js"> </script>
-        
-   
+        // alert( userTipo );
+    
+    </script>                   

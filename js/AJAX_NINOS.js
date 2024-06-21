@@ -1,5 +1,3 @@
-
-
 $('#more_info').change(function() {
     if(this.checked != true){
           $("#conditional_part").hide();
@@ -163,7 +161,8 @@ $('#formUsuarios').submit(function(e){
  
 
 //para limpiar los campos antes de dar de Alta una Persona
-$("#btnNuevo").click(function(userTipo){
+$("#btnNuevo").click(function(){
+    
     opcion = "add_etnia"; //alta           
     user_id=null;
     check_nac = 0;
@@ -188,12 +187,17 @@ $("#btnNuevo").click(function(userTipo){
 
     let fecha = new Date();
 	let anio = fecha.getFullYear();
-    alert(userTipo);
+    // alert(userTipo);
     
     
     $("#formUsuarios").trigger("reset");
 
     $('#periodo').val(anio);
+    if(userTipo==2){
+        $("#periodo").prop('disabled', true);
+    }else{
+        $("#periodo").prop('disabled', false);
+    }
 
     $(".modal-header").css( "background-color", "#17a2b8");
     $(".modal-header").css( "color", "white" );
