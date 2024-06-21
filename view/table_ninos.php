@@ -85,20 +85,23 @@
                         <input type="date" class="form-control" id="Naciemiento">
 
 
-                        <label for="" class="col-form-label">etnia:</label>
-                      <select name="cars" id="etnia" class = "form-control">
-                        <option value=1>Mapuche</option>
-                        <option value=2>Aymara</option>
-                        <option value=3>Rapa Nui</option>
-                        <option value=4>Quechua</option>
-                        <option value=5>Colla</option>
-                        <option value=6>Chango</option>
-                        <option value=7>Diaguita</option>
-                        <option value=8>Kawésqar</option>
-                        <option value=9>Yagan</option>
+                        <label for="" class="col-form-label">Etnia:</label>
+                      <?php 
+                      include_once("../controller/controller_etnia.php");
+                      ?>
+                      <select name="carsn" id="etnia" class = "form-control">              
+                        <?php
+
+                          foreach($datos as $key => $value){
+                            if($value['id'] >= 1){
+                              echo '<option value="'.$value['id'].'">'.$value['etnia'].'</option>'; 
+                            }
+                          }
+                        ?>
                       </select>
                     <br>
                     </div>
+                    
                     <div class="col-lg-6" style = "text-align: center;">
                       
 
