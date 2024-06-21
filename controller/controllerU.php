@@ -36,9 +36,100 @@
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
   case "usuario":
     //define la consulta
-    $CONSULTA = "SELECT  
-*
-FROM [dbo].[A_PERFIL]";
+    $CONSULTA = "SELECT id
+      ,perfil
+      ,tipo
+	  ,CASE
+			WHEN tipo = 0 THEN 'ADMINISTRADOR'
+			WHEN tipo = 1 THEN 'DIDECO'
+			WHEN tipo = 2 THEN 'REPRESENTANTE'
+		END AS nombreTipo
+      ,checkCreateN
+	  ,CASE
+			WHEN checkCreateN = 0 THEN 'NO'
+			WHEN checkCreateN = 1 THEN 'SI'
+		END AS expCreateN
+      ,checkUpdateN
+	  ,CASE
+			WHEN checkUpdateN = 0 THEN 'NO'
+			WHEN checkUpdateN = 1 THEN 'SI'
+		END AS expUpdateN
+      ,checkReadN
+	  ,CASE
+			WHEN checkReadN = 0 THEN 'NO'
+			WHEN checkReadN = 1 THEN 'SI'
+		END AS expReadN 
+      ,checkDeleteN
+	  ,CASE
+			WHEN checkDeleteN = 0 THEN 'NO'
+			WHEN checkDeleteN = 1 THEN 'SI'
+		END AS expDeleteN
+      ,checkCreateO
+	  ,CASE
+			WHEN checkCreateO = 0 THEN 'NO'
+			WHEN checkCreateO = 1 THEN 'SI'
+		END AS expCreateO
+      ,checkUpdateO
+	  ,CASE
+			WHEN checkUpdateO = 0 THEN 'NO'
+			WHEN checkUpdateO = 1 THEN 'SI'
+		END AS expUpdateO
+      ,checkReadO
+	  ,CASE
+			WHEN checkReadO = 0 THEN 'NO'
+			WHEN checkReadO = 1 THEN 'SI'
+		END AS expReadO
+      ,checkDeleteO
+	  ,CASE
+			WHEN checkDeleteO= 0 THEN 'NO'
+			WHEN checkDeleteO= 1 THEN 'SI'
+		END AS expDeleteO
+      ,checkCreateP
+	  ,CASE
+			WHEN checkCreateP= 0 THEN 'NO'
+			WHEN checkCreateP= 1 THEN 'SI'
+		END AS expCreateP
+      ,checkUpdateP
+	  ,CASE
+			WHEN checkUpdateP= 0 THEN 'NO'
+			WHEN checkUpdateP= 1 THEN 'SI'
+		END AS expUpdateP
+      ,checkReadP
+	  ,CASE
+			WHEN checkReadP= 0 THEN 'NO'
+			WHEN checkReadP= 1 THEN 'SI'
+		END AS expReadP
+      ,checkDeleteP
+	  ,CASE
+			WHEN checkDeleteP= 0 THEN 'NO'
+			WHEN checkDeleteP= 1 THEN 'SI'
+		END AS expDeleteP
+      ,checkCreatePer
+	  ,CASE
+			WHEN checkCreatePer= 0 THEN 'NO'
+			WHEN checkCreatePer= 1 THEN 'SI'
+		END AS expCreatePer
+      ,checkUpdatePer
+	  ,CASE
+			WHEN checkUpdatePer= 0 THEN 'NO'
+			WHEN checkUpdatePer= 1 THEN 'SI'
+		END AS expUpdatePer
+      ,checkReadPer
+	  ,CASE
+			WHEN checkReadPer= 0 THEN 'NO'
+			WHEN checkReadPer= 1 THEN 'SI'
+		END AS expReadPer
+      ,checkDeletePer
+	  ,CASE
+			WHEN checkDeletePer= 0 THEN 'NO'
+			WHEN checkDeletePer= 1 THEN 'SI'
+		END AS expDeletePer
+      ,estado
+	  ,CASE
+			WHEN estado= 0 THEN 'DESHABILITADO'
+			WHEN estado= 1 THEN 'HABILITADO'
+		END AS expEstado
+  FROM A_PERFIL";
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
     //imprimir los datos en JSON
@@ -56,7 +147,7 @@ FROM [dbo].[A_PERFIL]";
       '$CheckNC', '$CheckNE', '$CheckNL', '$CheckNB', 
       '$CheckOC', '$CheckOE', '$CheckOL', '$CheckOB', 
       '$CheckPC', '$CheckPE' , '$CheckPC', '$CheckPE', 
-       '$CheckPPC', '$CheckPPE' , '$CheckPPC', '$ChecKPPE',
+       '$CheckPPC', '$CheckPPE' , '$CheckPPC', '$CheckPPB',
       '$Estado')";
       //llamo al metodo listar y le doy la variable CONSULTA
 

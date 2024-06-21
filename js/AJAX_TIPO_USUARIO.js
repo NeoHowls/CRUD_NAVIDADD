@@ -21,6 +21,7 @@ let table = $('#myTable2').DataTable( {
         {"data": "id"},
         {"data": "perfil"},
         {"data": "tipo"},
+
         {"data": "checkCreateN"},
         {"data": "checkUpdateN"},
         {"data": "checkReadN"},
@@ -42,8 +43,25 @@ let table = $('#myTable2').DataTable( {
         { "data": "checkDeletePer" },
 
         {"data": "estado"},
-        
-        
+
+        { "data": "nombreTipo" },
+        { "data": "expCreateN" },
+        { "data": "expUpdateN" },
+        { "data": "expReadN" },
+        { "data": "expDeleteN" },
+        { "data": "expCreateO" },
+        { "data": "expUpdateO" },
+        { "data": "expReadO" },
+        { "data": "expDeleteO" },
+        { "data": "expCreateP" },
+        { "data": "expUpdateP" },
+        { "data": "expReadP" },
+        { "data": "expDeleteP" },
+        { "data": "expCreatePer" },
+        { "data": "expUpdatePer" },
+        { "data": "expReadPer" },
+        { "data": "expDeletePer" },
+        { "data": "expEstado" },
         {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'><svg xmlns=http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'><path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/><path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/></svg></i>"},
 
         
@@ -106,7 +124,7 @@ $('#formUsuarios').submit(function(e){
     perfil = $.trim($('#perfil').val());
     tipo = $.trim($('#tipo').val());
     Estado = $.trim($('#estado').val());
-    
+    console.log(CheckPPB)
     console.log(CheckNC)
     alert(CheckNC);    
     //console.log(opcion)                            
@@ -152,7 +170,7 @@ $('#formUsuarios').submit(function(e){
 $("#btnNuevo").click(function(){
     opcion = "add_persona"; //alta           
     user_id=null; 
-    
+    selections = document.getElementById('tipo');
     //funciona :D
     CheckNC = "";
     CheckNE = "";
@@ -173,6 +191,19 @@ $("#btnNuevo").click(function(){
     CheckPPE = "";
     CheckPPL = "";
     CheckPPB = "";
+
+    selections.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            CheckNC = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            CheckNC = 0;
+        }
+    });
+
     checkbox = document.getElementById('NC');
     checkbox.addEventListener('change', function () {
         // Verifica si el checkbox está marcado o no
@@ -328,53 +359,53 @@ $("#btnNuevo").click(function(){
         }
     });
 
-    checkboxPC = document.getElementById('PPC');
-    checkboxPC.addEventListener('change', function () {
+    checkboxPPC = document.getElementById('PPC');
+    checkboxPPC.addEventListener('change', function () {
         // Verifica si el checkbox está marcado o no
         if (this.checked) {
             console.log('El checkbox está activado.');
-            CheckPC = 1;
+            CheckPPC = 1;
 
         } else {
             console.log('El checkbox está desactivado.');
-            CheckPC = 0;
+            CheckPPC = 0;
         }
     });
 
-    checkboxPE = document.getElementById('PPE');
-    checkboxPE.addEventListener('change', function () {
+    checkboxPPE = document.getElementById('PPE');
+    checkboxPPE.addEventListener('change', function () {
         // Verifica si el checkbox está marcado o no
         if (this.checked) {
             console.log('El checkbox está activado.');
-            CheckPE = 1;
+            CheckPPE = 1;
 
         } else {
             console.log('El checkbox está desactivado.');
-            CheckPE = 0;
+            CheckPPE = 0;
         }
     });
-    checkboxPL = document.getElementById('PPL');
-    checkboxPL.addEventListener('change', function () {
+    checkboxPPL = document.getElementById('PPL');
+    checkboxPPL.addEventListener('change', function () {
         // Verifica si el checkbox está marcado o no
         if (this.checked) {
             console.log('El checkbox está activado.');
-            CheckPL = 1;
+            CheckPPL = 1;
 
         } else {
             console.log('El checkbox está desactivado.');
             CheckPL = 0;
         }
     });
-    checkboxPB = document.getElementById('PPB');
-    checkboxPB.addEventListener('change', function () {
+    checkboxPPB = document.getElementById('PPB');
+    checkboxPPB.addEventListener('change', function () {
         // Verifica si el checkbox está marcado o no
         if (this.checked) {
             console.log('El checkbox está activado.');
-            CheckPB = 1;
+            CheckPPB = 1;
 
         } else {
             console.log('El checkbox está desactivado.');
-            CheckPB = 0;
+            CheckPPB = 0;
         }
     });
 

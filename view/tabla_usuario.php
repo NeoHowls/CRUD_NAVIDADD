@@ -21,7 +21,8 @@
     <div class="col-lg-6" style = "text-align: center;">   
     <label for="" class="col-form-label">Tipo:</label>
                       <select name="cars" id="tipo" class = "form-control">
-                        <option hidden   defauld value=0>-------</option>
+                        <option hidden   defauld value='X'>-------</option>
+                        <option defauld value=0>ADMINISTRADOR</option>
                         <option value=1>DIDECO</option>
                         <option value=2>REPRESENTANTE</option>
                       </select>
@@ -174,27 +175,49 @@
                 
                 <th class ='never'>id</th>
                 <th>perfil</th>
+                <th class="never">tipo</th>
+
+                <th class="never">Crear niño</th>
+                <th class="never">Editar niño</th>
+                <th class="never">Leer datos de niños</th>
+                <th class="never">Eliminar niños</th>
+                <th class="never">Crear Organanizacion</th>
+                <th class="never">Editar Organizacion</th>
+                <th class="never">Leer datos de Organizacion</th>
+                <th class="never">Eliminar Organizacion</th>
+
+                <th class="never">Crear Persona</th>
+                <th class="never">Editar Person</th>
+                <th class="never">Visulizar Persona</th>
+                <th class="never">Eliminar Persona</th>
+
+                <th class="never">Crear Perfiles</th>
+                <th class="never">Editar Perfiles</th>
+                <th class="never">Visulizar Perfiles</th>
+                <th class="never">Eliminar Perfiles</th>
+
+                <th class="never">estado</th>
+
                 <th>tipo</th>
+
                 <th>Crear niño</th>
                 <th>Editar niño</th>
-                <th>Leer datos de niños</th>
+                <th>Visulizar niños</th>
                 <th>Eliminar niños</th>
 
-                <th class="none">Crear Organanizacion</th>
-                <th class="none">Editar Organizacion</th>
-                <th class="none">Leer datos de Organizacion</th>
-                <th class="none">Eliminar Organizacion</th>
-
-                <th class="none">Crear Persona</th>
-                <th class="none">Editar Person</th>
-                <th class="none">Visulizar Persona</th>
-                <th class="none">Eliminar Persona</th>
-
-                <th class="none">Crear Perfiles</th>
-                <th class="none">Editar Perfiles</th>
-                <th class="none">Visulizar Perfiles</th>
-                <th class="none">Eliminar Perfiles</th>
-                <th class="none">estado</th>
+                <th>Crear Organanizacion</th>
+                <th>Editar Organizacion</th>
+                <th>Visulizar Organizacion</th>
+                <th>Eliminar Organizacion</th>
+                <th>Crear Persona</th>
+                <th>Editar Person</th>
+                <th>Visulizar Persona</th>
+                <th>Eliminar Persona</th>
+                <th>Crear Perfiles</th>
+                <th>Editar Perfiles</th>
+                <th>Visulizar Perfiles</th>
+                <th>Eliminar Perfiles</th>
+                <th>Estado</th>
                 <th class='all'>acciones</th>
             </tr>
         </thead>
