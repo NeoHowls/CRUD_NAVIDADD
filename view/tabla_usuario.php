@@ -179,17 +179,18 @@
 
                 <th class="never">Crear niño</th>
                 <th class="never">Editar niño</th>
-                <th class="never">Leer datos de niños</th>
+                <th class="never">Visulizar niños</th>
                 <th class="never">Eliminar niños</th>
+
                 <th class="never">Crear Organanizacion</th>
                 <th class="never">Editar Organizacion</th>
-                <th class="never">Leer datos de Organizacion</th>
+                <th class="never">Visulizar Organizacion</th>
                 <th class="never">Eliminar Organizacion</th>
 
                 <th class="never">Crear Persona</th>
                 <th class="never">Editar Person</th>
-                <th class="never">Visulizar Persona</th>
-                <th class="never">Eliminar Persona</th>
+                <th class="never">Visulizar Personas</th>
+                <th class="never">Eliminar Personas</th>
 
                 <th class="never">Crear Perfiles</th>
                 <th class="never">Editar Perfiles</th>
@@ -209,15 +210,19 @@
                 <th>Editar Organizacion</th>
                 <th>Visulizar Organizacion</th>
                 <th>Eliminar Organizacion</th>
-                <th>Crear Persona</th>
-                <th>Editar Person</th>
-                <th>Visulizar Persona</th>
-                <th>Eliminar Persona</th>
+
+                <th>Crear Personas</th>
+                <th>Editar Personas</th>
+                <th>Visulizar Personas</th>
+                <th>Eliminar Personas</th>
+
                 <th>Crear Perfiles</th>
                 <th>Editar Perfiles</th>
                 <th>Visulizar Perfiles</th>
                 <th>Eliminar Perfiles</th>
+
                 <th>Estado</th>
+
                 <th class='all'>acciones</th>
             </tr>
         </thead>
