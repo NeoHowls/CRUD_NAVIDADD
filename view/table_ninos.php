@@ -124,8 +124,8 @@
                     </div>
 
 
-      <div id="conditional_part">
-    <div class="col-lg-6">
+      <div id="conditional_part" style="display:none;">
+        <div class="col-lg-6">
                       <label for="" class="col-form-label">Ceguera:</label>
                       <input type="checkbox" id="cbox2" value= 1 id="comuna">
                         <label for="" class="col-form-label">Sordera:</label>
@@ -141,7 +141,7 @@
                       <label for="" class="col-form-label">Psiquica:</label>
                       <input type="checkbox" id="cbox2" value= 1 id="comuna">
                       </div>
-     </div>
+        </div>
                     
                     <div class="col-lg-6" style = "text-align: center;">
                       <label class="col-form-label" for="flexSwitchCheckDefault">EXTRANJERO <div class="elnt_container form-check form-switch">
@@ -151,7 +151,7 @@
                       
                     
                         
-                      <div id="conditional_parts">
+                      <div id="conditional_parts" style="display:none;">
 
 
                       <?php 

@@ -166,7 +166,7 @@ $("#btnNuevo").click(function(){
     opcion = "add_etnia"; //alta           
     user_id=null;
     check_nac = 0;
-    if (check_nac == 1) {
+    /* if (check_nac == 1) {
         document.getElementById('more_infos').checked = true
         $("#conditional_parts").show();
 
@@ -183,7 +183,7 @@ $("#btnNuevo").click(function(){
     else {
         document.getElementById('more_info').checked = false
         $("#conditional_part").hide();
-    }
+    } */
 
     let fecha = new Date();
 	let anio = fecha.getFullYear();
