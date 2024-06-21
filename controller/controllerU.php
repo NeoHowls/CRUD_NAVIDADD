@@ -146,7 +146,7 @@
       ('$perfil','$tipo', 
       '$CheckNC', '$CheckNE', '$CheckNL', '$CheckNB', 
       '$CheckOC', '$CheckOE', '$CheckOL', '$CheckOB', 
-      '$CheckPC', '$CheckPE' , '$CheckPC', '$CheckPE', 
+      '$CheckPC', '$CheckPE' , '$CheckPL', '$CheckPL', 
        '$CheckPPC', '$CheckPPE' , '$CheckPPC', '$CheckPPB',
       '$Estado')";
       //llamo al metodo listar y le doy la variable CONSULTA
