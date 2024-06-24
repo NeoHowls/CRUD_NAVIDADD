@@ -53,13 +53,27 @@ let table = $('#myTable1').DataTable( {
         {"data": "contrasena"},
         {"data": "idOrganizacion"},
         {"data": "NOMBRE_O"},
+
+        {"data": "id"},
+        {"data": "dni"},
+        {"data": "nombre"},
+        {"data": "direccion"},
+        {"data": "telefono"},
+        {"data": "mail"},
+        {"data": "idPerfil"},
+        {"data": "estadoPersona"},
+        {"data": "habilitado"},
+        {"data": "usuario"},
+        {"data": "contrasena"},
+        {"data": "idOrganizacion"},
+        {"data": "NOMBRE_O"},
         {
             "data": null,
             "render": function(data, type, row) {
                 // data es null ya que no especificamos una propiedad específica de data para esta columna
                 let estadoPButton = '';
                 if (row.estadoP == '1') {
-                    estadoPButton = '<button type="button" class="btn btn-danger btnBorrar me-2" data-toggle="tooltip" title="Eliminar usuario"><i class="bi bi-person-dash-fill"></i> </button>';
+                    estadoPButton = '<button type="button" class="btn btn-danger btnBorrar me-2" data-toggle="tooltip" title="Desactivar usuario"><i class="bi bi-person-dash-fill"></i> </button>';
                 } else {
                     estadoPButton = '<button type="button" class="btn btn-success btnHabilitar me-2"data-toggle="tooltip" title="Activar usuario"><i class="bi bi-person-plus-fill"></i> </button>';
                 }
@@ -272,7 +286,7 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     estado = $(this).closest('tr').find('td:eq(7)').text() ;
     dni = $(this).closest('tr').find('td:eq(1)').text();
     let action = estado == '1' ? 'borrar_persona' : 'habilitar_persona';
-    let confirmMessage = estado == '1' ? "¿Está seguro de borrar el registro de "+nombre+"?" : "¿Quieres activar al usuario "+nombre+"?"  ;
+    let confirmMessage = estado == '1' ? "¿Está seguro de Desactivar el registro de "+nombre+"?" : "¿Quieres activar al usuario "+nombre+"?"  ;
     let respuesta = confirm(confirmMessage);
     console.log("funciona")
     console.log(dni)

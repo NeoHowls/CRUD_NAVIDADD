@@ -30,17 +30,25 @@ session_start();
     //define la consulta
     $CONSULTA = 
     "SELECT 
-	P.id as id, 
+	  P.id as id, 
     P.dni as dni, 
     P.nombre as nombre, 
     P.direccion as direccion, 
     P.telefono as telefono, 
     P.mail as mail, 
     P.idPerfil as idPerfil, 
-    P.estado as estadoP, 
+    P.estado as estadoP,
+	CASE
+			WHEN P.estado= 0 THEN 'DESACTIVADO'
+			WHEN P.estado= 1 THEN 'ACTIVADO'
+	END AS estadoPersona,
     P.usuario as usuario, 
     P.contrasena as contrasena, 
     P.checkHabilitado as checkHabilitado,
+	CASE
+			WHEN P.checkHabilitado= 0 THEN 'DESHABILITADO'
+			WHEN P.checkHabilitado= 1 THEN 'HABILITADO'
+	END AS habilitado,
 	P.checkOrganizacion,
     PO.idOrganizacion as idOrganizacion, 
     O.nombre AS NOMBRE_O,
@@ -61,9 +69,17 @@ SELECT
     P.mail as mail, 
     P.idPerfil as idPerfil, 
     P.estado as estadoP, 
+	CASE
+			WHEN P.estado= 0 THEN 'DESACTIVADO'
+			WHEN P.estado= 1 THEN 'ACTIVADO'
+	END AS estadoPersona,
     P.usuario as usuario, 
     P.contrasena as contrasena, 
     P.checkHabilitado as checkHabilitado,
+	CASE
+			WHEN P.checkHabilitado= 0 THEN 'DESHABILITADO'
+			WHEN P.checkHabilitado= 1 THEN 'HABILITADO'
+	END AS habilitado,
 	P.checkOrganizacion,
     idOrganizacion = 0, 
     NOMBRE_O = NULL,

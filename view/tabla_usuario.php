@@ -232,5 +232,5 @@
 
     </table>
     <script type="text/javascript" src="../datatables.js"></script>
-    <script type="text/javascript" src="../js/ajax/idioma.js"></script>>
+    <script type="text/javascript" src="../js/ajax/idioma.js"></script>
     <script type="text/javascript" src="../js/AJAX_TIPO_USUARIO.js"> </script>
