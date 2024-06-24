@@ -27,7 +27,7 @@
       </div> 
 
       <!--Modal para CRUD-->
-  <div class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div  class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
           <div class="modal-content" style="width: 110%;">
               <div class="modal-header">
@@ -38,17 +38,17 @@
                   </button>
               </div>
           <form id="formUsuarios">    
-          <div class="modal-body" style="background: #E7E7E7">
+          <divssddd class="modal-body" style="background: #E7E7E7">
                   <div class="row">
     <div class="col-lg-6" style = "text-align: center;" >   
     <label for="" class="col-form-label">nombre:</label>
                       <input type="text" class="form-control" id="nombre">
-    <label for="" class="col-form-label">DNI:</label>
+    <label for="" class="col-form-label">DNI/RUT::</label>
                       <input type="text" class="form-control" id="dni">
                       <br>
     </div>              
     <div class="col-lg-6" style = "text-align: center;">   
-    <label for="" class="col-form-label">periodo:</label>
+    <label for="" class="col-form-label">Periodo:</label>
                       <select name="cars" id="periodo" class = "form-control">
                         <?php
                           for($i=2023;$i<=date("Y");$i++){
@@ -83,13 +83,21 @@
                           <div class="col-lg-6" style = "text-align: center;">
                       <label for="" class="col-form-label">Naciemiento:</label>
                         <input type="date" class="form-control" id="Naciemiento">
+                        <br>
 
 
-                        <label for="" class="col-form-label">Etnia:</label>
+                      
+                    </div>
+                    
+                    <div class="col-lg-6" style = "text-align: center;">
+                      
+
+                       <label for="" class="col-form-label">Etnia:</label>
                       <?php 
                       include_once("../controller/controller_etnia.php");
                       ?>
-                      <select name="carsn" id="etnia" class = "form-control">              
+                      <select name="carsn" id="etnia" class = "form-control">
+                        <option value= 0 >No tiene</option>               
                         <?php
 
                           foreach($datos as $key => $value){
@@ -100,18 +108,8 @@
                         ?>
                       </select>
                     <br>
-                    </div>
-                    
-                    <div class="col-lg-6" style = "text-align: center;">
                       
-
-                       <label for="" class="col-form-label">Naciemiento:</label>
-                      <input type="date" class="form-control" id="Naciemiento">
-                      
-                      
-                      <label for="" class="col-form-label">descripcion:</label>
-                      <input type="text" class="form-control" id="descripcion">
-                    <br>
+                   
                         </div>
 
                         <hr>
@@ -119,6 +117,7 @@
 
                         <!--PERSONA-->
 </div>
+<div class="col-lg-6">
     <label class="col-form-label" for="flexSwitchCheckDefault">Discapacidad</label>
                       <div class="elnt_container form-check form-switch">
                      
@@ -128,25 +127,47 @@
 
 
       <div id="conditional_part" style="display:none;">
-        <div class="col-lg-6">
+        
                       <label for="" class="col-form-label">Ceguera:</label>
                       <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                      <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                      <br>
+
+
                         <label for="" class="col-form-label">Sordera:</label>
                       <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                      <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                      <br>
+
+
                       <label for="" class="col-form-label">Mudez:</label>
-  
                       <input type="checkbox" id="cbox2" value= 1 id="comuna">
-                      
+                      <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                      <br> 
+
                       <label for="" class="col-form-label">Fisica:</label>
                       <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                      <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                      <br> 
+
                       <label for="" class="col-form-label">Mental:</label>
                       <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                      <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                      <br> 
+
+
                       <label for="" class="col-form-label">Psiquica:</label>
                       <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                      <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                      <br> 
+
+                      <label for="" class="col-form-label">descripcion:</label>
+                      <input type="text" class="form-control" id="descripcion">
+                      <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                      <br> 
                       </div>
         </div>
-                    
-                    <div class="col-lg-6" style = "text-align: center;">
+        <div class="col-lg-6" style = "text-align: center;">
                       <label class="col-form-label" for="flexSwitchCheckDefault">EXTRANJERO <div class="elnt_container form-check form-switch">
                      <input class="form-check-input" type="checkbox" id="more_infos" name="more" value = 1>
                     </div></label>
@@ -173,6 +194,10 @@
                         ?>
                       </select>
                       </div>
+        </div>
+        </div>
+                    
+                    
                         </div>
                  
               <div class="modal-footer" style="justify-content: center">
@@ -181,8 +206,6 @@
               </div>
               </div>
               </div>
-            
-
 
 </form>  
       </div>
