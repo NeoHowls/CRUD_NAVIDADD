@@ -302,18 +302,15 @@ break;
 
 
 case "habGeneral":
-  if($checkHabilitado == 1){
-    echo "funciona el if de editar";
-    
   //define la consulta
-  $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 0 WHERE idPerfil !=5 ";
+  $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil !=1 ";
   //llamo al metodo listar y le doy la variable CONSULTA
   $datos=$menu->listar($CONSULTA);
     $CONSULTA = "SELECT * FROM A_PERSONA";
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
     //imprimir los datos en JSON
-    //print($datos);
+    print($datos);
 
   $usuarioCambio = $_SESSION["test"];
   $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
@@ -321,31 +318,30 @@ case "habGeneral":
   $datos=$menu->listar($CONSULTA);
   $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
   $datos=$menu->listar($CONSULTA);
-  print($datos);
   
+  break;
 
-  
-  }else {
-    $CONSULTA1 = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil !=5 ";
-  //llamo al metodo listar y le doy la variable CONSULTA
-    $menu->listar($CONSULTA1);
-    $datos=$menu->listar($CONSULTA1);
-    $CONSULTA = "SELECT * FROM A_PERSONA";
+  case "DesHabGeneral": 
+    //define la consulta
+    $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 0 WHERE idPerfil !=1 ";
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
-    //imprimir los datos en JSON
-     print($datos);
-
-     $usuarioCambio = $_SESSION["test"];
+    $CONSULTA = "SELECT * FROM A_PERSONA";
+      //llamo al metodo listar y le doy la variable CONSULTA
+    $datos=$menu->listar($CONSULTA);
+    print($datos);
+      //imprimir los datos en JSON
+      //print($datos);
+  
+    $usuarioCambio = $_SESSION["test"];
     $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-    ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Habilitar nuevamente a un usuario')";
+    ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Deshabilitar a un  Usuario')";
     $datos=$menu->listar($CONSULTA);
     $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
     $datos=$menu->listar($CONSULTA);
-    print($datos);
-
-}
-break;
+    
+  
+    break;
 
   }
   

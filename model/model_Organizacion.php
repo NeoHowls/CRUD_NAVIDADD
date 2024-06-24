@@ -4,7 +4,7 @@
     require_once '../config/ConexionDB.php';
 
     //La clase Menu Model hereda funciones de ConexionDB
-    class MenuModel extends ConexionBD{
+    class MenuModelOrganizacion extends ConexionBD{
 
         public function listar($CONSULTA){
             //$sql = "SELECT * FROM A_ETNIA"

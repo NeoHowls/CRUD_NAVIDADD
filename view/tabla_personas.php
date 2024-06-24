@@ -14,13 +14,14 @@
         <div class="row">
             <div class="col-lg-12">            
             <button id="btnNuevo" type="button" class="btn btn-info bi bi-plus" data-toggle="tooltip" data-placement="top" title="Agregar Persona"><i class="material-icons"></i>
-            </button>  
-            <button id="btnHabGeneral" type="button" class="btn btn-danger btnHabGeneral" data-toggle="tooltip" data-placement="top" title="Deshabilitar registros">
-                <i id="iconHabGeneral" class="bi bi-x-square"></i> 
-            </button> 
-            <button id="btnDesHabGeneral" type="button" class="btn btn-success btnDesHabGeneral" data-toggle="tooltip" data-placement="top" title="Habilitar registros">
-                <i id="iconHabGeneral" class="bi bi-check-square"></i> 
             </button>
+            <button id="btnDesHabGeneral" type="button" class="btn btn-danger btnDesHabGeneral" data-toggle="tooltip" data-placement="top" title="Deshabilitar registros">
+                <i id="iconHabGeneral" class="bi bi-x-square"></i> 
+            </button>  
+            <button id="btnHabGeneral" type="button" class="btn btn-success btnHabGeneral" data-toggle="tooltip" data-placement="top" title="Habilitar registros">
+                <i id="iconHabGeneral" class="bi bi-check-square"></i> 
+            </button> 
+            
 			
 		</div> 
      
@@ -58,32 +59,26 @@
                     <input type="text" class="form-control" id="mail">
                     </div>
                     <div class="form-group row">
-                      <div class="col-md-6">
-                          <label for="telefono" class="col-form-label text-center">Teléfono:</label>
-                          <div class="text-center">
-                              <input type="number" class="form-control" id="telefono">
-                          </div>
-                      </div>
-                      <div class="col-lg-6">
-                          <label for="telefono" class="col-form-label text-center">Perfil:</label>
+                    <div class="col-md-6">
+                        <label for="telefono" class="col-form-label text-center">Teléfono:</label>
+                        <div class="text-center">
+                            <input type="number" class="form-control" id="telefono">
                         </div>
-                      </div>
-                      <div id="conditional_parts">
-                      <div class="form-group row">
-                      <div class="col-lg-6">
-                      <?php 
-                      //include_once("../controller/controller_mostrarPerfil.php")
-                      ?>
-                      <select name="carsd" id="P_ID" class = "form-control">              
-                        <?php
-                        foreach($datos as $key => $value){
-                            echo '<option value="'.$value['id'].'">'.$value['perfil'].'</option>'; 
-                          }
-                        ?>
-                      </select>
-                      </div>
                     </div>
-                      </div>
+                    <div class="col-md-6">
+                        <label for="telefono" class="col-form-label text-center">Perfil:</label>
+                        <div>
+                            <?php include_once("../controller/controller_mostrarPerfil.php") ?>
+                            <select name="carsd" id="P_ID" class="form-control">
+                                <?php
+                                foreach($datos as $key => $value){
+                                    echo '<option value="'.$value['id'].'">'.$value['perfil'].'</option>'; 
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                     </div>
                     <!-- <div class="form-group row">
                         <div class="col-md-6">
@@ -100,27 +95,36 @@
                         </div>
                     </div> -->
                     <div class="form-group row">
-                    <label class="col-form-label col-md-auto" for="flexSwitchCheckDefault">Desea agregar Organizacion:</label>
-                      <div class="col-md-auto elnt_container form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="more_infos" name="more" value = 1>
+                        <label class="col-form-label col-md-auto" for="flexSwitchCheckDefault">Desea agregar Organización:</label>
+                        <div class="col-md-auto elnt_container form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="more_infos" name="more" value="1">
+                        </div>
                     </div>
+
+                    <div id="organization_section" style="display: none;">
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <?php include_once("../controller/controller_mostrarO.php") ?>
+                                <select name="cars" id="O_ID" class="form-control">
+                                    <?php
+                                    foreach($datos as $key => $value){
+                                        echo '<option value="'.$value['id'].'">'.$value['nombre'].'</option>'; 
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                      <div id="conditional_parts">
-                      <div class="form-group row">
-                      <div class="col-lg-6">
-                      <?php 
-                      include_once("../controller/controller_mostrarO.php")
-                      ?>
-                      <select name="cars" id="O_ID" class = "form-control">              
-                        <?php
-                        foreach($datos as $key => $value){
-                            echo '<option value="'.$value['id'].'">'.$value['nombre'].'</option>'; 
-                          }
-                        ?>
-                      </select>
-                      </div>
-                    </div>
-                      </div>
+                    <script>
+                        document.getElementById('more_infos').addEventListener('change', function() {
+                            var organizationSection = document.getElementById('organization_section');
+                            if (this.checked) {
+                                organizationSection.style.display = 'block';
+                            } else {
+                                organizationSection.style.display = 'none';
+                            }
+                        });
+                    </script>
                     </div>
                 </div>
             <div class="modal-footer" style="justify-content: center">
@@ -146,7 +150,7 @@
                       <th>mail</th>
                       <th class ='never'>idPerfil</th>
                       <th class ='never'>estado</th>
-                      <th class ='never'>Habilitado</th>
+                      <th >Habilitado</th>
                       <th class ='never'>usuario</th>
                       <th class ='never'>contraseña</th>
                       <th class ='never'>idOrganizacion</th>

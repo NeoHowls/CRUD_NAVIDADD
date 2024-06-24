@@ -1,7 +1,7 @@
 <?php
   //llama al MenuModel
   require_once("../model/model_Organizacion.php");
-$menu= new MenuModel();
+$menu= new MenuModelOrganizacion();
 
 
 

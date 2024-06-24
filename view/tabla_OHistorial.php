@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 
-                <th>id</th>
+                <th class = 'never'>id</th>
                 <th>nombre</th>
                 <th>direccion</th>
                 <th>tipo</th>
@@ -16,7 +16,7 @@
                 <th>usuarioCambio</th>
                 <th>fechaCambio</th>
                 <th>tipoMovimiento</th>
-                <th class='all'>acciones</th>
+                
             </tr>
         </thead>
         <tbody>

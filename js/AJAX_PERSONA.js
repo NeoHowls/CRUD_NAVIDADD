@@ -1,3 +1,4 @@
+
 $('#more_info').change(function() {
     if(this.checked != true){
           $("#conditional_part").hide();
@@ -16,8 +17,10 @@ $('#more_infos').change(function() {
   }
 });
 
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip({
+        delay: { show: 0, hide: 0 }
+});    
 });
 
 let table = $('#myTable1').DataTable( {
@@ -56,20 +59,20 @@ let table = $('#myTable1').DataTable( {
                 // data es null ya que no especificamos una propiedad específica de data para esta columna
                 let estadoPButton = '';
                 if (row.estadoP == '1') {
-                    estadoPButton = '<button type="button" class="btn btn-danger btnBorrar me-2"><i class="bi bi-person-dash-fill"></i> </button>';
+                    estadoPButton = '<button type="button" class="btn btn-danger btnBorrar me-2" data-toggle="tooltip" title="Eliminar usuario"><i class="bi bi-person-dash-fill"></i> </button>';
                 } else {
-                    estadoPButton = '<button type="button" class="btn btn-success btnHabilitar me-2"><i class="bi bi-person-plus-fill"></i> </button>';
+                    estadoPButton = '<button type="button" class="btn btn-success btnHabilitar me-2"data-toggle="tooltip" title="Activar usuario"><i class="bi bi-person-plus-fill"></i> </button>';
                 }
         
                 let checkHabilitadoButton = '';
                 if (row.checkHabilitado == '1') {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-danger btnDeshabilitar me-2"><i class="bi bi-x-square"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-danger btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar usuario"><i class="bi bi-x-square"></i> </button>';
                 } else {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-success btnAutorizar me-2"><i class="bi bi-check-square"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-success btnAutorizar me-2" data-toggle="tooltip" title="Habilitar usuario"><i class="bi bi-check-square"></i> </button>';
                 }
         
                 // Botón de editar con modal
-                let editarButton = '<button type="button" class="btn btn-primary btnEditar" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro"><i class="bi bi-pencil-square"></i></button>';
+                let editarButton = '<button type="button" class="btn btn-primary btnEditar" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square"></i></button>';
         
                 // Combinamos los botones en una sola columna
                 return estadoPButton + checkHabilitadoButton + editarButton;
@@ -289,7 +292,7 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     }
  });
 
- //DESHABILIDAR/habiliar 
+ //deshabilitar/habiliar 
 $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     fila = $(this).closest('tr');           
@@ -317,16 +320,62 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
     }
  });
 
+// Habilitar General 
+$(document).on("click", ".btnHabGeneral", function(e){
+    e.preventDefault(); // Evita el comportamiento normal del submit, es decir, recarga total de la página
+    let fila = $(this).closest('tr');           
+    let user_id = fila.find('td:eq(0)').text();
+    let dni = fila.find('td:eq(1)').text();
+    let checkHabilitado = $(this).closest('tr').find('td:eq(8)').text() ;
+    let confirmMessage = "¿Quieres habilitar todos los registros?";
+    let respuesta = confirm(confirmMessage);
   
+    if (respuesta) {            
+        $.ajax({
+            url: "../controller/controllerP.php?op=habGeneral",
+            type: "POST",
+            dataType: "json",
+            data: { user_id: user_id, checkHabilitado:checkHabilitado, dni: dni },
+            success: function(data) {
+                table.ajax.reload(null, false);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la operación:", error);
+            }
+        });	    	    
+    }
+});
 
-
-    
-
+// Deshabilitar General 
+$(document).on("click", ".btnDesHabGeneral", function(e){
+    e.preventDefault(); // Evita el comportamiento normal del submit, es decir, recarga total de la página
+    let fila = $(this).closest('tr');           
+    let user_id = fila.find('td:eq(0)').text();
+    let dni = fila.find('td:eq(1)').text();
+    let checkHabilitado = $(this).closest('tr').find('td:eq(8)').text() ;
+    let confirmMessage = "¿Quieres deshabilitar todos los registros?";
+    let respuesta = confirm(confirmMessage);
+  
+    if (respuesta) {            
+        $.ajax({
+            url: "../controller/controllerP.php?op=DesHabGeneral",
+            type: "POST",
+            dataType: "json",
+            data: { user_id: user_id, checkHabilitado:checkHabilitado, dni: dni },
+            success: function(data) {
+                table.ajax.reload(null, false);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la operación:", error);
+            }
+        });	    	    
+    }
+});
 
  function cerrarModal() {
     $('#fondo-modal').hide();
   }
 
-
+ 
 
 //table.draw();
