@@ -74,20 +74,20 @@
                     </div>
                 </div>
                     </div>
-                    <!-- <div class="form-group row">
+                    <div class="form-group row">
                         <div class="col-md-6">
                             <label for="usuario" class="col-form-label text-center">usuario:</label>
                             <div class="text-center">
-                                <input type="text" class="form-control" id="usuario">
+                                <input type="text" class="form-control" id="usuario" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="contrasena" class="col-form-label text-center">contrasena:</label>
                             <div class="text-center">
-                                <input type="text" class="form-control" id="contrasena">
+                                <input type="text" class="form-control" id="contrasena" readonly>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-auto" for="flexSwitchCheckDefault">Desea agregar Organización:</label>
                         <div class="col-md-auto elnt_container form-check form-switch">
@@ -171,11 +171,9 @@
         </div>
           </table>
           <script type="text/javascript" src="../datatables.js"></script>
-          <script type="text/javascript" src="../js/idioma.js"></script>>
-          <script type="text/javascript" src="../js/AJAX_PERSONA.js">
+          <script type="text/javascript" src="../js/idioma.js"></script>
+          <script type="text/javascript" src="../js/AJAX_PERSONA.js"></script> 
           <script type="text/javascript" src="nacionalidad.js"></script>    
-          </script>
-
     </div>
   </div>
 </div>

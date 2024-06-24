@@ -73,23 +73,24 @@ let table = $('#myTable1').DataTable( {
                 // data es null ya que no especificamos una propiedad específica de data para esta columna
                 let estadoPButton = '';
                 if (row.estadoP == '1') {
-                    estadoPButton = '<button type="button" class="btn btn-danger btnBorrar me-2" data-toggle="tooltip" title="Desactivar usuario"><i class="bi bi-person-dash-fill"></i> </button>';
+                    estadoPButton = '<button type="button" class="btn btn-danger text-dark btnBorrar me-2" data-toggle="tooltip" title="Desactivar usuario"><i class="bi bi-person-dash-fill"></i> </button>';
                 } else {
-                    estadoPButton = '<button type="button" class="btn btn-success btnHabilitar me-2"data-toggle="tooltip" title="Activar usuario"><i class="bi bi-person-plus-fill"></i> </button>';
+                    estadoPButton = '<button type="button" class="btn btn-success text-dark btnHabilitar me-2"data-toggle="tooltip" title="Activar usuario"><i class="bi bi-person-plus-fill"></i> </button>';
                 }
         
                 let checkHabilitadoButton = '';
                 if (row.checkHabilitado == '1') {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-danger btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar usuario"><i class="bi bi-x-square"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-dark btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar usuario"><i class="bi bi-x-square"></i> </button>';
                 } else {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-success btnAutorizar me-2" data-toggle="tooltip" title="Habilitar usuario"><i class="bi bi-check-square"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-dark btnAutorizar me-2" data-toggle="tooltip" title="Habilitar usuario"><i class="bi bi-check-square"></i> </button>';
                 }
         
                 // Botón de editar con modal
-                let editarButton = '<button type="button" class="btn btn-primary btnEditar" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square"></i></button>';
+                let editarButton = '<button type="button" class="btn btn-primary text-dark btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square"></i></button>';
+                let PrintButton = '<button type="button" class="btn btn-warning text-dark  btnimprimir me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Imprimir usuario y contraseña" data-toggle="tooltip"><i class="bi bi-printer-fill"></i></button>';
         
                 // Combinamos los botones en una sola columna
-                return estadoPButton + checkHabilitadoButton + editarButton;
+                return estadoPButton + checkHabilitadoButton + editarButton+PrintButton;
             }
         }
     ], 
@@ -138,6 +139,31 @@ let table = $('#myTable1').DataTable( {
     }
 } );
 
+   // Funciones para generar usuario y contraseña
+   function generarUsuario(nombre) {
+    let partes = nombre.split(' ');
+    let usuario = partes[0].charAt(0) + (partes[1] || partes[0]);
+    return usuario.toLowerCase();
+}
+
+function generarContrasena(dni) {
+    return dni.slice(-6);
+}
+
+function actualizarUsuarioYContrasena() {
+    let nombre = $('#nombre').val();
+    let dni = $('#dni').val();
+    if (nombre && dni) {
+        let usuario = generarUsuario(nombre);
+        let contrasena = generarContrasena(dni);
+        $('#usuario').val(usuario);
+        $('#contrasena').val(contrasena);
+    }
+}
+
+$('#nombre').on('input', actualizarUsuarioYContrasena);
+$('#dni').on('input', actualizarUsuarioYContrasena);
+
 var fila; //captura la fila, para editar o eliminar
 //submit para el Alta y Actualización
 $('#formUsuarios').submit(function(e){                         
@@ -149,12 +175,14 @@ $('#formUsuarios').submit(function(e){
     telefono = $.trim($('#telefono').val());
     mail = $.trim($('#mail').val());
     idPerfil = $.trim($('#idPerfil').val());
-    estado = $.trim($('#estado').val());
-    checkHabilitado = $.trim($('#checkHabilitado').val());
-    usuario = $.trim($('#usuario').val());
-    contrasena = $.trim($('#contrasena').val());
+    estado = 1
+    checkHabilitado = 1
     idOrganizacion= $.trim($('#O_ID').val());
-    //console.log(opcion)                            
+    usuario = $('#usuario').val();
+    contrasena = $('#contrasena').val();
+    
+  
+    
     //EJECUTA EL AJAX
     $.ajax({
         //Laa URL es similar al AJAX principaal pero en el op= capturaa la opcion del boton para ejecutar la consulta correcta
@@ -179,6 +207,10 @@ $('#formUsuarios').submit(function(e){
 
 //para limpiar los campos antes de dar de Alta una Persona
 $("#btnNuevo").click(function(){
+    // Deshabilitar los campos de usuario y contraseña
+    $('#usuario').prop('readonly', true);
+    $('#contrasena').prop('readonly', true);
+
     opcion = "add_persona"; //alta           
     user_id=null;
     idOrganizacion = 0
@@ -209,12 +241,16 @@ $("#btnNuevo").click(function(){
     $(".modal-header").css( "background-color", "#17a2b8");
     $(".modal-header").css( "color", "white" );
     $(".modal-title").text("Añadir Persona");
-    $('#modalCRUD').modal('show');	    
+    $('#modalCRUD').modal('show');
+	    
 });
+
 
 //Editar       
 
-$(document).on("click", ".btnEditar", function(){		        
+$(document).on("click", ".btnEditar", function(){	
+    $('#usuario').prop('readonly', false);
+    $('#contrasena').prop('readonly', false);	        
     opcion = "edit_persona";//editar
     fila = $(this).closest("tr");	        
     user_id = fila.find('td:eq(0)').text(); //capturo el ID		            
