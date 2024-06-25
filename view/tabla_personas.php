@@ -60,10 +60,10 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="telefono" class="col-form-label text-center">Perfil:</label>
+                        <label for="perfil" class="col-form-label text-center">Perfil:</label>
                         <div>
                             <?php include_once("../controller/controller_mostrarPerfil.php") ?>
-                            <select name="carsd" id="P_ID" class="form-control">
+                            <select name="carsd" id="idPerfil" class="form-control">
                                 <?php
                                 foreach($datos as $key => $value){
                                     echo '<option value="'.$value['id'].'">'.$value['perfil'].'</option>'; 
