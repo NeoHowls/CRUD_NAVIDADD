@@ -139,15 +139,18 @@ let table = $('#myTable1').DataTable( {
     }
 } );
 
-   // Funciones para generar usuario y contraseña
-   function generarUsuario(nombre) {
+// Funciones para generar usuario y contraseña
+function generarUsuario(nombre) {
     let partes = nombre.split(' ');
     let usuario = partes[0].charAt(0) + (partes[1] || partes[0]);
     return usuario.toLowerCase();
 }
 
 function generarContrasena(dni) {
-    return dni.slice(-6);
+    // Elimina todos los caracteres que no sean dígitos
+    const cleanDni = dni.replace(/\D/g, '');
+    // Toma los últimos 6 caracteres del RUT limpio
+    return cleanDni.slice(-6);
 }
 
 function actualizarUsuarioYContrasena() {
@@ -163,6 +166,7 @@ function actualizarUsuarioYContrasena() {
 
 $('#nombre').on('input', actualizarUsuarioYContrasena);
 $('#dni').on('input', actualizarUsuarioYContrasena);
+
 
 var fila; //captura la fila, para editar o eliminar
 //submit para el Alta y Actualización
