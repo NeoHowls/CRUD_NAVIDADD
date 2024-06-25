@@ -22,7 +22,7 @@ session_start();
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
   case "organizacion":
     //define la consulta
-    $CONSULTA = "SELECT  
+    /* $CONSULTA = "SELECT  
 A_ORGANIZACION.id,
 A_ORGANIZACION.nombre,
 A_ORGANIZACION.direccion,
@@ -35,7 +35,34 @@ A_ORGANIZACION.checkHabilitado,
 A_ORGANIZACION.estado
 
 
-FROM [dbo].[A_ORGANIZACION]";
+FROM [dbo].[A_ORGANIZACION]"; */
+    $CONSULTA = "SELECT O.id AS id,
+    O.nombre AS nombre,
+    O.direccion AS direccion,
+    O.tipo AS tipo,
+    O.fechaIngreso AS fechaIngreso,
+    O.checkVigente AS checkVigente,
+    O.numProvidencia AS numProvidencia,
+    O.checkHabilitado AS checkHabilitado,
+    O.estado AS estado,
+  DO.aniosVigente AS aniosVigente,
+  vigente = 'VIGENTE'
+FROM A_ORGANIZACION O
+JOIN A_DETALLE_ORGANIZACION DO ON O.id=idOrganizacion
+WHERE DO.estado=1 AND O.checkVigente=1
+UNION
+SELECT O.id AS id,
+    O.nombre AS nombre,
+    O.direccion AS direccion,
+    O.tipo AS tipo,
+    O.fechaIngreso AS fechaIngreso,
+    O.checkVigente AS checkVigente,
+    O.numProvidencia AS numProvidencia,
+    O.checkHabilitado AS checkHabilitado,
+    O.estado AS estado,
+  aniosVigente=0,
+  vigente = 'NO VIGENTE'
+FROM A_ORGANIZACION O WHERE O.checkVigente=0";
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
     //imprimir los datos en JSON
