@@ -174,30 +174,52 @@
                           </div>
                       </div>
 
-                      <div class="row">
-                      <div class="col-lg-6">
+                      <div class="row p-1">
+                        
+                          <div class="col-lg-3">
+
 
                               <label for="" class="col-form-label">Mudez:</label>
                               <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                          </div>
+                          <div class="col-lg-3">
                               <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
-                              <br> 
-
+                              
+                          </div>
+                          <div class="col-lg-3">
                               <label for="" class="col-form-label">Fisica:</label>
                               <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                          </div>
+                          <div class="col-lg-3">
                               <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
-                              <br> 
+                              
+                          </div>
+                      </div>
+
+                      <div class="row p-1">
+                        
+                          <div class="col-lg-3">
+
 
                               <label for="" class="col-form-label">Mental:</label>
                               <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                          </div>
+                          <div class="col-lg-3">
                               <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
-                              <br> 
-
-
+                              
+                          </div>
+                          <div class="col-lg-3">
                               <label for="" class="col-form-label">Psiquica:</label>
                               <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                          </div>
+                          <div class="col-lg-3">
                               <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
-                              <br> 
+                              
+                          </div>
+                      </div>
 
+                      <div class="row">
+                      <div class="col-lg-6">
                               <label for="" class="col-form-label">descripcion:</label>
                               <input type="text" class="form-control" id="descripcion">
                               <!-- <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" /> -->
