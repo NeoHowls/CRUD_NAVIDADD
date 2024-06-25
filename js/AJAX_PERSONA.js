@@ -235,6 +235,7 @@ $("#btnNuevo").click(function(){
         } else {
             console.log('El checkbox está desactivado.');
             checkOrganizacion = 0;
+            $("#conditional_part").hide();
         }
     });
     
