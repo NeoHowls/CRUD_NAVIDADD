@@ -214,6 +214,7 @@ $("#btnNuevo").click(function(){
     opcion = "add_persona"; //alta           
     user_id=null;
     idOrganizacion = 0
+
     if (idOrganizacion >= 1) {
         document.getElementById('more_infos').checked = true;
         $("#conditional_parts").show();

@@ -24,7 +24,15 @@
             //retorno la consulta hacia controller.php
             return $query;
         }
-        
+        public function consultar($CONSULTA){
+            //$sql = "SELECT * FROM A_ETNIA";
+            //Realizo la conexion paara comunicarme con la bdd
+            $this->connect();
+            //configuro la consulta 
+            $query = $this->iniciar($CONSULTA);
+            //retorno la consulta hacia controller.php
+            return $query;
+        }
         //NO SE USARA AUN
         public function loginPersonal($rut, $pass){
    

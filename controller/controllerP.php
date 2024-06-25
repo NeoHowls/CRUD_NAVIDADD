@@ -111,16 +111,16 @@ WHERE P.checkOrganizacion=0";
         //imprimir los datos en JSON
   
       //imprimir los datos en JSON
-      
+      echo($dni);
       $CONSULTA = "SELECT id FROM A_PERSONA WHERE dni='$dni'";
-      $datos=$menu->listar($CONSULTA);
-      $user_id=$datos[0]['id'];
+      $datoss=$menu->consultar($CONSULTA);
+      $user_id=$datoss[0]['id'];
       $CONSULTA2 = "SELECT id,fechaIngreso  FROM A_ORGANIZACION WHERE id='$idOrganizacion'";
-      $datos=$menu->listar($CONSULTA2);
-      $fechaIngreso=$datos[0]['fechaIngreso'];    
+      $datos=$menu->consultar($CONSULTA2);
+    
       $fechaIngreso = date('Y-m-d H:i');
-
-      $dato_org=$menu->listar($CONSULTA2);
+      echo ($user_id." ".$idOrganizacion." ".$fechaIngreso  );
+      $dato_org=$menu->consultar($CONSULTA2);
       $CONSULTA ="INSERT INTO A_DETALLE_PO (idPersona, idOrganizacion, estado,fechaIngreso) VALUES ('$user_id','$idOrganizacion' , 1,'$fechaIngreso')";
       $menu->listar($CONSULTA);
 
@@ -173,14 +173,14 @@ WHERE P.checkOrganizacion=0";
         //imprimir los datos en JSON
         //print($datos);
       $CONSULTA = "SELECT id FROM A_PERSONA WHERE dni='$dni'";
-      $datos=$menu->listar($CONSULTA);
+      $datos=$menu->consultar($CONSULTA);
       $user_id=$datos[0]['id'];
       $CONSULTA2 = "SELECT id,fechaIngreso  FROM A_ORGANIZACION WHERE id='$idOrganizacion'";
-      $datos=$menu->listar($CONSULTA2);
+      $datos=$menu->consultar($CONSULTA2);
       $fechaIngreso=$datos[0]['fechaIngreso'];    
       $fechaIngreso = date('Y-m-d H:i');
 
-      $dato_org=$menu->listar($CONSULTA2);
+      $dato_org=$menu->consultar($CONSULTA2);
 
       $CONSULTA="UPDATE A_DETALLE_PO SET estado=0,fechaTermino='$fechaIngreso' WHERE idPersona='$user_id'";
       $menu->listar($CONSULTA);
