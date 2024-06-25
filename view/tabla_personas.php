@@ -172,8 +172,7 @@
           </table>
           <script type="text/javascript" src="../datatables.js"></script>
           <script type="text/javascript" src="../js/idioma.js"></script>
-          <script type="text/javascript" src="../js/AJAX_PERSONA.js"></script> 
-          <script type="text/javascript" src="nacionalidad.js"></script>    
+          <script type="text/javascript" src="../js/AJAX_PERSONA.js"></script>    
     </div>
   </div>
 </div>
