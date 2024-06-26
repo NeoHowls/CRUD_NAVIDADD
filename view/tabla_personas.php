@@ -76,13 +76,13 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label for="usuario" class="col-form-label text-center">usuario:</label>
+                            <label for="usuario" class="col-form-label text-center">Usuario:</label>
                             <div class="text-center">
                                 <input type="text" class="form-control" id="usuario" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="contrasena" class="col-form-label text-center">contrasena:</label>
+                            <label for="contrasena" class="col-form-label text-center">Contraseña:</label>
                             <div class="text-center">
                                 <input type="text" class="form-control" id="contrasena" readonly>
                             </div>
@@ -151,18 +151,18 @@
                       <th class ='never'>Nombre Organizacion</th>
 
                       <th class ='never'>id</th>
-                      <th>dni</th>
-                      <th>nombre</th>
-                      <th>direccion</th>
-                      <th>telefono</th>
-                      <th>mail</th>
+                      <th>Dni/RUT</th>
+                      <th>Nombre</th>
+                      <th>Dirección</th>
+                      <th>Teléfono</th>
+                      <th>Mail</th>
                       <th class ='never'>idPerfil</th>
-                      <th>estado</th>
+                      <th>Estado</th>
                       <th >Habilitado</th>
                       <th class ='never'>usuario</th>
                       <th class ='never'>contraseña</th>
                       <th class ='never'>idOrganizacion</th>
-                      <th>Nombre Organizacion</th>
+                      <th>Nombre Organización</th>
                       <th class='all'>Acciones</th>  
                   </tr>
               </thead>
