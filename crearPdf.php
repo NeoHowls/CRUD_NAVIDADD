@@ -7,7 +7,6 @@ use Dompdf\Dompdf;
 
 
 
- $html=file_get_contents("./misDatosPdf.php");
 
 
  
@@ -19,7 +18,7 @@ $pdf->set_paper("letter", "portrait");
 //$pdf->set_paper(array(0,0,104,250));
  
 // Cargamos el contenido HTML.
-$pdf->load_html(utf8_decode($html));
+$pdf->load_html(utf8_decode("hola"));
  
 // Renderizamos el documento PDF.
 $pdf->render();

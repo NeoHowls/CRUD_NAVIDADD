@@ -20,8 +20,8 @@ session_start();
   $checkOrganizacion=(isset($_POST['checkOrganizacion'])) ? $_POST['checkOrganizacion'] : '';
   $idOrganizacion=(isset($_POST['idOrganizacion'])) ? $_POST['idOrganizacion'] : '';
   $checkOrganizacion=intval($checkOrganizacion);
-
-  
+  $_SESSION["usuario"]= $usuario;
+  $_SESSION["contrasena"]= $contrasena;
 
   //Armo un GET "op" donde OP signific operacion
   switch($_GET["op"]){
@@ -359,6 +359,13 @@ case "habGeneral":
   
     break;
 
+    case "imprimir": 
+      ?>
+      <?php
+
+      include_once("../crearPdf.php");
+      
+      break;
   }
   
 ?>

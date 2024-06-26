@@ -319,6 +319,29 @@ checkboxNC.addEventListener('change', function () {
 });
 });
 
+$(document).on("click", ".btnimprimir", function(e){
+   
+    fila = $(this).closest('tr');           
+    user_id = $(this).closest('tr').find('td:eq(0)').text() ;
+    nombre = $(this).closest('tr').find('td:eq(2)').text() ;
+    contrasena = $(this).closest('tr').find('td:eq(10)').text() ;
+    usuario = $(this).closest('tr').find('td:eq(9)').text();
+         
+        $.ajax({
+          url: "../controller/controllerP.php?op=imprimir",
+          type: "POST",
+          datatype:"json",    
+            data: { user_id: user_id, usuario: usuario, contrasena: contrasena},
+          success: function(data) {
+   
+           },
+           error: function(xhr, status, error) {
+            console.error("Error en la operación:", error);
+        }
+        });	    	    
+    }
+ );    
+
 //Borrar/activar estado
 $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
