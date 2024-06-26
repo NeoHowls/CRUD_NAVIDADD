@@ -18,13 +18,13 @@
 		echo '
 				
 				<li class="nav-item">
-						<a class="nav-link" href="ninos.php" id ="1" value = 1 name = "insert">Ver niños</a>
+						<a class="nav-link" href="ninos.php" id ="1" value = 1 name = "insert">Niños</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="persona.php">Ver Persona</a>
+						<a class="nav-link" href="persona.php">Persona</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="organizacion.php">Ver Organizacion</a>
+						<a class="nav-link" href="organizacion.php">Organización</a>
 					</li>
 
 
@@ -32,7 +32,7 @@
 
 
           <li class="nav-item">
-						<a class="nav-link" href="po.php">Ver Detalle PO</a>
+						<a class="nav-link" href="po.php">Detalle PO</a>
 					</li>
 					<li class="dropdown">
 						<a class="nav-link"class="dropbtn">Registro de Cambios</a>
@@ -43,7 +43,7 @@
                 </div>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="tipo_u.php">Tipo Usuario</a>
+						<a class="nav-link" href="tipo_u.php">Usuario</a>
 					</li>
 
 					';
