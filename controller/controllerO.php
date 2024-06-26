@@ -117,29 +117,169 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
       
     break; 
         //edita 1 dato selecionable de la tabla A_ETNIA
-    case "edit_organizacion":
+      case "edit_organizacion":
+
+        if($tipo==4){
+        //define la consulta
+        $CONSULTA = "UPDATE A_ORGANIZACION SET nombre ='$nombre',direccion ='$direccion',tipo ='$tipo',fechaIngreso ='$fechaIngreso',
+        numProvidencia ='$numProvidencia' WHERE id='$user_id'";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+
+        // Obtiene el ID de la organización recién insertada
+        $CONSULTA = "SELECT id FROM A_ORGANIZACION WHERE nombre='$nombre' AND direccion='$direccion'";
+        echo($CONSULTA);
+        $datos = $menu->consultar($CONSULTA);
+        $idOrganizacion = $datos[0]['id'];
+    
+        // Calcula la fecha de vencimiento basada en los años vigentes
+        $fechaVencimiento = date('Y-m-d H:i:s', strtotime("+{$aniosVigente} year", strtotime($fechaIngreso)));
+
+        $CONSULTA = "UPDATE A_DETALLE_ORGANIZACION SET idOrganizacion='$idOrganizacion', fechaIngreso='$fechaIngreso',fechaVencimiento ='$fechaVencimiento',
+        aniosVigente ='$aniosVigente' WHERE idOrganizacion='$user_id'";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+
+        $CONSULTA = "SELECT * FROM A_ORGANIZACION";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+        //imprimir los datos en JSON
+        print($datos);
+        }
+        else{
+          //define la consulta
+        $CONSULTA = "UPDATE A_ORGANIZACION SET nombre ='$nombre',direccion ='$direccion',tipo ='$tipo',fechaIngreso ='$fechaIngreso'
+        WHERE id='$user_id'";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+
+        // Obtiene el ID de la organización recién insertada
+        $CONSULTA = "SELECT id FROM A_ORGANIZACION WHERE nombre='$nombre' AND direccion='$direccion'";
+        echo($CONSULTA);
+        $datos = $menu->consultar($CONSULTA);
+        $idOrganizacion = $datos[0]['id'];
+    
+        // Calcula la fecha de vencimiento basada en los años vigentes
+        $fechaVencimiento = date('Y-m-d H:i:s', strtotime("+{$aniosVigente} year", strtotime($fechaIngreso)));
+
+        $CONSULTA = "UPDATE A_DETALLE_ORGANIZACION SET idOrganizacion='$idOrganizacion', fechaIngreso='$fechaIngreso',fechaVencimiento ='$fechaVencimiento',
+        aniosVigente ='$aniosVigente' WHERE idOrganizacion='$user_id'";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+
+        $CONSULTA = "SELECT * FROM A_ORGANIZACION";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+        //imprimir los datos en JSON
+        print($datos);
+        }
+        // $usuarioCambio = $_SESSION["test"];
+        // $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
+        // checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+        // '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
+        // $datos=$menu->listar($CONSULTA);
+        // $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+        // $datos=$menu->listar($CONSULTA);
+        // print($datos);
+
+      break;
+
+      case "Habilitar_organizacion":
+        echo($checkHabilitado);
+        if($checkHabilitado == 1){
+          echo "funciona el if de habilitar organizacion";
+          
+        //define la consulta
+        $CONSULTA = "UPDATE A_ORGANIZACION SET checkHabilitado = 0 WHERE id='$user_id'";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+          $CONSULTA = "SELECT * FROM A_ORGANIZACION";
+          //llamo al metodo listar y le doy la variable CONSULTA
+          $datos=$menu->listar($CONSULTA);
+          //imprimir los datos en JSON
+          //print($datos);
+    
+        // $usuarioCambio = $_SESSION["test"];
+        // $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
+        // checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+        // '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
+        // $datos=$menu->listar($CONSULTA);
+        // $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+        // $datos=$menu->listar($CONSULTA);
+        // print($datos);
+        
+    
+        
+        }else {
+          echo "funciona el else de deshabilitar organizacion";
+          $CONSULTA1 = "UPDATE A_ORGANIZACION SET checkHabilitado = 1 WHERE id='$user_id'";
+        //llamo al metodo listar y le doy la variable CONSULTA
+          $menu->listar($CONSULTA1);
+          $datos=$menu->listar($CONSULTA1);
+          $CONSULTA = "SELECT * FROM A_ORGANIZACION";
+          //llamo al metodo listar y le doy la variable CONSULTA
+          $datos=$menu->listar($CONSULTA);
+          //imprimir los datos en JSON
+           print($datos);
+    
+          // $usuarioCambio = $_SESSION["test"];
+          // $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
+          // checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+          // '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
+          // $datos=$menu->listar($CONSULTA);
+          // $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+          // $datos=$menu->listar($CONSULTA);
+          // print($datos);
+    
+    }
+    break;
+    
+    
+    case "habGeneralO":
       //define la consulta
-      $CONSULTA = "UPDATE A_ORGANIZACION SET nombre ='$nombre',direccion ='$direccion',tipo ='$tipo',fechaIngreso ='$fechaIngreso',aniosVigente ='$aniosVigente',
-      checkVigente ='$checkVigente',numProvidencia ='$numProvidencia',checkHabilitado ='$checkHabilitado',estado ='$estado' WHERE id='$user_id'";
+      $CONSULTA = "UPDATE A_ORGANIZACION SET checkHabilitado = 1";
       //llamo al metodo listar y le doy la variable CONSULTA
-      echo($CONSULTA);
       $datos=$menu->listar($CONSULTA);
         $CONSULTA = "SELECT * FROM A_ORGANIZACION";
         //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
         //imprimir los datos en JSON
         print($datos);
-
-        $usuarioCambio = $_SESSION["test"];
-        $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
-        checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-        '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
+    
+      // $usuarioCambio = $_SESSION["test"];
+        // $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
+        // checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+        // '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
+        // $datos=$menu->listar($CONSULTA);
+        // $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+        // $datos=$menu->listar($CONSULTA);
+        // print($datos);
+      
+      break;
+    
+      case "DesHabGeneralO": 
+        //define la consulta
+        $CONSULTA = "UPDATE A_ORGANIZACION SET checkHabilitado = 0";
+        //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
-        $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+        $CONSULTA = "SELECT * FROM A_ORGANIZACION";
+          //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
         print($datos);
-
-      break;
+          //imprimir los datos en JSON
+          //print($datos);
+      
+        // $usuarioCambio = $_SESSION["test"];
+        // $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
+        // checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+        // '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
+        // $datos=$menu->listar($CONSULTA);
+        // $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+        // $datos=$menu->listar($CONSULTA);
+        // print($datos);
+        
+      
+        break;
   }
   
 ?>

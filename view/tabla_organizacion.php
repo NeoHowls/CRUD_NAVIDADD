@@ -13,13 +13,14 @@
             <div class="container">
           <div class="row">
               <div class="col-lg-12">            
-              <button id="btnNuevo" type="button" class="btn btn-info bi bi-plus" data-toggle="modal"><i class="material-icons">
-  
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-              </svg>
-  
-              </i></button>    
+              <button id="btnNuevo" type="button" class="btn btn-info bi bi-plus" data-toggle="tooltip" data-placement="top" title="Agregar Organizacion"><i class="material-icons"></i>
+                </button>
+                <button id="btnDesHabGeneral" type="button" class="btn btn-danger btnDesHabGeneral" data-toggle="tooltip" data-placement="top" title="Deshabilitar general">
+                    <i id="iconHabGeneral" class="bi bi-x-square"></i> 
+                </button>  
+                <button id="btnHabGeneral" type="button" class="btn btn-success btnHabGeneral" data-toggle="tooltip" data-placement="top" title="Habilitar general">
+                    <i id="iconHabGeneral" class="bi bi-check-square"></i> 
+               </button>    
               
           </div>    
           </div>    
@@ -96,7 +97,7 @@
                   <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
               </div>
           </form>
-          <script>
+          <!-- <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const tipoSelect = document.getElementById('tipo');
                     const aniosVigenteSelect = document.getElementById('aniosVigente');
@@ -116,7 +117,7 @@
                         }
                     });
                 });
-            </script>    
+            </script>     -->
           </div>
       </div>
   </div>   
