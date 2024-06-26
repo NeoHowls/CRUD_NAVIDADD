@@ -50,6 +50,18 @@ let table = $('#myTable2').DataTable( {
         {"data": "estado"},
         {"data": "aniosVigente"},
         {"data": "vigente"},
+
+        {"data": "id"},
+        {"data": "nombre"},
+        {"data": "direccion"},
+        {"data": "organizacion"},
+        {"data": "fechaIngreso"},
+        {"data": "checkVigente"},
+        {"data": "numProvidencia"},
+        {"data": "checkHabilitado"},
+        {"data": "estado"},
+        {"data": "aniosVigente"},
+        {"data": "vigente"},
         {
             "data": null,
             "render": function(data, type, row) {
