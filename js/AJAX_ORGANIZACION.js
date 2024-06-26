@@ -16,6 +16,11 @@ $('#more_infos').change(function() {
   }
 });
  
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip({
+        delay: { show: 0, hide: 0 }
+});    
+});
 
 let table = $('#myTable2').DataTable( {
     // destroy : true,
@@ -45,11 +50,27 @@ let table = $('#myTable2').DataTable( {
         {"data": "estado"},
         {"data": "aniosVigente"},
         {"data": "vigente"},
+        {
+            "data": null,
+            "render": function(data, type, row) {
+                // data es null ya que no especificamos una propiedad específica de data para esta columna
+                let checkHabilitadoButton = '';
+                if (row.checkHabilitado == '1') {
+                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-dark btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar Organizacion"><i class="bi bi-x-square"></i> </button>';
+                } else {
+                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-dark btnAutorizar me-2" data-toggle="tooltip" title="Habilitar Organizacion"><i class="bi bi-check-square"></i> </button>';
+                }
+        
+                // Botón de editar con modal
+                let editarButton = '<button type="button" class="btn btn-primary text-dark btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square"></i></button>';
 
+                // Combinamos los botones en una sola columna
+                return checkHabilitadoButton + editarButton;
+            }
+        }
         
         
-        {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'><svg xmlns=http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'><path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/><path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/></svg></i>"},
-
+        
         
        
 
@@ -114,7 +135,7 @@ $('#formUsuarios').submit(function(e){
     numProvidencia = $.trim($('#numProvidencia').val());   
     checkHabilitado = $.trim($('#checkHabilitado').val());
     estado = $.trim($('#estado').val());
-    window.alert(aniosVigente);
+   
     
     //console.log(opcion)                            
     //EJECUTA EL AJAX
@@ -138,45 +159,91 @@ $('#formUsuarios').submit(function(e){
         
  
 
-//para limpiar los campos antes de dar de Alta una Persona
 $("#btnNuevo").click(function(){
-    opcion = "add_organizacion"; //alta           
-    user_id=null; 
-    $("#formUsuarios").trigger("reset");
-    $(".modal-header").css( "background-color", "#17a2b8");
-    $(".modal-header").css( "color", "white" );
-    $(".modal-title").text("Añadir Organizacion");
-    $('#modalCRUD').modal('show');	    
+    opcion = "add_organizacion"; // Indica que se está agregando una nueva organización
+    user_id = null; // Reinicia el ID del usuario a null o lo que sea adecuado en tu lógica
+
+    // Limpiar todos los campos del formulario modal
+    $("#nombre").val('');
+    $("#direccion").val('');
+    $("#tipo").val('');
+    $("#fechaIngreso").val('');
+    $("#checkVigente").val('');
+    $("#numProvidencia").val('');
+    $("#checkHabilitado").val('');
+    $("#estado").val('');
+    $("#aniosVigente").val('');
+
+    // Reiniciar el estado de los campos relacionados con el tipo de organización
+    document.getElementById('numProvidenciaGroup').style.display = 'none';
+    document.getElementById('aniosVigente').disabled = false;
+
+    // Mostrar el modal y configurar estilos y título
+    $(".modal-header").css("background-color", "#17a2b8");
+    $(".modal-header").css("color", "white");
+    $(".modal-title").text("Añadir Organización");
+
+    $('#modalCRUD').modal('show');
+
+    // Manejar el cambio en el campo tipo (si es necesario para tu lógica)
+    $("#tipo").on("change", function() {
+        if ($(this).val() === '4') {
+            $("#numProvidenciaGroup").show();
+            $("#aniosVigente").val('1').prop('disabled', true);
+        } else {
+            $("#numProvidenciaGroup").hide();
+            $("#aniosVigente").prop('disabled', false);
+        }
+    });
 });
+
 
 //Editar       
 
-$(document).on("click", ".btnEditar", function(){		        
+$(document).on("click", ".btnEditar", function(){	        
     opcion = "edit_organizacion";//editar
+
+    selections = document.getElementById('tipo');
+    selections.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (selections.value === '4') {
+            document.getElementById('aniosVigente').style.display = 'block'
+            document.getElementById('numProvidenciaGroup').style.display = 'block'
+            document.getElementById('aniosVigente').value = '1'
+            document.getElementById('aniosVigente').disabled = true
+        }else {
+            document.getElementById('numProvidenciaGroup').style.display = 'none'
+            document.getElementById('aniosVigenteSelect').disabled = false
+        }
+});
+
     fila = $(this).closest("tr");	        
     user_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
     nombre = fila.find('td:eq(1)').text();
     direccion = fila.find('td:eq(2)').text();
     tipo = fila.find('td:eq(3)').text();
     fechaIngreso = fila.find('td:eq(4)').text();
-    aniosVigente= fila.find('td:eq(5)').text();
-    checkVigente= fila.find('td:eq(6)').text();
-    numProvidencia= fila.find('td:eq(7)').text();
-    checkHabilitado=fila.find('td:eq(8)').text();
-    estado= fila.find('td:eq(9)').text();
+    checkVigente= fila.find('td:eq(5)').text();
+    numProvidencia= fila.find('td:eq(6)').text();
+    checkHabilitado=fila.find('td:eq(7)').text();
+    estado= fila.find('td:eq(8)').text();
+    aniosVigente= fila.find('td:eq(9)').text();
     $("#nombre").val(nombre);
     $("#direccion").val(direccion);
     $("#tipo").val(tipo);
     $("#fechaIngreso").val(fechaIngreso);
-    $("#aniosVigente").val(aniosVigente);
     $("#checkVigente").val(checkVigente);
     $("#numProvidencia").val(numProvidencia);
     $("#checkHabilitado").val(checkHabilitado);
     $("#estado").val(estado);
+    $("#aniosVigente").val(aniosVigente);
     $(".modal-header").css("background-color", "#007bff");
     $(".modal-header").css("color", "white" );
     $(".modal-title").text("Editar Organizacion");		
-    $('#modalCRUD').modal('show');		   
+    $('#modalCRUD').modal('show');	
+
+   
+    		   
 });
 
 //Borrar
@@ -197,6 +264,86 @@ $(document).on("click", ".btnBorrar", function(){
         });	
     }
  });
+
+  //deshabilitar/habiliar 
+$(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
+    e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+    fila = $(this).closest('tr');           
+    user_id = $(this).closest('tr').find('td:eq(0)').text() ;
+    nombre = $(this).closest('tr').find('td:eq(1)').text() ;
+    checkHabilitado = $(this).closest('tr').find('td:eq(7)').text() ;
+    let action = checkHabilitado == '1' ? 'borrar_persona' : 'habilitar_persona';
+    let confirmMessage =  checkHabilitado== '1' ? "¿Está seguro que desesa deshabilitar el registro de "+nombre+"?" : "¿Quieres habilitar el registro de "+nombre+"?"  ;
+    let respuesta = confirm(confirmMessage);
+  
+    if (respuesta) {            
+        $.ajax({
+          url: "../controller/controllerO.php?op=Habilitar_organizacion",
+          type: "POST",
+          datatype:"json",    
+            data: { user_id: user_id, checkHabilitado: checkHabilitado,nombre:nombre} ,
+          success: function(data) {
+            table.ajax.reload(null, false);
+           },
+           error: function(xhr, status, error) {
+            console.error("Error en la operación:", error);
+        }
+        });	    	    
+    }
+ });
+
+ // Deshabilitar General 
+$(document).on("click", ".btnDesHabGeneral", function(e){
+    e.preventDefault(); // Evita el comportamiento normal del submit, es decir, recarga total de la página
+    let fila = $(this).closest('tr');           
+    let user_id = fila.find('td:eq(0)').text();
+    nombre = $(this).closest('tr').find('td:eq(1)').text() ;
+    let checkHabilitado = $(this).closest('tr').find('td:eq(7)').text() ;
+    let confirmMessage = "¿Quieres deshabilitar todos los registros?";
+    let respuesta = confirm(confirmMessage);
+  
+    if (respuesta) {            
+        $.ajax({
+            url: "../controller/controllerO.php?op=DesHabGeneralO",
+            type: "POST",
+            dataType: "json",
+            data: { user_id: user_id, checkHabilitado:checkHabilitado,nombre:nombre},
+            success: function(data) {
+                table.ajax.reload(null, false);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la operación:", error);
+            }
+        });	    	    
+    }
+});
+
+// Habilitar General 
+$(document).on("click", ".btnHabGeneral", function(e){
+    e.preventDefault(); // Evita el comportamiento normal del submit, es decir, recarga total de la página
+    let fila = $(this).closest('tr');           
+    let user_id = fila.find('td:eq(0)').text();
+    nombre = $(this).closest('tr').find('td:eq(1)').text() ;
+    let checkHabilitado = $(this).closest('tr').find('td:eq(7)').text() ;
+    let confirmMessage = "¿Quieres habilitar todos los registros?";
+    let respuesta = confirm(confirmMessage);
+  
+    if (respuesta) {            
+        $.ajax({
+            url: "../controller/controllerO.php?op=habGeneralO",
+            type: "POST",
+            dataType: "json",
+            data: { user_id: user_id, checkHabilitado:checkHabilitado, nombre:nombre },
+            success: function(data) {
+                table.ajax.reload(null, false);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la operación:", error);
+            }
+        });	    	    
+    }
+});
+
 
  function cerrarModal() {
     $('#fondo-modal').hide();
