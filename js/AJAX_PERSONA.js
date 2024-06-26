@@ -463,10 +463,11 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
   }
 
  
-  function crearpdf(contrasena1, usuario1){
-    alert(contrasena1+" "+ usuario1);
-    window.open("../crearPdf.php?nombre="+usuario1+" contrasena="+usuario1);
-    
-    window.open("pdf_Asistencia.php?folio="+folio, 'Nombre de la ventana', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=auto,height=auto,left = auto,top = auto');
+  function crearpdf(usuario1, contrasena1){
+    // alert(
+    console.log(contrasena1)
+    window.open("../crearPdf.php?nombre="+usuario1+" &contrasena="+contrasena1);
+   
+  
 }
 //table.draw();

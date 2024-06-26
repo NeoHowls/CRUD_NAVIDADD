@@ -1,4 +1,24 @@
+<?php 
+ob_start()
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+</head>
+<body>
+<h2>USUARIO: <?php echo($_GET['nombre']) ?></h2>
+
+<br>
+<h2>CONTRASEÑA: <?php echo($_GET['contrasena']) ?></h2>
+
+</body>
+</html>
+
 <?php
+$html=ob_get_clean();
+
 // Cargamos la librería dompdf que hemos instalado en la carpeta dompdf
 require_once 'dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
@@ -18,7 +38,7 @@ $pdf->set_paper("letter", "portrait");
 //$pdf->set_paper(array(0,0,104,250));
  
 // Cargamos el contenido HTML.
-$pdf->load_html(utf8_decode("hola"));
+$pdf->load_html(utf8_decode($html));
  
 // Renderizamos el documento PDF.
 $pdf->render();
