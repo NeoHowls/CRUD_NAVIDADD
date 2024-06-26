@@ -1,4 +1,5 @@
 <?php 
+
 ob_start()
 ?>
 
@@ -11,7 +12,7 @@ ob_start()
 <h2>USUARIO: <?php echo($_GET['nombre']) ?></h2>
 
 <br>
-<h2>CONTRASEÑA: <?php echo($_GET['contrasena']) ?></h2>
+<h2>CONTRASE&Ntilde;A: <?php echo($_GET['contrasena']) ?></h2>
 
 </body>
 </html>
