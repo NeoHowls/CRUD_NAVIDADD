@@ -68,7 +68,7 @@
                             <label for="aniosVigente" class="col-form-label">Años Vigente:</label>
                             <select name="cars" id="aniosVigente" class = "form-control">
                                   <option value=1>1</option>
-                                  <option value=2>4</option> 
+                                  <option value=4>4</option> 
                                 </select>
                         </div>
                         <div class="col-lg-6" style="text-align: center;" id="numProvidenciaGroup">
@@ -130,13 +130,16 @@
                 <th>Nombre</th>
                 <th>Dirección</th>
                 <th class ='never'>tipo</th>
-                <th>Fecha Ingreso</th>
-                <th>Años Vigente</th>
+                <th class ='never'>Fecha Ingreso</th>
                 <th class ='never'>checkVigente</th>
                 <th class ='never'>numProvidencia</th>
                 <th class ='never'>checkHabilitado</th>
                 <th class ='never'>estado</th>
+                <th class ='never'>Años Vigente</th>
+                <th>Vigente</th>
                 <th class='all'>acciones</th>
+                
+                
             </tr>
         </thead>
         <tbody>

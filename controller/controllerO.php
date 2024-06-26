@@ -17,6 +17,8 @@ session_start();
   $checkHabilitado = (isset($_POST['checkHabilitado'])) ? $_POST['checkHabilitado'] : '';
   $estado = (isset($_POST['estado'])) ? $_POST['estado'] : '';
   $fechaIngreso = date('Y-m-d H:i:s', strtotime($fechaIngreso));
+
+  echo ($aniosVigente);
   //Armo un GET "op" donde OP signific operacion
   switch($_GET["op"]){
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
@@ -70,28 +72,48 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
     break;
     
     case "add_organizacion":
-      //define la consulta
-      $CONSULTA = "INSERT INTO A_ORGANIZACION (nombre, direccion, tipo, fechaIngreso, aniosVigente, checkVigente, numProvidencia,
-      checkHabilitado, estado) VALUES ('$nombre','$direccion','$tipo','$fechaIngreso','$aniosVigente','$checkVigente','$numProvidencia',
-      '$checkHabilitado','$estado')";
+      // Define la consulta para insertar en A_ORGANIZACION
+      $CONSULTA = "INSERT INTO A_ORGANIZACION (nombre, direccion, tipo, fechaIngreso, checkVigente, numProvidencia,
+        checkHabilitado, estado) VALUES ('$nombre','$direccion','$tipo','$fechaIngreso',1,'$numProvidencia',1,1)";
       echo($CONSULTA);
-      //llamo al metodo listar y le doy la variable CONSULTA
-      $datos=$menu->listar($CONSULTA);
-        $CONSULTA = "SELECT * FROM A_ORGANIZACION";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-        //imprimir los datos en JSON
-        print($datos);
-      //imprimir los datos en JSON
-      
-      $usuarioCambio = $_SESSION["test"];
-      $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
+      // Ejecuta la consulta para insertar en A_ORGANIZACION
+      $datos = $menu->listar($CONSULTA);
+  
+      // Obtiene el ID de la organización recién insertada
+      $CONSULTA = "SELECT id FROM A_ORGANIZACION WHERE nombre='$nombre' AND direccion='$direccion'";
+      echo($CONSULTA);
+      $datos = $menu->consultar($CONSULTA);
+      $idOrganizacion = $datos[0]['id'];
+  
+      // Calcula la fecha de vencimiento basada en los años vigentes
+      $fechaVencimiento = date('Y-m-d H:i:s', strtotime("+{$aniosVigente} year", strtotime($fechaIngreso)));
+  
+      // Define la consulta para insertar en A_DETALLE_ORGANIZACION
+      $CONSULTA = "INSERT INTO A_DETALLE_ORGANIZACION (idOrganizacion, fechaIngreso,fechaVencimiento, aniosVigente, estado) 
+                  VALUES ('$idOrganizacion', '$fechaIngreso','$fechaVencimiento', '$aniosVigente', 1)";
+      echo($CONSULTA);
+      // Ejecuta la consulta para insertar en A_DETALLE_ORGANIZACION
+      $menu->listar($CONSULTA);
+  
+      // Aquí podrías añadir la lógica para el historial si lo necesitas
+       $usuarioCambio = $_SESSION["test"];
+      $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
       checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-      '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Añadir Nueva Organizacion')";
+      1, '$numProvidencia', 1,1,'$usuarioCambio',getdate(),'Añadir Nueva Organizacion')";
       $datos=$menu->listar($CONSULTA);
       $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
       $datos=$menu->listar($CONSULTA);
       print($datos);
+  
+      // Consulta final para obtener los datos actualizados de A_ORGANIZACION
+      $CONSULTA = "SELECT * FROM A_ORGANIZACION";
+      // Ejecuta la consulta para obtener los datos actualizados
+      $datos = $menu->listar($CONSULTA);
+      // Imprime los datos en JSON o realiza la acción necesaria
+      print($datos); 
+        
+      
+      
       
     break; 
         //edita 1 dato selecionable de la tabla A_ETNIA

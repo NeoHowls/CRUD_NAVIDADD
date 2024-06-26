@@ -113,14 +113,14 @@ WHERE P.checkOrganizacion=0";
       //imprimir los datos en JSON
       
       $CONSULTA = "SELECT id FROM A_PERSONA WHERE dni='$dni'";
-      $datos=$menu->listar($CONSULTA);
+      $datos=$menu->consultar($CONSULTA);
       $user_id=$datos[0]['id'];
       $CONSULTA2 = "SELECT id,fechaIngreso  FROM A_ORGANIZACION WHERE id='$idOrganizacion'";
-      $datos=$menu->listar($CONSULTA2);
+      $datos=$menu->consultar($CONSULTA2);
       $fechaIngreso=$datos[0]['fechaIngreso'];    
       $fechaIngreso = date('Y-m-d H:i');
-
-      $dato_org=$menu->listar($CONSULTA2);
+      $dato_org=$menu->consultar($CONSULTA2);
+      
       $CONSULTA ="INSERT INTO A_DETALLE_PO (idPersona, idOrganizacion, estado,fechaIngreso) VALUES ('$user_id','$idOrganizacion' , 1,'$fechaIngreso')";
       $menu->listar($CONSULTA);
 
