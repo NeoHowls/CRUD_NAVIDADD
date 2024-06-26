@@ -89,9 +89,10 @@ let table = $('#myTable1').DataTable( {
                 let editarButton = '<button type="button" class="btn btn-primary text-dark btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square"></i></button>';
                 let PrintButton = '<button type="button" class="btn btn-warning text-dark  btnimprimir me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Imprimir usuario y contraseña" data-toggle="tooltip"><i class="bi bi-printer-fill"></i></button>';
         
-                let id = data["id"];
-                pdf ="<button type='button' class='btn btn-outline-danger ms-1 p-1 btnAnular' title='PDF'"+
-                    "onclick=\"crearpdf('"+id+"')\">"+
+                let usuario1 = data["usuario"];
+                let contrasena1 = data["contrasena"];
+                pdf ="<button type='button' class='btn btn-outline-danger ms-1 p-1 btnAnular'  title='PDF'"+
+                    "onclick=\"crearpdf('"+usuario1+"','"+contrasena1+"')\">"+
                     "<i class='bi bi-filetype-pdf'></i>"+
                     "</button>"; 
 
@@ -462,9 +463,10 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
   }
 
  
-  function crearpdf(id){
-    alert(id);
+  function crearpdf(contrasena1, usuario1){
+    alert(contrasena1+" "+ usuario1);
+    window.open("../crearPdf.php?nombre="+usuario1+" contrasena="+usuario1);
     
-    // window.open("pdf_Asistencia.php?folio="+folio, 'Nombre de la ventana', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=auto,height=auto,left = auto,top = auto');
+    window.open("pdf_Asistencia.php?folio="+folio, 'Nombre de la ventana', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=auto,height=auto,left = auto,top = auto');
 }
 //table.draw();

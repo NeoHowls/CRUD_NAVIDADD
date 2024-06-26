@@ -361,9 +361,28 @@ case "habGeneral":
 
     case "imprimir": 
       ?>
+      <script type="text/javascript"> 
+        Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          window.open("../crearPdf.php");
+        } else if (result.isDenied) {
+          Swal.fire("Changes are not saved", "", "info");
+        }
+      });
+
+
+        window.open("../crearPdf.php");
+        </script> 
       <?php
 
-      include_once("../crearPdf.php");
+      // include_once("../crearPdf.php");
       
       break;
   }

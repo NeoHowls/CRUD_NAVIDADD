@@ -24,7 +24,7 @@ $pdf->load_html(utf8_decode("hola"));
 $pdf->render();
  
 // Enviamos el fichero PDF al navegador.
-$pdf->stream('reportePdf.pdf');
+$pdf->stream('reportePdf.pdf', array("Attachment" => false));
 
 
 function file_get_contents_curl($url) {
