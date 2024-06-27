@@ -149,6 +149,7 @@
                       <th class ='never'>contraseña</th>
                       <th class ='never'>idOrganizacion</th>
                       <th class ='never'>Nombre Organizacion</th>
+                      <th class ='never'>tipo</th>
 
                       <th class ='never'>id</th>
                       <th>Dni/RUT</th>
@@ -163,6 +164,7 @@
                       <th class ='never'>contraseña</th>
                       <th class ='never'>idOrganizacion</th>
                       <th>Nombre Organización</th>
+                      <th>tipo</th>
                       <th class='all'>Acciones</th>  
                   </tr>
               </thead>

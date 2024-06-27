@@ -42,7 +42,7 @@ let table = $('#myTable1').DataTable( {
 
         {"data": "id"},
         {"data": "dni"},
-        {"data": "nombre"},
+        {"data": "nombreP"},
         {"data": "direccion"},
         {"data": "telefono"},
         {"data": "mail"},
@@ -53,10 +53,11 @@ let table = $('#myTable1').DataTable( {
         {"data": "contrasena"},
         {"data": "idOrganizacion"},
         {"data": "NOMBRE_O"},
+        {"data": "tipo"},
 
         {"data": "id"},
         {"data": "dni"},
-        {"data": "nombre"},
+        {"data": "nombreP"},
         {"data": "direccion"},
         {"data": "telefono"},
         {"data": "mail"},
@@ -67,6 +68,7 @@ let table = $('#myTable1').DataTable( {
         {"data": "contrasena"},
         {"data": "idOrganizacion"},
         {"data": "NOMBRE_O"},
+        {"data": "organizacion"},
         {
             "data": null,
             "render": function(data, type, row) {
@@ -87,17 +89,21 @@ let table = $('#myTable1').DataTable( {
         
                 // Botón de editar con modal
                 let editarButton = '<button type="button" class="btn btn-primary text-dark btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square fs-5"></i></button>';
-                let PrintButton = '<button type="button" class="btn btn-outline-warning   btnimprimir me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Imprimir usuario y contraseña" data-toggle="tooltip"><i class="bi bi-filetype-pdf fs-5"></i></button>';
-        
+                //let PrintButton = '<button type="button" class="btn btn-outline-warning   btnimprimir me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Imprimir usuario y contraseña" data-toggle="tooltip"><i class="bi bi-filetype-pdf fs-5"></i></button>';
+                
+                let nombre1 = data["nombreP"];
                 let usuario1 = data["usuario"];
                 let contrasena1 = data["contrasena"];
-                pdf ="<button type='button' class='btn btn-outline-danger ms-1 p-1 btnAnular'  title='PDF'"+
-                    "onclick=\"crearpdf('"+usuario1+"','"+contrasena1+"')\">"+
-                    "<i class='bi bi-filetype-pdf'></i>"+
+                let nombreO=data["NOMBRE_O"];
+                let organizacion1=data["organizacion"];
+
+                pdf ="<button type='button' class='btn btn-outline-warning me-2 btnAnular'  title='Imprimir usuario y contraseña'"+
+                    "onclick=\"crearpdf('"+usuario1+"','"+contrasena1+"','"+nombre1+"','"+nombreO+"','"+organizacion1+"')\">"+
+                    "<i class='bi bi-filetype-pdf fs-5'></i>"+
                     "</button>"; 
 
                 // Combinamos los botones en una sola columna
-                return estadoPButton + checkHabilitadoButton + editarButton+PrintButton + pdf;
+                return estadoPButton + checkHabilitadoButton + editarButton+ pdf;
             }
         }
     ], 
@@ -463,10 +469,9 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
   }
 
  
-  function crearpdf(usuario1, contrasena1){
+  function crearpdf(usuario1,contrasena1,nombre1,nombreO,organizacion1){
     // alert(
-    console.log(contrasena1)
-    window.open("../crearPdf.php?nombre="+usuario1+" &contrasena="+contrasena1);
+    window.open("../crearPdf.php?usuario="+usuario1+" &contrasena="+contrasena1+"&nombre="+nombre1+"&organizacion="+nombreO+"&tipo="+organizacion1);
    
   
 }

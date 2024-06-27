@@ -28,66 +28,82 @@ session_start();
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
   case "persona":
     //define la consulta
-    $CONSULTA = 
-    "SELECT 
-	  P.id as id, 
-    P.dni as dni, 
-    P.nombre as nombre, 
-    P.direccion as direccion, 
-    P.telefono as telefono, 
-    P.mail as mail, 
-    P.idPerfil as idPerfil, 
-    P.estado as estadoP,
+    $CONSULTA = "SELECT 
+    P.id AS id, 
+    P.dni AS dni, 
+    P.nombre AS nombreP, 
+    P.direccion AS direccion, 
+    P.telefono AS telefono, 
+    P.mail AS mail, 
+    P.idPerfil AS idPerfil, 
+    P.estado AS estadoP,
+    CASE
+        WHEN P.estado = 0 THEN 'DESACTIVADO'
+        WHEN P.estado = 1 THEN 'ACTIVADO'
+    END AS estadoPersona,
+    P.usuario AS usuario, 
+    P.contrasena AS contrasena, 
+    P.checkHabilitado AS checkHabilitado,
+    CASE
+        WHEN P.checkHabilitado = 0 THEN 'DESHABILITADO'
+        WHEN P.checkHabilitado = 1 THEN 'HABILITADO'
+    END AS habilitado,
+    P.checkOrganizacion,
+    PO.idOrganizacion AS idOrganizacion,
+	O.tipo AS tipo,
 	CASE
-			WHEN P.estado= 0 THEN 'DESACTIVADO'
-			WHEN P.estado= 1 THEN 'ACTIVADO'
-	END AS estadoPersona,
-    P.usuario as usuario, 
-    P.contrasena as contrasena, 
-    P.checkHabilitado as checkHabilitado,
-	CASE
-			WHEN P.checkHabilitado= 0 THEN 'DESHABILITADO'
-			WHEN P.checkHabilitado= 1 THEN 'HABILITADO'
-	END AS habilitado,
-	P.checkOrganizacion,
-    PO.idOrganizacion as idOrganizacion, 
+			WHEN O.tipo= NULL THEN 'asd'
+			WHEN O.tipo= 1 THEN 'JUNTA VECINAL'
+			WHEN O.tipo= 2 THEN 'COMÍTE'
+			WHEN O.tipo= 3 THEN 'CONDOMINIO'
+			WHEN O.tipo= 4 THEN 'PROVIDENCIA'	
+	END AS organizacion,
+	--ISNULL(O.tipo, 'no posee') AS Org,
     O.nombre AS NOMBRE_O,
-    PO.fechaIngreso as fechaIngreso,
-	PO.fechaTermino as fechaTermino,
-	PO.estado as estado
+    ISNULL(O.nombre, 'no posee') AS NOMBRE_O,
+    PO.fechaIngreso AS fechaIngreso,
+    PO.fechaTermino AS fechaTermino,
+    PO.estado AS estado
 FROM A_PERSONA P
-JOIN A_DETALLE_PO PO ON P.id=PO.idPersona
-JOIN A_ORGANIZACION O ON PO.idOrganizacion=O.id
-WHERE PO.estado=1
+JOIN A_DETALLE_PO PO ON P.id = PO.idPersona
+JOIN A_ORGANIZACION O ON PO.idOrganizacion = O.id
+WHERE PO.estado = 1
+
 UNION
+
 SELECT 
-	P.id as id, 
-    P.dni as dni, 
-    P.nombre as nombre, 
-    P.direccion as direccion, 
-    P.telefono as telefono, 
-    P.mail as mail, 
-    P.idPerfil as idPerfil, 
-    P.estado as estadoP, 
-	CASE
-			WHEN P.estado= 0 THEN 'DESACTIVADO'
-			WHEN P.estado= 1 THEN 'ACTIVADO'
-	END AS estadoPersona,
-    P.usuario as usuario, 
-    P.contrasena as contrasena, 
-    P.checkHabilitado as checkHabilitado,
-	CASE
-			WHEN P.checkHabilitado= 0 THEN 'DESHABILITADO'
-			WHEN P.checkHabilitado= 1 THEN 'HABILITADO'
-	END AS habilitado,
-	P.checkOrganizacion,
-    idOrganizacion = 0, 
-    NOMBRE_O = NULL,
-    fechaIngreso = NULL,
-	fechaTermino = NULL,
-	estado = 0
+    P.id AS id, 
+    P.dni AS dni, 
+    P.nombre AS nombreP, 
+    P.direccion AS direccion, 
+    P.telefono AS telefono, 
+    P.mail AS mail, 
+    P.idPerfil AS idPerfil, 
+    P.estado AS estadoP,
+    CASE
+        WHEN P.estado = 0 THEN 'DESACTIVADO'
+        WHEN P.estado = 1 THEN 'ACTIVADO'
+    END AS estadoPersona,
+    P.usuario AS usuario, 
+    P.contrasena AS contrasena, 
+    P.checkHabilitado AS checkHabilitado,
+    CASE
+        WHEN P.checkHabilitado = 0 THEN 'DESHABILITADO'
+        WHEN P.checkHabilitado = 1 THEN 'HABILITADO'
+    END AS habilitado,
+    P.checkOrganizacion,
+    0 AS idOrganizacion,
+	  null as tipo,
+	  'DIDECO' AS tipo,
+	  --null AS org,
+    NULL AS nombre,
+    'ADMINISTRACION' AS NOMBRE_O,
+    NULL AS fechaIngreso,
+    NULL AS fechaTermino,
+    0 AS estado
 FROM A_PERSONA P
-WHERE P.checkOrganizacion=0"; 
+WHERE P.checkOrganizacion = 0
+"; 
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
     //imprimir los datos en JSON
