@@ -74,7 +74,7 @@
               </div><!-- modal-header-->
 
               <form id="formUsuarios">    
-                  <div class="modal-body" style="background: #E7E7E7">
+                  <div class="modal-body" style="background: #9C9C9C">
                       <div class="row">
                           <div class="col-lg-12" style = "text-align: center;" >   
                               <label for="" class="col-form-label">Nombre Completo:</label>
@@ -101,7 +101,7 @@
                           </div>
                           <div class="col-lg-6" style = "text-align: center;">                    
                               <label for="" class="col-form-label">Sexo:</label>
-                              <select name="cars" id="periodo" class = "form-control">
+                              <select name="cars" id="sexo" class = "form-control">
                                   <option value=1>HOMBRE</option>
                                   <option value=0>MUJER</option> 
                               </select>
@@ -221,8 +221,10 @@
                       <div class="row">
                       <div class="col-lg-6">
                               <label for="" class="col-form-label">descripcion:</label>
-                              <input type="text" class="form-control" id="descripcion">
+                              <!-- <input type="text" class="form-control" id="descripcion"> -->
                               <!-- <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" /> -->
+                              <textarea id="descripcion" name="descripcion" rows="4" cols="50"></textarea>
+                              
                               <br> 
                               </div>
                         </div>
