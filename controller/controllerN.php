@@ -24,7 +24,7 @@
   $check_nac = (isset($_POST['check_nac'])) ? $_POST['check_nac'] : '';
   $correlativo = (isset($_POST['correlativo'])) ? $_POST['correlativo'] : '';
   $correlativo = (isset($_POST['correlativo'])) ? $_POST['correlativo'] : '';
-
+  
   
   //Armo un GET "op" donde OP signific operacion
   switch($_GET["op"]){

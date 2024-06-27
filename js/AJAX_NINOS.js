@@ -132,9 +132,22 @@ $('#formUsuarios').submit(function(e){
     mental = $.trim($('#mental').val());
     psiquica = $.trim($('#psiquica').val());
     check_nac = $.trim($('#check_nac').val());
-    edad = $.trim($('#edad').val());
+    // edad = $.trim($('#edad').val());
     etnia = $.trim($('#etnia').val());
-   
+    function calcularEdad(fecha) {
+        var hoy = new Date();
+        var cumpleanos = new Date(fecha);
+        var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+        var m = hoy.getMonth() - cumpleanos.getMonth();
+    
+        if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+            edad--;
+        }
+    
+        return edad;
+    }
+    edad = calcularEdad(naciemiento)
+    window.alert(edad)
     
     //console.log(opcion)                            
     //EJECUTA EL AJAX
@@ -187,7 +200,7 @@ $("#btnNuevo").click(function(){
 
     let fecha = new Date();
 	let anio = fecha.getFullYear();
-    // alert(userTipo);
+    alert(anio);
     
     
     $("#formUsuarios").trigger("reset");
