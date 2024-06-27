@@ -42,6 +42,12 @@ FROM [dbo].[A_ORGANIZACION]"; */
     O.nombre AS nombre,
     O.direccion AS direccion,
     O.tipo AS tipo,
+	CASE
+			WHEN O.tipo= 1 THEN 'JUNTA VECINAL'
+			WHEN O.tipo= 2 THEN 'COMÍTE'
+			WHEN O.tipo= 3 THEN 'CONDOMINIO'
+			WHEN O.tipo= 4 THEN 'PROVIDENCIA'
+	END AS organizacion,
     O.fechaIngreso AS fechaIngreso,
     O.checkVigente AS checkVigente,
     O.numProvidencia AS numProvidencia,
@@ -57,6 +63,12 @@ SELECT O.id AS id,
     O.nombre AS nombre,
     O.direccion AS direccion,
     O.tipo AS tipo,
+	CASE
+			WHEN O.tipo= 1 THEN 'JUNTA VECINAL'
+			WHEN O.tipo= 2 THEN 'COMÍTE'
+			WHEN O.tipo= 3 THEN 'CONDOMINIO'
+			WHEN O.tipo= 4 THEN 'PROVIDENCIA'	
+	END AS organizacion,
     O.fechaIngreso AS fechaIngreso,
     O.checkVigente AS checkVigente,
     O.numProvidencia AS numProvidencia,

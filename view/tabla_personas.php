@@ -131,7 +131,7 @@
 </div>   
 
       </div>
-<div class="table-responsive mx-3 text-center">
+<div class="table-responsive mx-3 text-left">
         <table id="myTable1" class="table table-striped nowrap" style="width:100%">
               <thead>
                   <tr>

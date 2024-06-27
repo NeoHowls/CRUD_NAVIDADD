@@ -123,30 +123,42 @@
   </div>   
   
         </div>
-<table id="myTable2" class="table table-striped nowrap" style="width:100%">
-        <thead>
-            <tr>
+    <div class="table-responsive mx-3 text-left">
+        <table id="myTable2" class="table table-striped nowrap" style="width:100%">
+            <thead>
+                <tr>
                 
-                <th class ='never'>id</th>
-                <th>Nombre</th>
-                <th>Dirección</th>
-                <th class ='never'>tipo</th>
-                <th class ='never'>Fecha Ingreso</th>
-                <th class ='never'>checkVigente</th>
-                <th class ='never'>numProvidencia</th>
-                <th class ='never'>checkHabilitado</th>
-                <th class ='never'>estado</th>
-                <th class ='never'>Años Vigente</th>
-                <th>Vigente</th>
-                <th class='all'>acciones</th>
-                
-                
-            </tr>
-        </thead>
-        <tbody>
+                    <th class ='never'>id</th>
+                    <th class ='never'>Nombre</th>
+                    <th class ='never'>Dirección</th>
+                    <th class ='never'>tipo</th>
+                    <th class ='never'>Fecha Ingreso</th>
+                    <th class ='never'>checkVigente</th>
+                    <th class ='never'>numProvidencia</th>
+                    <th class ='never'>checkHabilitado</th>
+                    <th class ='never'>estado</th>
+                    <th class ='never'>Años Vigente</th>
+                    <th class ='never'>Vigente</th>
 
-        </tbody>
-
+                    <th class ='never'>id</th>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Organización</th>
+                    <th class ='never'>Fecha Ingreso</th>
+                    <th class ='never'>checkVigente</th>
+                    <th class ='never'>numProvidencia</th>
+                    <th class ='never'>checkHabilitado</th>
+                    <th class ='never'>estado</th>
+                    <th class ='never'>Años Vigente</th>
+                    <th>Vigente</th>
+                    <th class='all'>acciones</th>
+                    
+                
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+    </div>
     </table>
     <script type="text/javascript" src="../datatables.js"></script>
     <script type="text/javascript" src="../js/idioma.js"></script>
