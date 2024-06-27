@@ -42,7 +42,7 @@ let table = $('#myTable1').DataTable( {
 
         {"data": "id"},
         {"data": "dni"},
-        {"data": "nombre"},
+        {"data": "nombreP"},
         {"data": "direccion"},
         {"data": "telefono"},
         {"data": "mail"},
@@ -53,10 +53,11 @@ let table = $('#myTable1').DataTable( {
         {"data": "contrasena"},
         {"data": "idOrganizacion"},
         {"data": "NOMBRE_O"},
+        {"data": "tipo"},
 
         {"data": "id"},
         {"data": "dni"},
-        {"data": "nombre"},
+        {"data": "nombreP"},
         {"data": "direccion"},
         {"data": "telefono"},
         {"data": "mail"},
@@ -67,37 +68,42 @@ let table = $('#myTable1').DataTable( {
         {"data": "contrasena"},
         {"data": "idOrganizacion"},
         {"data": "NOMBRE_O"},
+        {"data": "organizacion"},
         {
             "data": null,
             "render": function(data, type, row) {
                 // data es null ya que no especificamos una propiedad específica de data para esta columna
                 let estadoPButton = '';
                 if (row.estadoP == '1') {
-                    estadoPButton = '<button type="button" class="btn btn-danger text-dark btnBorrar me-2" data-toggle="tooltip" title="Desactivar usuario"><i class="bi bi-person-dash-fill"></i> </button>';
+                    estadoPButton = '<button type="button" class="btn btn-danger text-dark btnBorrar me-2" data-toggle="tooltip" title="Desactivar usuario"><i class="bi bi-person-dash-fill fs-5"></i> </button>';
                 } else {
-                    estadoPButton = '<button type="button" class="btn btn-success text-dark btnHabilitar me-2"data-toggle="tooltip" title="Activar usuario"><i class="bi bi-person-plus-fill"></i> </button>';
+                    estadoPButton = '<button type="button" class="btn btn-success text-dark btnHabilitar me-2"data-toggle="tooltip" title="Activar usuario"><i class="bi bi-person-plus-fill fs-5"></i> </button>';
                 }
         
                 let checkHabilitadoButton = '';
                 if (row.checkHabilitado == '1') {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-dark btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar usuario"><i class="bi bi-x-square"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-dark btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar usuario"><i class="bi bi-x-square fs-5"></i> </button>';
                 } else {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-dark btnAutorizar me-2" data-toggle="tooltip" title="Habilitar usuario"><i class="bi bi-check-square"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-dark btnAutorizar me-2" data-toggle="tooltip" title="Habilitar usuario"><i class="bi bi-check-square fs-5"></i> </button>';
                 }
         
                 // Botón de editar con modal
-                let editarButton = '<button type="button" class="btn btn-primary text-dark btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square"></i></button>';
-                let PrintButton = '<button type="button" class="btn btn-warning text-dark  btnimprimir me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Imprimir usuario y contraseña" data-toggle="tooltip"><i class="bi bi-printer-fill"></i></button>';
-        
+                let editarButton = '<button type="button" class="btn btn-primary text-dark btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square fs-5"></i></button>';
+                //let PrintButton = '<button type="button" class="btn btn-outline-warning   btnimprimir me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Imprimir usuario y contraseña" data-toggle="tooltip"><i class="bi bi-filetype-pdf fs-5"></i></button>';
+                
+                let nombre1 = data["nombreP"];
                 let usuario1 = data["usuario"];
                 let contrasena1 = data["contrasena"];
-                pdf ="<button type='button' class='btn btn-outline-danger ms-1 p-1 btnAnular'  title='PDF'"+
-                    "onclick=\"crearpdf('"+usuario1+"','"+contrasena1+"')\">"+
-                    "<i class='bi bi-filetype-pdf'></i>"+
+                let nombreO=data["NOMBRE_O"];
+                let organizacion1=data["organizacion"];
+
+                pdf ="<button type='button' class='btn btn-outline-warning me-2 btnAnular'  title='Imprimir usuario y contraseña'"+
+                    "onclick=\"crearpdf('"+usuario1+"','"+contrasena1+"','"+nombre1+"','"+nombreO+"','"+organizacion1+"')\">"+
+                    "<i class='bi bi-filetype-pdf fs-5'></i>"+
                     "</button>"; 
 
                 // Combinamos los botones en una sola columna
-                return estadoPButton + checkHabilitadoButton + editarButton+PrintButton + pdf;
+                return estadoPButton + checkHabilitadoButton + editarButton+ pdf;
             }
         }
     ], 
@@ -463,10 +469,9 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
   }
 
  
-  function crearpdf(usuario1, contrasena1){
+  function crearpdf(usuario1,contrasena1,nombre1,nombreO,organizacion1){
     // alert(
-    console.log(contrasena1)
-    window.open("../crearPdf.php?nombre="+usuario1+" &contrasena="+contrasena1);
+    window.open("../crearPdf.php?usuario="+usuario1+" &contrasena="+contrasena1+"&nombre="+nombre1+"&organizacion="+nombreO+"&tipo="+organizacion1);
    
   
 }
