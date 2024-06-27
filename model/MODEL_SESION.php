@@ -59,6 +59,7 @@
             $user = $rut;
             $contra = $pass;
             $sql ="SELECT  
+            A_PERSONA.id as id_persona,
             A_PERSONA.nombre,
             A_PERSONA.usuario,
             A_PERSONA.contrasena,
