@@ -122,7 +122,7 @@ let table = $('#myTable1').DataTable( {
                     text: 'COPIAR',
                     exportOptions: {
                         // columns: [ 0, ':visible' ]
-                        columns: ':visible'
+                        columns: ':visible:not(:last-child)'
                     }
                     
                 },
@@ -130,7 +130,7 @@ let table = $('#myTable1').DataTable( {
                     extend: 'excelHtml5',
                     text: 'EXCEL',
                     exportOptions: {
-                        columns: ':visible'
+                        columns: ':visible:not(:last-child)'
                     }
                     
                 },
@@ -139,13 +139,14 @@ let table = $('#myTable1').DataTable( {
                     text: 'PDF',
                     exportOptions: {
                         //columns: [ 0, 1, 2, 5 ]
-                        columns: ':visible'
+                       columns: ':visible:not(:last-child)'
                     }
                     
                 },
                 {    
                     extend: 'colvis',
                     text: 'COLUMNAS',
+                    columns: [15, 16, 17, 18, 19,21 ,22 ,26 ,27 ]
                 }
             ] 
         }

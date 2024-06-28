@@ -77,7 +77,7 @@ if($datos === TRUE){ ;
   
 ?>
 
-      usuario incorrecto
+      <!-- usuario incorrecto -->
   <script>
  Swal.fire({
   
