@@ -35,7 +35,7 @@ include_once("./nav_bar.php");
     <!-- Cambiar  -->
       <div class="card">
         <div class="card-header">
-          Tabla de Personas
+          Perfiles
         </div>
         <div class="card-body">
           <p class="card-text">

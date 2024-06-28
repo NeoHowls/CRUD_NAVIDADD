@@ -52,6 +52,10 @@ FROM [dbo].[A_ORGANIZACION]"; */
     O.checkVigente AS checkVigente,
     O.numProvidencia AS numProvidencia,
     O.checkHabilitado AS checkHabilitado,
+    CASE
+        WHEN O.checkHabilitado = 0 THEN 'DESHABILITADA'
+        WHEN O.checkHabilitado = 1 THEN 'HABILITADA'
+    END AS habilitado,
     O.estado AS estado,
   DO.aniosVigente AS aniosVigente,
   vigente = 'VIGENTE'
@@ -73,6 +77,10 @@ SELECT O.id AS id,
     O.checkVigente AS checkVigente,
     O.numProvidencia AS numProvidencia,
     O.checkHabilitado AS checkHabilitado,
+    CASE
+        WHEN O.checkHabilitado = 0 THEN 'DESHABILITADA'
+        WHEN O.checkHabilitado = 1 THEN 'HABILITADA'
+    END AS habilitado,
     O.estado AS estado,
   aniosVigente=0,
   vigente = 'NO VIGENTE'

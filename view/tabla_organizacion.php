@@ -147,7 +147,7 @@
                     <th class ='never'>Fecha Ingreso</th>
                     <th class ='never'>checkVigente</th>
                     <th class ='never'>numProvidencia</th>
-                    <th class ='never'>checkHabilitado</th>
+                    <th>Habilitada</th>
                     <th class ='never'>estado</th>
                     <th class ='never'>Años Vigente</th>
                     <th>Vigente</th>

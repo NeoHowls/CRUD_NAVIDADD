@@ -87,7 +87,7 @@ $anio = date('Y');
         <div class="content">
             <h2>Navidad <?php echo $anio; ?> - Municipalidad de Alto Hospicio</h2>
             <br>
-            <p>Estimado/a <span class="label"><?php echo htmlspecialchars($_GET['nombre']); ?></span>, de <span class="label"><?php echo htmlspecialchars($_GET['tipo']); ?></span> - <span class="label"><?php echo htmlspecialchars($_GET['organizacion']); ?></span>
+            <p>Estimado/a <span class="label"><?php echo htmlspecialchars($_GET['nombre']); ?></span>, de <span class="label"><?php echo htmlspecialchars($_GET['tipo']); ?></span>- <span class="label"><?php echo htmlspecialchars($_GET['organizacion']); ?></span>
 			, sus datos para acceder al sistema de navidad 2024 son los siguientes:</p>
             <br>
             <p>Usuario: <span class="label"><?php echo htmlspecialchars($_GET['usuario']); ?></span></p>

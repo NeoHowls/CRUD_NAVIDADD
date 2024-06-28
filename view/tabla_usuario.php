@@ -33,7 +33,6 @@
                       <select name="cars" id="estado" class = "form-control">
                         <option value=1>ACTIVA</option>
                         <option value=0>NO ACTIVA</option>
-                        
                       </select>
                       <br>
     </div>     

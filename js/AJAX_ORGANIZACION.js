@@ -58,7 +58,7 @@ let table = $('#myTable2').DataTable( {
         {"data": "fechaIngreso"},
         {"data": "checkVigente"},
         {"data": "numProvidencia"},
-        {"data": "checkHabilitado"},
+        {"data": "habilitado"},
         {"data": "estado"},
         {"data": "aniosVigente"},
         {"data": "vigente"},
@@ -285,7 +285,7 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
     nombre = $(this).closest('tr').find('td:eq(1)').text() ;
     checkHabilitado = $(this).closest('tr').find('td:eq(7)').text() ;
     let action = checkHabilitado == '1' ? 'borrar_persona' : 'habilitar_persona';
-    let confirmMessage =  checkHabilitado== '1' ? "¿Está seguro que desesa deshabilitar el registro de "+nombre+"?" : "¿Quieres habilitar el registro de "+nombre+"?"  ;
+    let confirmMessage =  checkHabilitado== '1' ? "¿Está seguro que desesa deshabilitar el registro de la organizacion "+nombre+"?" : "¿Quieres habilitar el registro de la organizacion "+nombre+"?"  ;
     let respuesta = confirm(confirmMessage);
   
     if (respuesta) {            
