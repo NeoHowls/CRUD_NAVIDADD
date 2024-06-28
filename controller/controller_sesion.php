@@ -11,6 +11,7 @@ if($datos === TRUE){ ;
   session_start();
   $datos=$menu->datosPersonal($USUARIO,$PASS);
   
+  $_SESSION["id_persona"]=$datos[0]['id_persona'];
   $_SESSION["test"]=$datos[0]['nombre'];
   $_SESSION["perfil"]=ucfirst($datos[0]['PERFIL']);
   $_SESSION["id_p"]=$datos[0]['id'];

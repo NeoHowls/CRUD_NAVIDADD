@@ -16,7 +16,18 @@ $('#more_infos').change(function() {
   }
 });
  
+function calcularEdad(fecha) {
+    var hoy = new Date();
+    var cumpleanos = new Date(fecha);
+    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    var m = hoy.getMonth() - cumpleanos.getMonth();
 
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+
+    return edad;
+}
 let table = $('#myTable').DataTable( {
     // destroy : true,
 
@@ -35,7 +46,6 @@ let table = $('#myTable').DataTable( {
     "columns":[
 
         {"data": "id"},
-        {"data": "correlativo"},
         {"data": "dni"},
         {"data": "nombre"},
         {"data": "sexo"},
@@ -113,13 +123,12 @@ $('#formUsuarios').submit(function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     //CAPTURA EL DATO DEL FORMULARIO
 
-    correlativo = $.trim($('#correlativo').val());
+
     dni = $.trim($('#dni').val());
     nombre = $.trim($('#nombre').val());
     sexo = $.trim($('#sexo').val());
     periodo = $.trim($('#periodo').val());
-    descripcion = $.trim($('#mail').val());
-    idPerfil = $.trim($('#descripcion').val());
+    descripcion = $.trim($('#descripcion').val());
     naciemiento = $.trim($('#Naciemiento').val());
     habilitado = $.trim($('#habilitado').val());
     nacion = $.trim($('#nacion').val());
@@ -132,23 +141,21 @@ $('#formUsuarios').submit(function(e){
     mental = $.trim($('#mental').val());
     psiquica = $.trim($('#psiquica').val());
     check_nac = $.trim($('#check_nac').val());
+
+
+    ceguera_p = $.trim($('#ceguera_percil').val());
+    sordera_p = $.trim($('#sordera_percil').val());
+    mudez_p= $.trim($('#mudez').val());
+    fisica_p = $.trim($('#fisica_percil').val());
+    mental_p = $.trim($('#mental_percil').val());
+    psiquica_p = $.trim($('#psiquica_percil').val());
+    check_nac = $.trim($('#check_nac').val());
     // edad = $.trim($('#edad').val());
     etnia = $.trim($('#etnia').val());
-    function calcularEdad(fecha) {
-        var hoy = new Date();
-        var cumpleanos = new Date(fecha);
-        var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-        var m = hoy.getMonth() - cumpleanos.getMonth();
-    
-        if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-            edad--;
-        }
-    
-        return edad;
-    }
     edad = calcularEdad(naciemiento)
-    window.alert(edad)
-    
+    usuario_id = id_usuario;
+    organizacion = $.trim($('#O_ID').val());
+    window.alert(nombre)
     //console.log(opcion)                            
     //EJECUTA EL AJAX
     $.ajax({
@@ -158,8 +165,12 @@ $('#formUsuarios').submit(function(e){
           datatype:"json", 
           //La prueba al solo la tabla ETNIA CAPTURA SOLO 2 VALORES, EL ID Y LA ETNIA, el ID es en caso que se quiera editar   
           data:  {user_id:user_id, dni:dni, nombre:nombre, sexo:sexo, edad:edad, periodo:periodo, descripcion:descripcion, 
-            naciemiento:naciemiento, etnia:etnia, nacion:nacion,comuna:comuna, check_dis:check_dis, ceguera:ceguera, 
-              sordera: sordera, mudez: mudez, fisica: fisica, mental: mental, psiquica: psiquica, check_nac: check_nac, correlativo: correlativo},    
+            naciemiento:naciemiento, etnia:etnia, nacion:nacion,comuna:comuna,check_dis:check_dis, 
+            ceguera:ceguera, sordera:sordera, mudez:mudez, fisica:fisica,
+             mental:mental, psiquica:psiquica, 
+             ceguera_p:ceguera_p,sordera_p:sordera_p,mudez_p:mudez_p, 
+             fisica:fisica,mental_p:mental_p, psiquica_p:psiquica_p, 
+             check_nac:check_nac, id_usuario:id_usuario, organizacion:organizacion},    
           //Si todo funiona recarga el AJAX
           success: function(data) {
             table.ajax.reload(null, false);
@@ -200,8 +211,15 @@ $("#btnNuevo").click(function(){
 
     let fecha = new Date();
 	let anio = fecha.getFullYear();
-    alert(anio);
+ 
+    selections = document.getElementById('Naciemiento');
+    selections.addEventListener('change', function () {
+        edad = calcularEdad(selections.value)
     
+            document.getElementById('edad').value = edad
+
+    })
+    usuario_id = id_usuario
     
     $("#formUsuarios").trigger("reset");
 
@@ -211,7 +229,7 @@ $("#btnNuevo").click(function(){
     }else{
         $("#periodo").prop('disabled', false);
     }
-
+    document.getElementById('edad').disabled = true
     $(".modal-header").css( "background-color", "#17a2b8");
     $(".modal-header").css( "color", "white" );
     $(".modal-title").text("Añadir Niño");

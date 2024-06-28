@@ -29,7 +29,7 @@
             <tr>
                 
                 <th>id</th>
-                <th>correlativo</th>
+
                 <th>dni</th>
                 <th>nombre</th>
                 <th>sexo</th>
@@ -76,16 +76,35 @@
               <form id="formUsuarios">    
                   <div class="modal-body" style="background: #9C9C9C">
                       <div class="row">
+                     
+
+                            <div class="col-6" >
+                                <label class="col-form-label" for="flexSwitchCheckDefault">EXTRANJERO <div class="elnt_container form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="more_infos" name="more" value = 1>
+                                </div></label>
+                            </div>  
+                            
+
+                            <div class="col-lg-6">
+                                <label class="col-form-label" for="flexSwitchCheckDefault">Discapacidad</label>
+                                <div class="elnt_container form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="more_info" name="more" value= 1>
+                                </div>
+   
+                            </div>  
+                            </div>
+                        <div class="row">
                           <div class="col-lg-12" style = "text-align: center;" >   
-                              <label for="" class="col-form-label">Nombre Completo:</label>
-                              <input type="text" class="form-control" id="nombre">
-                              <label for="" class="col-form-label">DNI/RUT::</label>
-                              <input type="text" class="form-control" id="dni">
+                            <label for="" class="col-form-label">DNI/RUT::</label>
+                            <input type="text" class="form-control" id="dni">  
+                            <label for="" class="col-form-label">Nombre Completo:</label>
+                            <input type="text" class="form-control" id="nombre">
+                              
                               <br>
                           </div>
                       </div><!--row-->
                       <div class="row">
-                          <div class="col-lg-6" style = "text-align: center;">   
+                          <div class="col-lg-3" style = "text-align: center;">   
                               <label for="" class="col-form-label">Periodo:</label>
                               <select name="cars" id="periodo" class = "form-control">
                                 <?php
@@ -99,23 +118,38 @@
                                 <option value=4>2025</option> -->
                               </select>
                           </div>
-                          <div class="col-lg-6" style = "text-align: center;">                    
+                          <div class="col-lg-3" style = "text-align: center;">                    
                               <label for="" class="col-form-label">Sexo:</label>
                               <select name="cars" id="sexo" class = "form-control">
-                                  <option value=1>HOMBRE</option>
-                                  <option value=0>MUJER</option> 
+                                  <option value=1>Hombre</option>
+                                  <option value=0>Mujer</option> 
                               </select>
-                          </div>     
-                          <br><br>
+                          </div>   
+                          <div class="col-lg-6" style = "text-align: center;">                    
+                              <label for="" class="col-form-label">Organizacion:</label>
+                              <?php include_once("../controller/controller_mostrarO.php") ?>
+                                <select name="cars" id="O_ID" class="form-control">
+                                    <?php
+                                    foreach($datos as $key => $value){
+                                        echo '<option value="'.$value['id'].'">'.$value['nombre'].'</option>'; 
+                                    }
+                                    ?>
+                                </select>
+                          </div>    
+                          <br>
                           <hr>
                       </div><!--row-->
                       <div class="row">
-                          <div class="col-lg-6" style = "text-align: center;">
-                              <label for="" class="col-form-label">Naciemiento:</label>
+                          <div class="col-lg-4" style = "text-align: center;">
+                              <label for="" class="col-form-label">Nacimiento:</label>
                               <input type="date" class="form-control" id="Naciemiento">
                               <br>
                           </div>
-                    
+                          <div class="col-lg-2" style = "text-align: center;">
+                              <label for="" class="col-form-label">Edad:</label>
+                              <input type="number" class="form-control" id="edad">
+                              <br>
+                          </div>
                           <div class="col-lg-6" style = "text-align: center;">
                               <label for="" class="col-form-label">Etnia:</label>
                               <?php 
@@ -136,21 +170,7 @@
                           </div>
                       <hr>
                       </div><!--row-->
-                      <div class="row">
-
-                          <div class="col-lg-12">
-                              <label class="col-form-label" for="flexSwitchCheckDefault">Discapacidad</label>
-                              <div class="elnt_container form-check form-switch">
-                        
-                     
-
-                                  <input class="form-check-input" type="checkbox" id="more_info" name="more" value= 1>
-                              </div>
-
-
-                              
-                        </div>  
-                      </div>
+                      
                       <div id="conditional_part" style="display:none;">
                       <div class="row p-1">
                         
@@ -158,18 +178,18 @@
 
 
                               <label for="" class="col-form-label">Ceguera:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                              <input type="checkbox" id="cbox2" value= 1 id="ceguera">
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                              <input type="number" id="ceguera_percil" name="ceguera" min="0" max="100" />
                               
                           </div>
                           <div class="col-lg-3">
                               <label for="" class="col-form-label">Sordera:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                              <input type="checkbox" id="cbox2" value= 1 id="sordera">
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                              <input type="number" id="sordera_percil" name="tentacles" min="0" max="100" />
                               
                           </div>
                       </div>
@@ -180,18 +200,18 @@
 
 
                               <label for="" class="col-form-label">Mudez:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                              <input type="checkbox" id="cbox2" value= 1 id="mudez">
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                              <input type="number" id="mudez_percil" name="tentacles" min="0" max="100" />
                               
                           </div>
                           <div class="col-lg-3">
                               <label for="" class="col-form-label">Fisica:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                              <input type="checkbox" id="cbox2" value= 1 id="fisica">
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                              <input type="number" id="fisica_percil" name="tentacles" min="0" max="100" />
                               
                           </div>
                       </div>
@@ -202,18 +222,18 @@
 
 
                               <label for="" class="col-form-label">Mental:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                              <input type="checkbox" id="cbox2" value= 1 id="mental">
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                              <input type="number" id="mental_percil" name="tentacles" min="0" max="100" />
                               
                           </div>
                           <div class="col-lg-3">
                               <label for="" class="col-form-label">Psiquica:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="comuna">
+                              <input type="checkbox" id="cbox2" value= 1 id="psiquica">
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" />
+                              <input type="number" id="psiquica_percil" name="tentacles" min="0" max="100" />
                               
                           </div>
                       </div>
@@ -230,33 +250,24 @@
                         </div>
                       </div><!--row-->
                       <div class="row">
-
-                          <div class="col-12" >
-                              <label class="col-form-label" for="flexSwitchCheckDefault">EXTRANJERO <div class="elnt_container form-check form-switch">
-                              <input class="form-check-input" type="checkbox" id="more_infos" name="more" value = 1>
-                              </div></label>
-                          </div>  
-                      </div><!--row-->          
-                      <div class="row">
-                              <div class="col-6" id="conditional_parts" style="display:none;">
-                                  <?php 
-                                  include_once("../controller/controller_nac.php");
-                                  ?>
-                                  <select name="cars" id="nacion" class = "form-control">              
+                                <div class="col-6" id="conditional_parts" style="display:none;">
+                                    <?php 
+                                    include_once("../controller/controller_nac.php");
+                                    ?>
+                                    
+                                    <select name="cars" id="nacion" class = "form-control">   
+                                    <option value= 1 >---------</option>            
                                     <?php
                                     foreach($datos as $key => $value){
-                                      if($value['id'] >= 2){
-                                        echo '<option value="'.$value['id'].'">'.$value['nacionalidad'].'</option>'; 
-                                        
-
-                                      }
+                                        if($value['id'] >= 2){
+                                        echo '<option value="'.$value['id'].'">'.$value['nacionalidad'].'</option>';                                       
+                                        }
                                     }
                                     ?>
-                                  </select>
-                              </div>
-                              <div class="col-6">
-                              </div>
-                      </div><!--row-->
+                                    </select>
+                                </div>
+
+                            </div><!--row-->
                       <div class="row">
                       </div><!--row-->
                       <div class="row">
@@ -283,9 +294,11 @@
     <script>
     // A $( document ).ready() block.
     let userTipo;
-    
+    let id_usuario
+
         
         userTipo = <?php echo($_SESSION['tipo_usuario']); ?>;
-        // alert( userTipo );
+        id_usuario = <?php echo($_SESSION['id_persona']); ?>;
+        // alert( id_usuario );
     
     </script>                   

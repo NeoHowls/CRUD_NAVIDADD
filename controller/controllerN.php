@@ -1,7 +1,8 @@
 <?php
   //llama al MenuModel
   require_once("../model/MenuModel.php");
-  
+  session_start();
+    
   //declaro una variable para poder invocar a MenuModel
   $menu= new MenuModel();
   $user_id = (isset($_POST['user_id'])) ? $_POST['user_id'] : '';
@@ -22,9 +23,22 @@
   $mental = (isset($_POST['mental'])) ? $_POST['mental'] : '';
   $psiquica = (isset($_POST['psiquica'])) ? $_POST['psiquica'] : '';
   $check_nac = (isset($_POST['check_nac'])) ? $_POST['check_nac'] : '';
-  $correlativo = (isset($_POST['correlativo'])) ? $_POST['correlativo'] : '';
-  $correlativo = (isset($_POST['correlativo'])) ? $_POST['correlativo'] : '';
-  
+
+
+  $ceguera_p = (isset($_POST['ceguera_p'])) ? $_POST['ceguera_p'] : '';
+  $sordera_p = (isset($_POST['sordera_p'])) ? $_POST['sordera_p'] : '';
+  $mudez_p = (isset($_POST['mudez_p'])) ? $_POST['mudez_p'] : '';
+  $fisica_p = (isset($_POST['fisica_p'])) ? $_POST['fisica_p'] : '';
+  $mental_p = (isset($_POST['mental_p'])) ? $_POST['mental_p'] : '';
+  $psiquica_p = (isset($_POST['psiquica_p'])) ? $_POST['psiquica_p'] : '';
+
+  $usuario_id = $_SESSION['id_persona'];
+  $organizacion = (isset($_POST['organizacion'])) ? $_POST['organizacion'] : '';
+  $etnia = (isset($_POST['etnia'])) ? $_POST['etnia'] : '';
+
+
+
+
   
   //Armo un GET "op" donde OP signific operacion
   switch($_GET["op"]){
@@ -33,10 +47,10 @@
 
    case "add_etnia":
       //define la consulta
-    
+
+      $fechaIngreso = date('Y-m-d H:i:s', strtotime($fechaIngreso));   
       $CONSULTA = "INSERT INTO [dbo].[A_NINOS]
-           ([correlativo]
-           ,[dni]
+           ([dni]
            ,[nombre]
            ,[sexo]
            ,[edad]
@@ -57,32 +71,42 @@
            ,[fechaRegistro]
            ,[checkExtranjero]
            ,[checkDiscapacitado]
-           ,[checkRSH])
+           ,[checkRSH]
+           ,[porcentajeCeguera]
+           ,[porcentajeSordera]
+           ,[porcentajeMudez]
+           ,[porcentajeFisica]
+           ,[porcentajeMental]
+           ,[porcentajePsiquica])
      VALUES
-           ($correlativo
-           ,$dni
-           ,$nombre
+           ('$dni'
+           ,'$nombre'
            ,$sexo
-           ,$edad 
-           ,$naciemiento
+           ,$edad
+           ,'$naciemiento'
            ,$nacion
-           ,<idEtnia, int,>
+           ,$etnia
            ,1
            ,$periodo
-           ,$ceguera 
-           ,$sordera
-           ,$mudez
-           ,$fisica 
-           ,$mental
-           ,$psiquica
-           ,$descripcion 
            ,1
-           ,10
-           ,GETDATE();
-           ,$check_nac
-           ,$check_dis
            ,1
-      ";
+           ,1
+           ,1
+           ,1
+           ,1
+           ,'$descripcion'
+           ,$organizacion
+           ,$usuario_id
+           ,'$fechaIngreso'
+           ,1
+           ,1
+           ,0
+           ,1
+           ,1
+           ,1
+           ,1
+           ,1
+           ,1)";
       //llamo al metodo listar y le doy la variable CONSULTA
       echo $CONSULTA;
       $datos=$menu->listar($CONSULTA);
@@ -90,7 +114,7 @@
         //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
         //imprimir los datos en JSON
-        //print($datos);
+        print($datos);
       //imprimir los datos en JSON
         break;
         //edita 1 dato selecionable de la tabla A_ETNIA
@@ -111,7 +135,7 @@
         //define la consulta
         $CONSULTA = "SELECT  
           A_NINOS.id,
-          A_NINOS.correlativo,
+
           A_NINOS.dni,
           A_NINOS.nombre,
           A_NINOS.sexo,
