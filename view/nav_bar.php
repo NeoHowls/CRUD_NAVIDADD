@@ -14,7 +14,7 @@
 				<ul class="navbar-nav ms-auto">
 				
 			<?php
-    if ($_SESSION["tipo_usuario"] != 2) {
+    if ($_SESSION["tipo_usuario"] == 0) {
 		echo '
 				
 				<li class="nav-item">
@@ -48,19 +48,20 @@
 
 					';
 	}
+	if ($_SESSION["tipo_usuario"] == 1) {
+		echo '
+				
+				<li class="nav-item">
+						<a class="nav-link" href="ninos.php" id ="1" value = 1 name = "insert">Niños</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="persona.php">Persona</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="organizacion.php">Organización</a>
+					</li>';
+	}
     ?>
-
-
-
-
-
-          
-
-
-
-
-
-
 					<li class="nav-item">
 					<a class="btn btn-danger nav-link"  onclick="myFunction()">
 						CERRAR  

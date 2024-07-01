@@ -16,25 +16,18 @@ class ConexionBD{
 
     public function  __construct()
     {
-       $this->host = 'DESKTOP-1DC178O\SQLEXPRESS';
-        $this->db = 'BD_NAVIDAD';
-       $this->user = 'sa';
-         $this->password ='1';
-       $this->error= '';
+    //    $this->host = 'DESKTOP-1DC178O\SQLEXPRESS';
+    //     $this->db = 'BD_NAVIDAD';
+    //    $this->user = 'sa';
+    //      $this->password ='1';
+    //    $this->error= '';
 
-        /* $this->host = '10.20.10.6';
-        // $this->db = 'Inventario_Test';
-        $this->db = 'BD_NAVIDAD';
-        $this->user = 'abaeza';
-        $this->password ='abaeza';
-        $this->error= '';
-         */
-/*         $this->host = 'LAPTOP-M0VBM7NP\SQLEXPRESS';
+        $this->host = '10.20.10.13';
         $this->db = 'BD_NAVIDAD';
         $this->user = 'sa';
         $this->password ='1';
         $this->error= '';
- */
+ 
     }
 
     public function connect()
