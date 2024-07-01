@@ -47,7 +47,7 @@
 
    case "add_etnia":
       //define la consulta
-
+      echo ($fisica_p);
       $fechaIngreso = date('Y-m-d H:i:s', strtotime($fechaIngreso));   
       $CONSULTA = "INSERT INTO [dbo].[A_NINOS]
            ([dni]
@@ -88,25 +88,25 @@
            ,$etnia
            ,1
            ,$periodo
-           ,1
-           ,1
-           ,1
-           ,1
-           ,1
-           ,1
+           ,$ceguera
+           ,$sordera 
+           ,$mudez
+           ,$fisica
+           ,$mental
+           ,$psiquica
            ,'$descripcion'
            ,$organizacion
            ,$usuario_id
            ,'$fechaIngreso'
-           ,1
-           ,1
+           ,$check_nac 
+           ,$check_dis
            ,0
-           ,1
-           ,1
-           ,1
-           ,1
-           ,1
-           ,1)";
+           ,$ceguera_p
+           ,$sordera_p 
+           ,$mudez_p
+           ,$fisica_p 
+           ,$mental_p
+           ,$psiquica_p)";
       //llamo al metodo listar y le doy la variable CONSULTA
       echo $CONSULTA;
       $datos=$menu->listar($CONSULTA);

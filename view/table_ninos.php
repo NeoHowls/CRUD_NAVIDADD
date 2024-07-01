@@ -178,18 +178,18 @@
 
 
                               <label for="" class="col-form-label">Ceguera:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="ceguera">
+                              <input class="form-check-input" type="checkbox" id="ceguera" name="more" value = 1>
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="ceguera_percil" name="ceguera" min="0" max="100" />
+                              <input type="number" id="ceguera_percil" name="ceguera" min="0" max="100" value = "0"/>
                               
                           </div>
                           <div class="col-lg-3">
                               <label for="" class="col-form-label">Sordera:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="sordera">
+                              <input class="form-check-input" type="checkbox" id="sordera" name="more" value = 1>
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="sordera_percil" name="tentacles" min="0" max="100" />
+                              <input type="number" id="sordera_percil" name="tentacles" min="0" max="100" value = "0"/>
                               
                           </div>
                       </div>
@@ -200,18 +200,18 @@
 
 
                               <label for="" class="col-form-label">Mudez:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="mudez">
+                              <input class="form-check-input" type="checkbox" id="mudez" name="more" value = 1>
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="mudez_percil" name="tentacles" min="0" max="100" />
+                              <input type="number" id="mudez_percil" name="tentacles" min="0" max="100" value = "0"/>
                               
                           </div>
                           <div class="col-lg-3">
                               <label for="" class="col-form-label">Fisica:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="fisica">
+                              <input class="form-check-input" type="checkbox" id="fisica" name="more" value = 1>
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="fisica_percil" name="tentacles" min="0" max="100" />
+                              <input type="number" id="fisica_percil" name="tentacles" min="0" max="100" value = "0" />
                               
                           </div>
                       </div>
@@ -222,18 +222,18 @@
 
 
                               <label for="" class="col-form-label">Mental:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="mental">
+                              <input class="form-check-input" type="checkbox" id="mental" name="more" value = 1>
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="mental_percil" name="tentacles" min="0" max="100" />
+                              <input type="number" id="mental_percil" name="tentacles" min="0" max="100" value = "0"/>
                               
                           </div>
                           <div class="col-lg-3">
                               <label for="" class="col-form-label">Psiquica:</label>
-                              <input type="checkbox" id="cbox2" value= 1 id="psiquica">
+                              <input class="form-check-input" type="checkbox" id="psiquica" name="more" value = 1>
                           </div>
                           <div class="col-lg-3">
-                              <input type="number" id="psiquica_percil" name="tentacles" min="0" max="100" />
+                              <input type="number" id="psiquica_percil" name="tentacles" min="0" max="100" value = "0"/>
                               
                           </div>
                       </div>
