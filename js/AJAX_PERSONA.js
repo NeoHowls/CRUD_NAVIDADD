@@ -225,6 +225,19 @@ $('#formUsuarios').submit(function(e){
 
 //para limpiar los campos antes de dar de Alta una Persona
 $("#btnNuevo").click(function(){
+
+
+    $("#dni").val('');
+    $("#nombre").val('');
+    $("#direccion").val('');
+    $("#telefono").val('');
+    $("#mail").val('');
+    $("#idPerfil").val('');
+    $("#estado").val('');
+    $("#usuario").val('');
+    $("#contrasena").val('');
+    $("#O_ID").val('');
+
     // Deshabilitar los campos de usuario y contraseña
     $('#usuario').prop('readonly', true);
     $('#contrasena').prop('readonly', true);
@@ -296,7 +309,6 @@ $(document).on("click", ".btnEditar", function(){
     $("#estado").val(estado);
     $("#usuario").val(usuario);
     $("#contrasena").val(contrasena);
-    $("#contrasena").val(contrasena)
     $("#O_ID").val(idOrganizacion);
     $(".modal-header").css("background-color", "#007bff");
     $(".modal-header").css("color", "white" );
@@ -332,6 +344,13 @@ checkboxNC.addEventListener('change', function () {
     }
 });
 });
+
+window.addEventListener("keydown", (e) => {
+    if (e.keyCode === 13) {
+        e.preventDefault(); // Previene el comportamiento por defecto del Enter
+        $('#btnGuardar').click(); // Dispara el evento de clic en el botón "Iniciar Sesión"
+    }
+  });
 
 $(document).on("click", ".btnimprimir", function(e){
    

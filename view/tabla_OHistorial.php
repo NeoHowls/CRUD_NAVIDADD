@@ -8,7 +8,6 @@
                 <th>direccion</th>
                 <th>tipo</th>
                 <th>fechaIngreso</th>
-                <th>aniosVigente</th>
                 <th>checkVigente</th>
                 <th>numProvidencia</th>
                 <th>checkHabilitado</th>

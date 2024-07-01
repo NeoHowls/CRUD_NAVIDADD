@@ -39,7 +39,6 @@ let table = $('#myTable5').DataTable( {
         {"data": "direccion"},
         {"data": "tipo"},
         {"data": "fechaIngreso"},
-        {"data": "aniosVigente"},
         {"data": "checkVigente"},
         {"data": "numProvidencia"},
         {"data": "checkHabilitado"},
@@ -109,7 +108,6 @@ $('#formUsuarios').submit(function(e){
     direccion = $.trim($('#direccion').val());
     tipo = $.trim($('#tipo').val());
     fechaIngreso = $.trim($('#fechaIngreso').val());
-    aniosVigente = $.trim($('#aniosVigente').val());
     checkVigente = $.trim($('#checkVigente').val());
     numProvidencia = $.trim($('#numProvidencia').val());   
     checkHabilitado = $.trim($('#checkHabilitado').val());
@@ -126,7 +124,7 @@ $('#formUsuarios').submit(function(e){
           type: "POST",
           datatype:"json", 
           //La prueba al solo la tabla ETNIA CAPTURA SOLO 2 VALORES, EL ID Y LA ETNIA, el ID es en caso que se quiera editar   
-          data:  {user_id:user_id,nombre:nombre, direccion:direccion, tipo:tipo, fechaIngreso:fechaIngreso,aniosVigente:aniosVigente, 
+          data:  {user_id:user_id,nombre:nombre, direccion:direccion, tipo:tipo, fechaIngreso:fechaIngreso, 
             checkVigente:checkVigente, numProvidencia:numProvidencia, checkHabilitado:checkHabilitado, estado:estado,
             usuarioCambio:usuarioCambio,fechaCambio:fechaCambio,tipoMovimiento:tipoMovimiento},    
           //Si todo funiona recarga el AJAX
@@ -163,19 +161,17 @@ $(document).on("click", ".btnEditar", function(){
     direccion = fila.find('td:eq(2)').text();
     tipo = fila.find('td:eq(3)').text();
     fechaIngreso = fila.find('td:eq(4)').text();
-    aniosVigente= fila.find('td:eq(5)').text();
-    checkVigente= fila.find('td:eq(6)').text();
-    numProvidencia= fila.find('td:eq(7)').text();
-    checkHabilitado=fila.find('td:eq(8)').text();
-    estado= fila.find('td:eq(9)').text();
-    usuarioCambio = fila.find('td:eq(10)').text();
-    fechaCambio = fila.find('td:eq(11)').text();
-    tipoMovimiento = fila.find('td:eq(12)').text();
+    checkVigente= fila.find('td:eq(5)').text();
+    numProvidencia= fila.find('td:eq(6)').text();
+    checkHabilitado=fila.find('td:eq(7)').text();
+    estado= fila.find('td:eq(8)').text();
+    usuarioCambio = fila.find('td:eq(9)').text();
+    fechaCambio = fila.find('td:eq(10)').text();
+    tipoMovimiento = fila.find('td:eq(11)').text();
     $("#nombre").val(nombre);
     $("#direccion").val(direccion);
     $("#tipo").val(tipo);
     $("#fechaIngreso").val(fechaIngreso);
-    $("#aniosVigente").val(aniosVigente);
     $("#checkVigente").val(checkVigente);
     $("#numProvidencia").val(numProvidencia);
     $("#checkHabilitado").val(checkHabilitado);

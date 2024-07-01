@@ -346,7 +346,7 @@ case "habGeneral":
 
   $usuarioCambio = $_SESSION["test"];
   $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-  ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Deshabilitar a un  Usuario')";
+  ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Habilitar a todos los Usuarios')";
   $datos=$menu->listar($CONSULTA);
   $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
   $datos=$menu->listar($CONSULTA);
@@ -367,7 +367,7 @@ case "habGeneral":
   
     $usuarioCambio = $_SESSION["test"];
     $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-    ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Deshabilitar a un  Usuario')";
+    ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Deshabilitar a todos los Usuario')";
     $datos=$menu->listar($CONSULTA);
     $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
     $datos=$menu->listar($CONSULTA);

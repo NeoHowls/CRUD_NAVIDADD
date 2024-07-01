@@ -164,7 +164,16 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
         //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
         //imprimir los datos en JSON
-        print($datos);
+        //print($datos);
+
+        $usuarioCambio = $_SESSION["test"];
+         $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
+         checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+         '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
+         $datos=$menu->listar($CONSULTA);
+         $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+         $datos=$menu->listar($CONSULTA);
+         print($datos);
         }
         else{
           //define la consulta
@@ -193,14 +202,14 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
         //imprimir los datos en JSON
         print($datos);
         }
-        // $usuarioCambio = $_SESSION["test"];
-        // $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
-        // checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-        // '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
-        // $datos=$menu->listar($CONSULTA);
-        // $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
-        // $datos=$menu->listar($CONSULTA);
-        // print($datos);
+         $usuarioCambio = $_SESSION["test"];
+         $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
+         checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+         '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
+         $datos=$menu->listar($CONSULTA);
+         $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+         $datos=$menu->listar($CONSULTA);
+         print($datos);
 
       break;
 
@@ -219,14 +228,14 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
           //imprimir los datos en JSON
           //print($datos);
     
-        // $usuarioCambio = $_SESSION["test"];
-        // $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
-        // checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-        // '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
-        // $datos=$menu->listar($CONSULTA);
-        // $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
-        // $datos=$menu->listar($CONSULTA);
-        // print($datos);
+         $usuarioCambio = $_SESSION["test"];
+         $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
+         checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+         '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Deshabilitar a una organizacion')";
+         $datos=$menu->listar($CONSULTA);
+         $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+         $datos=$menu->listar($CONSULTA);
+         print($datos);
         
     
         
@@ -242,14 +251,14 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
           //imprimir los datos en JSON
            print($datos);
     
-          // $usuarioCambio = $_SESSION["test"];
-          // $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
-          // checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-          // '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
-          // $datos=$menu->listar($CONSULTA);
-          // $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
-          // $datos=$menu->listar($CONSULTA);
-          // print($datos);
+           $usuarioCambio = $_SESSION["test"];
+           $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
+           checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+           '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Habilitar una organizacion')";
+           $datos=$menu->listar($CONSULTA);
+           $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+           $datos=$menu->listar($CONSULTA);
+           print($datos);
     
     }
     break;
@@ -266,14 +275,14 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
         //imprimir los datos en JSON
         print($datos);
     
-      // $usuarioCambio = $_SESSION["test"];
-        // $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
-        // checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-        // '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
-        // $datos=$menu->listar($CONSULTA);
-        // $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
-        // $datos=$menu->listar($CONSULTA);
-        // print($datos);
+         $usuarioCambio = $_SESSION["test"];
+         $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
+         checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+         '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Habilitar a todas las organizaciones')";
+         $datos=$menu->listar($CONSULTA);
+         $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+         $datos=$menu->listar($CONSULTA);
+         print($datos);
       
       break;
     
@@ -289,14 +298,14 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
           //imprimir los datos en JSON
           //print($datos);
       
-        // $usuarioCambio = $_SESSION["test"];
-        // $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
-        // checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-        // '$aniosVigente','$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
-        // $datos=$menu->listar($CONSULTA);
-        // $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
-        // $datos=$menu->listar($CONSULTA);
-        // print($datos);
+         $usuarioCambio = $_SESSION["test"];
+         $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
+         checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+         '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Deshabilitar a todas las organizaciones')";
+         $datos=$menu->listar($CONSULTA);
+         $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+         $datos=$menu->listar($CONSULTA);
+         print($datos);
         
       
         break;

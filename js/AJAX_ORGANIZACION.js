@@ -210,24 +210,26 @@ $("#btnNuevo").click(function(){
 
 
 //Editar       
-
-$(document).on("click", ".btnEditar", function(){	        
+$(document).on("click", ".btnEditar", function() {	        
     opcion = "edit_organizacion";//editar
 
-    selections = document.getElementById('tipo');
-    selections.addEventListener('change', function () {
-        // Verifica si el checkbox está marcado o no
-        if (selections.value === '4') {
-            document.getElementById('aniosVigente').style.display = 'block'
-            document.getElementById('numProvidenciaGroup').style.display = 'block'
-            document.getElementById('aniosVigente').value = '1'
-            document.getElementById('aniosVigente').disabled = true
-        }else {
-            document.getElementById('numProvidenciaGroup').style.display = 'none'
-            document.getElementById('aniosVigenteSelect').disabled = false
-        }
-});
+    // Limpiar todos los campos del formulario modal
+    $("#nombre").val('');
+    $("#direccion").val('');
+    $("#tipo").val('');
+    $("#fechaIngreso").val('');
+    $("#checkVigente").val('');
+    $("#numProvidencia").val('');
+    $("#checkHabilitado").val('');
+    $("#estado").val('');
+    $("#aniosVigente").val('');
 
+    document.getElementById('numProvidenciaGroup').style.display = 'none';
+    document.getElementById('aniosVigente').disabled = false;
+
+     
+
+    // Resto de tu código para obtener y mostrar los datos en el modal de edición
     fila = $(this).closest("tr");	        
     user_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
     nombre = fila.find('td:eq(1)').text();
@@ -239,6 +241,7 @@ $(document).on("click", ".btnEditar", function(){
     checkHabilitado=fila.find('td:eq(7)').text();
     estado= fila.find('td:eq(8)').text();
     aniosVigente= fila.find('td:eq(9)').text();
+    
     $("#nombre").val(nombre);
     $("#direccion").val(direccion);
     $("#tipo").val(tipo);
@@ -248,14 +251,46 @@ $(document).on("click", ".btnEditar", function(){
     $("#checkHabilitado").val(checkHabilitado);
     $("#estado").val(estado);
     $("#aniosVigente").val(aniosVigente);
+    
     $(".modal-header").css("background-color", "#007bff");
-    $(".modal-header").css("color", "white" );
+    $(".modal-header").css("color", "white");
     $(".modal-title").text("Editar Organizacion");		
     $('#modalCRUD').modal('show');	
 
-   
-    		   
+    // Obtener el valor actual del tipo seleccionado
+    var tipoActual = $("#tipo").val();
+
+    // Mostrar u ocultar campos según el tipo seleccionado al inicio
+    if (tipoActual === '4') {
+        $("#numProvidenciaGroup").show();
+        $("#aniosVigente").val('1').prop('disabled', true);
+    } else {
+        $("#numProvidenciaGroup").hide();
+        $("#aniosVigente").prop('disabled', false);
+    }
+
+   // Lógica para manejar cambios en el campo tipo
+    $("#tipo").on("change", function() {
+        var nuevoTipo = $(this).val();
+        if (nuevoTipo === '4') {
+            $("#numProvidenciaGroup").show();
+            $("#aniosVigente").val('1').prop('disabled', true);
+        } else {
+            $("#numProvidenciaGroup").hide();
+            $("#aniosVigente").prop('disabled', false);
+        }
+    });
 });
+
+
+
+//funcion para que los formularios se puedan enviar con el enter
+window.addEventListener("keydown", (e) => {
+    if (e.keyCode === 13) {
+        e.preventDefault(); // Previene el comportamiento por defecto del Enter
+        $('#btnGuardar').click(); // Dispara el evento de clic en el botón "Iniciar Sesión"
+    }
+  });
 
 //Borrar
 $(document).on("click", ".btnBorrar", function(){

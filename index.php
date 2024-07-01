@@ -337,6 +337,10 @@
 	<script type="text/javascript" src="./datatables.js"></script>
     <script type="text/javascript" src="./js/idioma.js"></script>
     <script type="text/javascript" src="./js/INICIAR_SESION.js"></script>
+
+
+	
+
 	
 </body>
 

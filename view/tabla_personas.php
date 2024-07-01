@@ -32,38 +32,43 @@
 
 				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-          <form id="formUsuarios">    
+          <form id="formUsuarios" >    
 		    <div class="modal-body" style="background: #E7E7E7">
                 <div class="row">
-    <div class="col-lg-12" style = "text-align: center;">
-                    <div class="form-group">
-                    <label for="" class="col-form-label">DNI/RUT:</label>
-                    <input type="text" class="form-control" id="dni">
-                    </div>
-                    <div class="form-group">
-                    <label for="" class="col-form-label">Nombre completo:</label>
-                    <input type="text" class="form-control" id="nombre">
-                    </div>
-                    <div class="form-group">
-                    <label for="" class="col-form-label">Direccion:</label>
-                    <input type="text" class="form-control" id="direccion">
-                    </div>
-                    <div class="form-group">
-                    <label for="" class="col-form-label">Mail:</label>
-                    <input type="text" class="form-control" id="mail">
-                    </div>
-                    <div class="form-group row">
-                    <div class="col-md-6">
-                        <label for="telefono" class="col-form-label text-center">Teléfono:</label>
-                        <div class="text-center">
-                            <input type="number" class="form-control" id="telefono">
+                    <div class="col-lg-12" style = "text-align: center;">
+                        <div class="form-group">
+                        <label for="" class="col-form-label">DNI/RUT:</label>
+                        <input type="text" class="form-control" id="dni"  required data-error="Porfavor ingrese su DNI/RUT">
+                        <div class="help-block with-errors"></div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label for="" class="col-form-label">Nombre completo:</label>
+                        <input type="text" class="form-control" id="nombre" required data-error="Porfavor ingrese su nombre">
+                        <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group">
+                        <label for="" class="col-form-label">Direccion:</label>
+                        <input type="text" class="form-control" id="direccion" required data-error="Porfavor ingrese su dirección">
+                        <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group">
+                        <label for="" class="col-form-label">Mail:</label>
+                        <input type="text" class="form-control" id="mail" required data-error="Porfavor ingrese su correo">
+                        <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="telefono" class="col-form-label text-center">Teléfono:</label>
+                            <div class="text-center">
+                                <input type="number" class="form-control" id="telefono" required data-error="Porfavor ingrese su Teléfono" min =0 max = "999999999" onKeyPress="if(this.value.length==9) return false;">
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                         <label for="perfil" class="col-form-label text-center">Perfil:</label>
                         <div>
                             <?php include_once("../controller/controller_mostrarPerfil.php") ?>
-                            <select name="carsd" id="idPerfil" class="form-control">
+                            <select name="carsd" id="idPerfil" class="form-control" required data-error="Porfavor ingrese un perfil">
                                 <?php
                                 foreach($datos as $key => $value){
                                     echo '<option value="'.$value['id'].'">'.$value['perfil'].'</option>'; 
@@ -164,7 +169,7 @@
                       <th class ='never'>contraseña</th>
                       <th class ='never'>idOrganizacion</th>
                       <th>Nombre Organización</th>
-                      <th>tipo</th>
+                      <th>Tipo Organización</th>
                       <th class='all'>Acciones</th>  
                   </tr>
               </thead>
@@ -172,9 +177,25 @@
               </tbody>
         </div>
           </table>
+
+          <script src="js/jquery.min.js"></script>
+          <script src="js/bootstrap.bundle.min.js"></script>
+          <script src="js/popper.min.js"></script>
+          <script src="js/jquery.magnific-popup.min.js"></script>
+          <script src="js/jquery.pogo-slider.min.js"></script>
+          <script src="js/slider-index.js"></script>
+          <script src="js/form-validator.min.js"></script>
+	      <script src="js/usuarios-form-script.js"></script>
+	      <script src="js/isotope.min.js"></script>
+	      <script src="js/images-loded.min.js"></script>
+	      <!-- Causa problemas en la velocidad de la pagina y en el scrolls-->
+	      <script src="js/custom.js"></script>  
+
+          <script src="https://cdn.jsdelivr.net/npm/validator@13.6.0"></script>
           <script type="text/javascript" src="../datatables.js"></script>
           <script type="text/javascript" src="../js/idioma.js"></script>
           <script type="text/javascript" src="../js/AJAX_PERSONA.js"></script>    
+    
     </div>
   </div>
 </div>

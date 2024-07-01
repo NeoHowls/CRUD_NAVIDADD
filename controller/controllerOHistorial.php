@@ -10,7 +10,6 @@
   $direccion = (isset($_POST['direccion'])) ? $_POST['direccion'] : '';
   $tipo = (isset($_POST['tipo'])) ? $_POST['tipo'] : '';
   $fechaIngreso = (isset($_POST['fechaIngreso'])) ? $_POST['fechaIngreso'] : '';
-  $aniosVigente = (isset($_POST['aniosVigente'])) ? $_POST['aniosVigente'] : '';
   $checkVigente = (isset($_POST['checkVigente'])) ? $_POST['checkVigente'] : '';
   $numProvidencia = (isset($_POST['numProvidencia'])) ? $_POST['numProvidencia'] : '';
   $checkHabilitado = (isset($_POST['checkHabilitado'])) ? $_POST['checkHabilitado'] : '';
@@ -30,7 +29,6 @@ A_ORGANIZACION_HISTORIAL.nombre,
 A_ORGANIZACION_HISTORIAL.direccion,
 A_ORGANIZACION_HISTORIAL.tipo,
 A_ORGANIZACION_HISTORIAL.fechaIngreso,
-A_ORGANIZACION_HISTORIAL.aniosVigente,
 A_ORGANIZACION_HISTORIAL.checkVigente,
 A_ORGANIZACION_HISTORIAL.numProvidencia,
 A_ORGANIZACION_HISTORIAL.checkHabilitado,
