@@ -133,29 +133,29 @@ $('#formUsuarios').submit(function(e){
     habilitado = $.trim($('#habilitado').val());
     nacion = $.trim($('#nacion').val());
     comuna = $.trim($('#comuna').val());
-    check_dis = $.trim($('#comuna').val());
-    ceguera = $.trim($('#ceguera').val());
+    // check_dis = $.trim($('#comuna').val());
+ /*    ceguera = $.trim($('#ceguera').val());
     sordera = $.trim($('#sordera').val());
     mudez = $.trim($('#mudez').val());
     fisica = $.trim($('#fisica').val());
     mental = $.trim($('#mental').val());
-    psiquica = $.trim($('#psiquica').val());
-    check_nac = $.trim($('#check_nac').val());
+    psiquica = $.trim($('#psiquica').val()); */
+    // check_nac = $.trim($('#check_nac').val());
 
 
     ceguera_p = $.trim($('#ceguera_percil').val());
     sordera_p = $.trim($('#sordera_percil').val());
-    mudez_p= $.trim($('#mudez').val());
+    mudez_p= $.trim($('#mudez_percil').val());
     fisica_p = $.trim($('#fisica_percil').val());
     mental_p = $.trim($('#mental_percil').val());
     psiquica_p = $.trim($('#psiquica_percil').val());
-    check_nac = $.trim($('#check_nac').val());
+    // check_nac = $.trim($('#check_nac').val());
     // edad = $.trim($('#edad').val());
     etnia = $.trim($('#etnia').val());
     edad = calcularEdad(naciemiento)
     usuario_id = id_usuario;
     organizacion = $.trim($('#O_ID').val());
-    window.alert(nombre)
+    window.alert(ceguera_p+" "+sordera_p+" "+mudez_p+" "+fisica_p+" "+mental_p+" "+psiquica_p )
     //console.log(opcion)                            
     //EJECUTA EL AJAX
     $.ajax({
@@ -169,7 +169,7 @@ $('#formUsuarios').submit(function(e){
             ceguera:ceguera, sordera:sordera, mudez:mudez, fisica:fisica,
              mental:mental, psiquica:psiquica, 
              ceguera_p:ceguera_p,sordera_p:sordera_p,mudez_p:mudez_p, 
-             fisica:fisica,mental_p:mental_p, psiquica_p:psiquica_p, 
+             fisica_p:fisica_p,mental_p:mental_p, psiquica_p:psiquica_p, 
              check_nac:check_nac, id_usuario:id_usuario, organizacion:organizacion},    
           //Si todo funiona recarga el AJAX
           success: function(data) {
@@ -190,7 +190,14 @@ $("#btnNuevo").click(function(){
     opcion = "add_etnia"; //alta           
     user_id=null;
     check_nac = 0;
-    /* if (check_nac == 1) {
+    check_dis = 0;
+    ceguera = 0;
+    sordera = 0;
+    mudez = 0;
+    fisica = 0;
+    mental= 0;
+    psiquica = 0;
+     if (check_nac == 1) {
         document.getElementById('more_infos').checked = true
         $("#conditional_parts").show();
 
@@ -199,15 +206,45 @@ $("#btnNuevo").click(function(){
         document.getElementById('more_infos').checked = false
         $("#conditional_parts").hide();
     }
+    checkboxNAC = document.getElementById('more_infos');
+    checkboxNAC.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            check_nac = 1;
 
-    if (check_nac == 1) {
+        } else {
+            console.log('El checkbox está desactivado.');
+            check_nac = 0;
+            $("#nacion").val('1')
+            
+        }
+    });
+
+    if (check_dis == 1) {
         document.getElementById('more_info').checked = true
         $("#conditional_part").show();
     }
     else {
         document.getElementById('more_info').checked = false
         $("#conditional_part").hide();
-    } */
+    } 
+    checkboxDIS = document.getElementById('more_info');
+    checkboxDIS.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            check_dis = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            check_dis = 0;
+        }
+    });
+
+
+    
+    
 
     let fecha = new Date();
 	let anio = fecha.getFullYear();
@@ -229,6 +266,108 @@ $("#btnNuevo").click(function(){
     }else{
         $("#periodo").prop('disabled', false);
     }
+    document.getElementById("ceguera_percil").disabled = true;
+    checkboxCeguera = document.getElementById('ceguera');
+    checkboxCeguera.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            ceguera = 1;
+            document.getElementById("ceguera_percil").disabled = false;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            ceguera = 0;
+            document.getElementById("ceguera_percil").disabled = true;
+            document.getElementById("ceguera_percil").value = 0;
+
+        }
+    });
+    document.getElementById("sordera_percil").disabled = true;
+    checkboxSordera= document.getElementById('sordera');
+    checkboxSordera.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            sordera = 1;
+            document.getElementById("sordera_percil").disabled = false;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            document.getElementById("sordera_percil").disabled = true;
+            sordera = 0;
+            document.getElementById("sordera_percil").value = 0;
+        }
+    });
+
+    document.getElementById("mudez_percil").disabled = true;
+    checkboxMudez= document.getElementById('mudez');
+    checkboxMudez.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            mudez = 1;
+            document.getElementById("mudez_percil").disabled = false;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            document.getElementById("mudez_percil").disabled = true;
+            mudez = 0;
+            document.getElementById("mudez_percil").value = 0;
+        }
+    });
+
+    document.getElementById("fisica_percil").disabled = true;
+    checkboxFisica= document.getElementById('fisica');
+    checkboxFisica.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            document.getElementById("fisica_percil").disabled = false;
+            fisica = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            document.getElementById("fisica_percil").disabled = true;
+            fisica = 0;
+            document.getElementById("fisica_percil").value = 0;
+        }
+    });
+
+    document.getElementById("mental_percil").disabled = true;
+    checkboxMental= document.getElementById('mental');
+    checkboxMental.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            document.getElementById("mental_percil").disabled = false;
+            mental = 1;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            document.getElementById("mental_percil").disabled = true;
+            mental = 0;
+            document.getElementById("mental_percil").value = 0;
+        }
+    });
+
+    document.getElementById("psiquica_percil").disabled = true;
+    checkboxPsiquica= document.getElementById('psiquica');
+    checkboxPsiquica.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            console.log('El checkbox está activado.');
+            psiquica = 1;
+            document.getElementById("psiquica_percil").disabled = false;
+
+        } else {
+            console.log('El checkbox está desactivado.');
+            document.getElementById("psiquica_percil").disabled = true;
+            psiquica = 0;
+            document.getElementById("psiquica_percil").value = 0;
+        }
+    });
+
     document.getElementById('edad').disabled = true
     $(".modal-header").css( "background-color", "#17a2b8");
     $(".modal-header").css( "color", "white" );
