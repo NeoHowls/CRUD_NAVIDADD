@@ -68,7 +68,7 @@
            ,[descripcion]
            ,[idOrganizacion]
            ,[idPersonalRegistro]
-           ,[fechaRegistro]
+           
            ,[checkExtranjero]
            ,[checkDiscapacitado]
            ,[checkRSH]
@@ -97,7 +97,7 @@
            ,'$descripcion'
            ,$organizacion
            ,$usuario_id
-           ,'$fechaIngreso'
+           
            ,$check_nac 
            ,$check_dis
            ,0
