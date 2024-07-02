@@ -319,16 +319,7 @@ $(document).on("click", ".btnEditar", function(){
     //Se comprueba si la variable CHECKCREATE  1, en caso de serlo simplemente auto levanta el Check en caso de que no sea asi baja el check 
     //
 
-if (idOrganizacion >= 1) {
-    document.getElementById('more_infos').checked = true;
-    $("#conditional_parts").show();
-    checkOrganizacion = 1
-}
-else {
-    document.getElementById('more_infos').checked = false;
-    $("#conditional_parts").hide();
-    checkOrganizacion = 0
-}
+
 
 // Comprueba si el Check esta ON u OFF 
 checkboxNC = document.getElementById('more_infos');
@@ -343,6 +334,20 @@ checkboxNC.addEventListener('change', function () {
         checkOrganizacion = 0;
     }
 });
+
+if (idOrganizacion >= 1) {
+    document.getElementById('more_infos').checked = true;
+    $("#conditional_parts").show();
+    checkOrganizacion = 1
+    console.log('El checkbox está activado@@@.');
+}
+else {
+    document.getElementById('more_infos').checked = false;
+    $("#conditional_parts").hide();
+    checkOrganizacion = 0
+    console.log('El checkbox está desactivado@@@.');
+}
+
 });
 
 window.addEventListener("keydown", (e) => {

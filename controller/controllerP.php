@@ -187,9 +187,9 @@ WHERE P.checkOrganizacion = 0
         //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
         //imprimir los datos en JSON
-        //print($datos);
+      //print($datos);
       $CONSULTA = "SELECT id FROM A_PERSONA WHERE dni='$dni'";
-      $datos=$menu->listar($CONSULTA);
+      $datos=$menu->consultar($CONSULTA);
       $user_id=$datos[0]['id'];
       $CONSULTA2 = "SELECT id,fechaIngreso  FROM A_ORGANIZACION WHERE id='$idOrganizacion'";
       $datos=$menu->listar($CONSULTA2);
@@ -197,19 +197,23 @@ WHERE P.checkOrganizacion = 0
       $fechaIngreso = date('Y-m-d H:i');
 
       $dato_org=$menu->listar($CONSULTA2);
-
+      echo($user_id);
       $CONSULTA="UPDATE A_DETALLE_PO SET estado=0,fechaTermino='$fechaIngreso' WHERE idPersona='$user_id'";
+      ECHO("ESTE ES EL ECHO DE UPDATE PO");
+      echo($CONSULTA);
       $menu->listar($CONSULTA);
+    
 
       $CONSULTA ="INSERT INTO A_DETALLE_PO (idPersona, idOrganizacion, estado,fechaIngreso) VALUES ('$user_id','$idOrganizacion' , 1,'$fechaIngreso')";
+
       $menu->listar($CONSULTA);
 
-      $usuarioCambio = $_SESSION["test"];
-      $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-      ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Editar Usuario con Organizacion')";
-      $datos=$menu->listar($CONSULTA);
-      $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
-      $datos=$menu->listar($CONSULTA);
+       $usuarioCambio = $_SESSION["test"];
+       $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+       ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Editar Usuario con Organizacion')";
+       $datos=$menu->listar($CONSULTA);
+       $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
+       $datos=$menu->listar($CONSULTA);
       print($datos);
       
  
