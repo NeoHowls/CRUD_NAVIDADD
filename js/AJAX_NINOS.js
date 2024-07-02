@@ -45,25 +45,43 @@ let table = $('#myTable').DataTable( {
     },
     "columns":[
 
-        {"data": "id"},
-        {"data": "dni"},
-        {"data": "nombre"},
-        {"data": "sexo"},
+        {"data": "id"}, //1
+        {"data": "dni"}, //2
+        {"data": "nombre"}, //3
+        {"data": "sexo"}, //4
+        {"data": "sexo_vista"}, //5
+        {"data": "edad"}, //6
+        {"data": "fechaNacimiento"},//7
+        {"data": "periodo"},//8
 
-        {"data": "edad"},
-        {"data": "periodo"},
+        {"data": "fechaRegistro"},//10
+        {"data": "idNacionalidad"},//11
+        {"data": "checkExtranjero"},//12
+        
+        {"data": "checkCeguera"},//13
+        {"data": "checkSordera"},//14
+        {"data": "checkMudez"},//15
+        {"data": "checkFisica"},//16
+        {"data": "checkMental"},//17
+        {"data": "checkPsiquica"},//18
+
+        {"data": "idOrganizacion"},//19
+        {"data": "idPersonalRegistro"},//20
+        {"data": "checkDiscapacitado"},//21
+
+        {"data": "porcentajeCeguera"},//22
+        {"data": "porcentajeSordera"},//23
+        {"data": "porcentajeMudez"},//24
+        {"data": "porcentajeFisica"},//25
+        {"data": "porcentajeMental"},//26
+        {"data": "porcentajePsiquica"},//27
         {"data": "descripcion"},
-        {"data": "fechaRegistro"},
-        {"data": "fechaNacimiento"},
-        
-        
-        {"data": "etnia"},
-        {"data": "nacionalidad"},
-        {"data": "COMUNA"},
-        {"data": "tipo"},
-        { "data": "idNacionalidad"},
-        {"data": "checkExtranjero"},
-        
+        {"data": "etnia"},//28
+        {"data": "nacionalidad"},//29
+        {"data": "NOMBRE_ORGANIZACION"},//30
+        {"data": "tipo"},//31
+        {"data": "tipo_org"},//32
+        {"data": "idEtnia"},//33
         {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'><svg xmlns=http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'><path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/><path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/></svg></i>"}
 
         
@@ -381,19 +399,36 @@ $(document).on("click", ".btnEditar", function(){
     opcion = "edit_etnia";//editar
     fila = $(this).closest("tr");	        
     user_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
-    correlativo = fila.find('td:eq(1)').text();
-    dni = fila.find('td:eq(2)').text();
-    nombre = fila.find('td:eq(3)').text();
-    sexo = fila.find('td:eq(4)').text();
+
+    dni = fila.find('td:eq(1)').text();
+    nombre = fila.find('td:eq(2)').text();
+    sexo = fila.find('td:eq(3)').text();
     edad = fila.find('td:eq(5)').text();
-    periodo = fila.find('td:eq(6)').text();
-    descripcion = fila.find('td:eq(7)').text();
-    naciemiento = fila.find('td:eq(9)').text();
-    etnia = fila.find('td:eq(10)').text();
-    nacion = fila.find('td:eq(14)').text();
-    comuna = fila.find('td:eq(12)').text();
-    check_nac = fila.find('td:eq(15)').text();
-    $("#correlativo").val(correlativo);
+    periodo = fila.find('td:eq(7)').text();
+    descripcion = fila.find('td:eq(26)').text();
+    naciemiento = fila.find('td:eq(6)').text();
+    etnia = fila.find('td:eq(32)').text();
+    nacion = fila.find('td:eq(9)').text();
+    comuna = fila.find('td:eq(29)').text();
+    check_nac = fila.find('td:eq(10)').text();
+
+
+    //CHECK DISCAPACIDAD
+    check_dis = fila.find('td:eq(19)').text();
+    ceguera = fila.find('td:eq(11)').text();
+    sordera = fila.find('td:eq(12)').text();
+    mudez = fila.find('td:eq(13)').text();
+    fisica = fila.find('td:eq(14)').text();
+    mental = fila.find('td:eq(15)').text();
+    psiquica = fila.find('td:eq(16)').text();
+
+    ceguera_p = fila.find('td:eq(20)').text();
+    sordera_p = fila.find('td:eq(21)').text();
+    mudez_p = fila.find('td:eq(22)').text();
+    fisica_p = fila.find('td:eq(23)').text();
+    mental_p = fila.find('td:eq(24)').text();
+    psiquica_p = fila.find('td:eq(25)').text();
+    window.alert(etnia)
     $("#dni").val(dni);
     $("#nombre").val(nombre);
     $("#sexo").val(sexo);
@@ -405,6 +440,24 @@ $(document).on("click", ".btnEditar", function(){
     $("#nacion").val(nacion);
     $("#comuna").val(comuna);
 
+    //discapacidad
+    $("#more_info").val(check_dis);
+    $("#ceguera").val(ceguera);
+    $("#sordera").val(sordera);
+    $("#mudez").val(mudez);
+    $("#fisica").val(fisica);
+    $("#mental").val(mental);
+    $("#psiquica").val(psiquica);
+
+    //discapacidad
+
+    $("#ceguera_percil").val(ceguera_p);
+    $("#sordera_percil").val(sordera_p);
+    $("#mudez_percil").val(mudez_p);
+    $("#fisica_percil").val(fisica_p);
+    $("#mental_percil").val(mental_p);
+    $("#psiquica_percil").val(psiquica_p);
+
     if (check_nac == 1) {
         document.getElementById('more_infos').checked = true
         $("#conditional_parts").show();
@@ -415,7 +468,7 @@ $(document).on("click", ".btnEditar", function(){
         $("#conditional_parts").hide();
     }
   
-    if (check_nac == 1) {
+    if (check_dis == 1) {
         document.getElementById('more_info').checked = true
         $("#conditional_part").show();
     }

@@ -139,20 +139,46 @@
           A_NINOS.dni,
           A_NINOS.nombre,
           A_NINOS.sexo,
-
+		  CASE
+        WHEN [sexo] = 0 THEN 'MUJER'
+        WHEN [sexo]= 1 THEN 'HOMBRE'
+		END AS sexo_vista,
           A_NINOS.edad,
           A_NINOS.fechaNacimiento,
           A_NINOS.periodo,
           A_NINOS.descripcion,
           A_NINOS.fechaRegistro,
-
           A_NINOS.idNacionalidad,
           A_NINOS.checkExtranjero,
+		  A_NINOS.checkCeguera
+		  ,A_NINOS.checkSordera
+		  ,A_NINOS.checkMudez
+		  ,A_NINOS.checkFisica
+		  ,A_NINOS.checkMental
+		  ,A_NINOS.checkPsiquica
+		  ,A_NINOS.idOrganizacion
+		  ,A_NINOS.idPersonalRegistro
+
+		  ,A_NINOS.checkDiscapacitado
+		  ,A_NINOS.porcentajeCeguera
+		  ,A_NINOS.porcentajeSordera
+		  ,A_NINOS.porcentajeMudez
+		  ,A_NINOS.porcentajeFisica
+		  ,A_NINOS.porcentajeMental
+		  ,A_NINOS.porcentajePsiquica,
+
           A_ETNIA.etnia,
           A_NACIONALIDAD.nacionalidad,
-          A_ORGANIZACION.nombre AS COMUNA,
+          A_ORGANIZACION.nombre AS NOMBRE_ORGANIZACION,
            
-          A_ORGANIZACION.tipo
+          A_ORGANIZACION.tipo,
+          CASE
+			WHEN A_ORGANIZACION.tipo = 1 THEN 'JUNTA VECINAL'
+			WHEN A_ORGANIZACION.tipo = 2 THEN 'COMÍTE'
+			WHEN A_ORGANIZACION.tipo = 3 THEN 'CONDOMINIO'
+			WHEN A_ORGANIZACION.tipo = 4 THEN 'PROVIDENCIA'
+		END AS tipo_org,
+		A_NINOS.idEtnia
 
 
 
