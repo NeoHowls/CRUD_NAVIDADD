@@ -27,29 +27,47 @@
       <table id="myTable" class="table table-striped nowrap" style="width:100%">
         <thead>
             <tr>
+             
+                <th class = "never">id</th>  <!-- 0 -->
+                <th>dni</th> <!-- 1 -->
+                <th>nombre</th><!-- 2 -->
+                <th class = "never">sexo</th><!-- 3 -->
+                <th>sexo_vista</th><!-- 4 -->
+                <th>edad</th><!-- 5 -->
+                <th>fechaNacimiento</th><!-- 6 -->
+                <th>periodo</th><!-- 7 -->
                 
-                <th>id</th>
+                <th class = "never">fechaRegistro</th><!-- 8 -->
+                <th class = "never">idNacionalidad</th><!-- 9 -->
+                <th class = "never">checkExtranjero</th><!-- 10 -->
 
-                <th>dni</th>
-                <th>nombre</th>
-                <th>sexo</th>
+                <th class = "never">checkCeguera</th>mental<!-- 11 -->
+                <th class = "never">checkSordera</th><!-- 12-->
+                <th class = "never">checkMudez</th><!-- 13 -->
+                <th class = "never">checkFisica</th><!-- 14 -->
+                <th class = "never">checkMental</th><!-- 15 -->
+                <th class = "never">checkPsiquica</th><!-- 16 -->
 
-                <th>edad</th>
-                <th>periodo</th>
-                <th>descripcion</th>
-                <th>fechaRegistro</th>
-                <th>Naciemiento</th>
-                
-                <th>etnia</th>
-                <th class="none">nacionalidad</th>
-                <th class="none">comuna</th>
-                <th class="none">tipo</th>
-                <th class="never">id_nac</th>
-                <th class="none">check_extra</th>
-                
-                
+                <th class = "never">idOrganizacion</th><!-- 17 -->
+                <th class = "never">idPersonalRegistro</th><!-- 18 -->
+                <th class = "never">checkDiscapacitado</th><!-- 19 -->
 
-                <th class='all'>acciones</th>
+                <th>porcentajeCeguera</th><!-- 20 -->
+                <th>porcentajeSordera</th><!-- 21 -->
+                <th>porcentajeMudez</th><!-- 22 -->
+                <th>porcentajeFisica</th><!-- 23 -->
+                <th>porcentajeMental</th><!-- 24 -->
+                <th>porcentajePsiquica</th><!-- 25 -->
+                <th>descripcion</th><!-- 26 -->
+                <th>etnia</th><!-- 27 -->
+                <th>nacionalidad</th><!-- 28 -->
+                <th>NOMBRE_ORGANIZACION</th><!-- 29 -->
+                <th class = "never">tipo</th><!-- 30 -->
+                <th class >tipo_org</th><!-- 31 -->
+                <th class class = "never">idEtnia</th><!-- 32 -->
+                <th class='all'>acciones</th><!-- 32 -->
+
+
             </tr>
         </thead>
         <tbody>
