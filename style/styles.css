@@ -497,3 +497,7 @@ p {
 th{
   text-align: center;
 }
+
+.col-form-label{
+  color: #111;
+}
