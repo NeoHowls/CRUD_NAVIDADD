@@ -3,7 +3,8 @@
 ob_start();
 
 // Ruta absoluta a la imagen
-$logoPath = 'C:\\xampp\\htdocs\\Proyecto_navidad\\CRUD_NAVIDADD\\images\\MahoH.png';
+// $logoPath = 'C:\\xampp\\htdocs\\Proyecto_navidad\\CRUD_NAVIDADD\\images\\MahoH.png';
+$logoPath = './images/MahoH.png';
 if (file_exists($logoPath)) {
     $logoBase64 = base64_encode(file_get_contents($logoPath));
     $logoDataUri = 'data:image/png;base64,' . $logoBase64;
