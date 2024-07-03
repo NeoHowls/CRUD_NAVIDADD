@@ -102,8 +102,7 @@ SELECT
     NULL AS fechaTermino,
     0 AS estado
 FROM A_PERSONA P
-WHERE P.checkOrganizacion = 0
-"; 
+WHERE P.checkOrganizacion = 0"; 
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
     //imprimir los datos en JSON

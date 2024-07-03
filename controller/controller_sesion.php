@@ -33,7 +33,7 @@ if($datos === TRUE){ ;
 
   $_SESSION["tipo_usuario"]=$datos[0]['tipo'];
 
-  if ($_SESSION["id_p"] == 4) {
+  if ($_SESSION["id_p"] == 10) {
              echo '</div>
           <script type="text/javascript"> 
           Swal.fire({
