@@ -210,7 +210,7 @@ $('#formUsuarios').submit(function(e){
     usuario_id = id_usuario;
     organizacion = $.trim($('#O_ID').val());
     // window.alert(ceguera_p+" "+sordera_p+" "+mudez_p+" "+fisica_p+" "+mental_p+" "+psiquica_p )
-    //console.log(opcion)                            
+    // // //console.log(periodo)                            
     //EJECUTA EL AJAX
     $.ajax({
         //Laa URL es similar al AJAX principaal pero en el op= capturaa la opcion del boton para ejecutar la consulta correcta
@@ -240,7 +240,10 @@ $('#formUsuarios').submit(function(e){
 
 //para limpiar los campos antes de dar de Alta una Persona
 $("#btnNuevo").click(function(){
-    const hoy_fecha = new Date().toISOString().substring(0, 10);
+
+    const periodo_fecha = document.getElementById("periodo").value
+    window.alert (periodo_fecha)
+    const hoy_fecha = `${periodo_fecha}-12-30`;
 
     const fecha_hace_11_anios = new Date();
     fecha_hace_11_anios.setFullYear(fecha_hace_11_anios.getFullYear() - 10);
