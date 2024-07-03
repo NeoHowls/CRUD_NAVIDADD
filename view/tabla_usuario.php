@@ -11,7 +11,7 @@
                   </button>
               </div>
           <form id="formUsuarios">    
-          <div class="modal-body" style="background: #9C9C9C">
+          <div class="modal-body" style="background: #E7E7E7">
                   <div class="row">
     <div class="col-lg-12" style = "text-align: center;" >   
     <label for="" class="col-form-label">Nombre:</label>

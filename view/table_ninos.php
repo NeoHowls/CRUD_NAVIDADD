@@ -92,7 +92,7 @@
               </div><!-- modal-header-->
 
               <form id="formUsuarios">    
-                  <div class="modal-body" style="background: #9C9C9C">
+                  <div class="modal-body" style="background: #E7E7E7">
                       <div class="row">
                      
 
