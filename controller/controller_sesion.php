@@ -9,11 +9,11 @@ $PASS = (isset($_POST['contrasena'])) ? $_POST['contrasena'] : '';
 $datos=$menu->loginPersonal($USUARIO,$PASS);
 if($datos === TRUE){ ;
   session_start();
-  $datos=$menu->datosPersonal($USUARIO,$PASS);
-  
+  $datos=$menu->datosPersonal($USUARIO,$PASS);  
   $_SESSION["id_persona"]=$datos[0]['id_persona'];
   $_SESSION["test"]=$datos[0]['nombre'];
   $_SESSION["perfil"]=ucfirst($datos[0]['PERFIL']);
+  $_SESSION["habilitado"]=ucfirst($datos[0]['checkHabilitado']);
   $_SESSION["id_p"]=$datos[0]['id'];
   $_SESSION["CCN"]=$datos[0]['checkCreateN'];
   $_SESSION["CUN"]=$datos[0]['checkUpdateN'];
@@ -27,12 +27,21 @@ if($datos === TRUE){ ;
   $_SESSION["CUP"]=$datos[0]['checkUpdateP'];
   $_SESSION["CRP"]=$datos[0]['checkReadP'];
   $_SESSION["CDP"]=$datos[0]['checkDeleteP']; 
-
-
-
-
   $_SESSION["tipo_usuario"]=$datos[0]['tipo'];
-
+  
+  
+  if ($_SESSION["habilitado"] == 0) {
+    echo '<script type="text/javascript"> 
+    Swal.fire({
+        icon: "error",
+        title: "ACCESO DENEGADO",
+        text: "No puede acceder a la página, su cuenta está deshabilitada.",
+        width: 300,
+        showConfirmButton: false,
+        timer: 3000 
+    });
+  </script>';
+  }else{
   if ($_SESSION["id_p"] == 10) {
              echo '</div>
           <script type="text/javascript"> 
@@ -67,10 +76,10 @@ if($datos === TRUE){ ;
 
           </script>';
   }
+}
+
+  
   ?>
-
-
-
   <?php
 
 }else{

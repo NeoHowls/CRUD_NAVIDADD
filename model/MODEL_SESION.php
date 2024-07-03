@@ -37,7 +37,7 @@
             A_PERFIL.PERFIL
             FROM [dbo].[A_PERSONA]
             INNER JOIN A_PERFIL ON A_PERSONA.idPerfil = A_PERFIL.id
-            WHERE A_PERSONA.usuario = :rut AND A_PERSONA.contrasena = :pass AND A_PERSONA.checkHabilitado = 1
+            WHERE A_PERSONA.usuario = :rut AND A_PERSONA.contrasena = :pass 
             ";
             $parametros = array("rut"=>$user,"pass"=>$contra);
             $this->connect();
@@ -63,6 +63,7 @@
             A_PERSONA.nombre,
             A_PERSONA.usuario,
             A_PERSONA.contrasena,
+            A_PERSONA.checkHabilitado,
             A_PERFIL.id,
             A_PERFIL.PERFIL,
             A_PERFIL.checkCreateN,
@@ -80,7 +81,7 @@
             A_PERFIL.tipo		
             FROM [dbo].[A_PERSONA]
             INNER JOIN A_PERFIL ON A_PERSONA.idPerfil = A_PERFIL.id
-            WHERE A_PERSONA.usuario = :rut AND A_PERSONA.contrasena = :pass AND A_PERSONA.checkHabilitado = 1
+            WHERE A_PERSONA.usuario = :rut AND A_PERSONA.contrasena = :pass
             ";
             $parametros = array("rut"=>$user,"pass"=>$contra);
             $this->connect();
