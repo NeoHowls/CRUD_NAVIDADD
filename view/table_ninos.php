@@ -9,8 +9,7 @@
     </div>
     <div class="card-body">
       <p class="card-text">
-        <?php echo "Bienvenido ".$_SESSION["perfil"]." ".$_SESSION["test"]." ".$_SESSION["id_p"]; ?>
-      </p>
+              </p>
       <!-- <div class="container"> -->
         <div class="row">
           <div class="col-lg-12">            
