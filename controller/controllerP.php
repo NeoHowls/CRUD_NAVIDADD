@@ -54,7 +54,7 @@ session_start();
 	CASE
 			WHEN O.tipo= NULL THEN 'asd'
 			WHEN O.tipo= 1 THEN 'JUNTA VECINAL'
-			WHEN O.tipo= 2 THEN 'COMÍTE'
+			WHEN O.tipo= 2 THEN 'COMÍTE VIVIENDA'
 			WHEN O.tipo= 3 THEN 'CONDOMINIO'
 			WHEN O.tipo= 4 THEN 'PROVIDENCIA'	
 	END AS organizacion,

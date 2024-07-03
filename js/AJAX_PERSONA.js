@@ -501,20 +501,37 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
   
 }
 //table.draw();
-function validatePhoneNumber(input) {
-    // Asegurarse de que el prefijo "+" no se pueda borrar
-    if (input.value.charAt(0) !== '+') {
-        input.value = '+' + input.value.replace(/[^0-9]/g, '');
-    } else {
-        // Permitir solo números después del prefijo "+"
-        input.value = '+' + input.value.substring(1).replace(/[^0-9]/g, '');
-    }
 
-    // Mostrar mensaje de error si se intenta ingresar caracteres no permitidos
-    const errorMessage = document.querySelector('.help-block');
-    if (/[^0-9]/.test(input.value.substring(1))) {
-        errorMessage.textContent = 'Por favor ingrese solo números.';
-    } else {
-        errorMessage.textContent = '';
-    }
-}
+ // Inicializa el campo con el prefijo "+569"
+ document.getElementById('telefono').value = '+569';
+
+ function validatePhoneNumber(input) {
+     // Asegurarse de que el prefijo "+569" no se pueda borrar
+     if (input.value.indexOf('+569') !== 0) {
+         input.value = '+569' + input.value.substring(4).replace(/[^0-9]/g, '');
+     } else {
+         // Permitir solo números después del prefijo "+569"
+         input.value = '+569' + input.value.substring(4).replace(/[^0-9]/g, '');
+     }
+
+     // Limitar la longitud total del campo a 15 caracteres
+     if (input.value.length > 15) {
+         input.value = input.value.substring(0, 15);
+     }
+
+     // Mostrar mensaje de error si se intenta ingresar caracteres no permitidos
+     const errorMessage = document.querySelector('.help-block');
+     if (/[^0-9]/.test(input.value.substring(4))) {
+         errorMessage.textContent = 'Por favor ingrese solo números.';
+     } else {
+         errorMessage.textContent = '';
+     }
+ }
+
+ // Evitar que se pueda borrar el prefijo usando el evento keydown
+ document.getElementById('telefono').addEventListener('keydown', function(e) {
+     const key = e.key;
+     if (this.selectionStart < 4 && (key === 'Backspace' || key === 'Delete')) {
+         e.preventDefault();
+     }
+ });
