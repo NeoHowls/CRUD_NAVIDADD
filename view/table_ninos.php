@@ -126,7 +126,8 @@
                               <label for="" class="col-form-label">Periodo:</label>
                               <select name="cars" id="periodo" class = "form-control">
                                 <?php
-                                  for($i=2023;$i<=date("Y");$i++){
+                                  //for($i=2023;$i<=date("Y");$i++){
+                                    for($i=2023;$i<=2025;$i++){
                                     echo ("<option value=".$i.">".$i."</option>");
                                   }
                                 ?>
@@ -160,7 +161,7 @@
                       <div class="row">
                           <div class="col-lg-4" style = "text-align: center;">
                               <label for="" class="col-form-label">Nacimiento:</label>
-                              <input type="date" name="fecha" max="<?= date("Y-m-d") ?>" class="form-control" id="Naciemiento">
+                              <input type="date" name='fecha'  class="form-control" id="Naciemiento">
                               <br>
                           </div>
                           <div class="col-lg-2" style = "text-align: center;">
