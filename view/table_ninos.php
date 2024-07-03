@@ -126,7 +126,8 @@
                               <label for="" class="col-form-label">Periodo:</label>
                               <select name="cars" id="periodo" class = "form-control">
                                 <?php
-                                  for($i=2023;$i<=date("Y");$i++){
+                                  //for($i=2023;$i<=date("Y");$i++){
+                                    for($i=2023;$i<=2025;$i++){
                                     echo ("<option value=".$i.">".$i."</option>");
                                   }
                                 ?>
