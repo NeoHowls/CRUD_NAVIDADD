@@ -37,7 +37,7 @@
                   </button>
               </div>
           <form id="formUsuarios">    
-          <div class="modal-body">
+          <div class="modal-body" style="background: #E7E7E7">
                   <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group" style = "text-align: center;">
@@ -92,7 +92,7 @@
                     </div>
                       
                   </div>
-              <div class="modal-footer">
+              <div class="modal-footer" style="justify-content: center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                   <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
               </div>

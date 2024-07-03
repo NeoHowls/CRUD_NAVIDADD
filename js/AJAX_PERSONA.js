@@ -501,3 +501,20 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
   
 }
 //table.draw();
+function validatePhoneNumber(input) {
+    // Asegurarse de que el prefijo "+" no se pueda borrar
+    if (input.value.charAt(0) !== '+') {
+        input.value = '+' + input.value.replace(/[^0-9]/g, '');
+    } else {
+        // Permitir solo números después del prefijo "+"
+        input.value = '+' + input.value.substring(1).replace(/[^0-9]/g, '');
+    }
+
+    // Mostrar mensaje de error si se intenta ingresar caracteres no permitidos
+    const errorMessage = document.querySelector('.help-block');
+    if (/[^0-9]/.test(input.value.substring(1))) {
+        errorMessage.textContent = 'Por favor ingrese solo números.';
+    } else {
+        errorMessage.textContent = '';
+    }
+}

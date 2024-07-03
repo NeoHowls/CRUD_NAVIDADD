@@ -57,8 +57,8 @@
                                         <div class="form-group row">
                                             <div class="col-md-6">
                                                 <label for="telefono" class="col-form-label text-center">Teléfono:</label>
-                                                <div class="text-center">
-                                                    <input type="number" class="form-control" id="telefono" required data-error="Por favor ingrese su Teléfono" min="0" max="999999999" onKeyPress="if(this.value.length==9) return false;">
+                                                <div class="text-center phone-input">
+                                                    <input type="text" class="form-control" id="telefono" placeholder="569XXXXXXXX" data-error="Por favor ingrese su Teléfono" min="0" max="999999999" onKeyPress="if(this.value.length==12) return false;" oninput="validatePhoneNumber(this)">
                                                     <div class="help-block with-errors"></div>
                                                 </div>
                                             </div>
