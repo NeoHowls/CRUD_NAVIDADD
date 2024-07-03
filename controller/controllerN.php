@@ -121,7 +121,33 @@
     case "edit_etnia":
       //define la consulta
       echo $etnia;
-      $CONSULTA = "UPDATE A_ETNIA SET etnia='$etnia' WHERE id='$user_id'";
+      $CONSULTA = "UPDATE [dbo].[A_NINOS]
+   SET [dni] = '$dni'
+      ,[nombre] = '$nombre'
+      ,[sexo] = $sexo
+      ,[edad] = $edad
+      ,[fechaNacimiento] = '$naciemiento'
+      ,[idNacionalidad] = '$nacion '
+      ,[idEtnia] = '$etnia '
+      ,[periodo] = '$periodo'
+      ,[checkCeguera] = $ceguera
+      ,[checkSordera] = $sordera
+      ,[checkMudez] = $mudez
+      ,[checkFisica] = $fisica
+      ,[checkMental] = $mental
+      ,[checkPsiquica] = $psiquica
+      ,[descripcion] = '$descripcion'
+      ,[idOrganizacion] = '$organizacion'
+      ,[checkExtranjero] = '$check_nac'
+      ,[checkDiscapacitado] = '$check_dis'
+
+      ,[porcentajeCeguera] = $ceguera_p 
+      ,[porcentajeSordera] = $sordera_p
+      ,[porcentajeMudez] = $mudez_p
+      ,[porcentajeFisica] = $fisica_p
+      ,[porcentajeMental] = $mental_p 
+      ,[porcentajePsiquica] = $psiquica_p
+ WHERE id = $user_id ";
       //llamo al metodo listar y le doy la variable CONSULTA
       echo $etnia;
       $datos=$menu->listar($CONSULTA);

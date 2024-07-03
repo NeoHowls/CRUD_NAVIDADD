@@ -173,7 +173,7 @@ $('#formUsuarios').submit(function(e){
     edad = calcularEdad(naciemiento)
     usuario_id = id_usuario;
     organizacion = $.trim($('#O_ID').val());
-    window.alert(ceguera_p+" "+sordera_p+" "+mudez_p+" "+fisica_p+" "+mental_p+" "+psiquica_p )
+    // window.alert(ceguera_p+" "+sordera_p+" "+mudez_p+" "+fisica_p+" "+mental_p+" "+psiquica_p )
     //console.log(opcion)                            
     //EJECUTA EL AJAX
     $.ajax({
@@ -436,7 +436,7 @@ $(document).on("click", ".btnEditar", function(){
     fisica_p = fila.find('td:eq(23)').text();
     mental_p = fila.find('td:eq(24)').text();
     psiquica_p = fila.find('td:eq(25)').text();
-    window.alert(etnia)
+    // window.alert(etnia)
     $("#dni").val(dni);
     $("#nombre").val(nombre);
     $("#sexo").val(sexo);
@@ -469,13 +469,13 @@ $(document).on("click", ".btnEditar", function(){
     if (check_nac == 1) {
         document.getElementById('more_infos').checked = true
         $("#conditional_parts").show();
-        window.alert("holsssa")
+        // window.alert("holsssa")
 
     }
     else {
         document.getElementById('more_infos').checked = false
         $("#conditional_parts").hide();
-        window.alert("hola")
+        // window.alert("hola")
     }
     checkboxNAC = document.getElementById('more_infos');
     checkboxNAC.addEventListener('change', function () {
