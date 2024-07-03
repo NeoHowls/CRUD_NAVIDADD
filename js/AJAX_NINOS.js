@@ -52,8 +52,12 @@ function calendario(){
     });
 
 }
-function calcularEdad(fecha) {
-    var hoy = new Date();
+function calcularEdad(fecha, periodo) {
+    var hoy = new Date
+    hoy.setFullYear(periodo);
+    hoy.setMonth(11); // 11 representa diciembre (los meses son indexados desde 0)
+    hoy.setDate(30);
+    console.log(hoy)
     var cumpleanos = new Date(fecha);
     var edad = hoy.getFullYear() - cumpleanos.getFullYear();
     var m = hoy.getMonth() - cumpleanos.getMonth();
@@ -206,11 +210,11 @@ $('#formUsuarios').submit(function(e){
     // check_nac = $.trim($('#check_nac').val());
     // edad = $.trim($('#edad').val());
     etnia = $.trim($('#etnia').val());
-    edad = calcularEdad(naciemiento)
+    edad = calcularEdad(naciemiento, periodo)
     usuario_id = id_usuario;
     organizacion = $.trim($('#O_ID').val());
     // window.alert(ceguera_p+" "+sordera_p+" "+mudez_p+" "+fisica_p+" "+mental_p+" "+psiquica_p )
-    // // //console.log(periodo)                            
+    window.alert (periodo)                        
     //EJECUTA EL AJAX
     $.ajax({
         //Laa URL es similar al AJAX principaal pero en el op= capturaa la opcion del boton para ejecutar la consulta correcta
@@ -241,10 +245,8 @@ $('#formUsuarios').submit(function(e){
 //para limpiar los campos antes de dar de Alta una Persona
 $("#btnNuevo").click(function(){
 
+    
     const periodo_fecha = document.getElementById("periodo").value
-    window.alert (periodo_fecha)
-    const hoy_fecha = `${periodo_fecha}-12-30`;
-
     const fecha_hace_11_anios = new Date();
     fecha_hace_11_anios.setFullYear(fecha_hace_11_anios.getFullYear() - 10);
     const anio_hace_11_anios = fecha_hace_11_anios.getFullYear();
@@ -258,7 +260,11 @@ $("#btnNuevo").click(function(){
 
     const fecha_minima120 = `${anio_hace_120_anios}-01-01`;
 
-    document.getElementById("Naciemiento").max = hoy_fecha
+    
+
+ 
+    
+
     opcion = "add_etnia"; //alta           
     user_id=null;
     check_nac = 0;
@@ -327,12 +333,14 @@ $("#btnNuevo").click(function(){
 	let anio = fecha.getFullYear();
  
     selections = document.getElementById('Naciemiento');
+    select_periodo = document.getElementById('periodo');
     selections.addEventListener('change', function () {
-        edad = calcularEdad(selections.value)
+        edad = calcularEdad(selections.value, select_periodo.value)
     
             document.getElementById('edad').value = edad
 
     })
+
     usuario_id = id_usuario
     
     $("#formUsuarios").trigger("reset");
@@ -344,6 +352,15 @@ $("#btnNuevo").click(function(){
     }else{
         $("#periodo").prop('disabled', false);
     }
+    const hoy_fecha = `${anio}-12-30`
+    document.getElementById("Naciemiento").max = hoy_fecha
+    $("#periodo").on("change", function() {
+        const periodo_fecha = document.getElementById("periodo").value
+        const hoy_fecha = `${periodo_fecha}-12-30`;
+        document.getElementById("Naciemiento").max = hoy_fecha
+        window.alert("g")
+        
+    });
     document.getElementById("ceguera_percil").disabled = true;
     checkboxCeguera = document.getElementById('ceguera');
     checkboxCeguera.addEventListener('change', function () {
@@ -447,8 +464,9 @@ $("#btnNuevo").click(function(){
     });
 
     selections = document.getElementById('Naciemiento');
+    select_periodo = document.getElementById('periodo');
     selections.addEventListener('change', function () {
-        edad = calcularEdad(selections.value)
+        edad = calcularEdad(selections.value, select_periodo.value)
     
             document.getElementById('edad').value = edad
 
