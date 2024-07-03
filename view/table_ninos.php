@@ -160,7 +160,7 @@
                       <div class="row">
                           <div class="col-lg-4" style = "text-align: center;">
                               <label for="" class="col-form-label">Nacimiento:</label>
-                              <input type="date" class="form-control" id="Naciemiento">
+                              <input type="date" name="fecha" max="<?= date("Y-m-d") ?>" class="form-control" id="Naciemiento">
                               <br>
                           </div>
                           <div class="col-lg-2" style = "text-align: center;">
