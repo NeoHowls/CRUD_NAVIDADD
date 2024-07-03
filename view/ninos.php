@@ -42,7 +42,7 @@ include_once("./nav_bar.php");
 
 	
 	  require_once '../controller/controller_vista.php';
-    var_dump($_SESSION);
+    //var_dump($_SESSION);
       $nu = 3;
 	  //permisos
 	  if($nu == 1){
