@@ -4,6 +4,22 @@ $('#more_info').change(function() {
      }
   else{
         $("#conditional_part").show();
+        window.addEventListener('DOMContentLoaded', (evento) => {
+            /* Obtenemos la fecha de hoy en formato ISO */
+            const hoy_fecha = new Date().toISOString().substring(0, 10);
+            
+            /* Calculamos la fecha hace 11 años */
+            const fecha_hace_11_anios = new Date();
+            fecha_hace_11_anios.setFullYear(fecha_hace_11_anios.getFullYear() - 11);
+            const anio_hace_11_anios = fecha_hace_11_anios.getFullYear();
+            
+            /* Establecemos la fecha mínima desde enero de hace 11 años */
+            const fecha_minima = `${anio_hace_11_anios}-01-01`;
+            
+            /* Buscamos la etiqueta del input por su selector */
+            document.querySelector("input[name='fecha']").max = hoy_fecha;
+            document.querySelector("input[name='fecha']").min = fecha_minima;
+        });
   }
 });
 
@@ -16,6 +32,27 @@ $('#more_infos').change(function() {
   }
 });
  
+
+
+function calendario(){
+    window.addEventListener('DOMContentLoaded', (evento) => {
+        /* Obtenemos la fecha de hoy en formato ISO */
+        const hoy_fecha = new Date().toISOString().substring(0, 10);
+        
+        /* Calculamos la fecha hace 11 años */
+        const fecha_hace_11_anios = new Date();
+        fecha_hace_11_anios.setFullYear(fecha_hace_11_anios.getFullYear() - 11);
+        const anio_hace_11_anios = fecha_hace_11_anios.getFullYear();
+        
+        /* Establecemos la fecha mínima desde enero de hace 11 años */
+        const fecha_minima = `${anio_hace_11_anios}-01-01`;
+        
+        /* Buscamos la etiqueta del input por su selector */
+        document.querySelector("input[name='fecha']").max = hoy_fecha;
+        document.querySelector("input[name='fecha']").min = fecha_minima;
+    });
+
+}
 function calcularEdad(fecha) {
     var hoy = new Date();
     var cumpleanos = new Date(fecha);
@@ -257,10 +294,11 @@ $("#btnNuevo").click(function(){
         } else {
             console.log('El checkbox está desactivado.');
             check_dis = 0;
+            
         }
     });
 
-
+    
     
     
 
@@ -277,6 +315,7 @@ $("#btnNuevo").click(function(){
     usuario_id = id_usuario
     
     $("#formUsuarios").trigger("reset");
+    
 
     $('#periodo').val(anio);
     if(userTipo==2){
@@ -395,7 +434,9 @@ $("#btnNuevo").click(function(){
     })
 
     document.getElementById('edad').disabled = true
+    
     $(".modal-header").css( "background-color", "#17a2b8");
+    
     $(".modal-header").css( "color", "white" );
     $(".modal-title").text("Añadir Niño");
     $('#modalCRUD').modal('show');	    
