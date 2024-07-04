@@ -10,6 +10,15 @@
     <div class="card-body">
       <p class="card-text">
               </p>
+
+              <table class="inputs">
+        <tbody><tr>
+            <select name="periodo" id="select_periodo">
+                <option value=2023>2023</option>
+                <option value=2024>2024</option>
+                <option value=2025>2025</option>
+            </select>
+    </tbody></table>
       <!-- <div class="container"> -->
         <div class="row">
           <div class="col-lg-12">            

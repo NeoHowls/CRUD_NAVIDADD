@@ -63,8 +63,8 @@
 	}
     ?>
 					<li class="nav-item">
-					<a class="btn btn-danger nav-link"  onclick="myFunction()">
-						CERRAR  
+					<a class="nav-link"  onclick="myFunction()">
+						Cerrar
             </a>
 						</li>
 <p id="demo"></p>

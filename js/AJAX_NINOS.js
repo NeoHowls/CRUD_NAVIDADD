@@ -67,43 +67,43 @@ let table = $('#myTable').DataTable( {
     },
     "columns":[
 
-        {"data": "id"}, //1
-        {"data": "dni"}, //2
-        {"data": "nombre"}, //3
-        {"data": "sexo"}, //4
-        {"data": "sexo_vista"}, //5
-        {"data": "edad"}, //6
-        {"data": "fechaNacimiento"},//7
-        {"data": "periodo"},//8
+        {"data": "id"}, //0
+        {"data": "dni"}, //1
+        {"data": "nombre"}, //2
+        {"data": "sexo"}, //3
+        {"data": "sexo_vista"}, //4
+        {"data": "edad"}, //5
+        {"data": "fechaNacimiento"},//6
+        {"data": "periodo"},//7
 
-        {"data": "fechaRegistro"},//10
-        {"data": "idNacionalidad"},//11
-        {"data": "checkExtranjero"},//12
+        {"data": "fechaRegistro"},//8
+        {"data": "idNacionalidad"},//9
+        {"data": "checkExtranjero"},//10
         
-        {"data": "checkCeguera"},//13
-        {"data": "checkSordera"},//14
-        {"data": "checkMudez"},//15
-        {"data": "checkFisica"},//16
-        {"data": "checkMental"},//17
-        {"data": "checkPsiquica"},//18
+        {"data": "checkCeguera"},//11
+        {"data": "checkSordera"},//12
+        {"data": "checkMudez"},//13
+        {"data": "checkFisica"},//14
+        {"data": "checkMental"},//15
+        {"data": "checkPsiquica"},//16
 
-        {"data": "idOrganizacion"},//19
-        {"data": "idPersonalRegistro"},//20
-        {"data": "checkDiscapacitado"},//21
+        {"data": "idOrganizacion"},//17
+        {"data": "idPersonalRegistro"},//18
+        {"data": "checkDiscapacitado"},//19
 
-        {"data": "porcentajeCeguera"},//22
-        {"data": "porcentajeSordera"},//23
-        {"data": "porcentajeMudez"},//24
-        {"data": "porcentajeFisica"},//25
-        {"data": "porcentajeMental"},//26
-        {"data": "porcentajePsiquica"},//27
-        {"data": "descripcion"},
-        {"data": "etnia"},//28
-        {"data": "nacionalidad"},//29
-        {"data": "NOMBRE_ORGANIZACION"},//30
-        {"data": "tipo"},//31
-        {"data": "tipo_org"},//32
-        {"data": "idEtnia"},//33
+        {"data": "porcentajeCeguera"},//20
+        {"data": "porcentajeSordera"},//21
+        {"data": "porcentajeMudez"},//22
+        {"data": "porcentajeFisica"},//23
+        {"data": "porcentajeMental"},//24
+        {"data": "porcentajePsiquica"},//25
+        {"data": "descripcion"},//26
+        {"data": "etnia"},//27
+        {"data": "nacionalidad"},//28
+        {"data": "NOMBRE_ORGANIZACION"},//29
+        {"data": "tipo"},//30
+        {"data": "tipo_org"},//31
+        {"data": "idEtnia"},//32
         {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'><svg xmlns=http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'><path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/><path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/></svg></i>"}
 
         
@@ -156,6 +156,36 @@ let table = $('#myTable').DataTable( {
         }
     }
 } );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$(document).ready(function() {
+
+    $('#select_periodo').on('change', function(){
+        table.draw();
+
+    })
+
+
+})
+
+$.fn.dataTableExt.afnFiltering.push(
+    function(setting, data, index){
+        
+    }
+);
 
 var fila; //captura la fila, para editar o eliminar
 //submit para el Alta y Actualización
