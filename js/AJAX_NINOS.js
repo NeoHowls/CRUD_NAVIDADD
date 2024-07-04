@@ -178,23 +178,42 @@ $(document).ready(function() {
 
     })
 
+    $('#select_org').on('change', function(){
+        table.draw();
+
+    })
+
 
 })
 
+const hoy = new Date();
+const anioActual = hoy.getFullYear();
+$('#select_periodo').val(anioActual);
 $.fn.dataTableExt.afnFiltering.push(
     function(setting, data, index){
         var select_periodo = $('select#select_periodo option:selected').val();
         var periodo_columna = data[7]
-        console.log(periodo_columna)
-        console.log(select_periodo)
-        if (select_periodo == periodo_columna) {
+        var select_org = $('select#select_org option:selected').val();
+        var org_columna = data[17]
+        console.log(select_org)
+        console.log(org_columna)
+        if (select_org == 0) {
+            if (select_periodo == periodo_columna & select_org <= org_columna) {
+                return true;
+            }
+            
+        }
+        else if (select_periodo == periodo_columna & select_org == org_columna)  {
             return true;
             
         }
         return false
     
     }
+
+
 );
+
 
 var fila; //captura la fila, para editar o eliminar
 //submit para el Alta y Actualización

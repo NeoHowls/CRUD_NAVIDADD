@@ -13,9 +13,26 @@
 
               <table class="inputs">
         <tbody><tr>
+        <div class="row">
+            <div class="col-lg-3" style = "text-align: center;">
+            </div>
+            <div class="col-lg-3" style = "text-align: center;">                    
+                              <label for="" class="col-form-label">Organizacion:</label>
+                              
+                              <?php include_once("../controller/controller_mostrarO.php") ?>
+                                <select name="cars" id="select_org" class="form-control">
+                                    <option value=0>Mostrar todo</option>
+                                    <?php
+                                    foreach($datos as $key => $value){
+                                        echo '<option value="'.$value['id'].'">'.$value['nombre'].'</option>'; 
+                                    }
+                                    ?>
+                                </select>
+            </div>
             <div class="col-lg-3" style = "text-align: center;">   
                               <label for="" class="col-form-label">Periodo:</label>
                               <select name="cars" id="select_periodo" class = "form-control">
+                                
                                 <?php
                                   //for($i=2023;$i<=date("Y");$i++){
                                     for($i=2023;$i<=2025;$i++){
@@ -27,6 +44,9 @@
                                 <option value=3>2024</option>
                                 <option value=4>2025</option> -->
                               </select>
+                          </div>
+                          <div class="col-lg-3" style = "text-align: center;">
+                          </div>
                           </div>
     </tbody></table>
       <!-- <div class="container"> -->
@@ -82,7 +102,7 @@
                 <th class = "none">NOMBRE_ORGANIZACION</th><!-- 29 -->
                 <th class = "never">tipo</th><!-- 30 -->
                 <th class = "none" >tipo_org</th><!-- 31 -->
-                <th class class = "never">idEtnia</th><!-- 32 -->
+                <th class  = "never">idEtnia</th><!-- 32 -->
                 <th class='all'>acciones</th><!-- 32 -->
 
 
