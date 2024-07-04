@@ -161,16 +161,6 @@ let table = $('#myTable').DataTable( {
 
 
 
-
-
-
-
-
-
-
-
-
-
 $(document).ready(function() {
 
     $('#select_periodo').on('change', function(){
@@ -182,6 +172,11 @@ $(document).ready(function() {
         table.draw();
 
     })
+
+    $("#opcion").on('change', function () {
+        const opcionSeleccionada = $(this).val();
+        $.post("table_ninos.php", { opcion: opcionSeleccionada })
+    });
 
 
 })

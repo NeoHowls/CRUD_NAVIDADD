@@ -15,11 +15,34 @@
         <tbody><tr>
         <div class="row">
             <div class="col-lg-3" style = "text-align: center;">
+                <label for="pais">Opciones:</label>
+            <select name="opcion" id="opcion" class="form-control" required>
+                <option value="0" >Seleccione...</option>
+                <option value="1" >Opción 1</option>
+                <option value="2">Opción 2</option>
+                <option value="3">Opción 3</option>
+            </select>    
             </div>
             <div class="col-lg-3" style = "text-align: center;">                    
                               <label for="" class="col-form-label">Organizacion:</label>
                               
-                              <?php include_once("../controller/controller_mostrarO.php") ?>
+                              
+                              <?php 
+                              $opcion = $_POST['opcion'];
+                              if ($opcion == 0) {
+                                include_once("../controller/controller_mostrarO.php");
+                            } elseif ($opcion == 1) {
+                                include_once("../controller/controller_mostrarO1.php");
+                            } elseif ($opcion == 2) {
+                                include_once("../controller/controller_mostrarO2.php");
+                            } elseif ($opcion == 3) {
+                                include_once("../controller/controller_mostrarO3.php");
+                            } elseif ($opcion == 4) {
+                                include_once("../controller/controller_mostrarO4.php");
+                            }
+
+                            
+                             ?>
                                 <select name="cars" id="select_org" class="form-control">
                                     <option value=0>Mostrar todo</option>
                                     <?php

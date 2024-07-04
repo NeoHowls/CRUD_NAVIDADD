@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector Dinámico</title>
+</head>
+<body>
+    <h1>Selecciona una opción:</h1>
+    <select id="miSelector">
+        <option value="opcion1">Opción 1</option>
+        <option value="opcion2">Opción 2</option>
+        <option value="opcion3">Opción 3</option>
+    </select>
+
+    <div id="resultado"></div>
+
+    <script>
+        const selector = document.getElementById('miSelector');
+        const resultado = document.getElementById('resultado');
+
+        // Escuchamos el evento 'change' del selector
+        selector.addEventListener('change', () => {
+            const opcionSeleccionada = selector.value;
+
+            // Actualizamos el contenido del div 'resultado'
+            resultado.textContent = `Has seleccionado: ${opcionSeleccionada}`;
+        });
+    </script>
+</body>
+</html>
