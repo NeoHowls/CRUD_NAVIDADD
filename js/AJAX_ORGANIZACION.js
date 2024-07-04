@@ -68,13 +68,13 @@ let table = $('#myTable2').DataTable( {
                 // data es null ya que no especificamos una propiedad específica de data para esta columna
                 let checkHabilitadoButton = '';
                 if (row.checkHabilitado == '1') {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-dark btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar Organizacion"><i class="bi bi-x-square"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-light btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar Organizacion"><i class="bi bi-x-square icon-100"></i> </button>';
                 } else {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-dark btnAutorizar me-2" data-toggle="tooltip" title="Habilitar Organizacion"><i class="bi bi-check-square"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-light btnAutorizar me-2" data-toggle="tooltip" title="Habilitar Organizacion"><i class="bi bi-check-square icon-100"></i> </button>';
                 }
         
                 // Botón de editar con modal
-                let editarButton = '<button type="button" class="btn btn-primary text-dark btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square"></i></button>';
+                let editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square icon-100"></i></button>';
 
                 // Combinamos los botones en una sola columna
                 return checkHabilitadoButton + editarButton;
