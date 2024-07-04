@@ -44,7 +44,7 @@ FROM [dbo].[A_ORGANIZACION]"; */
     O.tipo AS tipo,
 	CASE
 			WHEN O.tipo= 1 THEN 'JUNTA VECINAL'
-			WHEN O.tipo= 2 THEN 'COMÍTE'
+			WHEN O.tipo= 2 THEN 'COMÍTE VIVIENDA'
 			WHEN O.tipo= 3 THEN 'CONDOMINIO'
 			WHEN O.tipo= 4 THEN 'PROVIDENCIA'
 	END AS organizacion,
@@ -69,7 +69,7 @@ SELECT O.id AS id,
     O.tipo AS tipo,
 	CASE
 			WHEN O.tipo= 1 THEN 'JUNTA VECINAL'
-			WHEN O.tipo= 2 THEN 'COMÍTE'
+			WHEN O.tipo= 2 THEN 'COMÍTE VIVIENDA'
 			WHEN O.tipo= 3 THEN 'CONDOMINIO'
 			WHEN O.tipo= 4 THEN 'PROVIDENCIA'	
 	END AS organizacion,

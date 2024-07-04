@@ -68,7 +68,7 @@
                                 <label for="tipo" class="col-form-label">Tipo:</label>
                                 <select name="cars" id="tipo" class = "form-control">
                                   <option value=1>JUNTA VECINAL</option>
-                                  <option value=2>COMÍTE</option>
+                                  <option value=2>COMÍTE VIVIENDA</option>
                                   <option value=3>CONDOMINIO</option>
                                   <option value=4>PROVIDENCIA</option> 
                                 </select>
