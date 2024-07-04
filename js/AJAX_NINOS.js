@@ -33,25 +33,7 @@ window.addEventListener('DOMContentLoaded', (evento) => {
     // document.querySelector("input[name='fecha']").min = fecha_minima;
 });
 
-function calendario(){
-    window.addEventListener('DOMContentLoaded', (evento) => {
-        /* Obtenemos la fecha de hoy en formato ISO */
-        const hoy_fecha = new Date().toISOString().substring(0, 10);
-        
-        /* Calculamos la fecha hace 11 años */
-        const fecha_hace_11_anios = new Date();
-        fecha_hace_11_anios.setFullYear(fecha_hace_11_anios.getFullYear() - 11);
-        const anio_hace_11_anios = fecha_hace_11_anios.getFullYear();
-        
-        /* Establecemos la fecha mínima desde enero de hace 11 años */
-        const fecha_minima = `${anio_hace_11_anios}-01-01`;
-        
-        /* Buscamos la etiqueta del input por su selector */
-        document.querySelector("input[name='fecha']").max = hoy_fecha;
-        document.querySelector("input[name='fecha']").min = fecha_minima;
-    });
 
-}
 function calcularEdad(fecha, periodo) {
     var hoy = new Date
     hoy.setFullYear(periodo);
@@ -358,7 +340,9 @@ $("#btnNuevo").click(function(){
         const periodo_fecha = document.getElementById("periodo").value
         const hoy_fecha = `${periodo_fecha}-12-30`;
         document.getElementById("Naciemiento").max = hoy_fecha
-        window.alert("g")
+        edad = calcularEdad(selections.value, select_periodo.value)
+    
+            document.getElementById('edad').value = edad
         
     });
     document.getElementById("ceguera_percil").disabled = true;
