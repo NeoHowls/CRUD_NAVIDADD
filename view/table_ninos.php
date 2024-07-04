@@ -13,11 +13,21 @@
 
               <table class="inputs">
         <tbody><tr>
-            <select name="periodo" id="select_periodo">
-                <option value=2023>2023</option>
-                <option value=2024>2024</option>
-                <option value=2025>2025</option>
-            </select>
+            <div class="col-lg-3" style = "text-align: center;">   
+                              <label for="" class="col-form-label">Periodo:</label>
+                              <select name="cars" id="select_periodo" class = "form-control">
+                                <?php
+                                  //for($i=2023;$i<=date("Y");$i++){
+                                    for($i=2023;$i<=2025;$i++){
+                                    echo ("<option value=".$i.">".$i."</option>");
+                                  }
+                                ?>
+                                <!-- <option value=1>2022</option>
+                                <option value=2>2023</option>
+                                <option value=3>2024</option>
+                                <option value=4>2025</option> -->
+                              </select>
+                          </div>
     </tbody></table>
       <!-- <div class="container"> -->
         <div class="row">
@@ -60,18 +70,18 @@
                 <th class = "never">idPersonalRegistro</th><!-- 18 -->
                 <th class = "never">checkDiscapacitado</th><!-- 19 -->
 
-                <th>porcentajeCeguera</th><!-- 20 -->
-                <th>porcentajeSordera</th><!-- 21 -->
-                <th>porcentajeMudez</th><!-- 22 -->
-                <th>porcentajeFisica</th><!-- 23 -->
-                <th>porcentajeMental</th><!-- 24 -->
-                <th>porcentajePsiquica</th><!-- 25 -->
-                <th>descripcion</th><!-- 26 -->
-                <th>etnia</th><!-- 27 -->
-                <th>nacionalidad</th><!-- 28 -->
-                <th>NOMBRE_ORGANIZACION</th><!-- 29 -->
+                <th class = "none">porcentajeCeguera</th><!-- 20 -->
+                <th class = "none">porcentajeSordera</th><!-- 21 -->
+                <th class = "none">porcentajeMudez</th><!-- 22 -->
+                <th class = "none">porcentajeFisica</th><!-- 23 -->
+                <th class = "none">porcentajeMental</th><!-- 24 -->
+                <th class = "none">porcentajePsiquica</th><!-- 25 -->
+                <th class = "none">descripcion</th><!-- 26 -->
+                <th class = "none">etnia</th><!-- 27 -->
+                <th class = "none">nacionalidad</th><!-- 28 -->
+                <th class = "none">NOMBRE_ORGANIZACION</th><!-- 29 -->
                 <th class = "never">tipo</th><!-- 30 -->
-                <th class >tipo_org</th><!-- 31 -->
+                <th class = "none" >tipo_org</th><!-- 31 -->
                 <th class class = "never">idEtnia</th><!-- 32 -->
                 <th class='all'>acciones</th><!-- 32 -->
 

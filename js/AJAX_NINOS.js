@@ -183,7 +183,16 @@ $(document).ready(function() {
 
 $.fn.dataTableExt.afnFiltering.push(
     function(setting, data, index){
-        
+        var select_periodo = $('select#select_periodo option:selected').val();
+        var periodo_columna = data[7]
+        console.log(periodo_columna)
+        console.log(select_periodo)
+        if (select_periodo == periodo_columna) {
+            return true;
+            
+        }
+        return false
+    
     }
 );
 
