@@ -1,5 +1,18 @@
+    <style>
+        .btnDeshabilitar, .btnAutorizar, .btnEditar , .btnDesHabGeneral, .btnHabGeneral, .btnNuevo {
+            height: 40px; /* Ajusta la altura del botón */
+            line-height: 40px; /* Alinea el contenido del botón verticalmente */
+            padding: 0 5px; /* Ajusta el padding del botón */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btnDeshabilitar i, .btnAutorizar i, .btnEditar i, .btnDesHabGeneral i, .btnHabGeneral i, .btnNuevo i {
+            font-size: 30px; /* Ajusta el tamaño del icono */
+            padding: 0; /* Ajusta el padding del icono */
+        }
+    </style>
 <div class="container">
-		
         <br>
       <!-- Cambiar  -->
         <div class="card">
@@ -13,7 +26,8 @@
             <div class="container">
           <div class="row">
               <div class="col-lg-12">            
-              <button id="btnNuevo" type="button" class="btn btn-info bi bi-plus" data-toggle="tooltip" data-placement="top" title="Agregar Organizacion"><i class="material-icons"></i>
+                <button id="btnNuevo" type="button" class="btn btn-info text-light btnNuevo" data-toggle="tooltip" data-placement="top" title="Agregar Persona">
+                    <i id="btnNuevo" class="bi bi-plus fs-4"></i>
                 </button>
                 <button id="btnDesHabGeneral" type="button" class="btn btn-danger btnDesHabGeneral" data-toggle="tooltip" data-placement="top" title="Deshabilitar general">
                     <i id="iconHabGeneral" class="bi bi-x-square"></i> 

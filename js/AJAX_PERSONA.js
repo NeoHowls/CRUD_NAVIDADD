@@ -75,20 +75,20 @@ let table = $('#myTable1').DataTable( {
                 // data es null ya que no especificamos una propiedad específica de data para esta columna
                 let estadoPButton = '';
                 if (row.estadoP == '1') {
-                    estadoPButton = '<button type="button" class="btn btn-danger text-dark btnBorrar me-2" data-toggle="tooltip" title="Desactivar usuario"><i class="bi bi-person-dash-fill fs-5"></i> </button>';
+                    estadoPButton = '<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" title="Desactivar usuario"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
                 } else {
-                    estadoPButton = '<button type="button" class="btn btn-success text-dark btnHabilitar me-2"data-toggle="tooltip" title="Activar usuario"><i class="bi bi-person-plus-fill fs-5"></i> </button>';
+                    estadoPButton = '<button type="button" class="btn btn-success text-light btnHabilitar me-2"data-toggle="tooltip" title="Activar usuario"><i class="bi bi-person-plus-fill icon-100"></i> </button>';
                 }
         
                 let checkHabilitadoButton = '';
                 if (row.checkHabilitado == '1') {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-dark btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar usuario"><i class="bi bi-x-square fs-5"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-light btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar usuario"><i class="bi bi-x-square icon-100"></i> </button>';
                 } else {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-dark btnAutorizar me-2" data-toggle="tooltip" title="Habilitar usuario"><i class="bi bi-check-square fs-5"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-light btnAutorizar me-2" data-toggle="tooltip" title="Habilitar usuario"><i class="bi bi-check-square icon-100"></i> </button>';
                 }
         
                 // Botón de editar con modal
-                let editarButton = '<button type="button" class="btn btn-primary text-dark btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square fs-5"></i></button>';
+                let editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square icon-100"></i></button>';
                 //let PrintButton = '<button type="button" class="btn btn-outline-warning   btnimprimir me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Imprimir usuario y contraseña" data-toggle="tooltip"><i class="bi bi-filetype-pdf fs-5"></i></button>';
                 
                 let nombre1 = data["nombreP"];
@@ -97,9 +97,9 @@ let table = $('#myTable1').DataTable( {
                 let nombreO=data["NOMBRE_O"];
                 let organizacion1=data["organizacion"];
 
-                pdf ="<button type='button' class='btn btn-outline-warning me-2 btnAnular'  title='Imprimir usuario y contraseña'"+
+                pdf ="<button type='button' class='btn btn-warning me-2 btnAnular text-light'  title='Imprimir usuario y contraseña'"+
                     "onclick=\"crearpdf('"+usuario1+"','"+contrasena1+"','"+nombre1+"','"+nombreO+"','"+organizacion1+"')\">"+
-                    "<i class='bi bi-filetype-pdf fs-5'></i>"+
+                    "<i class='bi bi-filetype-pdf icon-100'></i>"+
                     "</button>"; 
 
                 // Combinamos los botones en una sola columna
