@@ -218,6 +218,16 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
         if($checkHabilitado == 1){
           echo "funciona el if de habilitar organizacion";
           
+          $CONSULTA ="SELECT idPersona FROM A_DETALLE_PO WHERE idOrganizacion='$user_id' and estado=1";
+        $datos=$menu->consultar($CONSULTA);
+        $persona_ids = array_column($datos, 'idPersona');
+        $persona_ids_string = implode(',', $persona_ids);
+
+        if (!empty($persona_ids_string)) {
+        $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0 WHERE id IN ($persona_ids_string)";
+        $menu->listar($CONSULTA);
+        }
+
         //define la consulta
         $CONSULTA = "UPDATE A_ORGANIZACION SET checkHabilitado = 0 WHERE id='$user_id'";
         //llamo al metodo listar y le doy la variable CONSULTA
@@ -241,6 +251,18 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
         
         }else {
           echo "funciona el else de deshabilitar organizacion";
+
+          $CONSULTA ="SELECT idPersona FROM A_DETALLE_PO WHERE idOrganizacion='$user_id' and estado=1";
+          $datos=$menu->consultar($CONSULTA);
+          $persona_ids = array_column($datos, 'idPersona');
+          $persona_ids_string = implode(',', $persona_ids);
+
+          if (!empty($persona_ids_string)) {
+          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=1 WHERE id IN ($persona_ids_string)";
+          $menu->listar($CONSULTA);
+          }
+
+
           $CONSULTA1 = "UPDATE A_ORGANIZACION SET checkHabilitado = 1 WHERE id='$user_id'";
         //llamo al metodo listar y le doy la variable CONSULTA
           $menu->listar($CONSULTA1);
@@ -263,38 +285,141 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
     }
     break;
     
-    
-    case "habGeneralO":
-      //define la consulta
-      $CONSULTA = "UPDATE A_ORGANIZACION SET checkHabilitado = 1";
-      //llamo al metodo listar y le doy la variable CONSULTA
-      $datos=$menu->listar($CONSULTA);
+    case "borrar_organizacion":
+      echo($estado);
+      if($estado == 1){
+        echo "funciona el if de editar";
+
+        $CONSULTA ="SELECT idPersona FROM A_DETALLE_PO WHERE idOrganizacion='$user_id' and estado=1";
+        $datos=$menu->consultar($CONSULTA);
+        $persona_ids = array_column($datos, 'idPersona');
+        $persona_ids_string = implode(',', $persona_ids);
+
+        if (!empty($persona_ids_string)) {
+        $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0, estado=0 WHERE id IN ($persona_ids_string)";
+        $menu->listar($CONSULTA);
+        }
+
+        //define la consulta
+        $CONSULTA = "UPDATE A_ORGANIZACION SET checkHabilitado = 0 WHERE id='$user_id'";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+
+        //define la consulta
+        $CONSULTA = "UPDATE A_ORGANIZACION SET estado = 0 WHERE id='$user_id'";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+        
         $CONSULTA = "SELECT * FROM A_ORGANIZACION";
         //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
         //imprimir los datos en JSON
         print($datos);
-    
-         $usuarioCambio = $_SESSION["test"];
-         $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
-         checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-         '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Habilitar a todas las organizaciones')";
-         $datos=$menu->listar($CONSULTA);
-         $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
-         $datos=$menu->listar($CONSULTA);
+
+            $usuarioCambio = $_SESSION["test"];
+            $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
+            checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+            '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Habilitar una organizacion')";
+            $datos=$menu->listar($CONSULTA);
+            $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+            $datos=$menu->listar($CONSULTA);
+            print($datos);
+      
+ 
+      
+      }else {
+
+        $CONSULTA ="SELECT idPersona FROM A_DETALLE_PO WHERE idOrganizacion='$user_id' and estado=1";
+        $datos=$menu->consultar($CONSULTA);
+        $persona_ids = array_column($datos, 'idPersona');
+        $persona_ids_string = implode(',', $persona_ids);
+
+        if (!empty($persona_ids_string)) {
+        $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=1, estado=1 WHERE id IN ($persona_ids_string)";
+        $menu->listar($CONSULTA);
+        }
+
+        $CONSULTA1 = "UPDATE A_ORGANIZACION SET checkHabilitado = 1 WHERE id='$user_id'";
+          //llamo al metodo listar y le doy la variable CONSULTA
+          $menu->listar($CONSULTA1);
+          $datos=$menu->listar($CONSULTA1);
+
+        $CONSULTA1 = "UPDATE A_ORGANIZACION SET estado = 1 WHERE id='$user_id'";
+      //llamo al metodo listar y le doy la variable CONSULTA
+        $menu->listar($CONSULTA1);
+        $datos=$menu->listar($CONSULTA1);
+        $CONSULTA = "SELECT * FROM A_ORGANIZACION";
+        //llamo al metodo listar y le doy la variable CONSULTA
+        $datos=$menu->listar($CONSULTA);
+        //imprimir los datos en JSON
          print($datos);
+
+            $usuarioCambio = $_SESSION["test"];
+            $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
+            checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+            '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Habilitar una organizacion')";
+            $datos=$menu->listar($CONSULTA);
+            $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+            $datos=$menu->listar($CONSULTA);
+            print($datos);
+  
+}
+break;
+    
+    case "habGeneralO":
+      //define la consulta
+      
+      $CONSULTA ="SELECT idPersona FROM A_DETALLE_PO WHERE  estado=1";
+      $datos=$menu->consultar($CONSULTA);
+      $persona_ids = array_column($datos, 'idPersona');
+      $persona_ids_string = implode(',', $persona_ids);
+
+      if (!empty($persona_ids_string)) {
+      $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=1 WHERE id IN ($persona_ids_string)";
+      $menu->listar($CONSULTA);
+      }
+
+      $CONSULTA = "UPDATE A_ORGANIZACION SET checkHabilitado = 1";
+      //llamo al metodo listar y le doy la variable CONSULTA
+      $datos=$menu->listar($CONSULTA);
+        
+      $CONSULTA = "SELECT * FROM A_ORGANIZACION";
+      //llamo al metodo listar y le doy la variable CONSULTA
+      $datos=$menu->listar($CONSULTA);
+      //imprimir los datos en JSON
+      print($datos);
+    
+      $usuarioCambio = $_SESSION["test"];
+      $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
+      checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
+      '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Habilitar a todas las organizaciones')";
+      $datos=$menu->listar($CONSULTA);
+      $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
+      $datos=$menu->listar($CONSULTA);
+        
       
       break;
     
       case "DesHabGeneralO": 
         //define la consulta
+
+        $CONSULTA ="SELECT idPersona FROM A_DETALLE_PO WHERE estado=1";
+        $datos=$menu->consultar($CONSULTA);
+        $persona_ids = array_column($datos, 'idPersona');
+        $persona_ids_string = implode(',', $persona_ids);
+
+        if (!empty($persona_ids_string)) {
+        $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0 WHERE id IN ($persona_ids_string)";
+        $menu->listar($CONSULTA);
+        }
+
         $CONSULTA = "UPDATE A_ORGANIZACION SET checkHabilitado = 0";
         //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
         $CONSULTA = "SELECT * FROM A_ORGANIZACION";
           //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
-        print($datos);
+          //print($datos);
           //imprimir los datos en JSON
           //print($datos);
       

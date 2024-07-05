@@ -19,7 +19,8 @@ $('#more_infos').change(function() {
 
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip({
-        delay: { show: 0, hide: 0 }
+        delay: { show: 0, hide: 0 },
+        placement: 'top'
 });    
 });
 
@@ -75,22 +76,25 @@ let table = $('#myTable1').DataTable( {
                 // data es null ya que no especificamos una propiedad específica de data para esta columna
                 let estadoPButton = '';
                 if (row.estadoP == '1') {
-                    estadoPButton = '<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" title="Desactivar usuario"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
+                    estadoPButton = '<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" data-placement="top" title="Desactivar usuario"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
                 } else {
-                    estadoPButton = '<button type="button" class="btn btn-success text-light btnHabilitar me-2"data-toggle="tooltip" title="Activar usuario"><i class="bi bi-person-plus-fill icon-100"></i> </button>';
+                    estadoPButton = '<button type="button" class="btn btn-success text-light btnHabilitar me-2" data-toggle="tooltip" data-placement="top" title="Activar usuario"><i class="bi bi-person-plus-fill icon-100"></i> </button>';
                 }
         
                 let checkHabilitadoButton = '';
                 if (row.checkHabilitado == '1') {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-light btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar usuario"><i class="bi bi-x-square icon-100"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-light btnDeshabilitar me-2" data-toggle="tooltip" data-placement="top" title="Deshabilitar usuario"><i class="bi bi-x-square icon-100"></i> </button>';
                 } else {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-light btnAutorizar me-2" data-toggle="tooltip" title="Habilitar usuario"><i class="bi bi-check-square icon-100"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-light btnAutorizar me-2" data-toggle="tooltip" data-placement="top" title="Habilitar usuario"><i class="bi bi-check-square icon-100"></i> </button>';
                 }
         
-                // Botón de editar con modal
-                let editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square icon-100"></i></button>';
-                //let PrintButton = '<button type="button" class="btn btn-outline-warning   btnimprimir me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Imprimir usuario y contraseña" data-toggle="tooltip"><i class="bi bi-filetype-pdf fs-5"></i></button>';
-                
+                let editarButton = '';
+                    if (row.checkHabilitado == '1') {
+                        editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" data-toggle="tooltip" data-placement="top" title="Editar registro" ><i class="bi bi-pencil-square icon-100"></i></button>';
+                    } else {
+                        editarButton = '<button type="button" class="btn btn-secondary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal"  data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-pencil-square icon-100"></i></button>';
+                    }
+                    
                 let nombre1 = data["nombreP"];
                 let usuario1 = data["usuario"];
                 let contrasena1 = data["contrasena"];
@@ -213,6 +217,11 @@ $('#formUsuarios').submit(function(e){
           //Si todo funiona recarga el AJAX
           success: function(data) {
             table.ajax.reload(null, false);
+            $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
+            $('[data-toggle="tooltip"]').tooltip({ // Vuelve a activar los tooltips
+                delay: { show: 0, hide: 0 },
+                placement: 'top' // O 'bottom' según donde desees mostrarlos
+            });
            }
         });		
         
@@ -401,6 +410,11 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
             data: { user_id: user_id, estado: estado, dni: dni },
           success: function(data) {
             table.ajax.reload(null, false);
+            $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
+            $('[data-toggle="tooltip"]').tooltip({ // Vuelve a activar los tooltips
+                delay: { show: 0, hide: 0 },
+                placement: 'top' // O 'bottom' según donde desees mostrarlos
+            });
            },
            error: function(xhr, status, error) {
             console.error("Error en la operación:", error);
@@ -429,6 +443,11 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
             data: { user_id: user_id, checkHabilitado: checkHabilitado, dni: dni } ,
           success: function(data) {
             table.ajax.reload(null, false);
+            $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
+            $('[data-toggle="tooltip"]').tooltip({ // Vuelve a activar los tooltips
+                delay: { show: 0, hide: 0 },
+                placement: 'top' // O 'bottom' según donde desees mostrarlos
+            });
            },
            error: function(xhr, status, error) {
             console.error("Error en la operación:", error);
@@ -455,10 +474,23 @@ $(document).on("click", ".btnHabGeneral", function(e){
             data: { user_id: user_id, checkHabilitado:checkHabilitado, dni: dni },
             success: function(data) {
                 table.ajax.reload(null, false);
-            },
-            error: function(xhr, status, error) {
-                console.error("Error en la operación:", error);
+                $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
+                $('[data-toggle="tooltip"]').tooltip({ // Vuelve a activar los tooltips
+                    delay: { show: 0, hide: 0 },
+                    placement: 'top' // O 'bottom' según donde desees mostrarlos
+                });
+                var res = JSON.parse(response);
+            if (res.status === 'error') {
+                alert(res.message); // Muestra el mensaje de error en un alert
+            } else if (res.status === 'success') {
+                alert('Todos los registros han sido habilitados.');
+                // Actualiza la tabla con los nuevos datos si es necesario
+                $('#myTable1').DataTable().clear().rows.add(res.data).draw();
             }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Primero debe habilitar todas las organizaciones.');
+        }
         });	    	    
     }
 });
@@ -481,6 +513,11 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
             data: { user_id: user_id, checkHabilitado:checkHabilitado, dni: dni },
             success: function(data) {
                 table.ajax.reload(null, false);
+                $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
+                $('[data-toggle="tooltip"]').tooltip({ // Vuelve a activar los tooltips
+                    delay: { show: 0, hide: 0 },
+                    placement: 'top' // O 'bottom' según donde desees mostrarlos
+                });
             },
             error: function(xhr, status, error) {
                 console.error("Error en la operación:", error);

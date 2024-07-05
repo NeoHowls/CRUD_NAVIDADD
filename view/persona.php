@@ -23,7 +23,11 @@
       // Script para mostrar el Tooltip al pasar el cursor sobre el botón
       $(document).ready(function() {
             // Inicializar tooltips de Bootstrap
-          $('[data-toggle="tooltip"]').tooltip();
+          $('[data-toggle="tooltip"]').tooltip({
+            delay: { show: 0, hide: 0 },
+            placement: 'top'
+      });
+          
       });
     </script> 
     <style>

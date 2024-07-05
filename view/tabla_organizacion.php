@@ -1,5 +1,5 @@
     <style>
-        .btnDeshabilitar, .btnAutorizar, .btnEditar , .btnDesHabGeneral, .btnHabGeneral, .btnNuevo {
+        .btnBorrar, .btnHabilitar, .btnDeshabilitar, .btnAutorizar, .btnEditar, .btnAnular, .btnDesHabGeneral, .btnHabGeneral, .btnNuevo  {
             height: 40px; /* Ajusta la altura del botón */
             line-height: 40px; /* Alinea el contenido del botón verticalmente */
             padding: 0 5px; /* Ajusta el padding del botón */
@@ -7,7 +7,7 @@
             align-items: center;
             justify-content: center;
         }
-        .btnDeshabilitar i, .btnAutorizar i, .btnEditar i, .btnDesHabGeneral i, .btnHabGeneral i, .btnNuevo i {
+        .btnBorrar i, .btnHabilitar i, .btnDeshabilitar i, .btnAutorizar i, .btnEditar i, .btnAnular i, .btnDesHabGeneral i, .btnHabGeneral i, .btnNuevo i {
             font-size: 30px; /* Ajusta el tamaño del icono */
             padding: 0; /* Ajusta el padding del icono */
         }
