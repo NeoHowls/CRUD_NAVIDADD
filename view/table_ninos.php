@@ -43,7 +43,7 @@
                       <option selected disabled value=0>Sin Dirección</option>
                       <!-- carga select direcciones-->
                   </select>
-              </div>
+    </div>
     
             <div class="col-lg-3" style = "text-align: center;">   
                               <label for="" class="col-form-label">Periodo:</label>

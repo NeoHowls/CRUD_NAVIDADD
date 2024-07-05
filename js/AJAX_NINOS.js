@@ -194,9 +194,8 @@ $("#areas").change(function(){
 
   })//fin change
 
-function listarDireccion(carea,action){
-    parametros="codigo_area="+carea+
-               "&action="+action;
+function listarDireccion(carea){
+    parametros="codigo_area="+carea
     //  parametros="codigo_area="+carea;
 //  console.log(parametros);
     $.ajax({
