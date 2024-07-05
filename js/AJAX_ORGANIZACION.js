@@ -76,9 +76,9 @@ let table = $('#myTable2').DataTable( {
                 // data es null ya que no especificamos una propiedad específica de data para esta columna
                 let estadoButton = '';
                 if (row.estado == '1') {
-                    estadoButton = '<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" data-placement="top" title="Desactivar usuario"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
+                    estadoButton = '<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" data-placement="top" title="Desactivar Organizacion"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
                 } else {
-                    estadoButton = '<button type="button" class="btn btn-success text-light btnHabilitar me-2" data-toggle="tooltip" data-placement="top" title="Activar usuario"><i class="bi bi-person-plus-fill icon-100"></i> </button>';
+                    estadoButton = '<button type="button" class="btn btn-success text-light btnHabilitar me-2" data-toggle="tooltip" data-placement="top" title="Activar Organizacion"><i class="bi bi-person-plus-fill icon-100"></i> </button>';
                 }
                 let checkHabilitadoButton = '';
                 if (row.checkHabilitado == '1') {
