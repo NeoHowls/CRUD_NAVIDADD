@@ -247,7 +247,7 @@ WHERE P.checkOrganizacion = 0";
         if($estado == 1){
           echo "funciona el if de editar";
         //define la consulta
-        $CONSULTA = "UPDATE A_PERSONA SET estado = 0 WHERE id='$user_id'";
+        $CONSULTA = "UPDATE A_PERSONA SET estado = 0, checkHabilitado=0 WHERE id='$user_id' and idPerfil !=7";
         //llamo al metodo listar y le doy la variable CONSULTA
         $datos=$menu->listar($CONSULTA);
           $CONSULTA = "SELECT * FROM A_PERSONA";
@@ -267,7 +267,7 @@ WHERE P.checkOrganizacion = 0";
    
         
         }else {
-          $CONSULTA1 = "UPDATE A_PERSONA SET estado = 1 WHERE id='$user_id'";
+          $CONSULTA1 = "UPDATE A_PERSONA SET estado = 1 , checkHabilitado=1 WHERE id='$user_id'";
         //llamo al metodo listar y le doy la variable CONSULTA
           $menu->listar($CONSULTA1);
           $datos=$menu->listar($CONSULTA1);
@@ -294,7 +294,7 @@ WHERE P.checkOrganizacion = 0";
       echo "funciona el if de editar";
       
     //define la consulta
-    $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 0 WHERE id='$user_id'";
+    $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 0 WHERE id='$user_id' and idPerfil !=7";
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
       $CONSULTA = "SELECT * FROM A_PERSONA";
