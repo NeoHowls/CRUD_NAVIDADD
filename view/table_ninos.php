@@ -27,8 +27,8 @@
         <tbody><tr>
         <div class="row">
             <div class="col-lg-3" style = "text-align: center;" >
-                <label for="pais">Opciones:</label>
-                <select id="areas" class = "form-control">
+                <label >Tipo:</label>
+                <select id="tipo" class = "form-control">
                 <option value=0>TIPO</option>
                 <option value=1>Junta Vecinal</option>
                 <option value=2>Comite</option>
@@ -38,8 +38,8 @@
             </div>
                               
             <div class="col-lg-6" style = "text-align: center;" >
-                  <label for="direcciones">Organizacion</label>
-                  <select class="form-control" id="direcciones" name="direcciones" disabled>
+                  <label for="organizacion_selection">Organizacion</label>
+                  <select class="form-control" id="organizacion_selection" name="organizacion_selection" disabled>
                       <option selected disabled value=0>Sin Dirección</option>
                       <!-- carga select direcciones-->
                   </select>
