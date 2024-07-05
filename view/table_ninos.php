@@ -14,45 +14,25 @@
               <table class="inputs">
         <tbody><tr>
         <div class="row">
-            <div class="col-lg-3" style = "text-align: center;">
+            <div class="col-lg-3" style = "text-align: center;" >
                 <label for="pais">Opciones:</label>
-            <select name="opcion" id="opcion" class="form-control" required>
-                <option value="0" >Seleccione...</option>
-                <option value="1" >Opción 1</option>
-                <option value="2">Opción 2</option>
-                <option value="3">Opción 3</option>
-            </select>    
+                <select id="areas" class = "form-control">
+                <option value=0>TIPO</option>
+                <option value=1>Junta Vecinal</option>
+                <option value=2>Comite</option>
+                <option value=3>Condominio</option>
+                <option value=4>Providencia</option>
+            </select>  
             </div>
-            <div class="col-lg-3" style = "text-align: center;">                    
-                              <label for="" class="col-form-label">Organizacion:</label>
                               
-                              
-                              <?php 
-                              $opcion = $_POST['opcion'];
-                              if ($opcion == 0) {
-                                include_once("../controller/controller_mostrarO.php");
-                            } elseif ($opcion == 1) {
-                                include_once("../controller/controller_mostrarO1.php");
-                            } elseif ($opcion == 2) {
-                                include_once("../controller/controller_mostrarO2.php");
-                            } elseif ($opcion == 3) {
-                                include_once("../controller/controller_mostrarO3.php");
-                            } elseif ($opcion == 4) {
-                                include_once("../controller/controller_mostrarO4.php");
-                            }
-
-                            
-                             ?>
-                                <select name="cars" id="select_org" class="form-control">
-                                    <option value=0>Mostrar todo</option>
-                                    <?php
-                                    foreach($datos as $key => $value){
-                                        echo '<option value="'.$value['id'].'">'.$value['nombre'].'</option>'; 
-                                    }
-                                    ?>
-                                </select>
-            </div>
-            <div class="col-lg-3" style = "text-align: center;">   
+            <div class="col-lg-6" style = "text-align: center;" >
+                  <label for="direcciones" class="col-form-label">Organizacion</label>
+                  <select class="form-control" id="direcciones" name="direcciones" disabled>
+                      <option selected disabled value=0>Sin Dirección</option>
+                      <!-- carga select direcciones-->
+                  </select>
+              </div>
+            <div class="col-lg-2" style = "text-align: center;">   
                               <label for="" class="col-form-label">Periodo:</label>
                               <select name="cars" id="select_periodo" class = "form-control">
                                 
@@ -68,7 +48,7 @@
                                 <option value=4>2025</option> -->
                               </select>
                           </div>
-                          <div class="col-lg-3" style = "text-align: center;">
+                          <div class="col-lg-1" style = "text-align: center;">
                           </div>
                           </div>
     </tbody></table>

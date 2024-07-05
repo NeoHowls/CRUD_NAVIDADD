@@ -157,8 +157,64 @@ let table = $('#myTable').DataTable( {
     }
 } );
 
+//! --------------cambio de areas-------------------
+$("#areas").change(function(){
 
+    $('#direcciones').attr('disabled', false);
+    $('#departamentos').attr('disabled', true);
+    $('#secciones').attr('disabled', true);
 
+    $('#btnDepartamento').attr('disabled', true);
+    $('#btnSeccion').attr('disabled', true);
+    $("#direcciones").empty();
+    $("#departamentos").empty();
+    $("#departamentos").html("<option selected disabled>Sin Departamentos</option>")
+    $("#secciones").empty();
+    $("#secciones").html("<option selected disabled>Sin Secciones</option>")
+    let carea = $('#areas').val();
+    let action = 1;
+
+    listarDireccion(carea,action);
+
+    /* parametros="codigo_area="+carea;
+    $.ajax({
+        data: parametros,
+        url: 'ajax_direcciones.php',
+        type: 'POST',
+        beforeSend: function(){
+            // alert("enviado")
+        },
+        success: function(response){
+            $("#direcciones").html(response);
+        },
+        error:function(){
+            alert("error")
+        }
+    });//fin ajax */
+
+  })//fin change
+
+function listarDireccion(carea,action){
+    parametros="codigo_area="+carea+
+               "&action="+action;
+    //  parametros="codigo_area="+carea;
+ console.log(parametros);
+    $.ajax({
+        data: parametros,
+        url: '../controller/ajax_direcciones.php',
+        type: 'POST',
+        beforeSend: function(){
+           // alert("enviado")
+        },
+        success: function(response){
+            $("#direcciones").html(response);
+            // console.log(response);
+        },
+        error:function(){
+            alert("error")
+        }
+    });//fin ajax
+}
 
 
 $(document).ready(function() {
@@ -168,15 +224,12 @@ $(document).ready(function() {
 
     })
 
-    $('#select_org').on('change', function(){
+    $('#direcciones').on('change', function(){
         table.draw();
 
     })
 
-    $("#opcion").on('change', function () {
-        const opcionSeleccionada = $(this).val();
-        $.post("table_ninos.php", { opcion: opcionSeleccionada })
-    });
+
 
 
 })
@@ -188,7 +241,7 @@ $.fn.dataTableExt.afnFiltering.push(
     function(setting, data, index){
         var select_periodo = $('select#select_periodo option:selected').val();
         var periodo_columna = data[7]
-        var select_org = $('select#select_org option:selected').val();
+        var select_org = $('select#direcciones option:selected').val();
         var org_columna = data[17]
         console.log(select_org)
         console.log(org_columna)

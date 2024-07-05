@@ -27,9 +27,9 @@
         }
         
         //NO SE USARA AUN
-        public function mostrarOrganizacion(){
+        public function listarDireccionesS($tipo){
    
-            $sql ="SELECT id, nombre FROM A_ORGANIZACION where estado=1 and tipo = 1";
+            $sql ="SELECT id, nombre FROM A_ORGANIZACION where estado=1 and tipo = $tipo";
             $this->connect();
             $query = $this->iniciar($sql);
             
