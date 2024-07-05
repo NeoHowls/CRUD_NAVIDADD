@@ -17,12 +17,6 @@ $('#more_infos').change(function() {
   }
 });
 
-$(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip({
-        delay: { show: 0, hide: 0 },
-        placement: 'top'
-});    
-});
 
 let table = $('#myTable1').DataTable( {
     // destroy : true,
@@ -73,6 +67,14 @@ let table = $('#myTable1').DataTable( {
         {
             "data": null,
             "render": function(data, type, row) {
+
+                $(document).ready(function () {
+                    $('[data-toggle="tooltip"]').tooltip({
+                        delay: { show: 0, hide: 0 },
+                        placement: 'top'
+                });    
+                });
+                
                 // data es null ya que no especificamos una propiedad específica de data para esta columna
                 let estadoPButton = '';
                 if (row.estadoP == '1') {
@@ -101,7 +103,7 @@ let table = $('#myTable1').DataTable( {
                 let nombreO=data["NOMBRE_O"];
                 let organizacion1=data["organizacion"];
 
-                pdf ="<button type='button' class='btn btn-warning me-2 btnAnular text-light'  title='Imprimir usuario y contraseña'"+
+                pdf ="<button type='button' class='btn btn-warning me-2 btnAnular text-light' data-toggle='tooltip' data-placement='top' title='Imprimir usuario y contraseña'"+
                     "onclick=\"crearpdf('"+usuario1+"','"+contrasena1+"','"+nombre1+"','"+nombreO+"','"+organizacion1+"')\">"+
                     "<i class='bi bi-filetype-pdf icon-100'></i>"+
                     "</button>"; 

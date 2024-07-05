@@ -65,22 +65,30 @@ let table = $('#myTable2').DataTable( {
         {
             "data": null,
             "render": function(data, type, row) {
+
+                $(document).ready(function () {
+                    $('[data-toggle="tooltip"]').tooltip({
+                        delay: { show: 0, hide: 0 },
+                        placement: 'top'
+                });    
+                });
+                
                 // data es null ya que no especificamos una propiedad específica de data para esta columna
                 let estadoButton = '';
                 if (row.estado == '1') {
-                    estadoButton = '<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" title="Desactivar usuario"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
+                    estadoButton = '<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" data-placement="top" title="Desactivar usuario"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
                 } else {
-                    estadoButton = '<button type="button" class="btn btn-success text-light btnHabilitar me-2"data-toggle="tooltip" title="Activar usuario"><i class="bi bi-person-plus-fill icon-100"></i> </button>';
+                    estadoButton = '<button type="button" class="btn btn-success text-light btnHabilitar me-2" data-toggle="tooltip" data-placement="top" title="Activar usuario"><i class="bi bi-person-plus-fill icon-100"></i> </button>';
                 }
                 let checkHabilitadoButton = '';
                 if (row.checkHabilitado == '1') {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-light btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar Organizacion"><i class="bi bi-x-square icon-100"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-light btnDeshabilitar me-2" data-toggle="tooltip" data-placement="top" title="Deshabilitar Organizacion"><i class="bi bi-x-square icon-100"></i> </button>';
                 } else {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-light btnAutorizar me-2" data-toggle="tooltip" title="Habilitar Organizacion"><i class="bi bi-check-square icon-100"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-light btnAutorizar me-2" data-toggle="tooltip" data-placement="top" title="Habilitar Organizacion"><i class="bi bi-check-square icon-100"></i> </button>';
                 }
         
                 // Botón de editar con modal
-                let editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square icon-100"></i></button>';
+                let editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" data-toggle="tooltip" data-placement="top" title="Editar registro" ><i class="bi bi-pencil-square icon-100"></i></button>';
 
                 // Combinamos los botones en una sola columna
                 return estadoButton + checkHabilitadoButton + editarButton;
