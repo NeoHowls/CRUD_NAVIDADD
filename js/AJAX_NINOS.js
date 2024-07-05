@@ -579,7 +579,19 @@ $("#btnNuevo").click(function(){
 //Editar       
 
 $(document).on("click", ".btnEditar", function(){	
+    const periodo_fecha = document.getElementById("periodo").value
+    const fecha_hace_11_anios = new Date();
+    fecha_hace_11_anios.setFullYear(fecha_hace_11_anios.getFullYear() - 10);
+    const anio_hace_11_anios = fecha_hace_11_anios.getFullYear();
 
+    const fecha_hace_120_anios = new Date();
+    fecha_hace_120_anios.setFullYear(fecha_hace_120_anios.getFullYear() - 120);
+    const anio_hace_120_anios = fecha_hace_120_anios.getFullYear();
+    
+    /* Establecemos la fecha mínima desde enero de hace 11 años */
+    const fecha_minima = `${anio_hace_11_anios}-01-01`;
+
+    const fecha_minima120 = `${anio_hace_120_anios}-01-01`;
     opcion = "edit_etnia";//editar
     fila = $(this).closest("tr");	        
     user_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
@@ -671,30 +683,43 @@ $(document).on("click", ".btnEditar", function(){
     if (check_dis == 1) {
         document.getElementById('more_info').checked = true
         $("#conditional_part").show();
-        document.getElementById("Naciemiento").min = "1900-07-24";
+        document.getElementById("Naciemiento").min = fecha_minima120
     }
     else {
         document.getElementById('more_info').checked = false
         $("#conditional_part").hide();
-        document.getElementById("Naciemiento").min = "1900-07-24";
-
+        document.getElementById("Naciemiento").min = fecha_minima
     } 
     checkboxDIS = document.getElementById('more_info');
     checkboxDIS.addEventListener('change', function () {
         // Verifica si el checkbox está marcado o no
         if (this.checked) {
-            console.log('El checkbox está activado.');
+            console.log(fecha_minima120);
             check_dis = 1;
-            document.getElementById("Naciemiento").min = "1900-07-24";
-            $("#Naciemiento").min("1900-07-24")
-
+            document.getElementById("Naciemiento").min = fecha_minima120
 
         } else {
             console.log('El checkbox está desactivado.');
             check_dis = 0;
-            document.getElementById("Naciemiento").min = "1900-07-24";
-
+            document.getElementById("Naciemiento").min = fecha_minima
+            
         }
+    });
+    if(userTipo==2){
+        $("#periodo").prop('disabled', true);
+    }else{
+        $("#periodo").prop('disabled', false);
+    }
+    const hoy_fecha = `${periodo_fecha}-12-30`
+    document.getElementById("Naciemiento").max = hoy_fecha
+    $("#periodo").on("change", function() {
+        const periodo_fecha = document.getElementById("periodo").value
+        const hoy_fecha = `${periodo_fecha}-12-30`;
+        document.getElementById("Naciemiento").max = hoy_fecha
+        edad = calcularEdad(selections.value, select_periodo.value)
+    
+            document.getElementById('edad').value = edad
+        
     });
 
     if (ceguera == 1) {
@@ -873,8 +898,9 @@ $(document).on("click", ".btnEditar", function(){
         }
     });
     selections = document.getElementById('Naciemiento');
+    select_periodo = document.getElementById('periodo');
     selections.addEventListener('change', function () {
-        edad = calcularEdad(selections.value)
+        edad = calcularEdad(selections.value, select_periodo.value)
     
             document.getElementById('edad').value = edad
 
