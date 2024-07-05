@@ -66,6 +66,12 @@ let table = $('#myTable2').DataTable( {
             "data": null,
             "render": function(data, type, row) {
                 // data es null ya que no especificamos una propiedad específica de data para esta columna
+                let estadoButton = '';
+                if (row.estado == '1') {
+                    estadoButton = '<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" title="Desactivar usuario"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
+                } else {
+                    estadoButton = '<button type="button" class="btn btn-success text-light btnHabilitar me-2"data-toggle="tooltip" title="Activar usuario"><i class="bi bi-person-plus-fill icon-100"></i> </button>';
+                }
                 let checkHabilitadoButton = '';
                 if (row.checkHabilitado == '1') {
                     checkHabilitadoButton = '<button type="button" class="btn btn-danger text-light btnDeshabilitar me-2" data-toggle="tooltip" title="Deshabilitar Organizacion"><i class="bi bi-x-square icon-100"></i> </button>';
@@ -77,7 +83,7 @@ let table = $('#myTable2').DataTable( {
                 let editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" title="Editar registro" data-toggle="tooltip"><i class="bi bi-pencil-square icon-100"></i></button>';
 
                 // Combinamos los botones en una sola columna
-                return checkHabilitadoButton + editarButton;
+                return estadoButton + checkHabilitadoButton + editarButton;
             }
         }
         
@@ -292,22 +298,30 @@ window.addEventListener("keydown", (e) => {
     }
   });
 
-//Borrar
-$(document).on("click", ".btnBorrar", function(){
-    fila = $(this);           
-    user_id = parseInt($(this).closest('tr').find('td:eq(0)').text()) ;		
-    opcion = 3; //eliminar        
-    var respuesta = confirm("¿Está seguro de borrar el registro "+user_id+"?");                
+//Borrar/activar estado
+$(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
+    e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+    fila = $(this).closest('tr');           
+    user_id = $(this).closest('tr').find('td:eq(0)').text() ;
+    nombre = $(this).closest('tr').find('td:eq(1)').text() ;
+    estado = $(this).closest('tr').find('td:eq(8)').text() ;
+    let action = estado == '1' ? 'borrar_persona' : 'habilitar_persona';
+    let confirmMessage = estado == '1' ? "¿Está seguro de Desactivar el registro de "+nombre+"?" : "¿Quieres activar el registro de  "+nombre+"?"  ;
+    let respuesta = confirm(confirmMessage);
+    console.log("funciona")
     if (respuesta) {            
         $.ajax({
-          url: "bd/crud.php",
+          url: "../controller/controllerO.php?op=borrar_organizacion",
           type: "POST",
           datatype:"json",    
-          data:  {opcion:opcion, user_id:user_id},    
-          success: function() {
-            table.row(fila.parents('tr')).remove().draw();                  
-           }
-        });	
+            data: { user_id:user_id, estado:estado,nombre:nombre},
+          success: function(data) {
+            table.ajax.reload(null, false);
+           },
+           error: function(xhr, status, error) {
+            console.error("Error en la operación:", error);
+        }
+        });	    	    
     }
  });
 

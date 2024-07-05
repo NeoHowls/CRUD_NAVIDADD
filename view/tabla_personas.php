@@ -155,20 +155,20 @@
                             <th class='never'>Nombre Organizacion</th>
                             <th class='never'>tipo</th>
                             <th class='never'>id</th>
-                            <th>Dni/RUT</th>
-                            <th>Nombre</th>
-                            <th>Dirección</th>
-                            <th>Teléfono</th>
-                            <th>Mail</th>
-                            <th class='never'>idPerfil</th>
-                            <th>Estado</th>
-                            <th>Habilitado</th>
-                            <th class='never'>usuario</th>
-                            <th class='never'>contraseña</th>
-                            <th class='never'>idOrganizacion</th>
-                            <th>Nombre Organización</th>
-                            <th>Tipo Organización</th>
-                            <th class='all'>Acciones</th>
+                            <th style='text-align: center;'>Dni/RUT</th>
+                            <th style='text-align: center;'>Nombre</th>
+                            <th style='text-align: center;'>Dirección</th>
+                            <th style='text-align: center;'>Teléfono</th>
+                            <th style='text-align: center;'>Mail</th>
+                            <th class='never' style='text-align: center;'>idPerfil</th>
+                            <th style='text-align: center;'>Estado</th>
+                            <th style='text-align: center;'>Habilitado</th>
+                            <th class='never' style='text-align: center;'>usuario</th>
+                            <th class='never' style='text-align: center;'>contraseña</th>
+                            <th class='never' style='text-align: center;'>idOrganizacion</th>
+                            <th style='text-align: center;'>Nombre Organización</th>
+                            <th style='text-align: center;'>Tipo Organización</th>
+                            <th class='all' style='text-align: center;'>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

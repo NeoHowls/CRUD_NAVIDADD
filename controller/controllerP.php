@@ -337,28 +337,36 @@ break;
 
 
 case "habGeneral":
-  //define la consulta
-  $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil !=1 ";
-  //llamo al metodo listar y le doy la variable CONSULTA
-  $datos=$menu->listar($CONSULTA);
+
+  $consultaOrganizaciones = "SELECT * FROM A_ORGANIZACION WHERE estado = 0 OR checkHabilitado = 0";
+  $resultadoOrganizaciones = $menu->consultar($consultaOrganizaciones);
+    
+    if (count($resultadoOrganizaciones) > 0) {
+        // Si hay organizaciones no habilitadas, devuelve un mensaje de error
+        json_encode(array("status" => "error"));
+    } else {
+    //define la consulta
+    $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil !=7 and idPerfil !=8 ";
+    //llamo al metodo listar y le doy la variable CONSULTA
+    $datos=$menu->listar($CONSULTA);
     $CONSULTA = "SELECT * FROM A_PERSONA";
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
-    //imprimir los datos en JSON
     print($datos);
 
-  $usuarioCambio = $_SESSION["test"];
-  $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-  ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Habilitar a todos los Usuarios')";
-  $datos=$menu->listar($CONSULTA);
-  $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
-  $datos=$menu->listar($CONSULTA);
-  
+    $usuarioCambio = $_SESSION["test"];
+    $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
+    ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Habilitar a todos los Usuarios')";
+    $datos=$menu->listar($CONSULTA);
+    $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
+    $datos=$menu->listar($CONSULTA);
+
+    }
   break;
 
   case "DesHabGeneral": 
     //define la consulta
-    $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 0 WHERE idPerfil !=1 ";
+    $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 0 WHERE idPerfil !=7 and idPerfil !=8  ";
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
     $CONSULTA = "SELECT * FROM A_PERSONA";
@@ -374,7 +382,7 @@ case "habGeneral":
     $datos=$menu->listar($CONSULTA);
     $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
     $datos=$menu->listar($CONSULTA);
-    
+    //print($datos);
   
     break;
 
