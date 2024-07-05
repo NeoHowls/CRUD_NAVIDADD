@@ -200,7 +200,7 @@ function listarDireccion(carea){
 //  console.log(parametros);
     $.ajax({
         data: parametros,
-        url: '../controller/ajax_direcciones.php',
+        url: '../controller/controller_filtrar_organizacion.php',
         type: 'POST',
         beforeSend: function(){
            // alert("enviado")

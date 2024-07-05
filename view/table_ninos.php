@@ -27,7 +27,7 @@
         <tbody><tr>
         <div class="row">
             <div class="col-lg-3" style = "text-align: center;" >
-                <label >Opciones:</label>
+                <label >Tipo:</label>
                 <select id="tipo" class = "form-control">
                 <option value=0>TIPO</option>
                 <option value=1>Junta Vecinal</option>
