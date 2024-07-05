@@ -5,7 +5,19 @@
   <!-- Cambiar  -->
   <div class="card">
     <div class="card-header">
-      Tabla de Niños
+        <div class="row">
+        <div class="col-lg-6" style = "text-align: center;" >
+      <p style = "text-align: left; font-size:100%;">Tabla de Niños </p>
+      <p style = "text-align: left; font-size:100%;"> </p>
+      </div>
+      <div class="col-lg-6" style = "text-align: center;" >
+      <p style = "text-align: right; font-size:100%;"><?php echo $_SESSION["test"]; ?>
+      </p>
+      <p style = "text-align: right; font-size:60%;"><?php echo $_SESSION["perfil"]; ?>
+      </p> 
+    </div>
+      
+      </div>
     </div>
     <div class="card-body">
       <p class="card-text">
@@ -26,19 +38,20 @@
             </div>
                               
             <div class="col-lg-6" style = "text-align: center;" >
-                  <label for="direcciones" class="col-form-label">Organizacion</label>
+                  <label for="direcciones">Organizacion</label>
                   <select class="form-control" id="direcciones" name="direcciones" disabled>
                       <option selected disabled value=0>Sin Dirección</option>
                       <!-- carga select direcciones-->
                   </select>
               </div>
-            <div class="col-lg-2" style = "text-align: center;">   
+    
+            <div class="col-lg-3" style = "text-align: center;">   
                               <label for="" class="col-form-label">Periodo:</label>
                               <select name="cars" id="select_periodo" class = "form-control">
                                 
                                 <?php
-                                  //for($i=2023;$i<=date("Y");$i++){
-                                    for($i=2023;$i<=2025;$i++){
+                                  for($i=2023;$i<=date("Y");$i++){
+                                    //for($i=2023;$i<=2025;$i++){
                                     echo ("<option value=".$i.">".$i."</option>");
                                   }
                                 ?>
@@ -48,11 +61,11 @@
                                 <option value=4>2025</option> -->
                               </select>
                           </div>
-                          <div class="col-lg-1" style = "text-align: center;">
-                          </div>
+
                           </div>
     </tbody></table>
       <!-- <div class="container"> -->
+        <br>
         <div class="row">
           <div class="col-lg-12">            
             <button id="btnNuevo" type="button" class="btn btn-info bi bi-plus" data-toggle="modal"><i class="material-icons">

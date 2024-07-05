@@ -20,9 +20,8 @@ if(isset($_POST['codigo_area'])){
             break;
     }
 
-    // $dir = new Direccion();
-    // $dir -> listarDirecciones($_POST['codigo_area']);
-    $html="<option selected value = 0>Mostrar todo de ".$area."</option>";
+   
+    $html="<option selected value=0>Mostrar todo de ".$area."</option>";
     $datos=$menu->listarDireccionesS($_POST['codigo_area']);
 
     foreach($datos as $key => $value){
@@ -30,7 +29,7 @@ if(isset($_POST['codigo_area'])){
     }
     echo $html;
 }else{
-    $html="<option selected disabled value = 0>Sin Direccionesss</option>";
+    $html="<option selected disabled value = 0>Sin</option>";
     echo $html;
 }
 ?>

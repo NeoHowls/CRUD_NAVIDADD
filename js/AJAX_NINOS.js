@@ -161,16 +161,16 @@ let table = $('#myTable').DataTable( {
 $("#areas").change(function(){
 
     $('#direcciones').attr('disabled', false);
-    $('#departamentos').attr('disabled', true);
-    $('#secciones').attr('disabled', true);
+/*     $('#departamentos').attr('disabled', true);
+    $('#secciones').attr('disabled', true); */
 
-    $('#btnDepartamento').attr('disabled', true);
-    $('#btnSeccion').attr('disabled', true);
-    $("#direcciones").empty();
-    $("#departamentos").empty();
+   /*  $('#btnDepartamento').attr('disabled', true);
+    $('#btnSeccion').attr('disabled', true); */
+
+/*     $("#departamentos").empty();
     $("#departamentos").html("<option selected disabled>Sin Departamentos</option>")
     $("#secciones").empty();
-    $("#secciones").html("<option selected disabled>Sin Secciones</option>")
+    $("#secciones").html("<option selected disabled>Sin Secciones</option>") */
     let carea = $('#areas').val();
     let action = 1;
 
@@ -198,7 +198,7 @@ function listarDireccion(carea,action){
     parametros="codigo_area="+carea+
                "&action="+action;
     //  parametros="codigo_area="+carea;
- console.log(parametros);
+//  console.log(parametros);
     $.ajax({
         data: parametros,
         url: '../controller/ajax_direcciones.php',
