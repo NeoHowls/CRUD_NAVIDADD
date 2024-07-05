@@ -95,7 +95,7 @@
                 <th class = "never">idNacionalidad</th><!-- 9 -->
                 <th class = "never">checkExtranjero</th><!-- 10 -->
 
-                <th class = "never">checkCeguera</th>mental<!-- 11 -->
+                <th class = "never">checkCeguera</th><!-- 11 -->
                 <th class = "never">checkSordera</th><!-- 12-->
                 <th class = "never">checkMudez</th><!-- 13 -->
                 <th class = "never">checkFisica</th><!-- 14 -->
