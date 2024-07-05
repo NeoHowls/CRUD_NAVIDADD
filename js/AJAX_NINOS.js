@@ -158,9 +158,9 @@ let table = $('#myTable').DataTable( {
 } );
 
 //! --------------cambio de areas-------------------
-$("#areas").change(function(){
+$("#tipo").change(function(){
 
-    $('#direcciones').attr('disabled', false);
+    $('#organizacion_selection').attr('disabled', false);
 /*     $('#departamentos').attr('disabled', true);
     $('#secciones').attr('disabled', true); */
 
@@ -171,10 +171,10 @@ $("#areas").change(function(){
     $("#departamentos").html("<option selected disabled>Sin Departamentos</option>")
     $("#secciones").empty();
     $("#secciones").html("<option selected disabled>Sin Secciones</option>") */
-    let carea = $('#areas').val();
+    let carea = $('#tipo').val();
     let action = 1;
 
-    listarDireccion(carea,action);
+    listarDireccion(carea);
 
     /* parametros="codigo_area="+carea;
     $.ajax({
@@ -206,7 +206,7 @@ function listarDireccion(carea){
            // alert("enviado")
         },
         success: function(response){
-            $("#direcciones").html(response);
+            $("#organizacion_selection").html(response);
             // console.log(response);
         },
         error:function(){
@@ -223,7 +223,12 @@ $(document).ready(function() {
 
     })
 
-    $('#direcciones').on('change', function(){
+    $('#organizacion_selection').on('change', function(){
+        table.draw();
+
+    })
+
+    $('#tipo').on('change', function(){
         table.draw();
 
     })
@@ -240,11 +245,12 @@ $.fn.dataTableExt.afnFiltering.push(
     function(setting, data, index){
         var select_periodo = $('select#select_periodo option:selected').val();
         var periodo_columna = data[7]
-        var select_org = $('select#direcciones option:selected').val();
+        var select_org = $('select#organizacion_selection option:selected').val();
+        var select_tipo = $('select#tipo option:selected').val();
         var org_columna = data[17]
         console.log(select_org)
         console.log(org_columna)
-        if (select_org == 0) {
+        if (select_org || select_tipo == 0) {
             if (select_periodo == periodo_columna & select_org <= org_columna) {
                 return true;
             }
