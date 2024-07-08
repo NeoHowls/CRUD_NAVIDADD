@@ -7,14 +7,16 @@
     <div class="card-header">
         <div class="row">
         <div class="col-lg-6" style = "text-align: center;" >
-      <p style = "text-align: left; font-size:100%;">Tabla de Niños </p>
-      <p style = "text-align: left; font-size:100%;"> </p>
+      <p style = "text-align: left; font-size:100%;">Niños <?php echo '('.$_SESSION["nombreOrganizacion"].')'; ?></p>
+      <p style = "text-align: left; font-size:100%;"></p>
+      <!-- <p style = "text-align: left; font-size:100%;">Niños <?php //echo '('.$_SESSION["nombreOrganizacion"].')'; ?></p>
+      <p style = "text-align: left; font-size:100%;"></p> -->
       </div>
       <div class="col-lg-6" style = "text-align: center;" >
-      <p style = "text-align: right; font-size:100%;"><?php echo $_SESSION["test"]; ?>
+      <p style = "text-align: right; font-size:100%;"><?php echo $_SESSION["nombre"].'('.$_SESSION["perfil"].')'; ?>
       </p>
-      <p style = "text-align: right; font-size:60%;"><?php echo $_SESSION["perfil"]; ?>
-      </p> 
+      <!-- <p style = "text-align: right; font-size:60%;"><?php echo $_SESSION["perfil"]; ?>
+      </p> --> 
     </div>
       
       </div>

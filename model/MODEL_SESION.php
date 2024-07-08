@@ -58,7 +58,7 @@
         public function datosPersonal($rut, $pass){
             $user = $rut;
             $contra = $pass;
-            $sql ="SELECT  
+            /* $sql ="SELECT  
             A_PERSONA.id as id_persona,
             A_PERSONA.nombre,
             A_PERSONA.usuario,
@@ -82,8 +82,62 @@
             FROM [dbo].[A_PERSONA]
             INNER JOIN A_PERFIL ON A_PERSONA.idPerfil = A_PERFIL.id
             WHERE A_PERSONA.usuario = :rut AND A_PERSONA.contrasena = :pass
-            ";
-            $parametros = array("rut"=>$user,"pass"=>$contra);
+            "; */
+            $sql ="SELECT  
+            P.id AS id_persona,
+            P.nombre AS nombre,
+            P.usuario AS usuario,
+            P.contrasena AS contrasena,
+            P.checkHabilitado AS checkHabilitado,
+            PE.id AS id,
+            PE.PERFIL AS PERFIL,
+            PE.checkCreateN AS checkCreateN,
+            PE.checkUpdateN AS checkUpdateN,	
+            PE.checkReadN AS checkReadN,	
+            PE.checkDeleteN AS checkDeleteN,	
+            PE.checkCreateO AS checkCreateO,	
+            PE.checkUpdateO AS checkUpdateO,	
+            PE.checkReadO AS checkReadO,	
+            PE.checkDeleteO AS checkDeleteO,	
+            PE.checkCreateP AS checkCreateP,	
+            PE.checkUpdateP AS checkUpdateP,	
+            PE.checkReadP AS checkReadP,	
+            PE.checkDeleteP AS checkDeleteP,
+            PE.tipo	AS tipo,
+			O.nombre AS nombreOrganizacion
+            FROM A_PERSONA P
+            JOIN A_PERFIL PE ON P.idPerfil = PE.id
+			INNER JOIN A_DETALLE_PO DPO ON P.id =  DPO.idPersona
+			INNER JOIN A_ORGANIZACION O ON O.id = DPO.idOrganizacion
+			WHERE DPO.estado=1 AND P.usuario = :rut AND P.contrasena = :pass
+UNION
+SELECT  
+            P.id AS id_persona,
+            P.nombre AS nombre,
+            P.usuario AS usuario,
+            P.contrasena AS contrasena,
+            P.checkHabilitado AS checkHabilitado,
+            PE.id AS id,
+            PE.PERFIL AS PERFIL,
+            PE.checkCreateN AS checkCreateN,
+            PE.checkUpdateN AS checkUpdateN,	
+            PE.checkReadN AS checkReadN,	
+            PE.checkDeleteN AS checkDeleteN,	
+            PE.checkCreateO AS checkCreateO,	
+            PE.checkUpdateO AS checkUpdateO,	
+            PE.checkReadO AS checkReadO,	
+            PE.checkDeleteO AS checkDeleteO,	
+            PE.checkCreateP AS checkCreateP,	
+            PE.checkUpdateP AS checkUpdateP,	
+            PE.checkReadP AS checkReadP,	
+            PE.checkDeleteP AS checkDeleteP,
+            PE.tipo	AS tipo,
+			nombreOrganizacion = 'NINGUNA'
+            FROM A_PERSONA P
+            JOIN A_PERFIL PE ON P.idPerfil = PE.id
+			--INNER JOIN A_DETALLE_PO DPO ON P.id =  DPO.idPersona
+			WHERE P.checkOrganizacion=0 AND P.usuario = :rut2 AND P.contrasena = :pass2";
+            $parametros = array("rut"=>$user,"pass"=>$contra,"rut2"=>$user,"pass2"=>$contra);
             $this->connect();
             $listo = "gracias";
             $mal = "mal";

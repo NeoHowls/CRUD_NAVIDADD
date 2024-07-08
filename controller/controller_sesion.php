@@ -12,7 +12,7 @@ if($datos === TRUE){ ;
   session_start();
   $datos=$menu->datosPersonal($USUARIO,$PASS);  
   $_SESSION["id_persona"]=$datos[0]['id_persona'];
-  $_SESSION["test"]=$datos[0]['nombre'];
+  $_SESSION["nombre"]=$datos[0]['nombre'];
   $_SESSION["perfil"]=ucfirst($datos[0]['PERFIL']);
   $_SESSION["habilitado"]=ucfirst($datos[0]['checkHabilitado']);
   $_SESSION["id_p"]=$datos[0]['id'];
@@ -29,6 +29,7 @@ if($datos === TRUE){ ;
   $_SESSION["CRP"]=$datos[0]['checkReadP'];
   $_SESSION["CDP"]=$datos[0]['checkDeleteP']; 
   $_SESSION["tipo_usuario"]=$datos[0]['tipo'];
+  $_SESSION["nombreOrganizacion"]=$datos[0]['nombreOrganizacion'];
   
   if ($_SESSION["habilitado"] == 0) {
     session_destroy();
@@ -63,7 +64,7 @@ if($datos === TRUE){ ;
 
   $datos=$menu->datosPersonal($USUARIO,$PASS);  
   $_SESSION["id_persona"]=$datos[0]['id_persona'];
-  $_SESSION["test"]=$datos[0]['nombre'];
+  $_SESSION["nombre"]=$datos[0]['nombre'];
   $_SESSION["perfil"]=ucfirst($datos[0]['PERFIL']);
   $_SESSION["habilitado"]=ucfirst($datos[0]['checkHabilitado']);
   $_SESSION["id_p"]=$datos[0]['id'];
@@ -80,6 +81,7 @@ if($datos === TRUE){ ;
   $_SESSION["CRP"]=$datos[0]['checkReadP'];
   $_SESSION["CDP"]=$datos[0]['checkDeleteP']; 
   $_SESSION["tipo_usuario"]=$datos[0]['tipo'];
+  $_SESSION["nombreOrganizacion"]=$datos[0]['nombreOrganizacion'];
 
     echo '</div>
           <script type="text/javascript"> 
