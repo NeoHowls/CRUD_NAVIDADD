@@ -425,24 +425,25 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     }
  });
 
- //deshabilitar/habiliar 
-$(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
+ //deshabilitar/habilitar 
+ $(document).on("click", ".btnAutorizar, .btnDeshabilitar", function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     fila = $(this).closest('tr');           
     user_id = $(this).closest('tr').find('td:eq(0)').text() ;
     nombre = $(this).closest('tr').find('td:eq(2)').text() ;
-    dni = $(this).closest('tr').find('td:eq(1)').text();
     checkHabilitado = $(this).closest('tr').find('td:eq(8)').text() ;
+    dni = $(this).closest('tr').find('td:eq(1)').text();
     let action = checkHabilitado == '1' ? 'borrar_persona' : 'habilitar_persona';
-    let confirmMessage =  checkHabilitado== '1' ? "¿Está seguro que desesa deshabilitar el registro de "+nombre+"?" : "¿Quieres habilitar el registro de "+nombre+"?"  ;
+    let confirmMessage = checkHabilitado == '1' ? "¿Está seguro de Deshabilitar al usuario "+nombre+"?" : "¿Quieres habilitar al usuario "+nombre+"?";
     let respuesta = confirm(confirmMessage);
-  
+    console.log("funciona")
+    console.log(dni)
     if (respuesta) {            
         $.ajax({
           url: "../controller/controllerP.php?op=Habilitar_persona",
           type: "POST",
           datatype:"json",    
-            data: { user_id: user_id, checkHabilitado: checkHabilitado, dni: dni } ,
+            data: { user_id: user_id, checkHabilitado:checkHabilitado, dni: dni },
           success: function(data) {
             table.ajax.reload(null, false);
             $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
@@ -453,6 +454,7 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
            },
            error: function(xhr, status, error) {
             console.error("Error en la operación:", error);
+            alert(error);
         }
         });	    	    
     }
@@ -465,7 +467,7 @@ $(document).on("click", ".btnHabGeneral", function(e){
     let user_id = fila.find('td:eq(0)').text();
     let dni = fila.find('td:eq(1)').text();
     let checkHabilitado = $(this).closest('tr').find('td:eq(8)').text() ;
-    let confirmMessage = "¿Quieres habilitar todos los registros?";
+    let confirmMessage = "¿Quieres Habilitar todos los registros?";
     let respuesta = confirm(confirmMessage);
   
     if (respuesta) {            
@@ -481,18 +483,10 @@ $(document).on("click", ".btnHabGeneral", function(e){
                     delay: { show: 0, hide: 0 },
                     placement: 'top' // O 'bottom' según donde desees mostrarlos
                 });
-                var res = JSON.parse(response);
-            if (res.status === 'error') {
-                alert(res.message); // Muestra el mensaje de error en un alert
-            } else if (res.status === 'success') {
-                alert('Todos los registros han sido habilitados.');
-                // Actualiza la tabla con los nuevos datos si es necesario
-                $('#myTable1').DataTable().clear().rows.add(res.data).draw();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la operación:", error);
             }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            alert('Primero debe habilitar todas las organizaciones.');
-        }
         });	    	    
     }
 });
