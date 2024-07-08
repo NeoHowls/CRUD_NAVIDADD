@@ -139,7 +139,7 @@ WHERE P.checkOrganizacion = 0";
       $CONSULTA ="INSERT INTO A_DETALLE_PO (idPersona, idOrganizacion, estado,fechaIngreso) VALUES ('$user_id','$idOrganizacion' , 1,'$fechaIngreso')";
       $menu->listar($CONSULTA);
 
-      $usuarioCambio = $_SESSION["test"];
+      $usuarioCambio = $_SESSION["nombre"];
       $CONSULTAH = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
       ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Añadir Usuario Nuevo con Organizacion')";
       $datos=$menu->listar($CONSULTAH);
@@ -161,7 +161,7 @@ WHERE P.checkOrganizacion = 0";
         print($datos);
       //imprimir los datos en JSON 
 
-      $usuarioCambio = $_SESSION["test"];
+      $usuarioCambio = $_SESSION["nombre"];
       $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
       ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Añadir Usuario Nuevo Sin Organizacion')";
       $datos=$menu->listar($CONSULTA);
@@ -207,7 +207,7 @@ WHERE P.checkOrganizacion = 0";
 
       $menu->listar($CONSULTA);
 
-       $usuarioCambio = $_SESSION["test"];
+       $usuarioCambio = $_SESSION["nombre"];
        $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
        ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Editar Usuario con Organizacion')";
        $datos=$menu->listar($CONSULTA);
@@ -231,7 +231,7 @@ WHERE P.checkOrganizacion = 0";
         //imprimir los datos en JSON
          print($datos);
 
-         $usuarioCambio = $_SESSION["test"];
+         $usuarioCambio = $_SESSION["nombre"];
         $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
         ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Editar Usuario Sin Organizacion')";
         $datos=$menu->listar($CONSULTA);
@@ -256,7 +256,7 @@ WHERE P.checkOrganizacion = 0";
           //imprimir los datos en JSON
           //print($datos);
   
-        $usuarioCambio = $_SESSION["test"];
+        $usuarioCambio = $_SESSION["nombre"];
         $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
         ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Eliminar Usuario')";
         $datos=$menu->listar($CONSULTA);
@@ -277,7 +277,7 @@ WHERE P.checkOrganizacion = 0";
           //imprimir los datos en JSON
            print($datos);
   
-           $usuarioCambio = $_SESSION["test"];
+           $usuarioCambio = $_SESSION["nombre"];
           $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
           ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Activar nuevamente a un usuario')";
           $datos=$menu->listar($CONSULTA);
@@ -303,7 +303,7 @@ WHERE P.checkOrganizacion = 0";
       //imprimir los datos en JSON
       //print($datos);
 
-    $usuarioCambio = $_SESSION["test"];
+    $usuarioCambio = $_SESSION["nombre"];
     $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
     ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Deshabilitar a un  Usuario')";
     $datos=$menu->listar($CONSULTA);
@@ -324,7 +324,7 @@ WHERE P.checkOrganizacion = 0";
       //imprimir los datos en JSON
        print($datos);
 
-       $usuarioCambio = $_SESSION["test"];
+       $usuarioCambio = $_SESSION["nombre"];
       $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
       ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Habilitar nuevamente a un usuario')";
       $datos=$menu->listar($CONSULTA);
@@ -354,7 +354,7 @@ case "habGeneral":
     $datos=$menu->listar($CONSULTA);
     print($datos);
 
-    $usuarioCambio = $_SESSION["test"];
+    $usuarioCambio = $_SESSION["nombre"];
     $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
     ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Habilitar a todos los Usuarios')";
     $datos=$menu->listar($CONSULTA);
@@ -376,7 +376,7 @@ case "habGeneral":
       //imprimir los datos en JSON
       //print($datos);
   
-    $usuarioCambio = $_SESSION["test"];
+    $usuarioCambio = $_SESSION["nombre"];
     $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
     ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Deshabilitar a todos los Usuario')";
     $datos=$menu->listar($CONSULTA);

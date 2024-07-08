@@ -166,7 +166,7 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
         //imprimir los datos en JSON
         //print($datos);
 
-        $usuarioCambio = $_SESSION["test"];
+        $usuarioCambio = $_SESSION["nombre"];
          $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
          checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
          '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
@@ -202,7 +202,7 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
         //imprimir los datos en JSON
         print($datos);
         }
-         $usuarioCambio = $_SESSION["test"];
+         $usuarioCambio = $_SESSION["nombre"];
          $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
          checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
          '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
@@ -238,7 +238,7 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
           //imprimir los datos en JSON
           //print($datos);
     
-         $usuarioCambio = $_SESSION["test"];
+         $usuarioCambio = $_SESSION["nombre"];
          $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
          checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
          '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Deshabilitar a una organizacion')";
@@ -273,7 +273,7 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
           //imprimir los datos en JSON
            print($datos);
     
-           $usuarioCambio = $_SESSION["test"];
+           $usuarioCambio = $_SESSION["nombre"];
            $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
            checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
            '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Habilitar una organizacion')";
@@ -316,7 +316,7 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
         //imprimir los datos en JSON
         print($datos);
 
-            $usuarioCambio = $_SESSION["test"];
+            $usuarioCambio = $_SESSION["nombre"];
             $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
             checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
             '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Habilitar una organizacion')";
@@ -354,7 +354,7 @@ FROM A_ORGANIZACION O WHERE O.checkVigente=0";
         //imprimir los datos en JSON
          print($datos);
 
-            $usuarioCambio = $_SESSION["test"];
+            $usuarioCambio = $_SESSION["nombre"];
             $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,aniosVigente,checkVigente,numProvidencia,
             checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
             '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Habilitar una organizacion')";
@@ -389,7 +389,7 @@ break;
       //imprimir los datos en JSON
       print($datos);
     
-      $usuarioCambio = $_SESSION["test"];
+      $usuarioCambio = $_SESSION["nombre"];
       $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
       checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
       '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Habilitar a todas las organizaciones')";
@@ -423,7 +423,7 @@ break;
           //imprimir los datos en JSON
           //print($datos);
       
-         $usuarioCambio = $_SESSION["test"];
+         $usuarioCambio = $_SESSION["nombre"];
          $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
          checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
          '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Deshabilitar a todas las organizaciones')";
