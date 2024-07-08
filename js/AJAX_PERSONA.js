@@ -356,7 +356,7 @@ else {
     document.getElementById('more_infos').checked = false;
     $("#conditional_parts").hide();
     checkOrganizacion = 0
-    console.log('El checkbox está desactivado@@@.');
+    console.log('El checkbox está desactivado.');
 }
 
 });
