@@ -43,8 +43,7 @@ if($datos === TRUE){ ;
         timer: 3000 
     });
   </script>';
-  }else{
-  if ($_SESSION["id_p"] == 10) {
+  }elseif($_SESSION["id_p"] == 10) {
     session_destroy();
              echo '</div>
           <script type="text/javascript"> 
@@ -101,7 +100,7 @@ if($datos === TRUE){ ;
 
           </script>';
   }
-}
+//}
 
   
   ?>

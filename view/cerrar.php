@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if(isset($_SESSION['test'])){
+if(isset($_SESSION['nombre'])){
     /*
     var_dump( $_COOKIE);
     print("<br>");
