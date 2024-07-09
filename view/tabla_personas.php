@@ -81,10 +81,12 @@
                                                 <div>
                                                     <?php include_once("../controller/controller_mostrarPerfil.php") ?>
                                                     <select id="idPerfil" class="form-control" required data-error="Por favor ingrese un perfil">
+                                                        <option value="">Selecciona un perfil</option>
                                                         <?php foreach($datos as $key => $value): ?>
                                                             <option value="<?= $value['id'] ?>"><?= $value['perfil'] ?></option>
                                                         <?php endforeach; ?>
                                                     </select>
+                                                    <div id="perfilError" class="text-danger"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,24 +104,23 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="form-group row" id="checkbox-container" style="display: none;">
                                             <label class="col-form-label col-md-auto" for="flexSwitchCheckDefault">Desea agregar Organización:</label>
                                             <div class="col-md-auto elnt_container form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" id="more_infos" name="more" value="1">
                                             </div>
                                         </div>
+
                                         <div class="row">
-                                            <div class="col-lg-6" id="conditional_parts" style="display: none;">
-                                                <?php 
-                                                    include_once("../controller/controller_mostrarO.php"); 
-                                                ?>
+                                            <div class="col-lg-12" id="conditional_parts" style="display: none;">
+                                                <?php include_once("../controller/controller_mostrarO.php"); ?>
                                                 <select name="cars" id="O_ID" class="form-control">
-                                                <?php 
-                                                foreach($datos as $key => $value){
-                                                    echo '<option value="'.$value['id'].'">'.$value['nombre'].'</option>';
-                                                } 
-                                                ?>
+                                                    <option value="">Selecciona una opción</option>
+                                                    <?php foreach($datos as $key => $value): ?>
+                                                        <option value="<?= $value['id'] ?>" data-tipo="<?= $value['tipo'] ?>"><?= $value['nombre'] ?></option>
+                                                    <?php endforeach; ?>
                                                 </select>
+                                                <div id="organizacionError" class="text-danger"></div>
                                             </div>
                                         </div>
                                     </div>

@@ -235,58 +235,138 @@ $('#formUsuarios').submit(function(e){
  
 
 //para limpiar los campos antes de dar de Alta una Persona
-$("#btnNuevo").click(function(){
+$(document).ready(function() {
+    // Ocultar o mostrar el checkbox y su etiqueta dependiendo del perfil seleccionado
+    $('#idPerfil').change(function() {
+        var selectedOption = $(this).find('option:selected');
+        var perfilId = selectedOption.val();
+        var perfilText = selectedOption.text().toLowerCase();
 
-
-    $("#dni").val('');
-    $("#nombre").val('');
-    $("#direccion").val('');
-    $("#telefono").val('');
-    $("#mail").val('');
-    $("#idPerfil").val('');
-    $("#estado").val('');
-    $("#usuario").val('');
-    $("#contrasena").val('');
-    $("#O_ID").val('');
-
-    // Deshabilitar los campos de usuario y contraseña
-    $('#usuario').prop('readonly', true);
-    $('#contrasena').prop('readonly', true);
-
-    opcion = "add_persona"; //alta           
-    user_id=null;
-    idOrganizacion = 0
-
-    if (idOrganizacion >= 1) {
-        document.getElementById('more_infos').checked = true;
-        $("#conditional_parts").show();
-    }
-    else {
-        document.getElementById('more_infos').checked = false;
-        $("#conditional_parts").hide();
-    }
-    checkOrganizacion = 0
-    // Comprueba si el Check esta ON u OFF 
-    checkboxNC = document.getElementById('more_infos');
-    checkboxNC.addEventListener('change', function () {
-        // Verifica si el checkbox está marcado o no
-        if (this.checked) {
-            console.log('El checkbox está activado.');
-            checkOrganizacion = 1;
-            $("#conditional_part").show();
+        if (perfilId == 9) { // Representante
+            $('#checkbox-container').show();
+            $('#more_infos').prop('checked', true).prop('disabled', true).change(); // Activa y desactiva el checkbox
+        } else if (perfilId == 10) { // Providencia
+            $('#checkbox-container').show();
+            $('#more_infos').prop('checked', true).prop('disabled', true).change();
+            $('#conditional_parts').show();
+            $('#O_ID').val('').change(); // Resetear el valor del select
+            $('#O_ID option').each(function() {
+                if ($(this).data('tipo') == 4) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        } else if (perfilText === 'administrador' || perfilText === 'dideco') {
+            $('#checkbox-container').hide();
+            $('#more_infos').prop('checked', false).prop('disabled', false).change();
         } else {
-            console.log('El checkbox está desactivado.');
-            checkOrganizacion = 0;
-            $("#conditional_part").hide();
+            $('#checkbox-container').hide();
+            $('#more_infos').prop('checked', false).prop('disabled', false).change();
+            $('#conditional_parts').hide();
         }
     });
-    
-    $("#formUsuarios").trigger("reset");
-    $(".modal-header").css( "background-color", "#17a2b8");
-    $(".modal-header").css( "color", "white" );
-    $(".modal-title").text("Añadir Persona");
-    $('#modalCRUD').modal('show');
-	    
+
+    // Mostrar u ocultar el selector de organización dependiendo del checkbox
+    $('#more_infos').change(function() {
+        var selectedPerfil = $('#idPerfil').val();
+        if ($(this).is(':checked')) {
+            $('#conditional_parts').show();
+            if (selectedPerfil == 9) { // Representante
+                checkOrganizacion = 1;
+                $('#O_ID').val('').change(); // Resetear el valor del select
+                $('#O_ID option').each(function() {
+                    var tipo = $(this).data('tipo');
+                    if (tipo == 1 || tipo == 2 || tipo == 3) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        } else {
+            $('#conditional_parts').hide();
+        }
+    });
+
+    // Inicializar el formulario al hacer clic en el botón "Nuevo"
+    $("#btnNuevo").click(function() {
+        // Limpiar campos
+        $("#dni").val('');
+        $("#nombre").val('');
+        $("#direccion").val('');
+        $("#telefono").val('');
+        $("#mail").val('');
+        $("#idPerfil").val('');
+        $("#estado").val('');
+        $("#usuario").val('');
+        $("#contrasena").val('');
+        $("#O_ID").val('');
+
+        // Deshabilitar los campos de usuario y contraseña
+        $('#usuario').prop('readonly', true);
+        $('#contrasena').prop('readonly', true);
+
+        opcion = "add_persona"; // alta
+        user_id = null;
+        idOrganizacion = 0;
+
+        if (idOrganizacion >= 1) {
+            $('#more_infos').prop('checked', true).prop('disabled', true);
+            $("#conditional_parts").show();
+        } else {
+            $('#more_infos').prop('checked', false).prop('disabled', false);
+            $("#conditional_parts").hide();
+        }
+        checkOrganizacion = 0;
+
+        // Configurar el evento de cambio para el checkbox "Desea agregar Organización"
+        var checkboxNC = document.getElementById('more_infos');
+        checkboxNC.addEventListener('change', function() {
+            if (this.checked) {
+                console.log('El checkbox está activado.');
+                checkOrganizacion = 1;
+                $("#conditional_parts").show();
+            } else {
+                console.log('El checkbox está desactivado.');
+                checkOrganizacion = 0;
+                $("#conditional_parts").hide();
+            }
+        });
+
+        // Resetear el formulario y mostrar el modal
+        $("#formUsuarios").trigger("reset");
+        $(".modal-header").css("background-color", "#17a2b8");
+        $(".modal-header").css("color", "white");
+        $(".modal-title").text("Añadir Persona");
+        $('#modalCRUD').modal('show');
+    });
+
+    // Validar el formulario antes de enviarlo
+    $('#formUsuarios').submit(function(event) {
+        var perfilVal = $('#idPerfil').val();
+        var organizacionVal = $('#O_ID').val();
+
+        var isValid = true;
+
+        if (perfilVal === "") {
+            $('#perfilError').text("Por favor, selecciona un perfil.");
+            isValid = false;
+        } else {
+            $('#perfilError').text("");
+        }
+
+        if ($('#more_infos').is(':checked') && organizacionVal === "") {
+            $('#organizacionError').text("Por favor, selecciona una organización.");
+            isValid = false;
+        } else {
+            $('#organizacionError').text("");
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
 });
 
 

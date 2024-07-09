@@ -84,7 +84,8 @@ SELECT O.id AS id,
     O.estado AS estado,
   aniosVigente=0,
   vigente = 'NO VIGENTE'
-FROM A_ORGANIZACION O WHERE O.checkVigente=0";
+FROM A_ORGANIZACION O WHERE O.checkVigente=0
+ORDER BY tipo";
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
     //imprimir los datos en JSON

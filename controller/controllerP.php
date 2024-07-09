@@ -102,7 +102,8 @@ SELECT
     NULL AS fechaTermino,
     0 AS estado
 FROM A_PERSONA P
-WHERE P.checkOrganizacion = 0"; 
+WHERE P.checkOrganizacion = 0
+ORDER BY idOrganizacion"; 
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
     //imprimir los datos en JSON
@@ -249,7 +250,7 @@ WHERE P.checkOrganizacion = 0";
 
           echo "funciona el if de editar";
           //define la consulta
-          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0, estado=0 WHERE id='$user_id' and idPerfil !=1 and idPerfil!=3";
+          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0, estado=0 WHERE id='$user_id' and idPerfil !=7 and idPerfil!=8";
           //llamo al metodo listar y le doy la variable CONSULTA
           $datos=$menu->listar($CONSULTA);
             $CONSULTA = "SELECT * FROM A_PERSONA";
@@ -297,7 +298,7 @@ WHERE P.checkOrganizacion = 0";
 
       echo "funciona el if de editar";
       //define la consulta
-      $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0 WHERE id='$user_id' and idPerfil !=1 and idPerfil!=3";
+      $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0 WHERE id='$user_id' and idPerfil !=7 and idPerfil!=8";
       //llamo al metodo listar y le doy la variable CONSULTA
       $datos=$menu->listar($CONSULTA);
         $CONSULTA = "SELECT * FROM A_PERSONA";
@@ -365,16 +366,16 @@ case "habGeneral":
       // Excluir las personas con organizaciones deshabilitadas
       if (!empty($personasDeshabilitadasIds)) {
           $personasDeshabilitadasIdsStr = implode(',', $personasDeshabilitadasIds);
-          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil != 1 AND idPerfil != 3 AND id NOT IN ($personasDeshabilitadasIdsStr)";
+          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil != 7 AND idPerfil != 8 AND id NOT IN ($personasDeshabilitadasIdsStr)";
           $datos=$menu->listar($CONSULTA);
       } else {
           // Si no hay personas deshabilitadas, habilitar a todas las personas elegibles
-          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil != 1 AND idPerfil != 3";
+          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil != 7 AND idPerfil != 8";
           $datos=$menu->listar($CONSULTA);
       }
   } else {
       // Si no hay organizaciones deshabilitadas, habilitar a todas las personas elegibles
-      $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil != 1 AND idPerfil != 3";
+      $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil != 7 AND idPerfil != 8";
       $datos=$menu->listar($CONSULTA);
   }
 
@@ -386,7 +387,7 @@ break;
 
   case "DesHabGeneral": 
     //define la consulta
-    $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 0 WHERE idPerfil !=1 and idPerfil !=3  ";
+    $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 0 WHERE idPerfil !=7 and idPerfil !=8  ";
     //llamo al metodo listar y le doy la variable CONSULTA
     $datos=$menu->listar($CONSULTA);
 

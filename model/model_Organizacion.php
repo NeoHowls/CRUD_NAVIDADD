@@ -29,7 +29,7 @@
         //NO SE USARA AUN
         public function mostrarOrganizacion(){
    
-            $sql ="SELECT id, nombre FROM A_ORGANIZACION where estado=1 and checkHabilitado=1";
+            $sql ="SELECT id, nombre,tipo FROM A_ORGANIZACION where estado=1 and checkHabilitado=1";
             $this->connect();
             $query = $this->iniciar($sql);
             

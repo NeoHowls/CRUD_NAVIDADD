@@ -67,6 +67,7 @@
                         <div class="col-lg-6" style = "text-align: center;">
                                 <label for="tipo" class="col-form-label">Tipo:</label>
                                 <select name="cars" id="tipo" class = "form-control">
+                                <option value="">Selecciona una opción</option>
                                   <option value=1>JUNTA VECINAL</option>
                                   <option value=2>COMÍTE VIVIENDA</option>
                                   <option value=3>CONDOMINIO</option>
@@ -82,6 +83,7 @@
                         <div class="col-lg-6" style = "text-align: center;">
                             <label for="aniosVigente" class="col-form-label">Años Vigente:</label>
                             <select name="cars" id="aniosVigente" class = "form-control">
+                            <option value="">Selecciona una opción</option>
                                   <option value=1>1</option>
                                   <option value=4>4</option> 
                                 </select>
@@ -111,27 +113,6 @@
                   <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
               </div>
           </form>
-          <!-- <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const tipoSelect = document.getElementById('tipo');
-                    const aniosVigenteSelect = document.getElementById('aniosVigente');
-                    const numProvidenciaGroup = document.getElementById('numProvidenciaGroup');
-
-                    // Ocultar el campo de Número de Providencia al cargar la página
-                    numProvidenciaGroup.style.display = 'none';
-
-                    tipoSelect.addEventListener('change', function() {
-                        if (tipoSelect.value === '4') {
-                            numProvidenciaGroup.style.display = 'block';
-                            aniosVigenteSelect.value = '1';
-                            aniosVigenteSelect.disabled = true;
-                        } else {
-                            numProvidenciaGroup.style.display = 'none';
-                            aniosVigenteSelect.disabled = false;
-                        }
-                    });
-                });
-            </script>     -->
           </div>
       </div>
   </div>   
