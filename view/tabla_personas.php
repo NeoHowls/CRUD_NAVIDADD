@@ -180,5 +180,5 @@
     </div>
 </div>
 <script src="../datatables.js"></script>
-<script src="../js/idioma.js"></script>
+<script src="../js/ajax/idioma.js"></script>
 <script src="../js/AJAX_PERSONA.js"></script>
