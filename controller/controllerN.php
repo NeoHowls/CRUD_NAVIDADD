@@ -1,10 +1,11 @@
 <?php
   //llama al MenuModel
-  require_once("../model/MenuModel.php");
+  // require_once("../model/MenuModel.php");
+  require_once ("../model/MODEL_NINOS.php");
   session_start();
     
   //declaro una variable para poder invocar a MenuModel
-  $menu= new MenuModel();
+  
   $user_id = (isset($_POST['user_id'])) ? $_POST['user_id'] : '';
   $dni = (isset($_POST['dni'])) ? $_POST['dni'] : '';
   $nombre = (isset($_POST['nombre'])) ? $_POST['nombre'] : '';
@@ -46,6 +47,7 @@
 
 
    case "add_etnia":
+      $menu= new Ninos();;
       //define la consulta
       echo ($fisica_p);
       $fechaIngreso = date('Y-m-d H:i:s', strtotime($fechaIngreso));   
@@ -119,6 +121,7 @@
         break;
         //edita 1 dato selecionable de la tabla A_ETNIA
     case "edit_etnia":
+      $menu= new Ninos();
       //define la consulta
       echo $etnia;
       $CONSULTA = "UPDATE [dbo].[A_NINOS]
@@ -158,63 +161,25 @@
         print($datos);
       break;
       case "ninos":
-        //define la consulta
-        $CONSULTA = "SELECT  
-          A_NINOS.id,
+        // $menu= new MenuModel();
+        $tipoO = $_POST['tipoO'];
+        $OrganizacionO = $_POST['Organizacion'];
+        $periodo = $_POST['periodo'];
+        
 
-          A_NINOS.dni,
-          A_NINOS.nombre,
-          A_NINOS.sexo,
-		  CASE
-        WHEN [sexo] = 0 THEN 'MUJER'
-        WHEN [sexo]= 1 THEN 'HOMBRE'
-		END AS sexo_vista,
-          A_NINOS.edad,
-          A_NINOS.fechaNacimiento,
-          A_NINOS.periodo,
-          A_NINOS.descripcion,
-          A_NINOS.fechaRegistro,
-          A_NINOS.idNacionalidad,
-          A_NINOS.checkExtranjero,
-		  A_NINOS.checkCeguera
-		  ,A_NINOS.checkSordera
-		  ,A_NINOS.checkMudez
-		  ,A_NINOS.checkFisica
-		  ,A_NINOS.checkMental
-		  ,A_NINOS.checkPsiquica
-		  ,A_NINOS.idOrganizacion
-		  ,A_NINOS.idPersonalRegistro
-
-		  ,A_NINOS.checkDiscapacitado
-		  ,A_NINOS.porcentajeCeguera
-		  ,A_NINOS.porcentajeSordera
-		  ,A_NINOS.porcentajeMudez
-		  ,A_NINOS.porcentajeFisica
-		  ,A_NINOS.porcentajeMental
-		  ,A_NINOS.porcentajePsiquica,
-
-          A_ETNIA.etnia,
-          A_NACIONALIDAD.nacionalidad,
-          A_ORGANIZACION.nombre AS NOMBRE_ORGANIZACION,
-           
-          A_ORGANIZACION.tipo,
-          CASE
-			WHEN A_ORGANIZACION.tipo = 1 THEN 'JUNTA VECINAL'
-			WHEN A_ORGANIZACION.tipo = 2 THEN 'COMÍTE'
-			WHEN A_ORGANIZACION.tipo = 3 THEN 'CONDOMINIO'
-			WHEN A_ORGANIZACION.tipo = 4 THEN 'PROVIDENCIA'
-		END AS tipo_org,
-		A_NINOS.idEtnia
-
-
-
-        FROM [dbo].[A_NINOS]
-          INNER JOIN A_ETNIA ON A_NINOS.idEtnia = A_ETNIA.id
-          INNER JOIN A_NACIONALIDAD ON A_NINOS.idNacionalidad = A_NACIONALIDAD.id
-          INNER JOIN A_ORGANIZACION ON A_NINOS.idOrganizacion = A_ORGANIZACION.id;";
+        
         //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
+        // $datos=$menu->listar($sql);
+
+        $ninos= new Ninos();
+        // $datos=$ninos->listarNinos(1,1,2024);
+        $datos=$ninos->listarNinos($tipoO,$OrganizacionO,$periodo);
+
+        /* $ninos= new Ninos();
+        $datos=$ninos->listar($sql); */
+
         //imprimir los datos en JSON
+        // var_dump($datos);
         print($datos);
         break;
 

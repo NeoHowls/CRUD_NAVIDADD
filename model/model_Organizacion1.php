@@ -27,7 +27,7 @@
         }
         
         //NO SE USARA AUN
-        public function listarDireccionesS($tipo){
+        public function listarOrganizacionS($tipo){
    
             $sql ="SELECT id, nombre FROM A_ORGANIZACION where estado=1 and tipo = $tipo";
             $this->connect();

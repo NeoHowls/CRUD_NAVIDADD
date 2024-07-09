@@ -1,19 +1,19 @@
 <?php
 require_once("../model/model_Organizacion1.php");
 $menu= new MenuModelOrganizacion();
-if(isset($_POST['codigo_area'])){
-    switch ($_POST['codigo_area']) {
+if(isset($_POST['tipo'])){
+    switch ($_POST['tipo']) {
         case 1:
-            $area = "JUNTA VECINAL";
+            $tipo = "JUNTA VECINAL";
             break;
         case 2:
-            $area = "COMITE";
+            $tipo = "COMITE";
             break;
         case 3:
-            $area = "CONDOMINIO";
+            $tipo = "CONDOMINIO";
             break;
         case 4:
-            $area = "PROVIDENCIA";
+            $tipo = "PROVIDENCIA";
             break;
         case 99:
             echo "PERSONAL";
@@ -21,8 +21,9 @@ if(isset($_POST['codigo_area'])){
     }
 
    
-    $html="<option selected value=0>Mostrar todo de ".$area."</option>";
-    $datos=$menu->listarDireccionesS($_POST['codigo_area']);
+    // $html="<option selected value=0 disabled>Sin Organizacion".$tipo."</option>";
+    $html="<option selected value=0 disabled>Sin Organización</option>";
+    $datos=$menu->listarOrganizacionS($_POST['tipo']);
 
     foreach($datos as $key => $value){
         $html.='<option value="'.$value['id'].'">'.$value['nombre'].'</option>'; 

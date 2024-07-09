@@ -50,6 +50,7 @@ function calcularEdad(fecha, periodo) {
 
     return edad;
 }
+
 let table = $('#myTable').DataTable( {
     // destroy : true,
 
@@ -147,17 +148,17 @@ let table = $('#myTable').DataTable( {
                         columns: ':visible'
                     }
                     
-                },
+                }/* ,
                 {    
                     extend: 'colvis',
                     text: 'COLUMNAS',
-                }
+                } */
             ] 
         }
     }
 } );
 
-//! --------------cambio de areas-------------------
+//! --------------cambio de tipo-------------------
 $("#tipo").change(function(){
 
     $('#organizacion_selection').attr('disabled', false);
@@ -171,10 +172,10 @@ $("#tipo").change(function(){
     $("#departamentos").html("<option selected disabled>Sin Departamentos</option>")
     $("#secciones").empty();
     $("#secciones").html("<option selected disabled>Sin Secciones</option>") */
-    let carea = $('#tipo').val();
+    let tipo = $('#tipo').val();
     let action = 1;
 
-    listarDireccion(carea);
+    listarOrganizacion(tipo);
 
     /* parametros="codigo_area="+carea;
     $.ajax({
@@ -192,10 +193,10 @@ $("#tipo").change(function(){
         }
     });//fin ajax */
 
-  })//fin change
+})//fin change
 
-function listarDireccion(carea){
-    parametros="codigo_area="+carea
+function listarOrganizacion(tipo){
+    parametros="tipo="+tipo
     //  parametros="codigo_area="+carea;
 //  console.log(parametros);
     $.ajax({
@@ -217,19 +218,19 @@ function listarDireccion(carea){
 
 
 $(document).ready(function() {
-
+    // table.draw();
     $('#select_periodo').on('change', function(){
-        table.draw();
-
+        // table.draw();
+        // alert("periodo");
     })
 
     $('#organizacion_selection').on('change', function(){
-        table.draw();
+        //table.draw();
 
     })
 
     $('#tipo').on('change', function(){
-        table.draw();
+        //table.draw();
 
     })
 
@@ -248,8 +249,8 @@ $.fn.dataTableExt.afnFiltering.push(
         var select_org = $('select#organizacion_selection option:selected').val();
         var select_tipo = $('select#tipo option:selected').val();
         var org_columna = data[17]
-        console.log(select_org)
-        console.log(org_columna)
+        // console.log(select_org)
+        // console.log(org_columna)
         if (select_org || select_tipo == 0) {
             if (select_periodo == periodo_columna & select_org <= org_columna) {
                 return true;

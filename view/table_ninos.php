@@ -42,7 +42,7 @@
             <div class="col-lg-6" style = "text-align: center;" >
                   <label for="organizacion_selection">Organizacion</label>
                   <select class="form-control" id="organizacion_selection" name="organizacion_selection" disabled>
-                      <option selected disabled value=0>Sin Dirección</option>
+                      <option selected disabled value=0>Sin Organizacion</option>
                       <!-- carga select direcciones-->
                   </select>
     </div>
@@ -54,7 +54,12 @@
                                 <?php
                                   for($i=2023;$i<=date("Y");$i++){
                                     //for($i=2023;$i<=2025;$i++){
-                                    echo ("<option value=".$i.">".$i."</option>");
+                                    // echo ("<option value=".$i.">".$i."</option>");
+                                    if($i==date("Y")){
+                                        echo ("<option value=".$i." selected>".$i."</option>");
+                                    }else{
+                                        echo ("<option value=".$i.">".$i."</option>");
+                                    }
                                   }
                                 ?>
                                 <!-- <option value=1>2022</option>
@@ -182,8 +187,8 @@
                               <label for="" class="col-form-label">Periodo:</label>
                               <select name="cars" id="periodo" class = "form-control">
                                 <?php
-                                  //for($i=2023;$i<=date("Y");$i++){
-                                    for($i=2023;$i<=2025;$i++){
+                                  for($i=2023;$i<=date("Y");$i++){
+                                    // for($i=2023;$i<=2025;$i++){
                                     echo ("<option value=".$i.">".$i."</option>");
                                   }
                                 ?>
@@ -364,16 +369,22 @@
 </div><!--div contenedor principal-->   
     <script type="text/javascript" src="../datatables.js"></script>
     <script type="text/javascript" src="../js/ajax/idioma.js"></script>
-    <script type="text/javascript" src="../js/AJAX_NINOS.js"> </script>
+    <!-- <script type="text/javascript" src="../js/AJAX_NINOS.js"> </script> -->
+    <script type="text/javascript" src="../js/AJAX_NINOS2.js"> </script>
         
     <script>
     // A $( document ).ready() block.
     let userTipo;
     let id_usuario
-
+    let periodo;
         
         userTipo = <?php echo($_SESSION['tipo_usuario']); ?>;
         id_usuario = <?php echo($_SESSION['id_persona']); ?>;
-        // alert( id_usuario );
+        periodo = $('#select_periodo').val();
+        tipoO = $('#tipo').val();
+        Organizacion = $('#organizacion_selection').val();
+        // alert( periodo  );
+
+        listarNinos(tipoO,Organizacion,periodo);
     
     </script>                   
