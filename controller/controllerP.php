@@ -250,7 +250,7 @@ ORDER BY idOrganizacion";
 
           echo "funciona el if de editar";
           //define la consulta
-          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0, estado=0 WHERE id='$user_id' and idPerfil !=7 and idPerfil!=8";
+          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0, estado=0 WHERE id='$user_id' and idPerfil !=7";
           //llamo al metodo listar y le doy la variable CONSULTA
           $datos=$menu->listar($CONSULTA);
             $CONSULTA = "SELECT * FROM A_PERSONA";
@@ -260,37 +260,46 @@ ORDER BY idOrganizacion";
             //print($datos);
     
             
-        } else {
-            $CONSULTA = "SELECT idOrganizacion FROM A_DETALLE_PO WHERE idPersona='$user_id' AND estado=1";
-            $datos = $menu->consultar($CONSULTA);
-            $Org_id = $datos[0]['idOrganizacion'];
-    
-            $CONSULTA = "SELECT checkHabilitado FROM A_ORGANIZACION WHERE id='$Org_id'";
-            $datos = $menu->consultar($CONSULTA);
-            $Org_hab = $datos[0]['checkHabilitado'];
-            echo($Org_id);
-            echo($Org_hab);
-    
-            if ($Org_hab == 1) {
-                $CONSULTA1 = "UPDATE A_PERSONA SET checkHabilitado = 1, estado=1 WHERE id='$user_id'";
-                // Llama al método listar y le da la variable CONSULTA
-                $menu->listar($CONSULTA1);
-                $datos = $menu->listar($CONSULTA1);
+          } else {
+            if($idPerfil=8){
+      
+              $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=1, estado=1 WHERE id='$user_id' and idPerfil !=7";
+              //llamo al metodo listar y le doy la variable CONSULTA
+              $datos=$menu->listar($CONSULTA);
                 $CONSULTA = "SELECT * FROM A_PERSONA";
-                // Llama al método listar y le da la variable CONSULTA
-                $datos = $menu->listar($CONSULTA);
-                // Imprimir los datos en JSON
-                print($datos);
-            } else {
-                // Enviar un mensaje JSON al frontend
-                $response = array(
-                    "status" => "error",
-                    "message" => "La organización está deshabilitada."
-                );
-                print(json_encode($response));
-            }
-        }
-        break;
+                //llamo al metodo listar y le doy la variable CONSULTA
+                $datos=$menu->listar($CONSULTA);
+            }else{ 
+              $CONSULTA = "SELECT idOrganizacion FROM A_DETALLE_PO WHERE idPersona='$user_id' AND estado=7";
+              $datos = $menu->consultar($CONSULTA);
+              $Org_id = $datos[0]['idOrganizacion'];
+      
+              $CONSULTA = "SELECT checkHabilitado FROM A_ORGANIZACION WHERE id='$Org_id'";
+              $datos = $menu->consultar($CONSULTA);
+              $Org_hab = $datos[0]['checkHabilitado'];
+              echo($Org_id);
+              echo($Org_hab);
+      
+              if ($Org_hab == 1) {
+                  $CONSULTA1 = "UPDATE A_PERSONA SET checkHabilitado = 1, estado=1 WHERE id='$user_id'";
+                  // Llama al método listar y le da la variable CONSULTA
+                  $menu->listar($CONSULTA1);
+                  $datos = $menu->listar($CONSULTA1);
+                  $CONSULTA = "SELECT * FROM A_PERSONA";
+                  // Llama al método listar y le da la variable CONSULTA
+                  $datos = $menu->listar($CONSULTA);
+                  // Imprimir los datos en JSON
+                  print($datos);
+              } else {
+                  // Enviar un mensaje JSON al frontend
+                  $response = array(
+                      "status" => "error",
+                      "message" => "La organización está deshabilitada."
+                  );
+                  print(json_encode($response));
+              }
+          }}
+          break;
 
   case "Habilitar_persona":
 
@@ -298,7 +307,7 @@ ORDER BY idOrganizacion";
 
       echo "funciona el if de editar";
       //define la consulta
-      $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0 WHERE id='$user_id' and idPerfil !=7 and idPerfil!=8";
+      $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0 WHERE id='$user_id' and idPerfil !=7";
       //llamo al metodo listar y le doy la variable CONSULTA
       $datos=$menu->listar($CONSULTA);
         $CONSULTA = "SELECT * FROM A_PERSONA";
@@ -307,46 +316,47 @@ ORDER BY idOrganizacion";
         //imprimir los datos en JSON
         //print($datos);
 
-      // $usuarioCambio = $_SESSION["nombre"];
-      // $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-      // ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Eliminar Usuario')";
-      // $datos=$menu->listar($CONSULTA);
-      // $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
-      // $datos=$menu->listar($CONSULTA);
-      // print($datos);
-
         
-    } else {
-        $CONSULTA = "SELECT idOrganizacion FROM A_DETALLE_PO WHERE idPersona='$user_id' AND estado=1";
-        $datos = $menu->consultar($CONSULTA);
-        $Org_id = $datos[0]['idOrganizacion'];
-
-        $CONSULTA = "SELECT checkHabilitado FROM A_ORGANIZACION WHERE id='$Org_id'";
-        $datos = $menu->consultar($CONSULTA);
-        $Org_hab = $datos[0]['checkHabilitado'];
-        echo($Org_id);
-        echo($Org_hab);
-
-        if ($Org_hab == 1) {
-            $CONSULTA1 = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE id='$user_id'";
-            // Llama al método listar y le da la variable CONSULTA
-            $menu->listar($CONSULTA1);
-            $datos = $menu->listar($CONSULTA1);
+      } else {
+        if($idPerfil=8){
+  
+          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=1 WHERE id='$user_id' and idPerfil !=1";
+          //llamo al metodo listar y le doy la variable CONSULTA
+          $datos=$menu->listar($CONSULTA);
             $CONSULTA = "SELECT * FROM A_PERSONA";
-            // Llama al método listar y le da la variable CONSULTA
-            $datos = $menu->listar($CONSULTA);
-            // Imprimir los datos en JSON
-            print($datos);
-        } else {
-            // Enviar un mensaje JSON al frontend
-            $response = array(
-                "status" => "error",
-                "message" => "La organización está deshabilitada."
-            );
-            print(json_encode($response));
-        }
-    }
-    break;
+            //llamo al metodo listar y le doy la variable CONSULTA
+            $datos=$menu->listar($CONSULTA);
+        }else{ 
+          $CONSULTA = "SELECT idOrganizacion FROM A_DETALLE_PO WHERE idPersona='$user_id' AND estado=7";
+          $datos = $menu->consultar($CONSULTA);
+          $Org_id = $datos[0]['idOrganizacion'];
+  
+          $CONSULTA = "SELECT checkHabilitado FROM A_ORGANIZACION WHERE id='$Org_id'";
+          $datos = $menu->consultar($CONSULTA);
+          $Org_hab = $datos[0]['checkHabilitado'];
+          echo($Org_id);
+          echo($Org_hab);
+  
+          if ($Org_hab == 1) {
+              $CONSULTA1 = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE id='$user_id'";
+              // Llama al método listar y le da la variable CONSULTA
+              $menu->listar($CONSULTA1);
+              $datos = $menu->listar($CONSULTA1);
+              $CONSULTA = "SELECT * FROM A_PERSONA";
+              // Llama al método listar y le da la variable CONSULTA
+              $datos = $menu->listar($CONSULTA);
+              // Imprimir los datos en JSON
+              print($datos);
+          } else {
+              // Enviar un mensaje JSON al frontend
+              $response = array(
+                  "status" => "error",
+                  "message" => "La organización está deshabilitada."
+              );
+              print(json_encode($response));
+          }
+      }}
+      break;
 
 
 case "habGeneral":
