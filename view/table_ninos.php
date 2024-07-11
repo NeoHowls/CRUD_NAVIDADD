@@ -8,7 +8,7 @@
 </style>
 
 <?php
-    // var_dump($_SESSION);
+     var_dump($_SESSION);
 ?>
 <div class="container">
 		
@@ -200,7 +200,7 @@
 
               </div><!-- modal-header-->
 
-              <form id="formUsuarios">    
+              <form id="formUsuarios" autocomplete="off">    
                   <div class="modal-body" style="background: #E7E7E7">
                       <div class="row">
                      
@@ -225,7 +225,11 @@
                                 </div> -->
 
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="more_info" name="more" value = 1 <?php if($_SESSION['tipo_usuario']!=0 || $_SESSION['tipo_usuario']!=1 ){echo('disabled');}?>>
+                                    <input class="form-check-input" type="checkbox" id="more_info" name="more" 
+                                    <?php if($_SESSION['tipo_usuario']==2){echo('disabled');}
+                                            
+                                    ?> 
+                                    value = 1 >
                                     <label class="form-check-label" for="more_info">Discapacidad</label>
                                 </div>
                             </div>  
@@ -243,7 +247,7 @@
                       <div class="row">
                           <div class="col-lg-6" style = "text-align: center;">   
                               <label for="" class="col-form-label">Periodo</label>
-                              <select name="cars" id="periodo" class = "form-control" required>
+                              <select name="cars" id="periodo" class = "form-control" required <?php if($_SESSION['tipo_usuario']==2){echo('disabled');}?> >
                                 <?php
                                   for($i=2023;$i<=date("Y");$i++){
                                     // for($i=2023;$i<=2025;$i++){
@@ -273,12 +277,14 @@
                           <div class="col-lg-12" style = "text-align: center;">                    
                               <label for="" class="col-form-label">Organización</label>
                               <?php include_once("../controller/controller_mostrarO.php") ?>
-                                <select name="cars" id="O_ID" class="form-control" required <?php if($_SESSION['tipo_usuario']!=0 || $_SESSION['tipo_usuario']!=1 ) echo('disabled'); ?>>
-                                    <option disabled value=0>Sin Organización</option>
+                                <select name="cars" id="O_ID" class="form-control" required <?php if($_SESSION['tipo_usuario']==2){ echo('disabled');} ?>>
+                                    
                                     <?php
-                                        if($_SESSION['tipo_usuario']!=0 || $_SESSION['tipo_usuario']!=1 ){
+                                        if($_SESSION['tipo_usuario']==2 ){
+                                            echo("<option disabled value=0>Sin Organización</option>");
                                             echo("<option disabled value=".$_SESSION['idOrganizacion']." selected>".$_SESSION['nombreOrganizacion']."</option>");
                                         }else{
+                                            echo("<option disabled selected value=0>Sin Organización</option>");
                                             foreach($datos as $key => $value){
                                                 echo '<option value="'.$value['id'].'">'.$value['nombre'].'</option>'; 
                                             }
