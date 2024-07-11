@@ -22,7 +22,7 @@ if(isset($_POST['tipo'])){
 
    
     // $html="<option selected value=0 disabled>Sin Organizacion".$tipo."</option>";
-    $html="<option selected value=0 disabled>Sin Organización</option>";
+    $html="<option disabled selected value=0 disabled>Seleccione Organización</option>";
     $datos=$menu->listarOrganizacionS($_POST['tipo']);
 
     foreach($datos as $key => $value){
@@ -30,7 +30,7 @@ if(isset($_POST['tipo'])){
     }
     echo $html;
 }else{
-    $html="<option selected disabled value = 0>Sin</option>";
+    $html="<option selected disabled value = 0>Sin Organización</option>";
     echo $html;
 }
 ?>

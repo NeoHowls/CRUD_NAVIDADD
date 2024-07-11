@@ -50,28 +50,7 @@ class Ninos extends ConexionBD{
 
 
     public function listarNinos($tipoO, $organizacionO, $periodo){
-        /* $tipoO =1;
-        $organizacionO =1;
-        $periodo=2024; */
-        
-        
-        if($tipoO==0 && ($organizacionO==null || $organizacionO=='') ){
-            $condicion = "WHERE O.tipo= :tipoO
-		    AND N.periodo = :periodo";
-            
-        }/* elseif($tipoO!=0 && $organizacionO!=null){
-            $condicion = "WHERE O.tipo= :tipoO
-		    AND N.idOrganizacion = :organizacionO
-		    AND N.periodo = :periodo";
-            $bandera=2;
-        }elseif($periodo!=0){
-            $condicion = "WHERE N.periodo = :periodo";
-            $bandera=3;
-        }
-        else{
-            $condicion ="";
-            
-        } */
+
 
         $sql="SELECT  
           N.id AS id,
@@ -133,33 +112,29 @@ class Ninos extends ConexionBD{
             $parametros =array("periodo"=>$periodo);
             $this->connect();
             $query = $this->ejecutaConsulta($sql, $parametros);
-        }
-        /* if($bandera==1){
+        }elseif($tipoO!=0 && ($organizacionO==null || $organizacionO=='')){
+            $sql = $sql." WHERE O.tipo= :tipoO
+		    AND N.periodo = :periodo";
             $parametros =array("tipoO"=>$tipoO,"periodo"=>$periodo);
             $this->connect();
             $query = $this->ejecutaConsulta($sql, $parametros);
-        }elseif($bandera==2){
+        }elseif($tipoO!=0 && ($organizacionO!=null || $organizacionO!='') && $periodo!=0){
+            $sql = $sql." WHERE O.tipo= :tipoO
+            AND N.idOrganizacion = :organizacionO
+		    AND N.periodo = :periodo";
             $parametros =array("tipoO"=>$tipoO,"organizacionO"=>$organizacionO,"periodo"=>$periodo);
             $this->connect();
             $query = $this->ejecutaConsulta($sql, $parametros);
-        }elseif($bandera==3){
+        }
+        else{
+            $sql = $sql." WHERE N.periodo = :periodo";
             $parametros =array("periodo"=>$periodo);
             $this->connect();
             $query = $this->ejecutaConsulta($sql, $parametros);
-        }else{
-            $parametros =array("periodo"=>$periodo);
-            $this->connect();
-            $query = $this->ejecutaConsulta($sql);
-        } */
-        /* $parametros =array("tipoO"=>$tipoO,"organizacionO"=>$organizacionO,"periodo"=>$periodo);
-        $this->connect();
-        $query = $this->ejecutaConsulta($sql, $parametros); */
-        // $query = $this->ejecutaConsulta($sql);
+            
+        }
+
         return $query;
-        // $this->connect();
-        // //configuro la consulta 
-        // $query = $this->ejecutaConsulta($sql);
-        //retorno la consulta hacia controller.php
-        // return $query;
+
     }
 }

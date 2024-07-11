@@ -1,4 +1,15 @@
+<style>
+    /* Thick red border */
+    hr.linea {
+    background: #5c94f4;
+    border: 2px solid #5c94f4;
+    opacity: 1;
+    }
+</style>
 
+<?php
+    // var_dump($_SESSION);
+?>
 <div class="container">
 		
   <br>
@@ -28,48 +39,85 @@
               <table class="inputs">
         <tbody><tr>
         <div class="row">
-            <div class="col-lg-3" style = "text-align: center;" >
-                <label >Tipo:</label>
-                <select id="tipo" class = "form-control">
-                <option value=0>TIPO</option>
-                <option value=1>Junta Vecinal</option>
-                <option value=2>Comite</option>
-                <option value=3>Condominio</option>
-                <option value=4>Providencia</option>
-            </select>  
-            </div>
-                              
-            <div class="col-lg-6" style = "text-align: center;" >
-                  <label for="organizacion_selection">Organizacion</label>
-                  <select class="form-control" id="organizacion_selection" name="organizacion_selection" disabled>
-                      <option selected disabled value=0>Sin Organizacion</option>
-                      <!-- carga select direcciones-->
-                  </select>
-    </div>
-    
-            <div class="col-lg-3" style = "text-align: center;">   
-                              <label for="" class="col-form-label">Periodo:</label>
-                              <select name="cars" id="select_periodo" class = "form-control">
-                                
-                                <?php
-                                  for($i=2023;$i<=date("Y");$i++){
-                                    //for($i=2023;$i<=2025;$i++){
-                                    // echo ("<option value=".$i.">".$i."</option>");
-                                    if($i==date("Y")){
-                                        echo ("<option value=".$i." selected>".$i."</option>");
-                                    }else{
-                                        echo ("<option value=".$i.">".$i."</option>");
-                                    }
-                                  }
-                                ?>
-                                <!-- <option value=1>2022</option>
-                                <option value=2>2023</option>
-                                <option value=3>2024</option>
-                                <option value=4>2025</option> -->
-                              </select>
-                          </div>
-
-                          </div>
+            <?php 
+                if($_SESSION['tipo_usuario']==0 || $_SESSION['tipo_usuario']==1 ){
+            ?>
+                <div class="col-lg-3" style = "text-align: center;" >
+                    <label >Tipo:</label>
+                    <select id="tipo" class = "form-control">
+                        <option value=0 selected disabled>Seleccione Tipo</option>
+                        <option value=1>Junta Vecinal</option>
+                        <option value=2>Comite</option>
+                        <option value=3>Condominio</option>
+                        <option value=4>Providencia</option>
+                    </select>  
+                </div>              
+                <div class="col-lg-6" style = "text-align: center;" >
+                    <label for="organizacion_selection">Organización</label>
+                    <select class="form-control" id="organizacion_selection" name="organizacion_selection" disabled>
+                        <option selected disabled value=0>Sin Organización</option>
+                        <!-- carga select direcciones-->
+                    </select>
+                </div>
+                <div class="col-lg-3" style = "text-align: center;">   
+                    <label for="" class="col-form-label">Periodo:</label>
+                    <select name="cars" id="select_periodo" class = "form-control">
+                        <?php
+                            for($i=2023;$i<=date("Y");$i++){
+                            //for($i=2023;$i<=2025;$i++){
+                            // echo ("<option value=".$i.">".$i."</option>");
+                            if($i==date("Y")){
+                                echo ("<option value=".$i." selected>".$i."</option>");
+                            }else{
+                                echo ("<option value=".$i.">".$i."</option>");
+                            }
+                            }
+                        ?>
+                    </select>
+                </div>
+            <?php
+                }//fin if
+                else{
+            ?>
+                <div class="col-lg-3" style = "text-align: center;" >
+                    <label >Tipo:</label>
+                    <select id="tipo" class = "form-control" disabled>
+                        <option value=0 disabled>Seleccione Tipo</option>
+                        <option value=1 <?php if($_SESSION['tipoOrganizacion']==1) { echo('selected');}?>>Junta Vecinal</option>
+                        <option value=2 <?php if($_SESSION['tipoOrganizacion']==2) { echo('selected');}?>>Comite</option>
+                        <option value=3 <?php if($_SESSION['tipoOrganizacion']==3) { echo('selected');}?>>Condominio</option>
+                        <option value=4 <?php if($_SESSION['tipoOrganizacion']==4) { echo('selected');}?>>Providencia</option>
+                    </select>  
+                </div>              
+                <div class="col-lg-6" style = "text-align: center;" >
+                    <label for="organizacion_selection">Organización</label>
+                    <select class="form-control" id="organizacion_selection" name="organizacion_selection" disabled>
+                        <option disabled value=0>Sin Organización</option>
+                        <?php echo("<option disabled value=".$_SESSION['idOrganizacion']." selected>".$_SESSION['nombreOrganizacion']."</option>"); ?>
+                        <!-- carga select direcciones-->
+                    </select>
+                </div>
+                <div class="col-lg-3" style = "text-align: center;">   
+                    <label for="" class="col-form-label">Periodo:</label>
+                    <select name="cars" id="select_periodo" class = "form-control" disabled>
+                        <?php
+                            for($i=2023;$i<=date("Y");$i++){
+                            //for($i=2023;$i<=2025;$i++){
+                            // echo ("<option value=".$i.">".$i."</option>");
+                                if($i==date("Y")){
+                                    echo ("<option value=".$i." selected>".$i."</option>");
+                                }else{
+                                    echo ("<option value=".$i.">".$i."</option>");
+                                }
+                            }
+                        ?>
+                    </select>
+                </div>
+            <?php
+                }//fin else
+                
+            ?>
+        </div>
     </tbody></table>
       <!-- <div class="container"> -->
         <br>
@@ -158,38 +206,53 @@
                      
 
                             <div class="col-6" >
-                                <label class="col-form-label" for="flexSwitchCheckDefault">EXTRANJERO <div class="elnt_container form-check form-switch">
+                                <!-- <label class="col-form-label" for="flexSwitchCheckDefault">EXTRANJERO <div class="elnt_container form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="more_infos" name="more" value = 1>
-                                </div></label>
+                                </div></label> -->
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="more_infos" name="more" value = 1>
+                                    <label class="form-check-label" for="more_infos">Extranjero</label>
+                                </div>
                             </div>  
                             
 
+
                             <div class="col-lg-6">
-                                <label class="col-form-label" for="flexSwitchCheckDefault">Discapacidad</label>
+                                <!-- <label class="col-form-label" for="flexSwitchCheckDefault">Discapacidad</label>
                                 <div class="elnt_container form-check form-switch">
                                     <input class="form-check-input" type="checkbox" id="more_info" name="more" value= 1>
+                                </div> -->
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="more_info" name="more" value = 1 <?php if($_SESSION['tipo_usuario']!=0 || $_SESSION['tipo_usuario']!=1 ){echo('disabled');}?>>
+                                    <label class="form-check-label" for="more_info">Discapacidad</label>
                                 </div>
-   
                             </div>  
-                            </div>
+                        </div>
                         <div class="row">
                           <div class="col-lg-12" style = "text-align: center;" >   
-                            <label for="" class="col-form-label">DNI/RUT::</label>
-                            <input type="text" class="form-control" id="dni">  
-                            <label for="" class="col-form-label">Nombre Completo:</label>
-                            <input type="text" class="form-control" id="nombre">
+                            <label for="" class="col-form-label">DNI/RUT</label>
+                            <input type="text" class="form-control" id="dni" required>  
+                            <label for="" class="col-form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="nombre" required>
                               
-                              <br>
+                              <!-- <br> -->
                           </div>
                       </div><!--row-->
                       <div class="row">
-                          <div class="col-lg-3" style = "text-align: center;">   
-                              <label for="" class="col-form-label">Periodo:</label>
-                              <select name="cars" id="periodo" class = "form-control">
+                          <div class="col-lg-6" style = "text-align: center;">   
+                              <label for="" class="col-form-label">Periodo</label>
+                              <select name="cars" id="periodo" class = "form-control" required>
                                 <?php
                                   for($i=2023;$i<=date("Y");$i++){
                                     // for($i=2023;$i<=2025;$i++){
-                                    echo ("<option value=".$i.">".$i."</option>");
+                                    // echo ("<option value=".$i.">".$i."</option>");
+                                    if($i==date("Y")){
+                                        echo ("<option value=".$i." selected>".$i."</option>");
+                                    }else{
+                                        echo ("<option value=".$i.">".$i."</option>");
+                                    }
                                   }
                                 ?>
                                 <!-- <option value=1>2022</option>
@@ -198,44 +261,51 @@
                                 <option value=4>2025</option> -->
                               </select>
                           </div>
-                          <div class="col-lg-3" style = "text-align: center;">                    
-                              <label for="" class="col-form-label">Sexo:</label>
-                              <select name="cars" id="sexo" class = "form-control">
-                                  <option value=1>Hombre</option>
-                                  <option value=0>Mujer</option> 
-                              </select>
-                          </div>   
                           <div class="col-lg-6" style = "text-align: center;">                    
-                              <label for="" class="col-form-label">Organizacion:</label>
+                              <label for="" class="col-form-label">Sexo</label>
+                              <select name="cars" id="sexo" class = "form-control" required>
+                                  <option value=1>MASCULINO</option>
+                                  <option value=0>FEMENINO</option> 
+                              </select>
+                          </div>
+                        </div>
+                        <div class="row">   
+                          <div class="col-lg-12" style = "text-align: center;">                    
+                              <label for="" class="col-form-label">Organización</label>
                               <?php include_once("../controller/controller_mostrarO.php") ?>
-                                <select name="cars" id="O_ID" class="form-control">
+                                <select name="cars" id="O_ID" class="form-control" required <?php if($_SESSION['tipo_usuario']!=0 || $_SESSION['tipo_usuario']!=1 ) echo('disabled'); ?>>
+                                    <option disabled value=0>Sin Organización</option>
                                     <?php
-                                    foreach($datos as $key => $value){
-                                        echo '<option value="'.$value['id'].'">'.$value['nombre'].'</option>'; 
-                                    }
+                                        if($_SESSION['tipo_usuario']!=0 || $_SESSION['tipo_usuario']!=1 ){
+                                            echo("<option disabled value=".$_SESSION['idOrganizacion']." selected>".$_SESSION['nombreOrganizacion']."</option>");
+                                        }else{
+                                            foreach($datos as $key => $value){
+                                                echo '<option value="'.$value['id'].'">'.$value['nombre'].'</option>'; 
+                                            }
+                                        }
                                     ?>
                                 </select>
                           </div>    
-                          <br>
-                          <hr>
+                          <!-- <br>
+                          <hr> -->
                       </div><!--row-->
                       <div class="row">
                           <div class="col-lg-4" style = "text-align: center;">
-                              <label for="" class="col-form-label">Nacimiento:</label>
-                              <input type="date" name='fecha'  class="form-control" id="Naciemiento">
+                              <label for="" class="col-form-label">Fecha Nacimiento</label>
+                              <input type="date" name='fecha'  class="form-control" id="Naciemiento" required>
                               <br>
                           </div>
                           <div class="col-lg-2" style = "text-align: center;">
-                              <label for="" class="col-form-label">Edad:</label>
+                              <label for="" class="col-form-label">Edad</label>
                               <input type="number" class="form-control" id="edad">
                               <br>
                           </div>
                           <div class="col-lg-6" style = "text-align: center;">
-                              <label for="" class="col-form-label">Etnia:</label>
+                              <label for="" class="col-form-label">Etnia</label>
                               <?php 
                                   include_once("../controller/controller_etnia.php");
                               ?>
-                              <select name="carsn" id="etnia" class = "form-control">
+                              <select name="carsn" id="etnia" class = "form-control" required>
                               <option value= 0 >No tiene</option>               
                               <?php
 
@@ -248,25 +318,33 @@
                               </select>
                               <br>
                           </div>
-                      <hr>
+                      <hr class="linea">
                       </div><!--row-->
                       
                       <div id="conditional_part" style="display:none;">
                       <div class="row p-1">
                         
                           <div class="col-lg-3">
+                              <!-- <label for="" class="col-form-label">Ceguera:</label>
+                              <input class="form-check-input" type="checkbox" id="ceguera" name="more" value = 1> -->
 
-
-                              <label for="" class="col-form-label">Ceguera:</label>
-                              <input class="form-check-input" type="checkbox" id="ceguera" name="more" value = 1>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="ceguera" name="more" value = 1>
+                                <label class="form-check-label" for="ceguera">Ceguera</label>
+                            </div>
                           </div>
                           <div class="col-lg-3">
                               <input type="number" id="ceguera_percil" name="ceguera" min="0" max="100" value = "0"/>
                               
                           </div>
                           <div class="col-lg-3">
-                              <label for="" class="col-form-label">Sordera:</label>
-                              <input class="form-check-input" type="checkbox" id="sordera" name="more" value = 1>
+                              <!-- <label for="" class="col-form-label">Sordera:</label>
+                              <input class="form-check-input" type="checkbox" id="sordera" name="more" value = 1> -->
+                              
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="sordera" name="more" value = 1>
+                                <label class="form-check-label" for="sordera">Sordera</label>
+                            </div>
                           </div>
                           <div class="col-lg-3">
                               <input type="number" id="sordera_percil" name="tentacles" min="0" max="100" value = "0"/>
@@ -278,17 +356,25 @@
                         
                           <div class="col-lg-3">
 
-
-                              <label for="" class="col-form-label">Mudez:</label>
-                              <input class="form-check-input" type="checkbox" id="mudez" name="more" value = 1>
+                              <!-- <label for="" class="col-form-label">Mudez:</label>
+                              <input class="form-check-input" type="checkbox" id="mudez" name="more" value = 1> -->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="mudez" name="more" value = 1>
+                                <label class="form-check-label" for="mudez">Mudez</label>
+                            </div>
                           </div>
                           <div class="col-lg-3">
                               <input type="number" id="mudez_percil" name="tentacles" min="0" max="100" value = "0"/>
                               
                           </div>
                           <div class="col-lg-3">
-                              <label for="" class="col-form-label">Fisica:</label>
-                              <input class="form-check-input" type="checkbox" id="fisica" name="more" value = 1>
+                              <!-- <label for="" class="col-form-label">Fisica:</label>
+                              <input class="form-check-input" type="checkbox" id="fisica" name="more" value = 1> -->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="fisica" name="more" value = 1>
+                                <label class="form-check-label" for="fisica">Fisica</label>
+                            </div>
+                              
                           </div>
                           <div class="col-lg-3">
                               <input type="number" id="fisica_percil" name="tentacles" min="0" max="100" value = "0" />
@@ -301,16 +387,25 @@
                           <div class="col-lg-3">
 
 
-                              <label for="" class="col-form-label">Mental:</label>
-                              <input class="form-check-input" type="checkbox" id="mental" name="more" value = 1>
+                              <!-- <label for="" class="col-form-label">Mental:</label>
+                              <input class="form-check-input" type="checkbox" id="mental" name="more" value = 1> -->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="mental" name="more" value = 1>
+                                <label class="form-check-label" for="mental">Mental</label>
+                            </div>
+
                           </div>
                           <div class="col-lg-3">
                               <input type="number" id="mental_percil" name="tentacles" min="0" max="100" value = "0"/>
                               
                           </div>
                           <div class="col-lg-3">
-                              <label for="" class="col-form-label">Psiquica:</label>
-                              <input class="form-check-input" type="checkbox" id="psiquica" name="more" value = 1>
+                              <!-- <label for="" class="col-form-label">Psiquica:</label>
+                              <input class="form-check-input" type="checkbox" id="psiquica" name="more" value = 1> -->
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="psiquica" name="more" value = 1>
+                                <label class="form-check-label" for="psiquica">Psiquica</label>
+                            </div>
                           </div>
                           <div class="col-lg-3">
                               <input type="number" id="psiquica_percil" name="tentacles" min="0" max="100" value = "0"/>
@@ -318,19 +413,37 @@
                           </div>
                       </div>
 
-                      <div class="row">
-                      <div class="col-lg-6">
-                              <label for="" class="col-form-label">descripcion:</label>
-                              <!-- <input type="text" class="form-control" id="descripcion"> -->
-                              <!-- <input type="number" id="ceguera_percil" name="tentacles" min="0" max="100" /> -->
-                              <textarea id="descripcion" name="descripcion" rows="4" cols="50"></textarea>
-                              
-                              <br> 
-                              </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label for="" class="col-form-label">Descripción</label>
+
+                                <!-- <textarea id="descripcion" name="descripcion" rows="4" cols="50"></textarea> -->
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave a comment here" name="descripcion" id="descripcion" style="height: 100px"></textarea>
+                                    <label for="descripcion">Detallar Descripción !!!</label>
+                                </div>
+                                <br> 
+                            </div>
                         </div>
-                      </div><!--row-->
+
+                        <!-- <div class="row">
+                            <div class="col-lg-12">  
+                                <label for="" class="col-form-label">Descripción</label>
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                    <label for="floatingTextarea2">Comments</label>
+                                </div>
+                            </div>
+                        </div>    -->      
+
+                    </div><!--row-->
+
+
+
+
+
                       <div class="row">
-                                <div class="col-6" id="conditional_parts" style="display:none;">
+                                <div class="col-12" id="conditional_parts" style="display:none;">
                                     <?php 
                                     include_once("../controller/controller_nac.php");
                                     ?>

@@ -104,12 +104,16 @@
             PE.checkReadP AS checkReadP,	
             PE.checkDeleteP AS checkDeleteP,
             PE.tipo	AS tipo,
+            -----------------
+			O.TIPO AS tipoOrganizacion,
+			O.id AS idOrganizacion,
+			-----------------
 			O.nombre AS nombreOrganizacion
             FROM A_PERSONA P
             JOIN A_PERFIL PE ON P.idPerfil = PE.id
 			INNER JOIN A_DETALLE_PO DPO ON P.id =  DPO.idPersona
 			INNER JOIN A_ORGANIZACION O ON O.id = DPO.idOrganizacion
-			WHERE DPO.estado=1 AND P.usuario = :rut AND P.contrasena = :pass
+			WHERE DPO.estado=1 AND P.usuario = :user AND P.contrasena = :pass
 UNION
 SELECT  
             P.id AS id_persona,
@@ -132,12 +136,16 @@ SELECT
             PE.checkReadP AS checkReadP,	
             PE.checkDeleteP AS checkDeleteP,
             PE.tipo	AS tipo,
+            -----------------
+			tipoOrganizacion = 0,
+			idOrganizacion = 0,
+			-----------------
 			nombreOrganizacion = 'NINGUNA'
             FROM A_PERSONA P
             JOIN A_PERFIL PE ON P.idPerfil = PE.id
 			--INNER JOIN A_DETALLE_PO DPO ON P.id =  DPO.idPersona
-			WHERE P.checkOrganizacion=0 AND P.usuario = :rut2 AND P.contrasena = :pass2";
-            $parametros = array("rut"=>$user,"pass"=>$contra,"rut2"=>$user,"pass2"=>$contra);
+			WHERE P.checkOrganizacion=0 AND P.usuario = :user2 AND P.contrasena = :pass2";
+            $parametros = array("user"=>$user,"pass"=>$contra,"user2"=>$user,"pass2"=>$contra);
             $this->connect();
             $listo = "gracias";
             $mal = "mal";
