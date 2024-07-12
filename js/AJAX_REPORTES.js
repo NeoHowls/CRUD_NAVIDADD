@@ -147,6 +147,7 @@ let table1 = $('#myTable11').DataTable( {
     },
     "columns":[
         {"data": "edad"}, //0
+        {"data": "edadV"}, //0
         {"data": "MASCULINO"},//1 
         {"data": "FEMENINO"}, //2
         {"data": "TOTAL"}, //3
@@ -191,7 +192,7 @@ let table1 = $('#myTable11').DataTable( {
                 {    
                     extend: 'colvis',
                     text: 'COLUMNAS',
-                    columns: [0,1,2,3]
+                    columns: [1,2,3,4]
                 }
             ] 
         }

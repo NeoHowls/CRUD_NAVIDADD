@@ -70,10 +70,35 @@ switch ($_GET["op"]) {
 
     case "pdf":
         // Esta parte se manejará en el script que genera el PDF
-        $CONSULTA="SELECT edad, sum(masculino) MASCULINO, sum(femenino) FEMENINO, sum(masculino)+sum(femenino) TOTAL
-        FROM V_CONTEONINOS 
-        group by edad
-        order by edad";
+        $CONSULTA="SELECT  edad,
+                    REPLACE(edad, 99, 'MAYORES DE 10 AÑOS') edadV,
+                    --sum(masculino) MASCULINO,
+                    ISNULL(sum(masculino), 0) MASCULINO,
+                    --sum(femenino) FEMENINO,
+                    ISNULL(sum(femenino), 0) FEMENINO,
+                    --sum(masculino)+sum(femenino) TOTAL
+                    ISNULL(sum(masculino)+sum(femenino), 0) TOTAL
+                    
+            FROM (
+                    SELECT E.edad edad,
+                        --VCN.sexo sexo,
+                        VCN.masculino masculino,
+                        VCN.FEMENINO femenino
+                    FROM (SELECT * FROM V_CONTEONINOS WHERE edad <= 10 and periodo=2024) VCN
+                    RIGHT JOIN A_EDAD E ON VCN.edad = E.edad
+                    
+                    UNION
+                    SELECT 
+                        --edad = 'MAYORES DE 10 AÑOS',
+                        edad =99,
+                        sum(masculino) MASCULINO,
+                        sum(femenino) FEMENINO
+                        
+                    FROM V_CONTEONINOS VCN
+                    WHERE VCN.edad > 10 AND VCN.periodo=2024
+                    ) vista
+            group by edad
+            order by edad";
         $datos=$menu->listar($CONSULTA);
         print($datos); 
         break;

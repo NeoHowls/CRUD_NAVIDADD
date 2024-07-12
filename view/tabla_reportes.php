@@ -193,7 +193,8 @@
                             <thead>
                                 <tr>
                                 
-                                    <th>EDAD</th>  <!-- 0 -->
+                                    <th class="never">EDAD</th>  <!-- 0 -->
+                                    <th>RANGO ETARIO</th>  <!-- 0 -->
                                     <th>MASCULINO</th>  <!-- 1 -->
                                     <th>FEMENINO</th>  <!-- 2 -->
                                     <th>TOTAL</th>  <!-- 3 -->
