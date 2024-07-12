@@ -22,7 +22,7 @@ class ConexionBD{
     //      $this->password ='1';
     //    $this->error= '';
 
-        $this->host = '10.20.10.13';
+        $this->host = 'NB-ABAEZA\SQLEXPRESS01';
         $this->db = 'BD_NAVIDAD';
         $this->user = 'sa';
         $this->password ='1';

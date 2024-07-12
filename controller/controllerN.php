@@ -12,10 +12,10 @@
   $sexo = (isset($_POST['sexo'])) ? $_POST['sexo'] : '';
   $edad = (isset($_POST['edad'])) ? $_POST['edad'] : '';
   $periodo = (isset($_POST['periodo'])) ? $_POST['periodo'] : '';
-  $descripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion'] : '';
+  
   $naciemiento = (isset($_POST['naciemiento'])) ? $_POST['naciemiento'] : '';
-  $nacion = (isset($_POST['nacion'])) ? $_POST['nacion'] : '';
   $comuna = (isset($_POST['comuna'])) ? $_POST['comuna'] : '';
+  //!check discapacidad
   $check_dis = (isset($_POST['check_dis'])) ? $_POST['check_dis'] : '';
   $ceguera = (isset($_POST['ceguera'])) ? $_POST['ceguera'] : '';
   $sordera = (isset($_POST['sordera'])) ? $_POST['sordera'] : '';
@@ -23,15 +23,19 @@
   $fisica = (isset($_POST['fisica'])) ? $_POST['fisica'] : '';
   $mental = (isset($_POST['mental'])) ? $_POST['mental'] : '';
   $psiquica = (isset($_POST['psiquica'])) ? $_POST['psiquica'] : '';
-  $check_nac = (isset($_POST['check_nac'])) ? $_POST['check_nac'] : '';
-
-
+  
   $ceguera_p = (isset($_POST['ceguera_p'])) ? $_POST['ceguera_p'] : '';
   $sordera_p = (isset($_POST['sordera_p'])) ? $_POST['sordera_p'] : '';
   $mudez_p = (isset($_POST['mudez_p'])) ? $_POST['mudez_p'] : '';
   $fisica_p = (isset($_POST['fisica_p'])) ? $_POST['fisica_p'] : '';
   $mental_p = (isset($_POST['mental_p'])) ? $_POST['mental_p'] : '';
   $psiquica_p = (isset($_POST['psiquica_p'])) ? $_POST['psiquica_p'] : '';
+
+  $descripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion'] : '';
+
+  //!check nacionalidad
+  $check_nac = (isset($_POST['check_nac'])) ? $_POST['check_nac'] : '';
+  $nacion = (isset($_POST['nacion'])) ? $_POST['nacion'] : '';
 
   $usuario_id = $_SESSION['id_persona'];
   $organizacion = (isset($_POST['organizacion'])) ? $_POST['organizacion'] : '';
@@ -45,8 +49,9 @@
   switch($_GET["op"]){
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
 
-
-   case "add_etnia":
+   //! agregar nino 
+  //  case "add_etnia":
+    case "agregarNino":
       $menu= new Ninos();;
       //define la consulta
       echo ($fisica_p);
@@ -120,6 +125,7 @@
       //imprimir los datos en JSON
         break;
         //edita 1 dato selecionable de la tabla A_ETNIA
+    //! editar niño
     case "edit_etnia":
       $menu= new Ninos();
       //define la consulta
@@ -160,7 +166,8 @@
         //imprimir los datos en JSON
         print($datos);
       break;
-      case "ninos":
+      //! listar Niños
+      case "listarNinos":
         // $menu= new MenuModel();
         $tipoO = $_POST['tipoO'];
         $OrganizacionO = $_POST['Organizacion'];

@@ -2,6 +2,45 @@
     //Solicito el archivo ConexionDB.php para conectarme a la base de dato
     require_once '../config/ConexionDB.php';
 
+    class Etnia extends ConexionBD{
+        public function listar($CONSULTA){
+            //$sql = "SELECT * FROM A_ETNIA";
+            //Realizo la conexion paara comunicarme con la bdd
+            $this->connect();
+            //configuro la consulta 
+            $query = $this->ejecutaConsulta($CONSULTA);
+            //retorno la consulta hacia controller.php
+            return $query;
+        }
+        public function ejecutar($CONSULTA){
+            //$sql = "SELECT * FROM A_ETNIA";
+            //Realizo la conexion paara comunicarme con la bdd
+            $this->connect();
+            //configuro la consulta 
+            $query = $this->ejecutarOrden($CONSULTA);
+            //retorno la consulta hacia controller.php
+            return $query;
+        }
+        public function consultar($CONSULTA){
+            //$sql = "SELECT * FROM A_ETNIA";
+            //Realizo la conexion paara comunicarme con la bdd
+            $this->connect();
+            //configuro la consulta 
+            $query = $this->iniciar($CONSULTA);
+            //retorno la consulta hacia controller.php
+            return $query;
+        }
+        //!: listar etnia , vector
+        public function listarEtnia(){
+   
+            $sql ="SELECT id, etnia FROM A_ETNIA WHERE estado = 1";
+            $this->connect();
+            $query = $this->iniciar($sql); 
+            return $query; 
+        }
+    }
+
+/*     
     //La clase Menu Model hereda funciones de ConexionDB
     class MenuModelEtnia extends ConexionBD{
 
@@ -36,7 +75,7 @@
            
         }
 
-    }
+    } */
 
 
 ?>

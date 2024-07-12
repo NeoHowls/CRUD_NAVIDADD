@@ -1,5 +1,7 @@
+//todo: crea variables de datatable
 let table, dataid;
 
+//todo: lista dataTable niños segun tipo, organizacion y periodo
 let listarNinos = function(tipoO,Organizacion,periodo){
 
     // alert (tipoO+','+Organizacion+','+periodo);
@@ -12,7 +14,7 @@ let listarNinos = function(tipoO,Organizacion,periodo){
         
         //TENGO QUE SEPARAR ESTO EN OTRO ARCHIVO
         "ajax":{
-            url: "../controller/controllerN.php?op=ninos",
+            url: "../controller/controllerN.php?op=listarNinos",
             dataSrc:"",
             type: "post",
             responsive : true,
@@ -60,9 +62,6 @@ let listarNinos = function(tipoO,Organizacion,periodo){
             {"data": "tipo_org"},//31
             {"data": "idEtnia"},//32
             {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'><svg xmlns=http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'><path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/><path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/></svg></i>"}
-
-            
-        
 
         ] , 
 
@@ -113,43 +112,18 @@ let listarNinos = function(tipoO,Organizacion,periodo){
     } );
 }
 
-//! --------------cambio de tipo-------------------
+//todo: cambio de tipo de organizacion
 $("#tipo").change(function(){
 
     $('#organizacion_selection').attr('disabled', false);
-/*     $('#departamentos').attr('disabled', true);
-    $('#secciones').attr('disabled', true); */
 
-   /*  $('#btnDepartamento').attr('disabled', true);
-    $('#btnSeccion').attr('disabled', true); */
-
-/*     $("#departamentos").empty();
-    $("#departamentos").html("<option selected disabled>Sin Departamentos</option>")
-    $("#secciones").empty();
-    $("#secciones").html("<option selected disabled>Sin Secciones</option>") */
     let tipo = $('#tipo').val();
     let action = 1;
 
     listarOrganizacion(tipo);
-
-    /* parametros="codigo_area="+carea;
-    $.ajax({
-        data: parametros,
-        url: 'ajax_direcciones.php',
-        type: 'POST',
-        beforeSend: function(){
-            // alert("enviado")
-        },
-        success: function(response){
-            $("#direcciones").html(response);
-        },
-        error:function(){
-            alert("error")
-        }
-    });//fin ajax */
-
 })//fin change
 
+//todo: lista las organizaciones cuando cambio el tipo de organizacion
 function listarOrganizacion(tipo){
     parametros="tipo="+tipo
     //  parametros="codigo_area="+carea;
@@ -171,6 +145,7 @@ function listarOrganizacion(tipo){
     });//fin ajax
 }
 
+//todo: select dinamicos tipo organizacion y periodo 
     $('#tipo , #organizacion_selection , #select_periodo').change(function(){
         let tipoS = $('#tipo').val();
         let organizacionS = $('#organizacion_selection').val();
@@ -179,290 +154,298 @@ function listarOrganizacion(tipo){
         // table.destroy();
         listarNinos(tipoS,organizacionS,periodoS);
     });
-    /* $('#organizacion_selection').change(function(){
-        let tipoS = $('#tipo').val();
-        let organizacionS = $('#organizacion_selection').val();
-        let periodoS = $('#select_periodo').val();
-        // alert(organizacionS);
-        // table.destroy();
-        listarNinos(tipoS,organizacionS,periodoS);
-     });
-    $('#select_periodo').change(function(){
-        let tipoS = $('#tipo').val();
-        let organizacionS = $('#organizacion_selection').val();
-        let periodoS = $('#select_periodo').val();
-        // alert(periodoS);
-        // table.destroy();
-        listarNinos(tipoS,organizacionS,periodoS);
-    }); */
 
-/* $(document).ready(function() {
-    // table.draw();
-    $('#select_periodo').on('change', function(){
-        // table.draw();
-        // alert("periodo");
-        // listarNinos(tipoO,Organizacion,periodo);
-        // table.draw();
-    })
+//! check Discapacidad muestra/oculta contenido
+$('#chDiscapacidad').change(function() {
+    if(this.checked != true){
+          $("#contenidoDiscapacidad").hide();
+          limpiarContenidoDiscapacidad()
+     }
+  else{
+        $("#contenidoDiscapacidad").show();
+  }
+});
 
-    $('#organizacion_selection').on('change', function(){
-        //table.draw();
-        // listarNinos(tipoO,Organizacion,periodo);
-        // table.draw();
-    })
+//!  check Extranjeros muestra/oculta contenido
+$('#chExtrajero').change(function() {
+    if(this.checked != true){
+          $("#contenidoExtrajero").hide();
+     }
+  else{
+        $("#contenidoExtrajero").show();
+  }
+});
 
-    $('#tipo').on('change', function(){
-        //table.draw();
-        // listarNinos(tipoO,Organizacion,periodo);
-        // table.draw();
-    })
+//todo: limpia contenido contenido discapacidad
+function limpiarContenidoDiscapacidad(){
+    //check a desactivado
+    $("#ceguera").prop("checked", false);
+    $("#sordera").prop("checked", false);
+    $("#mudez").prop("checked", false);
+    $("#fisica").prop("checked", false);
+    $("#mental").prop("checked", false);
+    $("#psiquica").prop("checked", false);
+    //deshabilita input
+    $("#ceguera_percil").attr('disabled', true);
+    $("#sordera_percil").attr('disabled', true);
+    $("#mudez_percil").attr('disabled', true);
+    $("#fisica_percil").attr('disabled', true);
+    $("#mental_percil").attr('disabled', true);
+    $("#psiquica_percil").attr('disabled', true);
+    //vacia contenido input
+    $("#ceguera_percil").val("");
+    $("#sordera_percil").val("");
+    $("#mudez_percil").val("");
+    $("#fisica_percil").val("");
+    $("#mental_percil").val("");
+    $("#psiquica_percil").val("");
+
+    $("#descripcion").val("");
+}
 
 
+//! boton niño nuevo, limpia formulario
+$("#btnNuevo").click(function(){
+    
+    const periodo_fecha = document.getElementById("periodo").value
+    const fecha_hace_11_anios = new Date();
+    fecha_hace_11_anios.setFullYear(fecha_hace_11_anios.getFullYear() - 10);
+    const anio_hace_11_anios = fecha_hace_11_anios.getFullYear();
 
+    const fecha_hace_120_anios = new Date();
+    fecha_hace_120_anios.setFullYear(fecha_hace_120_anios.getFullYear() - 120);
+    const anio_hace_120_anios = fecha_hace_120_anios.getFullYear();
+    
+    /* Establecemos la fecha mínima desde enero de hace 11 años */
+    const fecha_minima = `${anio_hace_11_anios}-01-01`;
 
-}) */
-
-    $("#btnNuevo").click(function(){
+    const fecha_minima120 = `${anio_hace_120_anios}-01-01`;
 
     
-        const periodo_fecha = document.getElementById("periodo").value
-        const fecha_hace_11_anios = new Date();
-        fecha_hace_11_anios.setFullYear(fecha_hace_11_anios.getFullYear() - 10);
-        const anio_hace_11_anios = fecha_hace_11_anios.getFullYear();
+
     
-        const fecha_hace_120_anios = new Date();
-        fecha_hace_120_anios.setFullYear(fecha_hace_120_anios.getFullYear() - 120);
-        const anio_hace_120_anios = fecha_hace_120_anios.getFullYear();
-        
-        /* Establecemos la fecha mínima desde enero de hace 11 años */
-        const fecha_minima = `${anio_hace_11_anios}-01-01`;
     
-        const fecha_minima120 = `${anio_hace_120_anios}-01-01`;
-    
-        
-    
-     
-        
-    
-        opcion = "add_etnia"; //alta           
-        user_id=null;
-        check_nac = 0;
-        check_dis = 0;
-        ceguera = 0;
-        sordera = 0;
-        mudez = 0;
-        fisica = 0;
-        mental= 0;
-        psiquica = 0;
-         if (check_nac == 1) {
-            document.getElementById('more_infos').checked = true
-            $("#conditional_parts").show();
-    
-        }
-        else {
-            document.getElementById('more_infos').checked = false
-            $("#conditional_parts").hide();
-        }
-        checkboxNAC = document.getElementById('more_infos');
-        checkboxNAC.addEventListener('change', function () {
-            // Verifica si el checkbox está marcado o no
-            if (this.checked) {
-                console.log('El checkbox está activado.');
-                check_nac = 1;
-    
-            } else {
-                console.log('El checkbox está desactivado.');
-                check_nac = 0;
-                $("#nacion").val('1')
-                
-            }
-        });
-    
-        if (check_dis == 1) {
-            document.getElementById('more_info').checked = true
-            $("#conditional_part").show();
-            document.getElementById("Naciemiento").min = fecha_minima120
-        }
-        else {
-            document.getElementById('more_info').checked = false
-            $("#conditional_part").hide();
-            document.getElementById("Naciemiento").min = fecha_minima
-        } 
-        checkboxDIS = document.getElementById('more_info');
-        checkboxDIS.addEventListener('change', function () {
-            // Verifica si el checkbox está marcado o no
-            if (this.checked) {
-                console.log(fecha_minima120);
-                check_dis = 1;
-                document.getElementById("Naciemiento").min = fecha_minima120
-    
-            } else {
-                console.log('El checkbox está desactivado.');
-                check_dis = 0;
-                document.getElementById("Naciemiento").min = fecha_minima
-                
-            }
-        });
-    
-        
-        
-        
-    
-        let fecha = new Date();
-        let anio = fecha.getFullYear();
-     
-        selections = document.getElementById('Naciemiento');
-        select_periodo = document.getElementById('periodo');
-        selections.addEventListener('change', function () {
-            edad = calcularEdad(selections.value, select_periodo.value)
-        
-                document.getElementById('edad').value = edad
-    
-        })
-    
-        usuario_id = id_usuario
-        
-        $("#formUsuarios").trigger("reset");
-        
-    
-        $('#periodo').val(anio);
-        if(userTipo==2){
-            $("#periodo").prop('disabled', true);
-        }else{
-            $("#periodo").prop('disabled', false);
-        }
-        const hoy_fecha = `${anio}-12-30`
-        document.getElementById("Naciemiento").max = hoy_fecha
-        $("#periodo").on("change", function() {
-            const periodo_fecha = document.getElementById("periodo").value
-            const hoy_fecha = `${periodo_fecha}-12-30`;
-            document.getElementById("Naciemiento").max = hoy_fecha
-            edad = calcularEdad(selections.value, select_periodo.value)
-        
-                document.getElementById('edad').value = edad
+
+    opcion = "agregarNino"; //alta           
+    user_id=null;
+    check_nac = 0;
+    check_dis = 0;
+    ceguera = 0;
+    sordera = 0;
+    mudez = 0;
+    fisica = 0;
+    mental= 0;
+    psiquica = 0;
+        if (check_nac == 1) {
+        document.getElementById('chExtrajero').checked = true
+        $("#contenidoExtrajero").show();
+
+    }
+    else {
+        document.getElementById('chExtrajero').checked = false
+        $("#contenidoExtrajero").hide();
+    }
+    checkboxNAC = document.getElementById('chExtrajero');
+    checkboxNAC.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            // console.log('El checkbox está activado.');
+            check_nac = 1;
+
+        } else {
+            // console.log('El checkbox está desactivado.');
+            check_nac = 0;
+            $("#nacion").val('1')
             
-        });
-        document.getElementById("ceguera_percil").disabled = true;
-        checkboxCeguera = document.getElementById('ceguera');
-        checkboxCeguera.addEventListener('change', function () {
-            // Verifica si el checkbox está marcado o no
-            if (this.checked) {
-                console.log('El checkbox está activado.');
-                ceguera = 1;
-                document.getElementById("ceguera_percil").disabled = false;
-    
-            } else {
-                console.log('El checkbox está desactivado.');
-                ceguera = 0;
-                document.getElementById("ceguera_percil").disabled = true;
-                document.getElementById("ceguera_percil").value = 0;
-    
-            }
-        });
-        document.getElementById("sordera_percil").disabled = true;
-        checkboxSordera= document.getElementById('sordera');
-        checkboxSordera.addEventListener('change', function () {
-            // Verifica si el checkbox está marcado o no
-            if (this.checked) {
-                console.log('El checkbox está activado.');
-                sordera = 1;
-                document.getElementById("sordera_percil").disabled = false;
-    
-            } else {
-                console.log('El checkbox está desactivado.');
-                document.getElementById("sordera_percil").disabled = true;
-                sordera = 0;
-                document.getElementById("sordera_percil").value = 0;
-            }
-        });
-    
-        document.getElementById("mudez_percil").disabled = true;
-        checkboxMudez= document.getElementById('mudez');
-        checkboxMudez.addEventListener('change', function () {
-            // Verifica si el checkbox está marcado o no
-            if (this.checked) {
-                console.log('El checkbox está activado.');
-                mudez = 1;
-                document.getElementById("mudez_percil").disabled = false;
-    
-            } else {
-                console.log('El checkbox está desactivado.');
-                document.getElementById("mudez_percil").disabled = true;
-                mudez = 0;
-                document.getElementById("mudez_percil").value = 0;
-            }
-        });
-    
-        document.getElementById("fisica_percil").disabled = true;
-        checkboxFisica= document.getElementById('fisica');
-        checkboxFisica.addEventListener('change', function () {
-            // Verifica si el checkbox está marcado o no
-            if (this.checked) {
-                console.log('El checkbox está activado.');
-                document.getElementById("fisica_percil").disabled = false;
-                fisica = 1;
-    
-            } else {
-                console.log('El checkbox está desactivado.');
-                document.getElementById("fisica_percil").disabled = true;
-                fisica = 0;
-                document.getElementById("fisica_percil").value = 0;
-            }
-        });
-    
-        document.getElementById("mental_percil").disabled = true;
-        checkboxMental= document.getElementById('mental');
-        checkboxMental.addEventListener('change', function () {
-            // Verifica si el checkbox está marcado o no
-            if (this.checked) {
-                console.log('El checkbox está activado.');
-                document.getElementById("mental_percil").disabled = false;
-                mental = 1;
-    
-            } else {
-                console.log('El checkbox está desactivado.');
-                document.getElementById("mental_percil").disabled = true;
-                mental = 0;
-                document.getElementById("mental_percil").value = 0;
-            }
-        });
-    
-        document.getElementById("psiquica_percil").disabled = true;
-        checkboxPsiquica= document.getElementById('psiquica');
-        checkboxPsiquica.addEventListener('change', function () {
-            // Verifica si el checkbox está marcado o no
-            if (this.checked) {
-                console.log('El checkbox está activado.');
-                psiquica = 1;
-                document.getElementById("psiquica_percil").disabled = false;
-    
-            } else {
-                console.log('El checkbox está desactivado.');
-                document.getElementById("psiquica_percil").disabled = true;
-                psiquica = 0;
-                document.getElementById("psiquica_percil").value = 0;
-            }
-        });
-    
-        selections = document.getElementById('Naciemiento');
-        select_periodo = document.getElementById('periodo');
-        selections.addEventListener('change', function () {
-            edad = calcularEdad(selections.value, select_periodo.value)
-        
-                document.getElementById('edad').value = edad
-    
-        })
-    
-        document.getElementById('edad').disabled = true
-        
-        $(".modal-header").css( "background-color", "#17a2b8");
-        
-        $(".modal-header").css( "color", "white" );
-        $(".modal-title").text("Añadir Niño");
-        $('#modalCRUD').modal('show');	    
+        }
     });
+
+    if (check_dis == 1) {
+        document.getElementById('chDiscapacidad').checked = true
+        $("#contenidoDiscapacidad").show();
+        document.getElementById("Naciemiento").min = fecha_minima120
+    }
+    else {
+        document.getElementById('chDiscapacidad').checked = false
+        $("#contenidoDiscapacidad").hide();
+        document.getElementById("Naciemiento").min = fecha_minima
+    } 
+    checkboxDIS = document.getElementById('chDiscapacidad');
+    checkboxDIS.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            //console.log(fecha_minima120);
+            check_dis = 1;
+            document.getElementById("Naciemiento").min = fecha_minima120
+
+        } else {
+            //console.log('El checkbox está desactivado.');
+            check_dis = 0;
+            document.getElementById("Naciemiento").min = fecha_minima
+            
+        }
+    });
+
+    
+    
     
 
+    let fecha = new Date();
+    let anio = fecha.getFullYear();
+    
+    selections = document.getElementById('Naciemiento');
+    select_periodo = document.getElementById('periodo');
+    selections.addEventListener('change', function () {
+        edad = calcularEdad(selections.value, select_periodo.value)
+    
+        document.getElementById('edad').value = edad;
+
+    })
+
+    usuario_id = id_usuario
+    
+    $("#formNinos").trigger("reset");
+    
+
+    $('#periodo').val(anio);
+    if(userTipo==2){
+        $("#periodo").prop('disabled', true);
+    }else{
+        $("#periodo").prop('disabled', false);
+    }
+    const hoy_fecha = `${anio}-12-30`
+    document.getElementById("Naciemiento").max = hoy_fecha
+    $("#periodo").on("change", function() {
+        const periodo_fecha = document.getElementById("periodo").value
+        const hoy_fecha = `${periodo_fecha}-12-30`;
+        document.getElementById("Naciemiento").max = hoy_fecha
+        edad = calcularEdad(selections.value, select_periodo.value)
+    
+            document.getElementById('edad').value = edad
+        
+    });
+    document.getElementById("ceguera_percil").disabled = true;
+    checkboxCeguera = document.getElementById('ceguera');
+    checkboxCeguera.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            //console.log('El checkbox está activado.');
+            ceguera = 1;
+            document.getElementById("ceguera_percil").disabled = false;
+
+        } else {
+            //console.log('El checkbox está desactivado.');
+            ceguera = 0;
+            document.getElementById("ceguera_percil").disabled = true;
+            document.getElementById("ceguera_percil").value = 0;
+
+        }
+    });
+    document.getElementById("sordera_percil").disabled = true;
+    checkboxSordera= document.getElementById('sordera');
+    checkboxSordera.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            //console.log('El checkbox está activado.');
+            sordera = 1;
+            document.getElementById("sordera_percil").disabled = false;
+
+        } else {
+            //console.log('El checkbox está desactivado.');
+            document.getElementById("sordera_percil").disabled = true;
+            sordera = 0;
+            document.getElementById("sordera_percil").value = 0;
+        }
+    });
+
+    document.getElementById("mudez_percil").disabled = true;
+    checkboxMudez= document.getElementById('mudez');
+    checkboxMudez.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            //console.log('El checkbox está activado.');
+            mudez = 1;
+            document.getElementById("mudez_percil").disabled = false;
+
+        } else {
+            //console.log('El checkbox está desactivado.');
+            document.getElementById("mudez_percil").disabled = true;
+            mudez = 0;
+            document.getElementById("mudez_percil").value = 0;
+        }
+    });
+
+    document.getElementById("fisica_percil").disabled = true;
+    checkboxFisica= document.getElementById('fisica');
+    checkboxFisica.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            //console.log('El checkbox está activado.');
+            document.getElementById("fisica_percil").disabled = false;
+            fisica = 1;
+
+        } else {
+            //console.log('El checkbox está desactivado.');
+            document.getElementById("fisica_percil").disabled = true;
+            fisica = 0;
+            document.getElementById("fisica_percil").value = 0;
+        }
+    });
+
+    document.getElementById("mental_percil").disabled = true;
+    checkboxMental= document.getElementById('mental');
+    checkboxMental.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            //console.log('El checkbox está activado.');
+            document.getElementById("mental_percil").disabled = false;
+            mental = 1;
+
+        } else {
+            //console.log('El checkbox está desactivado.');
+            document.getElementById("mental_percil").disabled = true;
+            mental = 0;
+            document.getElementById("mental_percil").value = 0;
+        }
+    });
+
+    document.getElementById("psiquica_percil").disabled = true;
+    checkboxPsiquica= document.getElementById('psiquica');
+    checkboxPsiquica.addEventListener('change', function () {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+            //console.log('El checkbox está activado.');
+            psiquica = 1;
+            document.getElementById("psiquica_percil").disabled = false;
+
+        } else {
+            //console.log('El checkbox está desactivado.');
+            document.getElementById("psiquica_percil").disabled = true;
+            psiquica = 0;
+            document.getElementById("psiquica_percil").value = 0;
+        }
+    });
+
+    selections = document.getElementById('Naciemiento');
+    select_periodo = document.getElementById('periodo');
+    selections.addEventListener('change', function () {
+        edad = calcularEdad(selections.value, select_periodo.value)
+    
+            document.getElementById('edad').value = edad
+
+    })
+
+    document.getElementById('edad').disabled = true
+    
+    $(".modal-header").css( "background-color", "#17a2b8");
+    
+    $(".modal-header").css( "color", "white" );
+    $(".modal-title").text("Añadir Niño");
+    $('#modalCRUD').modal('show');	    
+});
+
+    
+//! boton Editar
     $(document).on("click", ".btnEditar", function(){	
         const periodo_fecha = document.getElementById("periodo").value
         const fecha_hace_11_anios = new Date();
@@ -522,7 +505,7 @@ function listarOrganizacion(tipo){
         $("#comuna").val(comuna);
     
         //discapacidad
-        $("#more_info").val(check_dis);
+        $("#chDiscapacidad").val(check_dis);
         $("#ceguera").val(ceguera);
         $("#sordera").val(sordera);
         $("#mudez").val(mudez);
@@ -539,25 +522,25 @@ function listarOrganizacion(tipo){
         $("#mental_percil").val(mental_p);
         $("#psiquica_percil").val(psiquica_p);
         if (check_nac == 1) {
-            document.getElementById('more_infos').checked = true
-            $("#conditional_parts").show();
+            document.getElementById('chExtrajero').checked = true
+            $("#contenidoExtrajero").show();
             // window.alert("holsssa")
     
         }
         else {
-            document.getElementById('more_infos').checked = false
-            $("#conditional_parts").hide();
+            document.getElementById('chExtrajero').checked = false
+            $("#contenidoExtrajero").hide();
             // window.alert("hola")
         }
-        checkboxNAC = document.getElementById('more_infos');
+        checkboxNAC = document.getElementById('chExtrajero');
         checkboxNAC.addEventListener('change', function () {
             // Verifica si el checkbox está marcado o no
             if (this.checked) {
-                console.log('El checkbox está activado.');
+                //console.log('El checkbox está activado.');
                 check_nac = 1;
     
             } else {
-                console.log('El checkbox está desactivado.');
+                //console.log('El checkbox está desactivado.');
                 check_nac = 0;
                 $("#nacion").val('1')
                 
@@ -566,25 +549,25 @@ function listarOrganizacion(tipo){
         });
     
         if (check_dis == 1) {
-            document.getElementById('more_info').checked = true
-            $("#conditional_part").show();
+            document.getElementById('chDiscapacidad').checked = true
+            $("#contenidoDiscapacidad").show();
             document.getElementById("Naciemiento").min = fecha_minima120
         }
         else {
-            document.getElementById('more_info').checked = false
-            $("#conditional_part").hide();
+            document.getElementById('chDiscapacidad').checked = false
+            $("#contenidoDiscapacidad").hide();
             document.getElementById("Naciemiento").min = fecha_minima
         } 
-        checkboxDIS = document.getElementById('more_info');
+        checkboxDIS = document.getElementById('chDiscapacidad');
         checkboxDIS.addEventListener('change', function () {
             // Verifica si el checkbox está marcado o no
             if (this.checked) {
-                console.log(fecha_minima120);
+                //console.log(fecha_minima120);
                 check_dis = 1;
                 document.getElementById("Naciemiento").min = fecha_minima120
     
             } else {
-                console.log('El checkbox está desactivado.');
+                //console.log('El checkbox está desactivado.');
                 check_dis = 0;
                 document.getElementById("Naciemiento").min = fecha_minima
                 
@@ -622,12 +605,12 @@ function listarOrganizacion(tipo){
         checkboxceguera.addEventListener('change', function () {
             // Verifica si el checkbox está marcado o no
             if (this.checked) {
-                console.log('El checkbox está activado.');
+                //console.log('El checkbox está activado.');
                 document.getElementById("ceguera_percil").disabled = false
                 ceguera = 1;
     
             } else {
-                console.log('El checkbox está desactivado.');
+                //console.log('El checkbox está desactivado.');
                 ceguera = 0;
                 document.getElementById("ceguera_percil").disabled = true;
                 document.getElementById("ceguera_percil").value = 0;
@@ -651,11 +634,11 @@ function listarOrganizacion(tipo){
         checkboxsordera.addEventListener('change', function () {
             // Verifica si el checkbox está marcado o no
             if (this.checked) {
-                console.log('El checkbox está activado.');
+                //console.log('El checkbox está activado.');
                 sordera = 1;
     
             } else {
-                console.log('El checkbox está desactivado.');
+                //console.log('El checkbox está desactivado.');
                 sordera = 0;
                 document.getElementById("sordera_percil").disabled = true;
                 document.getElementById("sordera_percil").value = 0;
@@ -679,11 +662,11 @@ function listarOrganizacion(tipo){
         checkboxmudez.addEventListener('change', function () {
             // Verifica si el checkbox está marcado o no
             if (this.checked) {
-                console.log('El checkbox está activado.');
+                //console.log('El checkbox está activado.');
                 mudez = 1;
     
             } else {
-                console.log('El checkbox está desactivado.');
+                //console.log('El checkbox está desactivado.');
                 mudez = 0;
                 document.getElementById("mudez_percil").disabled = true;
                 document.getElementById("mudez_percil").value = 0;
@@ -709,11 +692,11 @@ function listarOrganizacion(tipo){
         checkboxfisica.addEventListener('change', function () {
             // Verifica si el checkbox está marcado o no
             if (this.checked) {
-                console.log('El checkbox está activado.');
+                //console.log('El checkbox está activado.');
                 fisica = 1;
     
             } else {
-                console.log('El checkbox está desactivado.');
+                //console.log('El checkbox está desactivado.');
                 fisica = 0;
                 document.getElementById("fisica_percil").disabled = true;
                 document.getElementById("fisica_percil").value = 0;
@@ -740,11 +723,11 @@ function listarOrganizacion(tipo){
         checkboxmental.addEventListener('change', function () {
             // Verifica si el checkbox está marcado o no
             if (this.checked) {
-                console.log('El checkbox está activado.');
+                //console.log('El checkbox está activado.');
                 mental = 1;
     
             } else {
-                console.log('El checkbox está desactivado.');
+                //console.log('El checkbox está desactivado.');
                 mental = 0;
                 document.getElementById("mental_percil").disabled = true;
                 document.getElementById("mental_percil").value = 0;
@@ -770,11 +753,11 @@ function listarOrganizacion(tipo){
         checkboxpsiquica.addEventListener('change', function () {
             // Verifica si el checkbox está marcado o no
             if (this.checked) {
-                console.log('El checkbox está activado.');
+                //console.log('El checkbox está activado.');
                 psiquica = 1;
     
             } else {
-                console.log('El checkbox está desactivado.');
+                //console.log('El checkbox está desactivado.');
                 document.getElementById("psiquica_percil").disabled = true;
                 psiquica = 0;
                 document.getElementById("psiquica_percil").value = 0;
@@ -798,7 +781,8 @@ function listarOrganizacion(tipo){
         $(".modal-title").text("Editar Usuario");		
         $('#modalCRUD').modal('show');		   
     });
-    
+ 
+//! boton borrar
     //Borrar
     $(document).on("click", ".btnBorrar", function(){
         fila = $(this);           
@@ -822,10 +806,11 @@ function listarOrganizacion(tipo){
         $('#fondo-modal').hide();
       }
 
+//! guardar niños
 //guardar niño
 var fila; //captura la fila, para editar o eliminar
 //submit para el Alta y Actualización
-$('#formUsuarios').submit(function(e){                         
+$('#formNinos').submit(function(e){                         
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     //CAPTURA EL DATO DEL FORMULARIO
 
@@ -888,6 +873,7 @@ $('#formUsuarios').submit(function(e){
         $('#modalCRUD').modal('hide');											     			
 });
 
+//!-------------------------------------------
 const hoy = new Date();
 const anioActual = hoy.getFullYear();
 $('#select_periodo').val(anioActual);
@@ -917,24 +903,9 @@ $.fn.dataTableExt.afnFiltering.push(
 
 );
 
-$('#more_info').change(function() {
-    if(this.checked != true){
-          $("#conditional_part").hide();
-     }
-  else{
-        $("#conditional_part").show();
-  }
-});
 
-$('#more_infos').change(function() {
-    if(this.checked != true){
-          $("#conditional_parts").hide();
-     }
-  else{
-        $("#conditional_parts").show();
-  }
-});
- 
+
+//!-------------------------------------------
 window.addEventListener('DOMContentLoaded', (evento) => {
     /* Obtenemos la fecha de hoy en formato ISO */
     const hoy_fecha = new Date().toISOString().substring(0, 10);
@@ -952,13 +923,13 @@ window.addEventListener('DOMContentLoaded', (evento) => {
     // document.querySelector("input[name='fecha']").min = fecha_minima;
 });
 
-
+//!-------------------------------------------
 function calcularEdad(fecha, periodo) {
     var hoy = new Date
     hoy.setFullYear(periodo);
     hoy.setMonth(11); // 11 representa diciembre (los meses son indexados desde 0)
     hoy.setDate(30);
-    console.log(hoy)
+    //console.log(hoy)
     var cumpleanos = new Date(fecha);
     var edad = hoy.getFullYear() - cumpleanos.getFullYear();
     var m = hoy.getMonth() - cumpleanos.getMonth();

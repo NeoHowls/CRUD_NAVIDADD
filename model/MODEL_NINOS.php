@@ -51,8 +51,7 @@ class Ninos extends ConexionBD{
 
     public function listarNinos($tipoO, $organizacionO, $periodo){
 
-
-        $sql="SELECT  
+        /* $sql="SELECT  
           N.id AS id,
 		  N.dni AS dni,
           N.nombre AS nombre,
@@ -105,36 +104,150 @@ class Ninos extends ConexionBD{
           JOIN A_ETNIA E ON N.idEtnia = E.id
           JOIN A_NACIONALIDAD NA ON N.idNacionalidad = NA.id
           JOIN A_ORGANIZACION O ON N.idOrganizacion = O.id
-           ";
+           "; */
+        $sql1 = "SELECT  
+          N.id AS id,
+		  N.dni AS dni,
+          N.nombre AS nombre,
+          N.sexo AS sexo,
+		  CASE
+			WHEN [sexo] = 0 THEN 'FEMENINO'
+			WHEN [sexo]= 1 THEN 'MASCULINO'
+			END AS sexo_vista,
+          N.edad AS edad,
+          N.fechaNacimiento AS fechaNacimiento,
+          N.periodo AS periodo,
+          N.descripcion AS descripcion,
+          N.fechaRegistro AS fechaRegistro,
+          N.idNacionalidad AS idNacionalidad,
+          N.checkExtranjero AS checkExtranjero,
+		  N.checkCeguera AS checkCeguera,
+		  N.checkSordera AS checkSordera,
+		  N.checkMudez AS checkMudez,
+		  N.checkFisica AS checkFisica,
+		  N.checkMental AS checkMental,
+		  N.checkPsiquica AS checkPsiquica,
+		  N.idOrganizacion AS idOrganizacion,
+		  N.idPersonalRegistro AS idPersonalRegistro,
+
+		  N.checkDiscapacitado AS checkDiscapacitado,
+		  N.porcentajeCeguera AS porcentajeCeguera,
+		  N.porcentajeSordera AS porcentajeSordera,
+		  N.porcentajeMudez AS porcentajeMudez,
+		  N.porcentajeFisica AS porcentajeFisica,
+		  N.porcentajeMental AS porcentajeMental,
+		  N.porcentajePsiquica AS porcentajePsiquica,
+
+          E.etnia AS etnia,
+          NA.nacionalidad AS nacionalidad,
+          O.nombre AS NOMBRE_ORGANIZACION,
+           
+          O.tipo AS tipo,
+          CASE
+			WHEN tipo = 1 THEN 'JUNTA VECINAL'
+			WHEN tipo = 2 THEN 'COMÍTE'
+			WHEN tipo = 3 THEN 'CONDOMINIO'
+			WHEN tipo = 4 THEN 'PROVIDENCIA'
+		END AS tipo_org,
+		N.idEtnia AS idEtnia--,
+
+		--N.idOrganizacion AS idOrganizacion
+
+
+        FROM A_NINOS N
+          JOIN A_ETNIA E ON N.idEtnia = E.id
+          JOIN A_NACIONALIDAD NA ON N.idNacionalidad = NA.id
+          JOIN A_ORGANIZACION O ON N.idOrganizacion = O.id
+		WHERE N.idEtnia <>0";
+
+$sql2 = "SELECT 
+		  N.id AS id,
+		  N.dni AS dni,
+          N.nombre AS nombre,
+          N.sexo AS sexo,
+		  CASE
+			WHEN [sexo] = 0 THEN 'FEMENINO'
+			WHEN [sexo]= 1 THEN 'MASCULINO'
+			END AS sexo_vista,
+          N.edad AS edad,
+          N.fechaNacimiento AS fechaNacimiento,
+          N.periodo AS periodo,
+          N.descripcion AS descripcion,
+          N.fechaRegistro AS fechaRegistro,
+          N.idNacionalidad AS idNacionalidad,
+          N.checkExtranjero AS checkExtranjero,
+		  N.checkCeguera AS checkCeguera,
+		  N.checkSordera AS checkSordera,
+		  N.checkMudez AS checkMudez,
+		  N.checkFisica AS checkFisica,
+		  N.checkMental AS checkMental,
+		  N.checkPsiquica AS checkPsiquica,
+		  N.idOrganizacion AS idOrganizacion,
+		  N.idPersonalRegistro AS idPersonalRegistro,
+
+		  N.checkDiscapacitado AS checkDiscapacitado,
+		  N.porcentajeCeguera AS porcentajeCeguera,
+		  N.porcentajeSordera AS porcentajeSordera,
+		  N.porcentajeMudez AS porcentajeMudez,
+		  N.porcentajeFisica AS porcentajeFisica,
+		  N.porcentajeMental AS porcentajeMental,
+		  N.porcentajePsiquica AS porcentajePsiquica,
+		etnia = 'Sin Etnia',
+		NA.nacionalidad AS nacionalidad,
+		O.nombre AS NOMBRE_ORGANIZACION,
+           
+          O.tipo AS tipo,
+          CASE
+			WHEN tipo = 1 THEN 'JUNTA VECINAL'
+			WHEN tipo = 2 THEN 'COMÍTE'
+			WHEN tipo = 3 THEN 'CONDOMINIO'
+			WHEN tipo = 4 THEN 'PROVIDENCIA'
+		END AS tipo_org,
+		idEtnia = 0
+
+FROM A_NINOS N
+JOIN A_NACIONALIDAD NA ON N.idNacionalidad = NA.id
+JOIN A_ORGANIZACION O ON N.idOrganizacion = O.id
+WHERE N.idEtnia =0";
 
         if($tipoO==0 && ($organizacionO==null || $organizacionO=='') ){
-            $sql = $sql." WHERE N.periodo = :periodo";
-            $parametros =array("periodo"=>$periodo);
+            $sql1 = $sql1." AND N.periodo = :periodo";
+            $sql2 = $sql2." AND N.periodo = :periodo2";
+            $sql = $sql1. " UNION " . $sql2;
+            $parametros =array("periodo"=>$periodo,"periodo2"=>$periodo);
             $this->connect();
             $query = $this->ejecutaConsulta($sql, $parametros);
         }elseif($tipoO!=0 && ($organizacionO==null || $organizacionO=='')){
-            $sql = $sql." WHERE O.tipo= :tipoO
-		    AND N.periodo = :periodo";
-            $parametros =array("tipoO"=>$tipoO,"periodo"=>$periodo);
+            $sql1 = $sql1." AND O.tipo= :tipoO AND N.periodo = :periodo";
+            $sql2 = $sql2." AND O.tipo= :tipoO2 AND N.periodo = :periodo2";
+            $sql = $sql1. " UNION " . $sql2;
+            $parametros =array("tipoO"=>$tipoO,"periodo"=>$periodo,"tipoO2"=>$tipoO,"periodo2"=>$periodo);
             $this->connect();
             $query = $this->ejecutaConsulta($sql, $parametros);
         }elseif($tipoO!=0 && ($organizacionO!=null || $organizacionO!='') && $periodo!=0){
-            $sql = $sql." WHERE O.tipo= :tipoO
-            AND N.idOrganizacion = :organizacionO
-		    AND N.periodo = :periodo";
-            $parametros =array("tipoO"=>$tipoO,"organizacionO"=>$organizacionO,"periodo"=>$periodo);
+            $sql1 = $sql1." AND O.tipo= :tipoO AND N.idOrganizacion = :organizacionO AND N.periodo = :periodo";
+            $sql2 = $sql2." AND O.tipo= :tipoO2 AND N.idOrganizacion = :organizacionO2 AND N.periodo = :periodo2";
+            $sql = $sql1. " UNION " . $sql2;
+            $parametros =array("tipoO"=>$tipoO,"organizacionO"=>$organizacionO,"periodo"=>$periodo,
+                               "tipoO2"=>$tipoO,"organizacionO2"=>$organizacionO,"periodo2"=>$periodo);
             $this->connect();
             $query = $this->ejecutaConsulta($sql, $parametros);
         }
         else{
-            $sql = $sql." WHERE N.periodo = :periodo";
-            $parametros =array("periodo"=>$periodo);
+            $sql1 = $sql1." AND N.periodo = :periodo";
+            $sql2 = $sql2." AND N.periodo = :periodo2";
+            $sql = $sql1. " UNION " . $sql2;
+            $parametros =array("periodo"=>$periodo,"periodo2"=>$periodo);
             $this->connect();
             $query = $this->ejecutaConsulta($sql, $parametros);
             
         }
-
         return $query;
+    }
+
+    public function guardarNinos(){
+        $sql="";
+        
 
     }
 }

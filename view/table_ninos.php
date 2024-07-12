@@ -138,13 +138,13 @@
             <tr>
              
                 <th class = "never">id</th>  <!-- 0 -->
-                <th>dni</th> <!-- 1 -->
-                <th>nombre</th><!-- 2 -->
+                <th>DNI/RUT</th> <!-- 1 dni-->
+                <th>Nombre</th><!-- 2 nombre-->
                 <th class = "never">sexo</th><!-- 3 -->
-                <th>sexo_vista</th><!-- 4 -->
-                <th>edad</th><!-- 5 -->
-                <th>fechaNacimiento</th><!-- 6 -->
-                <th>periodo</th><!-- 7 -->
+                <th>Sexo</th><!-- 4 sexo_vista-->
+                <th>Edad</th><!-- 5 -->
+                <th>Fecha Nacimiento</th><!-- 6 -->
+                <th>Periodo</th><!-- 7 -->
                 
                 <th class = "never">fechaRegistro</th><!-- 8 -->
                 <th class = "never">idNacionalidad</th><!-- 9 -->
@@ -161,20 +161,20 @@
                 <th class = "never">idPersonalRegistro</th><!-- 18 -->
                 <th class = "never">checkDiscapacitado</th><!-- 19 -->
 
-                <th class = "none">porcentajeCeguera</th><!-- 20 -->
-                <th class = "none">porcentajeSordera</th><!-- 21 -->
-                <th class = "none">porcentajeMudez</th><!-- 22 -->
-                <th class = "none">porcentajeFisica</th><!-- 23 -->
-                <th class = "none">porcentajeMental</th><!-- 24 -->
-                <th class = "none">porcentajePsiquica</th><!-- 25 -->
-                <th class = "none">descripcion</th><!-- 26 -->
-                <th class = "none">etnia</th><!-- 27 -->
-                <th class = "none">nacionalidad</th><!-- 28 -->
-                <th class = "none">NOMBRE_ORGANIZACION</th><!-- 29 -->
+                <th class = "none">% Ceguera</th><!-- 20 -->
+                <th class = "none">% Sordera</th><!-- 21 -->
+                <th class = "none">% Mudez</th><!-- 22 -->
+                <th class = "none">% Fisica</th><!-- 23 -->
+                <th class = "none">% Mental</th><!-- 24 -->
+                <th class = "none">% Psiquica</th><!-- 25 -->
+                <th class = "none">Descripción</th><!-- 26 -->
+                <th class = "none">Etnia</th><!-- 27 -->
+                <th class = "none">Nacionalidad</th><!-- 28 -->
+                <th class = "none">Organizació</th><!-- 29 NOMBRE_ORGANIZACION-->
                 <th class = "never">tipo</th><!-- 30 -->
-                <th class = "none" >tipo_org</th><!-- 31 -->
+                <th class = "none" >Tipo Organización</th><!-- 31 -->
                 <th class  = "never">idEtnia</th><!-- 32 -->
-                <th class='all'>acciones</th><!-- 32 -->
+                <th class='all'>Acciones</th><!-- 32 -->
 
 
             </tr>
@@ -200,19 +200,19 @@
 
               </div><!-- modal-header-->
 
-              <form id="formUsuarios" autocomplete="off">    
+              <form id="formNinos" autocomplete="off">    
                   <div class="modal-body" style="background: #E7E7E7">
                       <div class="row">
                      
 
                             <div class="col-6" >
                                 <!-- <label class="col-form-label" for="flexSwitchCheckDefault">EXTRANJERO <div class="elnt_container form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="more_infos" name="more" value = 1>
+                                <input class="form-check-input" type="checkbox" id="chExtrajero" name="more" value = 1>
                                 </div></label> -->
 
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="more_infos" name="more" value = 1>
-                                    <label class="form-check-label" for="more_infos">Extranjero</label>
+                                    <input class="form-check-input" type="checkbox" id="chExtrajero" name="more" value = 1>
+                                    <label class="form-check-label" for="chExtrajero">Extranjero</label>
                                 </div>
                             </div>  
                             
@@ -221,16 +221,16 @@
                             <div class="col-lg-6">
                                 <!-- <label class="col-form-label" for="flexSwitchCheckDefault">Discapacidad</label>
                                 <div class="elnt_container form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="more_info" name="more" value= 1>
+                                    <input class="form-check-input" type="checkbox" id="chDiscapacidad" name="more" value= 1>
                                 </div> -->
 
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="more_info" name="more" 
+                                    <input class="form-check-input" type="checkbox" id="chDiscapacidad" name="more" 
                                     <?php if($_SESSION['tipo_usuario']==2){echo('disabled');}
                                             
                                     ?> 
                                     value = 1 >
-                                    <label class="form-check-label" for="more_info">Discapacidad</label>
+                                    <label class="form-check-label" for="chDiscapacidad">Discapacidad</label>
                                 </div>
                             </div>  
                         </div>
@@ -327,7 +327,7 @@
                       <hr class="linea">
                       </div><!--row-->
                       
-                      <div id="conditional_part" style="display:none;">
+                      <div id="contenidoDiscapacidad" style="display:none;">
                       <div class="row p-1">
                         
                           <div class="col-lg-3">
@@ -449,7 +449,7 @@
 
 
                       <div class="row">
-                                <div class="col-12" id="conditional_parts" style="display:none;">
+                                <div class="col-12" id="contenidoExtrajero" style="display:none;">
                                     <?php 
                                     include_once("../controller/controller_nac.php");
                                     ?>
