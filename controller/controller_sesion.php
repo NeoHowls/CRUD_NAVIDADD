@@ -29,6 +29,10 @@ if($datos === TRUE){ ;
   $_SESSION["CRP"]=$datos[0]['checkReadP'];
   $_SESSION["CDP"]=$datos[0]['checkDeleteP']; 
   $_SESSION["tipo_usuario"]=$datos[0]['tipo'];
+
+  $_SESSION["tipoOrganizacion"]=$datos[0]['tipoOrganizacion'];
+  $_SESSION["idOrganizacion"]=$datos[0]['idOrganizacion'];
+
   $_SESSION["nombreOrganizacion"]=$datos[0]['nombreOrganizacion'];
   
   if ($_SESSION["habilitado"] == 0) {
