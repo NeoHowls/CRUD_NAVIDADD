@@ -130,83 +130,110 @@ let table = $('#myTable10').DataTable( {
 //! ----------------------------------------------------------------------------------------------------------------
 
 // Código JavaScript ajustado
-let table1 = $('#myTable11').DataTable( {
-    // destroy : true,
-
-
+let table1 = $('#myTable11').DataTable({
     pageLength: 20,
-    
-    //TENGO QUE SEPARAR ESTO EN OTRO ARCHIVO
-    "ajax":{
+    ajax: {
         url: "../controller/controllerReport.php?op=pdf",
-        dataSrc:"",
+        dataSrc: "",
         type: "post",
-        responsive : true,
-        aaSorting:[]
-
+        responsive: true,
+        aaSorting: []
     },
-    "columns":[
-        {"data": "edad"}, //0
-        {"data": "edadV"}, //0
-        {"data": "MASCULINO"},//1 
-        {"data": "FEMENINO"}, //2
-        {"data": "TOTAL"}, //3
-
-        ],
-
-        //ESTO DEBERIA INVOCARSE EN BASE A UN ID
-    language : idioma_espanol,
-    responsive : true,
-    aaSorting:[],
+    columns: [
+        { "data": "edad" }, //0
+        { "data": "edadV" }, //1
+        { "data": "MASCULINO" }, //2
+        { "data": "FEMENINO" }, //3
+        { "data": "TOTAL" } //4
+    ],
+    language: idioma_espanol,
+    responsive: true,
+    aaSorting: [],
     pagingType: 'simple',
-    layout: {
-        topStart: {
-            // buttons: ['copy', 'excel', 'pdf', 'colvis']
-            buttons: [
-                {
-                    extend: 'copyHtml5',
-                    text: 'COPIAR',
-                    exportOptions: {
-                        // columns: [ 0, ':visible' ]
-                        columns: ':visible:not(:last-child)'
-                    }
-                    
-                },
-                {
-                    extend: 'excelHtml5',
-                    text: 'EXCEL',
-                    exportOptions: {
-                        columns: ':visible:not(:last-child)'
-                    }
-                    
-                },
-                {
-                    extend: 'pdfHtml5',
-                    text: 'PDF',
-                    exportOptions: {
-                        //columns: [ 0, 1, 2, 5 ]
-                       columns: ':visible:not(:last-child)'
-                    }
-                    
-                },
-                {    
-                    extend: 'colvis',
-                    text: 'COLUMNAS',
-                    columns: [1,2,3,4]
-                }
-            ] 
+    dom: 'Bfrtip',
+    buttons: [
+        {
+            extend: 'copyHtml5',
+            text: 'COPIAR',
+            exportOptions: {
+                columns: ':visible:not(:last-child)'
+            }
+        },
+        {
+            extend: 'excelHtml5',
+            text: 'EXCEL',
+            exportOptions: {
+                columns: ':visible:not(:last-child)'
+            }
+        },
+        {
+            extend: 'pdfHtml5',
+            text: 'PDF',
+            exportOptions: {
+                columns: [1, 2, 3, 4]
+            },
+            customize: function (doc) {
+                pdfMake.createPdf(doc).getBlob(function (blob) {
+                    var url = URL.createObjectURL(blob);
+                    var newWindow = window.open();
+                    var iframe = newWindow.document.createElement('iframe');
+                    iframe.style.border = 'none';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.src = url;
+                    newWindow.document.body.appendChild(iframe);
+                });
+                return false;
+            }
+        },
+        {
+            extend: 'colvis',
+            text: 'COLUMNAS',
+            columns: [1, 2, 3, 4]
         }
-    }
-        
-    });
-//! --------------cambio de areas-------------------
+    ],
+    footerCallback: function (row, data, start, end, display) {
+        var api = this.api();
 
-function crearpdf(sexo1,edad1){
-    // alert(
-    window.open("../reportePdf2.php?edad="+edad1+" &sexo="+sexo1);
-   
-  
-}
+        // Remove the formatting to get integer data for summation
+        var intVal = function (i) {
+            return typeof i === 'string' ?
+                i.replace(/[\$,]/g, '') * 1 :
+                typeof i === 'number' ?
+                    i : 0;
+        };
+
+        // Total over all pages
+        var totalMasculino = api
+            .column(2)
+            .data()
+            .reduce(function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0);
+
+        var totalFemenino = api
+            .column(3)
+            .data()
+            .reduce(function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0);
+
+        var totalGeneral = api
+            .column(4)
+            .data()
+            .reduce(function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0);
+
+        // Update footer
+        $(api.column(2).footer()).html(totalMasculino);
+        $(api.column(3).footer()).html(totalFemenino);
+        $(api.column(4).footer()).html(totalGeneral);
+    }
+});
+
+
+//! --------------cambio de areas-------------------
 
 
 

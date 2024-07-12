@@ -39,6 +39,10 @@
       margin-bottom: 20px;
       color: #000;
     }
+
+  
+    
+    
   </style>
 
 <script>
@@ -132,7 +136,7 @@
     <br>
     <div class="card">
         <div class="card-header">
-            Tabla de edades
+            Edades
                           <!-------------->
                           <!-------------->
                           <!-- Reportes -->
@@ -188,26 +192,32 @@
                           <!----TABLA----->
                           <!-------------->
                           <!-------------->
-                          <div class="table-responsive mx-2 text-left">
-                          <table id="myTable11" class="table table-striped nowrap" style="width:100%">
-                            <thead>
-                                <tr>
-                                
-                                    <th class="never">EDAD</th>  <!-- 0 -->
-                                    <th>RANGO ETARIO</th>  <!-- 0 -->
-                                    <th>MASCULINO</th>  <!-- 1 -->
-                                    <th>FEMENINO</th>  <!-- 2 -->
-                                    <th>TOTAL</th>  <!-- 3 -->
-                                  
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-
-                          </table>
+                          <div class="table-responsive mx-5 text-center">
+                            <table id="myTable11" class="table table-striped nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="never">EDAD</th> <!-- 0 -->
+                                        <th>RANGO ETARIO</th> <!-- 0 -->
+                                        <th>MASCULINO</th> <!-- 1 -->
+                                        <th>FEMENINO</th> <!-- 2 -->
+                                        <th>TOTAL</th> <!-- 3 -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Data goes here -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th> <!-- EDAD -->
+                                        <th>TOTAL:</th> <!-- RANGO ETARIO -->
+                                        <th id="totalMasculino"></th> <!-- MASCULINO -->
+                                        <th id="totalFemenino"></th> <!-- FEMENINO -->
+                                        <th id="totalGeneral"></th> <!-- TOTAL -->
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
+
                           <!-------------->
                           <!-------------->
                           <!----TABLA----->
