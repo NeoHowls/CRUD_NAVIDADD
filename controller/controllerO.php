@@ -330,15 +330,6 @@ ORDER BY tipo";
       
       }else {
 
-        $CONSULTA ="SELECT idPersona FROM A_DETALLE_PO WHERE idOrganizacion='$user_id' and estado=1";
-        $datos=$menu->consultar($CONSULTA);
-        $persona_ids = array_column($datos, 'idPersona');
-        $persona_ids_string = implode(',', $persona_ids);
-
-        if (!empty($persona_ids_string)) {
-        $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=1, estado=1 WHERE id IN ($persona_ids_string)";
-        $menu->listar($CONSULTA);
-        }
 
         $CONSULTA1 = "UPDATE A_ORGANIZACION SET checkHabilitado = 1 WHERE id='$user_id'";
           //llamo al metodo listar y le doy la variable CONSULTA

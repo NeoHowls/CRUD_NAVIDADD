@@ -242,10 +242,10 @@ $(document).ready(function() {
         var perfilId = selectedOption.val();
         var perfilText = selectedOption.text().toLowerCase();
 
-        if (perfilId == 9) { // Representante
+        if (perfilId == 2) { // Representante
             $('#checkbox-container').show();
             $('#more_infos').prop('checked', true).prop('disabled', true).change(); // Activa y desactiva el checkbox
-        } else if (perfilId == 10) { // Providencia
+        } else if (perfilId == 4) { // Providencia
             $('#checkbox-container').show();
             $('#more_infos').prop('checked', true).prop('disabled', true).change();
             $('#conditional_parts').show();
@@ -272,7 +272,7 @@ $(document).ready(function() {
         var selectedPerfil = $('#idPerfil').val();
         if ($(this).is(':checked')) {
             $('#conditional_parts').show();
-            if (selectedPerfil == 9) { // Representante
+            if (selectedPerfil == 2) { // Representante
                 checkOrganizacion = 1;
                 $('#O_ID').val('').change(); // Resetear el valor del select
                 $('#O_ID option').each(function() {
@@ -370,6 +370,7 @@ $(document).ready(function() {
 });
 
 
+
 //Editar       
 
 $(document).on("click", ".btnEditar", function(){	
@@ -436,7 +437,7 @@ else {
     document.getElementById('more_infos').checked = false;
     $("#conditional_parts").hide();
     checkOrganizacion = 0
-    console.log('El checkbox está desactivado.');
+    console.log('El checkbox está desactivado@@@.');
 }
 
 });
@@ -478,6 +479,7 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     user_id = $(this).closest('tr').find('td:eq(0)').text() ;
     nombre = $(this).closest('tr').find('td:eq(2)').text() ;
     estado = $(this).closest('tr').find('td:eq(7)').text() ;
+    checkHabilitado = $(this).closest('tr').find('td:eq(8)').text() ;
     dni = $(this).closest('tr').find('td:eq(1)').text();
     let action = estado == '1' ? 'borrar_persona' : 'habilitar_persona';
     let confirmMessage = estado == '1' ? "¿Está seguro de Desactivar el registro de "+nombre+"?" : "¿Quieres activar al usuario "+nombre+"?"  ;
@@ -489,7 +491,7 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
           url: "../controller/controllerP.php?op=borrar_persona",
           type: "POST",
           datatype:"json",    
-            data: { user_id: user_id, estado: estado, dni: dni },
+            data: { user_id: user_id, estado: estado,checkHabilitado:checkHabilitado, dni: dni },
           success: function(data) {
             table.ajax.reload(null, false);
             $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
@@ -539,6 +541,8 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
         });	    	    
     }
  });
+
+
 
 // Habilitar General 
 $(document).on("click", ".btnHabGeneral", function(e){

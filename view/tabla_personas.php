@@ -122,7 +122,7 @@
                                                 </select>
                                                 <div id="organizacionError" class="text-danger"></div>
                                             </div>
-                                        </div>
+                                        </div>      
                                     </div>
                                     </div>
                                 </div>
@@ -137,7 +137,7 @@
                 </div>
             </div>
 
-            <div class="table-responsive mx-3 text-left">
+            <div class="table-responsive mx-2 text-left">
                 <table id="myTable1" class="table table-striped nowrap" style="width:100%">
                     <thead>
                         <tr>
@@ -158,7 +158,7 @@
                             <th class='never'>id</th>
                             <th style='text-align: center;'>Dni/RUT</th>
                             <th style='text-align: center;'>Nombre</th>
-                            <th style='text-align: center;'>Dirección</th>
+                            <th class='never' style='text-align: center;'>Dirección</th>
                             <th style='text-align: center;'>Teléfono</th>
                             <th style='text-align: center;'>Mail</th>
                             <th class='never' style='text-align: center;'>idPerfil</th>
@@ -180,5 +180,5 @@
     </div>
 </div>
 <script src="../datatables.js"></script>
-<script src="../js/ajax/idioma.js"></script>
+<script src="../js/idioma.js"></script>
 <script src="../js/AJAX_PERSONA.js"></script>

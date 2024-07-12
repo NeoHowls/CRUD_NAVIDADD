@@ -38,6 +38,8 @@ function test9(){
     require_once ('../view/table_ninos.php');
 }
 
-
+function test10(){
+    require_once ('../view/tabla_reportes.php');
+}
 
 ?>
