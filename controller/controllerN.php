@@ -2,6 +2,9 @@
   //llama al MenuModel
   // require_once("../model/MenuModel.php");
   require_once ("../model/MODEL_NINOS.php");
+
+  require_once ("../funciones.php");
+
   session_start();
     
   //declaro una variable para poder invocar a MenuModel
@@ -14,7 +17,7 @@
   $periodo = (isset($_POST['periodo'])) ? $_POST['periodo'] : '';
   
   $naciemiento = (isset($_POST['naciemiento'])) ? $_POST['naciemiento'] : '';
-  $comuna = (isset($_POST['comuna'])) ? $_POST['comuna'] : '';
+  // $comuna = (isset($_POST['comuna'])) ? $_POST['comuna'] : '';
   //!check discapacidad
   $check_dis = (isset($_POST['check_dis'])) ? $_POST['check_dis'] : '';
   $ceguera = (isset($_POST['ceguera'])) ? $_POST['ceguera'] : '';
@@ -52,111 +55,208 @@
    //! agregar nino 
   //  case "add_etnia":
     case "agregarNino":
-      $menu= new Ninos();;
-      //define la consulta
-      echo ($fisica_p);
-      $fechaIngreso = date('Y-m-d H:i:s', strtotime($fechaIngreso));   
-      $CONSULTA = "INSERT INTO [dbo].[A_NINOS]
-           ([dni]
-           ,[nombre]
-           ,[sexo]
-           ,[edad]
-           ,[fechaNacimiento]
-           ,[idNacionalidad]
-           ,[idEtnia]
-           ,[estado]
-           ,[periodo]
-           ,[checkCeguera]
-           ,[checkSordera]
-           ,[checkMudez]
-           ,[checkFisica]
-           ,[checkMental]
-           ,[checkPsiquica]
-           ,[descripcion]
-           ,[idOrganizacion]
-           ,[idPersonalRegistro]
-           
-           ,[checkExtranjero]
-           ,[checkDiscapacitado]
-           ,[checkRSH]
-           ,[porcentajeCeguera]
-           ,[porcentajeSordera]
-           ,[porcentajeMudez]
-           ,[porcentajeFisica]
-           ,[porcentajeMental]
-           ,[porcentajePsiquica])
-     VALUES
-           ('$dni'
-           ,'$nombre'
-           ,$sexo
-           ,$edad
-           ,'$naciemiento'
-           ,$nacion
-           ,$etnia
-           ,1
-           ,$periodo
-           ,$ceguera
-           ,$sordera 
-           ,$mudez
-           ,$fisica
-           ,$mental
-           ,$psiquica
-           ,'$descripcion'
-           ,$organizacion
-           ,$usuario_id
-           
-           ,$check_nac 
-           ,$check_dis
-           ,0
-           ,$ceguera_p
-           ,$sordera_p 
-           ,$mudez_p
-           ,$fisica_p 
-           ,$mental_p
-           ,$psiquica_p)";
-      //llamo al metodo listar y le doy la variable CONSULTA
-      echo $CONSULTA;
-      $datos=$menu->listar($CONSULTA);
-        $CONSULTA = "SELECT * FROM A_NINOS";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-        //imprimir los datos en JSON
-        print($datos);
-      //imprimir los datos en JSON
+
+      $respuesta = array();
+      $i=0;
+      $erut = '/^[0-9]{7,8}\-[0-9kK]{1}$/';
+      $enombre = '/^[a-zA-Z ]+$/';
+
+      $ninos= new Ninos();
+      
+      if($check_nac==0){
+          if(verificarExpresion($dni,$erut)==false){
+            $respuesta[$i]['action']='ERROR';
+            $respuesta[$i]['error']=1;
+            $respuesta[$i]['mensaje']='<p class="mensaje">Rut inválido debe incluir guión y dígito verificador</p>';
+            $i++;
+          }
+          if(verificarExpresion($dni,$erut)==true){
+            if(validadorRut($dni)==false){
+                $respuesta[$i]['action']='ERROR';
+                $respuesta[$i]['error']=1;
+                $respuesta[$i]['mensaje']='<p class="mensaje">Rut inválido debe incluir guión y dígito verificador</p>';
+                $i++;
+            }
+          }
+          $resultado=$ninos->buscarDniPeriodo($dni,$periodo,1);
+          
+          if(count($resultado)!=0){
+              if(count($resultado)==1){
+                  $respuesta[$i]['action']='ERROR';
+                  $respuesta[$i]['error']=1;
+                  $respuesta[$i]['mensaje']='<p class="mensaje">RUT/DNI '.$resultado[0]['dni'].' se encuentra registrado en '. $resultado[0]['nombreOrganizacion'] .'</p>';
+                  $i++;
+                  //SELECT N.dni dni, O.nombre nombreOrganizacion FROM A_NINOS N
+              }
+          }
+          $nacion=1;//chile
+      }else{
+          if($nacion=='' || $nacion==null || $nacion==0){
+              $respuesta[$i]['action']='ERROR';
+              $respuesta[$i]['error']=10;
+              $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar nacionalidad</p>';
+              $i++;
+          }
+      }
+      
+      if(verificarExpresion($nombre,$enombre)==false){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=2;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar nombre</p>';
+        $i++;
+      }
+      if($periodo=='' || $periodo==0){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=3;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Periodo</p>';
+        $i++;
+      }
+      if($sexo==''){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=4;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Sexo</p>';
+        $i++;
+      }
+      if($organizacion=='' || $organizacion==0){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=5;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Organización</p>';
+        $i++;
+      }
+      
+      if($naciemiento==''){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=6;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Seleccionar Fecha de Nacimiento</p>';
+        $i++;
+      }
+
+      //edad 7
+      if($edad=='' || $edad==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=7;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Seleccionar Fecha de Nacimiento para la edad</p>';
+        $i++;
+      }
+      if($etnia=='' || $etnia==0){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=8;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Etnia</p>';
+        $i++;
+      }
+      if($check_dis==1){
+
+        if(($ceguera==1 && $ceguera_p=='') || /* $ceguera==1 && $ceguera_p==0 ||  */ ($ceguera==1 && $ceguera_p==null)){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=9;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar valor valido</p>';
+          $i++;
+        }
+        if(($sordera==1 && $sordera_p=='') || /* $sordera==1 && $sordera_p==0 || */ ($sordera==1 && $sordera_p==null)){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=9;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar valor valido</p>';
+          $i++;
+        }
+        if(($mudez==1 && $mudez_p=='') || /* $mudez==1 && $mudez_p==0 || */ ($mudez==1 && $mudez_p==null)){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=9;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar valor valido</p>';
+          $i++;
+        }
+        if(($fisica==1 && $fisica_p=='') || /* $fisica==1 && $fisica_p==0 || */ ($fisica==1 && $fisica_p==null)){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=9;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar valor valido</p>';
+          $i++;
+        }
+        if(($mental==1 && $mental_p=='') || /* $mental==1 && $mental_p==0 || */ ($mental==1 && $mental_p==null)){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=9;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar valor valido</p>';
+          $i++;
+        }
+        if(($psiquica==1 && $psiquica_p=='') || /* $psiquica==1 && $psiquica_p==0 || */ ($psiquica==1 && $psiquica_p==null)){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=9;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar valor valido</p>';
+          $i++;
+        }
+      }
+
+      
+        /* $resultado=$ninos->buscarDniPeriodo($dni,$periodo,1);
+        if(count($resultado)!=0){
+            if(count($resultado)==1){
+                $respuesta[$i]['action']='ERROR';
+                $respuesta[$i]['error']=1;
+                $respuesta[$i]['mensaje']='<p class="mensaje">RUT/DNI '.$resultado[0]['dni'].' se encuentra registrado en '. $resultado[0]['nombreOrganizacion'] .'</p>';
+                $i++;
+                //SELECT N.dni dni, O.nombre nombreOrganizacion FROM A_NINOS N
+            }
+        } */
+
+      if(count($respuesta)==0){
+        // $ninos= new Ninos();
+        // $datos=$ninos->listarNinos(1,1,2024);
+        $datos=$ninos->guardarNinos($dni,$nombre,$sexo,
+        $edad,$naciemiento,$nacion,$etnia,$periodo,
+        $ceguera,$sordera,$mudez,$fisica,$mental,$psiquica,
+        $descripcion,$organizacion,$usuario_id,$check_nac ,$check_dis,
+        $ceguera_p,$sordera_p ,$mudez_p,$fisica_p ,$mental_p,$psiquica_p);
+
+        if($ninos->getError()==0){
+            $respuesta[$i]['action']="OK";
+            $respuesta[$i]['error']=0;
+            $respuesta[$i]['mensaje']="OK";
+            $i++;
+            echo json_encode($respuesta);
+        }else{
+          $respuesta[$i]['action']="ERROR";
+          $respuesta[$i]['error']=99;
+          $respuesta[$i]['mensaje']="ERROR BD";
+          $i++;
+          echo json_encode($respuesta);
+        }
+
+      }else{
+        echo json_encode($respuesta);
+      }
         break;
         //edita 1 dato selecionable de la tabla A_ETNIA
+
     //! editar niño
     case "edit_etnia":
       $menu= new Ninos();
       //define la consulta
       echo $etnia;
       $CONSULTA = "UPDATE [dbo].[A_NINOS]
-   SET [dni] = '$dni'
-      ,[nombre] = '$nombre'
-      ,[sexo] = $sexo
-      ,[edad] = $edad
-      ,[fechaNacimiento] = '$naciemiento'
-      ,[idNacionalidad] = '$nacion '
-      ,[idEtnia] = '$etnia '
-      ,[periodo] = '$periodo'
-      ,[checkCeguera] = $ceguera
-      ,[checkSordera] = $sordera
-      ,[checkMudez] = $mudez
-      ,[checkFisica] = $fisica
-      ,[checkMental] = $mental
-      ,[checkPsiquica] = $psiquica
-      ,[descripcion] = '$descripcion'
-      ,[idOrganizacion] = '$organizacion'
-      ,[checkExtranjero] = '$check_nac'
-      ,[checkDiscapacitado] = '$check_dis'
+                  SET [dni] = '$dni'
+                      ,[nombre] = '$nombre'
+                      ,[sexo] = $sexo
+                      ,[edad] = $edad
+                      ,[fechaNacimiento] = '$naciemiento'
+                      ,[idNacionalidad] = '$nacion '
+                      ,[idEtnia] = '$etnia '
+                      ,[periodo] = '$periodo'
+                      ,[checkCeguera] = $ceguera
+                      ,[checkSordera] = $sordera
+                      ,[checkMudez] = $mudez
+                      ,[checkFisica] = $fisica
+                      ,[checkMental] = $mental
+                      ,[checkPsiquica] = $psiquica
+                      ,[descripcion] = '$descripcion'
+                      ,[idOrganizacion] = '$organizacion'
+                      ,[checkExtranjero] = '$check_nac'
+                      ,[checkDiscapacitado] = '$check_dis'
 
-      ,[porcentajeCeguera] = $ceguera_p 
-      ,[porcentajeSordera] = $sordera_p
-      ,[porcentajeMudez] = $mudez_p
-      ,[porcentajeFisica] = $fisica_p
-      ,[porcentajeMental] = $mental_p 
-      ,[porcentajePsiquica] = $psiquica_p
- WHERE id = $user_id ";
+                      ,[porcentajeCeguera] = $ceguera_p 
+                      ,[porcentajeSordera] = $sordera_p
+                      ,[porcentajeMudez] = $mudez_p
+                      ,[porcentajeFisica] = $fisica_p
+                      ,[porcentajeMental] = $mental_p 
+                      ,[porcentajePsiquica] = $psiquica_p
+                WHERE id = $user_id ";
       //llamo al metodo listar y le doy la variable CONSULTA
       echo $etnia;
       $datos=$menu->listar($CONSULTA);
@@ -166,6 +266,7 @@
         //imprimir los datos en JSON
         print($datos);
       break;
+
       //! listar Niños
       case "listarNinos":
         // $menu= new MenuModel();

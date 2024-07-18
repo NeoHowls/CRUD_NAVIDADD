@@ -61,6 +61,9 @@ let listarNinos = function(tipoO,Organizacion,periodo){
             {"data": "tipo"},//30
             {"data": "tipo_org"},//31
             {"data": "idEtnia"},//32
+
+            {"data": "idOrganizacion"},//33
+
             {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'><svg xmlns=http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'><path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/><path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/></svg></i>"}
 
         ] , 
@@ -155,11 +158,11 @@ function listarOrganizacion(tipo){
         listarNinos(tipoS,organizacionS,periodoS);
     });
 
-//! check Discapacidad muestra/oculta contenido
+//todo: check Discapacidad muestra/oculta contenido
 $('#chDiscapacidad').change(function() {
     if(this.checked != true){
           $("#contenidoDiscapacidad").hide();
-          limpiarContenidoDiscapacidad()
+          limpiarContenidoDiscapacidad();
      }
   else{
         $("#contenidoDiscapacidad").show();
@@ -170,6 +173,7 @@ $('#chDiscapacidad').change(function() {
 $('#chExtrajero').change(function() {
     if(this.checked != true){
           $("#contenidoExtrajero").hide();
+          //limpiar
      }
   else{
         $("#contenidoExtrajero").show();
@@ -201,12 +205,61 @@ function limpiarContenidoDiscapacidad(){
     $("#psiquica_percil").val("");
 
     $("#descripcion").val("");
+
 }
 
+function limpiarContenidoMensajes(){
+    $('#m_dni').text('');
+    $('#m_nombre').text('');
+    $('#m_periodo').text('');
+    $('#m_sexo').text('');
+    $('#m_organizacion').text('');
+    $('#m_nacimiento').text('');
+    $('#m_edad').text('');
+    $('#m_etnia').text('');
+    $('#m_nacion').text('');
+}
 
-//! boton niño nuevo, limpia formulario
+//todo: verificacion de mensaje error al seleccionar input
+//!  check Extranjeros muestra/oculta contenido
+$('#dni').on('change click', function() {
+    $('#m_dni').text('');
+});
+$('#nombre').on('change click', function() {
+    $('#m_nombre').text('');
+});
+$('#periodo').on('change click', function() {
+    $('#m_periodo').text('');
+});
+$('#sexo').on('change click', function() {
+    $('#m_sexo').text('');
+});
+$('#O_ID').on('change click', function() {
+    $('#m_organizacion').text('');
+});
+$('#Naciemiento').on('change click', function() {
+    $('#m_nacimiento').text('');
+    $('#m_edad').text('');
+});
+/* $('#edad').on('change click', function() {
+    $('#m_edad').text('');
+}); */
+$('#etnia').on('change click', function() {
+    $('#m_etnia').text('');
+});
+
+
+$('#nacion').on('change click', function() {
+    $('#m_nacion').text('');
+});
+//!-----------------------------------------------------------
+//!-----------------------------------------------------------
+
+
+//! boton niño nuevo, limpia formulario y restablece contenido
 $("#btnNuevo").click(function(){
-    
+    limpiarContenidoMensajes();
+
     const periodo_fecha = document.getElementById("periodo").value
     const fecha_hace_11_anios = new Date();
     fecha_hace_11_anios.setFullYear(fecha_hace_11_anios.getFullYear() - 10);
@@ -221,11 +274,6 @@ $("#btnNuevo").click(function(){
 
     const fecha_minima120 = `${anio_hace_120_anios}-01-01`;
 
-    
-
-    
-    
-
     opcion = "agregarNino"; //alta           
     user_id=null;
     check_nac = 0;
@@ -236,15 +284,16 @@ $("#btnNuevo").click(function(){
     fisica = 0;
     mental= 0;
     psiquica = 0;
-        if (check_nac == 1) {
+    // muestra/oculta contenido extranjero
+    if (check_nac == 1) {
         document.getElementById('chExtrajero').checked = true
         $("#contenidoExtrajero").show();
-
     }
     else {
         document.getElementById('chExtrajero').checked = false
         $("#contenidoExtrajero").hide();
     }
+
     checkboxNAC = document.getElementById('chExtrajero');
     checkboxNAC.addEventListener('change', function () {
         // Verifica si el checkbox está marcado o no
@@ -476,6 +525,8 @@ $("#btnNuevo").click(function(){
         comuna = fila.find('td:eq(29)').text();
         check_nac = fila.find('td:eq(10)').text();
     
+        idOrganizacion = fila.find('td:eq(33)').text();
+        // alert (idOrganizacion);
     
         //CHECK DISCAPACIDAD
         check_dis = fila.find('td:eq(19)').text();
@@ -503,6 +554,8 @@ $("#btnNuevo").click(function(){
         $("#etnia").val(etnia);
         $("#nacion").val(nacion);
         $("#comuna").val(comuna);
+
+        $("#O_ID").val(idOrganizacion);
     
         //discapacidad
         $("#chDiscapacidad").val(check_dis);
@@ -823,16 +876,7 @@ $('#formNinos').submit(function(e){
     naciemiento = $.trim($('#Naciemiento').val());
     habilitado = $.trim($('#habilitado').val());
     nacion = $.trim($('#nacion').val());
-    comuna = $.trim($('#comuna').val());
-    // check_dis = $.trim($('#comuna').val());
- /*    ceguera = $.trim($('#ceguera').val());
-    sordera = $.trim($('#sordera').val());
-    mudez = $.trim($('#mudez').val());
-    fisica = $.trim($('#fisica').val());
-    mental = $.trim($('#mental').val());
-    psiquica = $.trim($('#psiquica').val()); */
-    // check_nac = $.trim($('#check_nac').val());
-
+    // comuna = $.trim($('#comuna').val());
 
     ceguera_p = $.trim($('#ceguera_percil').val());
     sordera_p = $.trim($('#sordera_percil').val());
@@ -840,14 +884,50 @@ $('#formNinos').submit(function(e){
     fisica_p = $.trim($('#fisica_percil').val());
     mental_p = $.trim($('#mental_percil').val());
     psiquica_p = $.trim($('#psiquica_percil').val());
-    // check_nac = $.trim($('#check_nac').val());
-    // edad = $.trim($('#edad').val());
+
     etnia = $.trim($('#etnia').val());
-    edad = calcularEdad(naciemiento, periodo)
-    usuario_id = id_usuario;
+    edad = calcularEdad(naciemiento, periodo);//devuelve NaN si no selecciona fecha
+    if(Number.isNaN(edad)==true){
+        edad='';
+    }
+
+    // usuario_id = id_usuario;
+
+    // alert (id_suaurio);
+    // alert (usuario_id);
     organizacion = $.trim($('#O_ID').val());
     // window.alert(ceguera_p+" "+sordera_p+" "+mudez_p+" "+fisica_p+" "+mental_p+" "+psiquica_p )
-    window.alert (periodo)                        
+    // window.alert (periodo)
+
+    // alert ('comuna: '+comuna);
+    alert ('dni: '+ dni +
+        ' nombre: '+nombre+
+        ' periodo: '+periodo+
+        ' sexo: '+sexo+
+        ' organizacion: '+organizacion+
+        ' naciemiento: '+naciemiento+
+        ' edad: '+edad+
+        ' etnia: '+etnia+
+        ' check_nac: '+check_nac+
+        ' nacion: '+nacion+
+        ' check_dis: '+check_dis+
+        ' ceguera: ' +ceguera+
+        ' sordera: '+sordera+ 
+        ' mudez: '+mudez+ 
+        ' fisica: '+fisica+
+        ' mental: '+mental+ 
+        ' psiquica: '+psiquica+
+        ' ceguera_p: '+ceguera_p+
+        ' sordera_p: '+sordera_p+
+        ' mudez_p: '+mudez_p+ 
+        ' fisica_p: '+fisica_p+
+        ' mental_p: '+mental_p+
+        ' psiquica_p: '+psiquica_p+
+        ' usuario_id: '+usuario_id
+
+     );
+     mensaje='';
+
     //EJECUTA EL AJAX
     $.ajax({
         //Laa URL es similar al AJAX principaal pero en el op= capturaa la opcion del boton para ejecutar la consulta correcta
@@ -855,22 +935,80 @@ $('#formNinos').submit(function(e){
           type: "POST",
           datatype:"json", 
           //La prueba al solo la tabla ETNIA CAPTURA SOLO 2 VALORES, EL ID Y LA ETNIA, el ID es en caso que se quiera editar   
-          data:  {user_id:user_id, dni:dni, nombre:nombre, sexo:sexo, edad:edad, periodo:periodo, descripcion:descripcion, 
-            naciemiento:naciemiento, etnia:etnia, nacion:nacion,comuna:comuna,check_dis:check_dis, 
+          data:  {/* user_id:user_id, */ dni:dni, nombre:nombre, sexo:sexo, edad:edad, periodo:periodo, descripcion:descripcion, 
+            naciemiento:naciemiento, etnia:etnia, nacion:nacion,/* comuna:comuna, */check_dis:check_dis, 
             ceguera:ceguera, sordera:sordera, mudez:mudez, fisica:fisica,
              mental:mental, psiquica:psiquica, 
              ceguera_p:ceguera_p,sordera_p:sordera_p,mudez_p:mudez_p, 
              fisica_p:fisica_p,mental_p:mental_p, psiquica_p:psiquica_p, 
-             check_nac:check_nac, id_usuario:id_usuario, organizacion:organizacion},    
+             check_nac:check_nac, /* id_usuario:id_usuario, */ organizacion:organizacion},    
           //Si todo funiona recarga el AJAX
+          beforeSend: function(){
+            //  console.log("enviado");
+          },
           success: function(data) {
-            table.ajax.reload(null, false);
-           }
-        });		
+                table.ajax.reload(null, false);
+          },
+          error:function(){
+                alert("error");
+          }
+        }).done(function(response){
+             console.log(response);
+             respuesta = JSON.parse(response);
+             for(i=0;i<respuesta.length;i++){
+                if(respuesta[i].error==1)
+                    {$('#m_dni').html(respuesta[i].mensaje);}
+                if(respuesta[i].error==2)
+                    {$('#m_nombre').html(respuesta[i].mensaje);}
+                if(respuesta[i].error==3)
+                    {$('#m_periodo').html(respuesta[i].mensaje);}
+                if(respuesta[i].error==4)
+                    {$('#m_sexo').html(respuesta[i].mensaje);}
+                if(respuesta[i].error==5)
+                    {$('#m_organizacion').html(respuesta[i].mensaje);}
+                if(respuesta[i].error==6)
+                    {$('#m_nacimiento').html(respuesta[i].mensaje);}
+                if(respuesta[i].error==7)
+                    {$('#m_edad').html(respuesta[i].mensaje);}
+                if(respuesta[i].error==8)
+                    {$('#m_etnia').html(respuesta[i].mensaje);}
+                if(respuesta[i].error==9)
+                    {
+                        // $('#content').html(respuesta[i].mensaje);
+                        // limpiarSolicitud();
+                        if(mensaje==''){
+                            // mensaje = respuesta[i].mensaje;
+                            mensaje = respuesta[i].mensaje;
+                            // cm++;
+                        }
+                        else{
+                            // mensaje = mensaje +"<br>"+ respuesta[i].mensaje;
+                            mensaje = mensaje +"<br>"+ respuesta[i].mensaje;
+                            // cm++;
+                        }
+                        // window.location.href = "formSolicitud.php?folio="+respuesta[0].mensaje;
+                    }
+
+                if(respuesta[i].error==10)
+                    {$('#m_nacion').html(respuesta[i].mensaje);}
+             }
+                if(mensaje!='') {$('#m_discapacidad').html(respuesta[i].mensaje);}
+                // alert (mensaje);
+             if(respuesta.length>0){
+
+             }
+             else if(respuesta.length=1 && respuesta[0].error==0){
+                console.log("ingresado");
+                $('#modalCRUD').modal('hide');
+                //mensaje ingresado
+             }else{
+                $('#modalCRUD').modal('hide');
+             }    
+        });//fin done;		
         
         //EL MODAL SE DESTRUYE/ESCONDE NUEVAMENTE COMO SE LIMPIA LOS DATOS        
     
-        $('#modalCRUD').modal('hide');											     			
+        											     			
 });
 
 //!-------------------------------------------

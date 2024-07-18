@@ -149,9 +149,9 @@ class Ninos extends ConexionBD{
 			WHEN tipo = 3 THEN 'CONDOMINIO'
 			WHEN tipo = 4 THEN 'PROVIDENCIA'
 		END AS tipo_org,
-		N.idEtnia AS idEtnia--,
+		N.idEtnia AS idEtnia,
 
-		--N.idOrganizacion AS idOrganizacion
+		N.idOrganizacion AS idOrganizacion
 
 
         FROM A_NINOS N
@@ -203,7 +203,9 @@ $sql2 = "SELECT
 			WHEN tipo = 3 THEN 'CONDOMINIO'
 			WHEN tipo = 4 THEN 'PROVIDENCIA'
 		END AS tipo_org,
-		idEtnia = 0
+		idEtnia = 0,
+
+		N.idOrganizacion AS idOrganizacion
 
 FROM A_NINOS N
 JOIN A_NACIONALIDAD NA ON N.idNacionalidad = NA.id
@@ -245,9 +247,89 @@ WHERE N.idEtnia =0";
         return $query;
     }
 
-    public function guardarNinos(){
-        $sql="";
+    public function guardarNinos($dni,$nombre,$sexo,
+    $edad,$naciemiento,$nacion,$etnia,$periodo,
+    $ceguera,$sordera,$mudez,$fisica,$mental,$psiquica,
+    $descripcion,$organizacion,$usuario_id,$check_nac ,$check_dis,
+    $ceguera_p,$sordera_p ,$mudez_p,$fisica_p ,$mental_p,$psiquica_p){
+        $sql="INSERT INTO A_NINOS
+              (
+                dni,--1
+                nombre,--2
+                sexo,--3
+                edad,--4
+                fechaNacimiento,--5
+                idNacionalidad,--6
+                idEtnia,--7
+                periodo,--8
+                checkCeguera,--9
+                checkSordera,--10
+                checkMudez,--11
+                checkFisica,--12
+                checkMental,--13
+                checkPsiquica,--14
+                descripcion,--15
+                idOrganizacion,--16
+                idPersonalRegistro,--17
+                checkExtranjero,--18
+                checkDiscapacitado,--19
+                porcentajeCeguera,--20
+                porcentajeSordera,--21
+                porcentajeMudez,--22
+                porcentajeFisica,--23
+                porcentajeMental,--24
+                porcentajePsiquica--25
+              )
+        VALUES
+              (:dni,:nombre,:sexo
+              ,:edad,:naciemiento,:nacion,:etnia,:periodo
+              ,:ceguera,:sordera ,:mudez,:fisica,:mental,:psiquica
+              ,:descripcion,:organizacion,:usuario_id,:check_nac ,:check_dis
+              ,:ceguera_p,:sordera_p ,:mudez_p,:fisica_p ,:mental_p,:psiquica_p)";
+        $parametros =array(
+            "dni"=>$dni,
+            "nombre"=>$nombre,
+            "sexo"=>$sexo,
+            "edad"=>$edad,
+            "naciemiento"=>$naciemiento,
+            "nacion"=>$nacion,
+            "etnia"=>$etnia,
+            "periodo"=>$periodo,
+            "ceguera"=>$ceguera,
+            "sordera"=>$sordera, 
+            "mudez"=>$mudez,
+            "fisica"=>$fisica,
+            "mental"=>$mental,
+            "psiquica"=>$psiquica,
+            "descripcion"=>$descripcion,
+            "organizacion"=>$organizacion,
+            "usuario_id"=>$usuario_id,
+            "check_nac"=>$check_nac, 
+            "check_dis"=>$check_dis,
+            "ceguera_p"=>$ceguera_p,
+            "sordera_p"=>$sordera_p,
+            "mudez_p"=>$mudez_p,
+            "fisica_p"=>$fisica_p,
+            "mental_p"=>$mental_p,
+            "psiquica_p"=>$psiquica_p
+        );
+        // $parametros =array("periodo"=>$periodo,"periodo2"=>$periodo);
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
         
+    }
 
+    public function buscarDniPeriodo($dni,$periodo,$estado){
+        $sql="SELECT N.dni dni, O.nombre nombreOrganizacion 
+            FROM A_NINOS N
+            JOIN A_ORGANIZACION O ON O.id=N.idOrganizacion
+            WHERE N.dni=:dni AND N.periodo=:periodo AND N.estado=:estado";
+        $parametros =array("dni"=>$dni,"periodo"=>$periodo,"estado"=>$estado);
+        $this->connect();
+        $query = $this->iniciar($sql, $parametros);
+        // $query = $this->ejecutaConsulta($sql, $parametros);
+        // var_dump($query);
+        return $query;
     }
 }
