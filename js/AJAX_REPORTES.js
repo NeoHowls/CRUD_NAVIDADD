@@ -29,29 +29,29 @@ let table1 = $('#myTable11').DataTable({
             extend: 'copyHtml5',
             text: 'COPIAR',
             exportOptions: {
-                columns: [1, 2, 3, 4]
+                columns: [0, 1, 2, 3, 4] // Ajustar los índices de columna según sea necesario
             }
         },
         {
             extend: 'excelHtml5',
             text: 'EXCEL',
             exportOptions: {
-                columns: [1, 2, 3, 4]
+                columns: [0, 1, 2, 3, 4] // Ajustar los índices de columna según sea necesario
             }
         },
         {
             extend: 'pdfHtml5',
             text: 'PDF',
             exportOptions: {
-                columns: [1, 2, 3, 4]
-            },
+                columns: [0, 1, 2, 3, 4] // Ajustar los índices de columna según sea necesario
+            }
         },
         {
             extend: 'colvis',
             text: 'COLUMNAS',
-            columns: [1, 2, 3, 4]
+            columns: [0, 1, 2, 3, 4] // Ajustar los índices de columna según sea necesario
         }
-    ],
+    ]
 });
 
 // Función para actualizar el gráfico
@@ -71,12 +71,6 @@ document.getElementById('btnReportNat').addEventListener('click', function () {
 
 // Document.ready para inicializar tooltips de Bootstrap y gráficos de Chart.js
 $(document).ready(function () {
-
-
-console.log(totalFemenino2);
-console.log(totalMasculino2);
-console.log(totalGeneral2);
-
     // Inicializar tooltips de Bootstrap
     $('[data-toggle="tooltip"]').tooltip({
         delay: { show: 0, hide: 0 },
@@ -159,4 +153,34 @@ console.log(totalGeneral2);
             }
         }
     });
+});
+
+// Solicitar datos para la tabla y actualizar gráfico
+$.ajax({
+    url: "../controller/controllerReport.php?op=pdf",
+    type: "post",
+    dataType: "json",
+    success: function (data) {
+        console.log('Datos recibidos:', data); // Verificar datos
+        // Inicializar DataTables con los datos recibidos
+        table1.clear().rows.add(data).draw();
+    },
+    error: function (xhr, status, error) {
+        console.error('Error en la solicitud:', error);
+    }
+});
+
+// Actualizar totales y gráfico después de que DataTables haya dibujado la tabla
+table1.on('draw', function () {
+    var data = table1.rows().data().toArray();
+    var totalFemenino = 0, totalMasculino = 0, totalGeneral = 0;
+
+    data.forEach(function (row) {
+        totalFemenino += parseFloat(row.FEMENINO || 0);
+        totalMasculino += parseFloat(row.MASCULINO || 0);
+        totalGeneral += parseFloat(row.TOTAL || 0);
+    });
+
+    // Actualizar gráficos
+    updateChart(chartReportGen, [totalFemenino, totalMasculino, totalGeneral]);
 });
