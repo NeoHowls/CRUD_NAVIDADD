@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="../images/Escudo_de_Alto_Hospicio.png">
     <link rel="stylesheet" href= ../style/bootstrap.css >
 	<link rel="stylesheet" href= ../js/jquery-3.7.0.js >
     <link rel="stylesheet" href= ../style/styles.css >

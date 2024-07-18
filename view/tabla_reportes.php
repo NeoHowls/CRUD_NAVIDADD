@@ -39,122 +39,20 @@
       margin-bottom: 20px;
       color: #000;
     }
-
-  
-    
-    
-  </style>
-
-<script>
-    // Script para mostrar el Tooltip al pasar el cursor sobre el botón
-    $(document).ready(function() {
-      // Inicializar tooltips de Bootstrap
-      $('[data-toggle="tooltip"]').tooltip({
-        delay: { show: 0, hide: 0 },
-        placement: 'top'
-      });
-
-      // Inicializar gráficos de Chart.js GENERAL
-      const ctx1 = document.getElementById('chartReportGen').getContext('2d');
-      const chartReportGen = new Chart(ctx1, {
-        type: 'bar',
-        data: {
-          labels: ['FEMENINO', 'MASCULINO', 'TOTAL'],
-          datasets: [{
-            label: '# of Votes',
-            data: [11, 19, 30],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-
-      // Inicializar gráficos de Chart.js POR NACIONALIDAD
-      const ctx3 = document.getElementById('chartReportGen3').getContext('2d');
-      const chartReportGen3 = new Chart(ctx3, {
-        type: 'bar',
-        data: {
-          labels: ['CHILE', 'ARGENTINA', 'URUGUAY', 'PARAGUAY', 'BOLIVIA', 'PERU', 'BRASIL', 'ECUADOR', 'COLOMBIA', 'VENEZUELA'],
-          datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3, 14, 4, 9, 10],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(123, 239, 178, 0.2)',
-              'rgba(232, 90, 130, 0.2)',
-              'rgba(101, 143, 255, 0.2)',
-              'rgba(255, 123, 167, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-              'rgba(123, 239, 178, 1)',
-              'rgba(232, 90, 130, 1)',
-              'rgba(101, 143, 255, 1)',
-              'rgba(255, 123, 167, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-    });
-  </script>
-
+  </style>  
 <div class="container">
     <br>
     <div class="card">
         <div class="card-header">
-            Edades
+            Tabla de edades
                           <!-------------->
                           <!-------------->
                           <!-- Reportes -->
                           <!-------------->
                           <!-------------->
-                             <!-- <div class="container">
+                              <div class="container">
                             <div class="card-custom">
-                              <h1 class="text-center">Generar Informes</h1>
-                              <div class="row">
-                                <div class="col-lg-12">
-                                  <h3>IMPRIMIR REPORTE GENERAL POR ORGANIZACION</h3>
-                                  <button id="btnReportOrg" type="button" class="btn btn-warning text-light btnReportGen" data-toggle="tooltip" data-placement="top" title="Imprimir Reporte General por Organización">
-                                    <i id="iconReportOrg" class="bi bi-filetype-pdf fs-3"></i>
-                                  </button>
-                                </div>
-                                 <div><br></br></div>  
-                              </div>
-                                  
+                              <h1 class="text-center">Generar Informes</h1>                                  
                               <div class="row">
                                 <div class="col-lg-12">
                                   <h3>IMPRIMIR REPORTE GENERAL</h3>
@@ -180,49 +78,53 @@
                                 </div>
                               </div>
                             </div>
-                          </div> --> 
+                          </div>
                           <!-------------->
                           <!-------------->
                           <!-- Reportes -->
                           <!-------------->
                           <!-------------->
+                          
 
-                          <!-- ------------>
+                          <!-------------->
                           <!-------------->
                           <!----TABLA----->
                           <!-------------->
                           <!-------------->
-                          <div class="table-responsive mx-5 text-center">
-                            <table id="myTable11" class="table table-striped nowrap" style="width:100%">
-                                <thead>
+                          <!-- <div class="table-responsive mx-2 text-left">
+                          <table id="myTable11" class="table table-striped nowrap table-centered" style="width:100%">
+                            <thead>
+                                <tr>
+                                
+                                    <th class='never'>EDAD</th>  
+                                    <th style='text-align: center;'>RANGO ETARIO</th> 
+                                    <th style='text-align: center;'>MASCULINO</th>  
+                                    <th style='text-align: center;'>FEMENINO</th>  
+                                    <th style='text-align: center;'>TOTAL</th>  
+                                  
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                            <tfoot>
                                     <tr>
-                                        <th class="never">EDAD</th> <!-- 0 -->
-                                        <th>RANGO ETARIO</th> <!-- 0 -->
-                                        <th>MASCULINO</th> <!-- 1 -->
-                                        <th>FEMENINO</th> <!-- 2 -->
-                                        <th>TOTAL</th> <!-- 3 -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Data goes here -->
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th></th> <!-- EDAD -->
-                                        <th>TOTAL:</th> <!-- RANGO ETARIO -->
-                                        <th id="totalMasculino"></th> <!-- MASCULINO -->
-                                        <th id="totalFemenino"></th> <!-- FEMENINO -->
-                                        <th id="totalGeneral"></th> <!-- TOTAL -->
+                                        <th></th> 
+                                        <th style='text-align: center;'>TOTAL:</th> 
+                                        <th style='text-align: right;' id="totalMasculino"></th> 
+                                        <th style='text-align: right;' id="totalFemenino"></th> 
+                                        <th style='text-align: right;' id="totalGeneral"></th> 
                                     </tr>
                                 </tfoot>
-                            </table>
-                        </div>
-
+                          </table>
+                        </div> -->
                           <!-------------->
                           <!-------------->
                           <!----TABLA----->
                           <!-------------->
                           <!-------------->
+                        
                           
         </div>
     </div>

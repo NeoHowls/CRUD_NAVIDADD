@@ -24,7 +24,7 @@
             </p>
             <div class="row">
                 <div class="col-lg-12">
-                    <button id="btnNuevo" type="button" class="btn btn-info text-light btnNuevo" data-toggle="tooltip" data-placement="top" title="Agregar Persona">
+                    <button id="btnNuevo" type="button" class="btn btn-primary text-light btnNuevo" data-toggle="tooltip" data-placement="top" title="Agregar Persona">
                         <i id="btnNuevo" class="bi bi-plus fs-4"></i>
                     </button>
                     <button id="btnDesHabGeneral" type="button" class="btn btn-danger text-light btnDesHabGeneral" data-toggle="tooltip" data-placement="top" title="Deshabilitar registros">
