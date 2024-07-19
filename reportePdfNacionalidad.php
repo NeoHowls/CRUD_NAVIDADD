@@ -53,20 +53,21 @@ try {
     $datos1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
     // Consulta SQL para la nueva tabla
-    $sql2 = "SELECT
-                idNacionalidad,
-                COALESCE(nacionalidad, 'SIN DATOS') AS nacionalidad,
-                COALESCE(SUM(masculino), 0) AS MASCULINO,
-                COALESCE(SUM(femenino), 0) AS FEMENINO,
-                COALESCE(SUM(masculino) + SUM(femenino), 0) AS TOTAL
-            FROM
-                V_CONTEONINOSNACION
-            WHERE
-                periodo = 2024 AND estado=1
-            GROUP BY
-                nacionalidad,idNacionalidad
-            ORDER BY
-                idNacionalidad";
+    $sql2 = "SELECT idNacionalidad,
+                    COALESCE(nacionalidad, 'SIN DATOS') AS nacionalidad,
+                            COALESCE(SUM(masculino), 0) AS MASCULINO,
+                            COALESCE(SUM(femenino), 0) AS FEMENINO,
+                            COALESCE(SUM(masculino) + SUM(femenino), 0) AS TOTAL
+
+            FROM(
+                SELECT NA.id idNacionalidad, NA.nacionalidad nacionalidad,VP.masculino masculino, VP.femenino femenino 
+                FROM(
+                SELECT * FROM V_CONTEONINOSNACION
+                WHERE periodo = 2024 AND estado=1
+                ) VP
+            RIGHT JOIN A_NACIONALIDAD NA ON VP.idNacionalidad=NA.id) VISTA
+            GROUP BY idNacionalidad,nacionalidad
+            ORDER BY idNacionalidad";
 
     $stmt2 = $connection->prepare($sql2);
     $stmt2->execute();
@@ -220,6 +221,8 @@ try {
                 <p>No hay datos para mostrar.</p>
             <?php endif; ?>
 
+            <br>
+            <br>
             <br>
             <br>
             <h3>Informe Detallado por Edad y Nacionalidad</h3>

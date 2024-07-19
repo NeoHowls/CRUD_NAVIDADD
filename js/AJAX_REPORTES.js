@@ -1,6 +1,18 @@
+//!-------------------------------------------------------------------------------------------------------------------------------------------
+//!-------------------------------------------------------------------------------------------------------------------------------------------
+//!----------------------------------------------------------------GENERAL--------------------------------------------------------------------
+//!-------------------------------------------------------------------------------------------------------------------------------------------
+//!-------------------------------------------------------------------------------------------------------------------------------------------
 let totalMasculino2 = 0;
 let totalFemenino2 = 0;
 let totalGeneral2 = 0;
+let totalGeneralPorNacionalidad = [];
+
+// Función para actualizar un gráfico
+function updateChart(chart, data) {
+    chart.data.datasets[0].data = data;
+    chart.update();
+}
 
 // Inicializar DataTables
 let table1 = $('#myTable11').DataTable({
@@ -13,11 +25,11 @@ let table1 = $('#myTable11').DataTable({
         aaSorting: []
     },
     columns: [
-        { "data": "edad" },     // Columna de edad
-        { "data": "edadV" },    // Columna de edadV
-        { "data": "MASCULINO" },// Columna de MASCULINO
-        { "data": "FEMENINO" }, // Columna de FEMENINO
-        { "data": "TOTAL" }     // Columna de TOTAL
+        { "data": "edad" },
+        { "data": "edadV" },
+        { "data": "MASCULINO" },
+        { "data": "FEMENINO" },
+        { "data": "TOTAL" }
     ],
     language: idioma_espanol,
     responsive: true,
@@ -29,58 +41,39 @@ let table1 = $('#myTable11').DataTable({
             extend: 'copyHtml5',
             text: 'COPIAR',
             exportOptions: {
-                columns: [0, 1, 2, 3, 4] // Ajustar los índices de columna según sea necesario
+                columns: [0, 1, 2, 3, 4]
             }
         },
         {
             extend: 'excelHtml5',
             text: 'EXCEL',
             exportOptions: {
-                columns: [0, 1, 2, 3, 4] // Ajustar los índices de columna según sea necesario
+                columns: [0, 1, 2, 3, 4]
             }
         },
         {
             extend: 'pdfHtml5',
             text: 'PDF',
             exportOptions: {
-                columns: [0, 1, 2, 3, 4] // Ajustar los índices de columna según sea necesario
+                columns: [0, 1, 2, 3, 4]
             }
         },
         {
             extend: 'colvis',
             text: 'COLUMNAS',
-            columns: [0, 1, 2, 3, 4] // Ajustar los índices de columna según sea necesario
+            columns: [0, 1, 2, 3, 4]
         }
+    ],
+    columnDefs: [
+        { className: "dt-head-center", targets: [1, 2, 3, 4] },
+        { className: "dt-body-center", targets: [1, 2, 3, 4] }
     ]
 });
 
-// Función para actualizar el gráfico
-function updateChart(chart, data) {
-    chart.data.datasets[0].data = data;
-    chart.update();
-}
-
-// Evento para redirigir al archivo PDF deseado
-document.getElementById('btnReportGen').addEventListener('click', function () {
-    window.open("../reportePdfGeneral.php");
-});
-
-document.getElementById('btnReportNat').addEventListener('click', function () {
-    window.open("../reportePdfNacionalidad.php");
-});
-
-// Document.ready para inicializar tooltips de Bootstrap y gráficos de Chart.js
-$(document).ready(function () {
-    // Inicializar tooltips de Bootstrap
-    $('[data-toggle="tooltip"]').tooltip({
-        delay: { show: 0, hide: 0 },
-        placement: 'top'
-    });
-
-    // Inicializar gráfico de Chart.js GENERAL
-    // Crear el gráfico solo después de que los datos estén disponibles
+let chartReportGen;
+function initChartReportGen() {
     const ctx1 = document.getElementById('chartReportGen').getContext('2d');
-    const chartReportGen = new Chart(ctx1, {
+    chartReportGen = new Chart(ctx1, {
         type: 'bar',
         data: {
             labels: ['FEMENINO', 'MASCULINO', 'TOTAL'],
@@ -88,9 +81,9 @@ $(document).ready(function () {
                 label: '# of Votes',
                 data: [totalFemenino2, totalMasculino2, totalGeneral2],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
@@ -108,39 +101,140 @@ $(document).ready(function () {
             }
         }
     });
+}
 
-    // Inicializar gráfico de Chart.js POR NACIONALIDAD
-    const ctx3 = document.getElementById('chartReportGen3').getContext('2d');
-    const chartReportGen3 = new Chart(ctx3, {
+// Solicitar datos para la tabla y actualizar gráfico
+$.ajax({
+    url: "../controller/controllerReport.php?op=pdf",
+    type: "post",
+    dataType: "json",
+    success: function (data) {
+        console.log('Datos recibidos:', data);
+        table1.clear().rows.add(data).draw();
+
+        totalFemenino2 = 0;
+        totalMasculino2 = 0;
+        totalGeneral2 = 0;
+
+        data.forEach(function (row) {
+            totalFemenino2 += parseFloat(row.FEMENINO || 0);
+            totalMasculino2 += parseFloat(row.MASCULINO || 0);
+            totalGeneral2 += parseFloat(row.TOTAL || 0);
+        });
+
+        updateChart(chartReportGen, [totalFemenino2, totalMasculino2, totalGeneral2]);
+    },
+    error: function (xhr, status, error) {
+        console.error('Error en la solicitud:', error);
+    }
+});
+
+table1.on('draw', function () {
+    var data = table1.rows().data().toArray();
+    var totalFemenino = 0, totalMasculino = 0, totalGeneral = 0;
+
+    data.forEach(function (row) {
+        totalFemenino += parseFloat(row.FEMENINO || 0);
+        totalMasculino += parseFloat(row.MASCULINO || 0);
+        totalGeneral += parseFloat(row.TOTAL || 0);
+    });
+
+    totalFemenino2 = totalFemenino;
+    totalMasculino2 = totalMasculino;
+    totalGeneral2 = totalGeneral;
+
+    updateChart(chartReportGen, [totalFemenino2, totalMasculino2, totalGeneral2]);
+});
+
+//!-------------------------------------------------------------------------------------------------------------------------------------------
+//!-------------------------------------------------------------------------------------------------------------------------------------------
+//!-----------------------------------------------------------NACIONALIDAD--------------------------------------------------------------------
+//!-------------------------------------------------------------------------------------------------------------------------------------------
+//!-------------------------------------------------------------------------------------------------------------------------------------------
+let table2 = $('#myTable12').DataTable({
+    pageLength: 20,
+    ajax: {
+        url: "../controller/controllerReport.php?op=nacion",
+        dataSrc: "",
+        type: "post",
+        responsive: true,
+        aaSorting: []
+    },
+    columns: [
+        { "data": "idNacionalidad" },
+        { "data": "nacionalidad" },
+        { "data": "MASCULINO" },
+        { "data": "FEMENINO" },
+        { "data": "TOTAL" }
+    ],
+    language: idioma_espanol,
+    responsive: true,
+    aaSorting: [],
+    pagingType: 'simple',
+    dom: 'Bfrtip',
+    buttons: [
+        {
+            extend: 'copyHtml5',
+            text: 'COPIAR',
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4]
+            }
+        },
+        {
+            extend: 'excelHtml5',
+            text: 'EXCEL',
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4]
+            }
+        },
+        {
+            extend: 'pdfHtml5',
+            text: 'PDF',
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4]
+            }
+        },
+        {
+            extend: 'colvis',
+            text: 'COLUMNAS',
+            columns: [0, 1, 2, 3, 4]
+        }
+    ]
+});
+
+let chartReportGen3;
+function initChartReportGen3() {
+    const ctx2 = document.getElementById('chartReportGen3').getContext('2d');
+    chartReportGen3 = new Chart(ctx2, {
         type: 'bar',
         data: {
-            labels: ['CHILE', 'ARGENTINA', 'URUGUAY', 'PARAGUAY', 'BOLIVIA', 'PERU', 'BRASIL', 'ECUADOR', 'COLOMBIA', 'VENEZUELA'],
+            labels: [],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3, 14, 4, 9, 10],
+                label: '# of Totals',
+                data: [],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(123, 239, 178, 0.2)',
-                    'rgba(232, 90, 130, 0.2)',
-                    'rgba(101, 143, 255, 0.2)',
-                    'rgba(255, 123, 167, 0.2)'
+                    'rgba(255, 69, 0, 0.5)',     // Orange Red
+                    'rgba(124, 252, 0, 0.5)',    // Lawn Green
+                    'rgba(0, 191, 255, 0.5)',    // Deep Sky Blue
+                    'rgba(255, 20, 147, 0.5)',   // Deep Pink
+                    'rgba(255, 140, 0, 0.5)',    // Dark Orange
+                    'rgba(30, 144, 255, 0.5)',   // Dodger Blue
+                    'rgba(50, 205, 50, 0.5)',    // Lime Green
+                    'rgba(138, 43, 226, 0.5)',   // Blue Violet
+                    'rgba(255, 105, 180, 0.5)',  // Hot Pink
+                    'rgba(218, 165, 32, 0.5)'    // Golden Rod
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(123, 239, 178, 1)',
-                    'rgba(232, 90, 130, 1)',
-                    'rgba(101, 143, 255, 1)',
-                    'rgba(255, 123, 167, 1)'
+                    'rgba(255, 69, 0, 1)',     // Orange Red
+                    'rgba(124, 252, 0, 1)',    // Lawn Green
+                    'rgba(0, 191, 255, 1)',    // Deep Sky Blue
+                    'rgba(255, 20, 147, 1)',   // Deep Pink
+                    'rgba(255, 140, 0, 1)',    // Dark Orange
+                    'rgba(30, 144, 255, 1)',   // Dodger Blue
+                    'rgba(50, 205, 50, 1)',    // Lime Green
+                    'rgba(138, 43, 226, 1)',   // Blue Violet
+                    'rgba(255, 105, 180, 1)',  // Hot Pink
+                    'rgba(218, 165, 32, 1)'    // Golden Rod
                 ],
                 borderWidth: 1
             }]
@@ -153,34 +247,66 @@ $(document).ready(function () {
             }
         }
     });
-});
+}
 
 // Solicitar datos para la tabla y actualizar gráfico
 $.ajax({
-    url: "../controller/controllerReport.php?op=pdf",
+    url: "../controller/controllerReport.php?op=nacion",
     type: "post",
     dataType: "json",
     success: function (data) {
-        console.log('Datos recibidos:', data); // Verificar datos
-        // Inicializar DataTables con los datos recibidos
-        table1.clear().rows.add(data).draw();
+        console.log('Datos recibidos:', data);
+        table2.clear().rows.add(data).draw();
+
+        totalGeneralPorNacionalidad = data.map(row => parseFloat(row.TOTAL || 0));
+        let labels = data.map(row => row.nacionalidad);
+
+        updateChart(chartReportGen3, totalGeneralPorNacionalidad);
+        chartReportGen3.data.labels = labels;
+        chartReportGen3.update();
     },
     error: function (xhr, status, error) {
         console.error('Error en la solicitud:', error);
     }
 });
 
-// Actualizar totales y gráfico después de que DataTables haya dibujado la tabla
-table1.on('draw', function () {
-    var data = table1.rows().data().toArray();
-    var totalFemenino = 0, totalMasculino = 0, totalGeneral = 0;
+table2.on('draw', function () {
+    var data = table2.rows().data().toArray();
+    var totalPorNacionalidad = [];
 
     data.forEach(function (row) {
-        totalFemenino += parseFloat(row.FEMENINO || 0);
-        totalMasculino += parseFloat(row.MASCULINO || 0);
-        totalGeneral += parseFloat(row.TOTAL || 0);
+        totalPorNacionalidad.push(parseFloat(row.TOTAL || 0));
     });
 
-    // Actualizar gráficos
-    updateChart(chartReportGen, [totalFemenino, totalMasculino, totalGeneral]);
+    totalGeneralPorNacionalidad = totalPorNacionalidad;
+    let labels = data.map(row => row.nacionalidad);
+
+    updateChart(chartReportGen3, totalGeneralPorNacionalidad);
+    chartReportGen3.data.labels = labels;
+    chartReportGen3.update();
+});
+
+// Inicializar los gráficos
+initChartReportGen();
+initChartReportGen3();
+
+
+document.getElementById('select_periodo').addEventListener('change', function() {
+    let value = parseInt(this.value, 10);
+    if (isNaN(value)) {
+        alert('Por favor, seleccione un valor válido.');
+        this.value = ''; // Opcionalmente, puedes reiniciar la selección
+    }
+});
+
+
+//!BOTONES PARA GENERAR EL PDF
+document.getElementById('btnReportGen').addEventListener('click', function () {
+    var anio = document.getElementById('select_periodo').value;
+    window.open("../reportePdfGeneral.php?periodo=" + encodeURIComponent(anio));
+});
+
+document.getElementById('btnReportNat').addEventListener('click', function () {
+    var anio = document.getElementById('select_periodo').value;
+    window.open("../reportePdfNacionalidad.php?periodo=" + encodeURIComponent(anio));
 });

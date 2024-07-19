@@ -137,45 +137,45 @@
                 </div>
             </div>
 
-            <div class="table-responsive mx-2 text-left">
+            <!-- <div class="table-responsive mx-1 text-left"> -->
                 <table id="myTable1" class="table table-striped nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th class='never'>id</th>
-                            <th class='never'>dni</th>
-                            <th class='never'>nombre</th>
-                            <th class='never'>direccion</th>
-                            <th class='never'>telefono</th>
-                            <th class='never'>mail</th>
-                            <th class='never'>idPerfil</th>
-                            <th class='never'>estado</th>
-                            <th class='never'>Habilitado</th>
-                            <th class='never'>usuario</th>
-                            <th class='never'>contraseña</th>
-                            <th class='never'>idOrganizacion</th>
-                            <th class='never'>Nombre Organizacion</th>
-                            <th class='never'>tipo</th>
-                            <th class='never'>id</th>
-                            <th style='text-align: center;'>Dni/RUT</th>
-                            <th style='text-align: center;'>Nombre</th>
-                            <th class='never' style='text-align: center;'>Dirección</th>
-                            <th style='text-align: center;'>Teléfono</th>
-                            <th style='text-align: center;'>Mail</th>
-                            <th class='never' style='text-align: center;'>idPerfil</th>
-                            <th style='text-align: center;'>Estado</th>
-                            <th style='text-align: center;'>Habilitado</th>
-                            <th class='never' style='text-align: center;'>usuario</th>
-                            <th class='never' style='text-align: center;'>contraseña</th>
-                            <th class='never' style='text-align: center;'>idOrganizacion</th>
-                            <th style='text-align: center;'>Nombre Organización</th>
-                            <th style='text-align: center;'>Tipo Organización</th>
-                            <th class='all' style='text-align: center;'>Acciones</th>
+                            <th class='never'>id</th><!-- 0 -->
+                            <th class='never'>dni</th><!-- 1 -->
+                            <th class='never'>nombre</th><!-- 2 -->
+                            <th class='never'>direccion</th><!-- 3 -->
+                            <th class='never'>telefono</th><!-- 4 -->
+                            <th class='never'>mail</th><!-- 5 -->
+                            <th class='never'>idPerfil</th><!-- 6 -->
+                            <th class='never'>estado</th><!-- 7 -->
+                            <th class='never'>Habilitado</th><!-- 8 -->
+                            <th class='never'>usuario</th><!-- 9 -->
+                            <th class='never'>contraseña</th><!-- 10 -->
+                            <th class='never'>idOrganizacion</th><!-- 11 -->
+                            <th class='never'>Nombre Organizacion</th><!-- 12 -->
+                            <th class='never'>tipo</th><!-- 13 -->
+                            <th class='never'>id</th><!-- 14 -->
+                            <th >Dni/RUT</th><!-- 15 -->
+                            <th >Nombre</th><!-- 16 -->
+                            <th class='never' >Dirección</th><!-- 17 -->
+                            <th>Teléfono</th><!-- 18 -->
+                            <th>Mail</th><!-- 19 -->
+                            <th class='never' style='text-align: center;'>idPerfil</th><!-- 20 -->
+                            <th>Estado</th><!-- 21 -->
+                            <th>Habilitado</th><!-- 22-->
+                            <th class='never' style='text-align: center;'>usuario</th><!-- 23 -->
+                            <th class='never' style='text-align: center;'>contraseña</th><!-- 24 -->
+                            <th class='never' style='text-align: center;'>idOrganizacion</th><!-- 25 -->
+                            <th>Nombre Organización</th><!-- 26 -->
+                            <th >Tipo Organización</th><!-- 27 -->
+                            <th class='all'>Acciones</th><!-- 28 -->
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
-            </div>
+            <!-- </div> -->
         </div>
     </div>
 </div>

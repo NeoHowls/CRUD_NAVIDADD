@@ -94,6 +94,26 @@ switch ($_GET["op"]) {
             print($datos); 
             break;
 
+        case "nacion":
+            $CONSULTA="SELECT idNacionalidad,
+                        COALESCE(nacionalidad, 'SIN DATOS') AS nacionalidad,
+                                COALESCE(SUM(masculino), 0) AS MASCULINO,
+                                COALESCE(SUM(femenino), 0) AS FEMENINO,
+                                COALESCE(SUM(masculino) + SUM(femenino), 0) AS TOTAL
+
+                FROM(
+                    SELECT NA.id idNacionalidad, NA.nacionalidad nacionalidad,VP.masculino masculino, VP.femenino femenino 
+                    FROM(
+                    SELECT * FROM V_CONTEONINOSNACION
+                    WHERE periodo = 2024 AND estado=1
+                    ) VP
+                RIGHT JOIN A_NACIONALIDAD NA ON VP.idNacionalidad=NA.id) VISTA
+                GROUP BY idNacionalidad,nacionalidad
+                ORDER BY idNacionalidad";
+            $datos=$menu->listar($CONSULTA);
+            print($datos);
+            break;    
+
     
 }
 

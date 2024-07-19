@@ -35,36 +35,36 @@ let table = $('#myTable1').DataTable( {
     },
     "columns":[
 
-        {"data": "id"},
-        {"data": "dni"},
-        {"data": "nombreP"},
-        {"data": "direccion"},
-        {"data": "telefono"},
-        {"data": "mail"},
-        {"data": "idPerfil"},
-        {"data": "estadoP"},
-        {"data": "checkHabilitado"},
-        {"data": "usuario"},
-        {"data": "contrasena"},
-        {"data": "idOrganizacion"},
-        {"data": "NOMBRE_O"},
-        {"data": "tipo"},
+        {"data": "id"},//0
+        {"data": "dni"},//1
+        {"data": "nombreP"},//2
+        {"data": "direccion"},//3
+        {"data": "telefono"},//4
+        {"data": "mail"},//5
+        {"data": "idPerfil"},//6
+        {"data": "estadoP"},//7
+        {"data": "checkHabilitado"},//8
+        {"data": "usuario"},//9
+        {"data": "contrasena"},//10
+        {"data": "idOrganizacion"},//11
+        {"data": "NOMBRE_O"},//12
+        {"data": "tipo"},//13
 
-        {"data": "id"},
-        {"data": "dni"},
-        {"data": "nombreP"},
-        {"data": "direccion"},
-        {"data": "telefono"},
-        {"data": "mail"},
-        {"data": "idPerfil"},
-        {"data": "estadoPersona"},
-        {"data": "habilitado"},
-        {"data": "usuario"},
-        {"data": "contrasena"},
-        {"data": "idOrganizacion"},
-        {"data": "NOMBRE_O"},
-        {"data": "organizacion"},
-        {
+        {"data": "id"},//14
+        {"data": "dni"},//15
+        {"data": "nombreP"},//16
+        {"data": "direccion"},//17
+        {"data": "telefono"},//18          
+        {"data": "mail"},//19
+        {"data": "idPerfil"},//20
+        {"data": "estadoPersona"},//21
+        {"data": "habilitado"},//22
+        {"data": "usuario"},//23
+        {"data": "contrasena"},//24
+        {"data": "idOrganizacion"},//25
+        {"data": "NOMBRE_O"},//26
+        {"data": "organizacion"},//27
+        {//28
             "data": null,
             "render": function(data, type, row) {
 
@@ -154,9 +154,17 @@ let table = $('#myTable1').DataTable( {
                     text: 'COLUMNAS',
                     columns: [15, 16, 17, 18, 19,21 ,22 ,26 ,27 ]
                 }
+                
             ] 
         }
-    }
+    },
+    columnDefs: [
+        // Center align the header content of column 1
+       { className: "dt-head-center", targets: [15,16,18,19,21,22,26,27,28] },
+       // Center align the body content of columns 2, 3, & 4
+       { className: "dt-body-center", targets: [21,22,28] },
+        { className: "dt-body-left", targets: [18] }
+    ]
 } );
 
 // Funciones para generar usuario y contraseña
@@ -229,7 +237,8 @@ $('#formUsuarios').submit(function(e){
         
         //EL MODAL SE DESTRUYE/ESCONDE NUEVAMENTE COMO SE LIMPIA LOS DATOS        
     
-        $('#modalCRUD').modal('hide');											     			
+        $('#modalCRUD').modal('hide');		
+        									     			
 });
         
  
@@ -242,10 +251,10 @@ $(document).ready(function() {
         var perfilId = selectedOption.val();
         var perfilText = selectedOption.text().toLowerCase();
 
-        if (perfilId == 2) { // Representante
+        if (perfilId == 9) { // Representante
             $('#checkbox-container').show();
             $('#more_infos').prop('checked', true).prop('disabled', true).change(); // Activa y desactiva el checkbox
-        } else if (perfilId == 4) { // Providencia
+        } else if (perfilId == 10) { // Providencia
             $('#checkbox-container').show();
             $('#more_infos').prop('checked', true).prop('disabled', true).change();
             $('#conditional_parts').show();
@@ -272,7 +281,7 @@ $(document).ready(function() {
         var selectedPerfil = $('#idPerfil').val();
         if ($(this).is(':checked')) {
             $('#conditional_parts').show();
-            if (selectedPerfil == 2) { // Representante
+            if (selectedPerfil == 9) { // Representante
                 checkOrganizacion = 1;
                 $('#O_ID').val('').change(); // Resetear el valor del select
                 $('#O_ID option').each(function() {
@@ -340,6 +349,8 @@ $(document).ready(function() {
         $(".modal-header").css("color", "white");
         $(".modal-title").text("Añadir Persona");
         $('#modalCRUD').modal('show');
+
+        
     });
 
     // Validar el formulario antes de enviarlo

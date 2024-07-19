@@ -44,7 +44,7 @@
     <br>
     <div class="card">
         <div class="card-header">
-            Tabla de edades
+            
                           <!-------------->
                           <!-------------->
                           <!-- Reportes -->
@@ -52,7 +52,22 @@
                           <!-------------->
                               <div class="container">
                             <div class="card-custom">
-                              <h1 class="text-center">Generar Informes</h1>                                  
+                              <h1 class="text-center">Generar Informes</h1>
+                              <div class="row">
+                              <div class="col-lg-4"></div>
+                              <div class="col-lg-4" style="text-align: center;">
+                                  <label for="select_periodo" class="col-form-label">Periodo:</label>
+                                  <select name="periodo" id="select_periodo" class="form-control">
+                                      <?php
+                                          for ($i = 2023; $i <= date("Y"); $i++) {
+                                              echo "<option value=\"$i\" " . ($i == date("Y") ? "selected" : "") . ">$i</option>";
+                                          }
+                                      ?>
+                                  </select>
+                              </div>
+
+                          <div class="col-lg-4"></div>  
+                          </div>                                
                               <div class="row">
                                 <div class="col-lg-12">
                                   <h3>IMPRIMIR REPORTE GENERAL</h3>
@@ -91,7 +106,7 @@
                           <!----TABLA----->
                           <!-------------->
                           <!-------------->
-                          <!-- <div class="table-responsive mx-2 text-left">
+                           <!-- <div class="table-responsive mx-2 text-left">
                           <table id="myTable11" class="table table-striped nowrap table-centered" style="width:100%">
                             <thead>
                                 <tr>
@@ -112,19 +127,46 @@
                                     <tr>
                                         <th></th> 
                                         <th style='text-align: center;'>TOTAL:</th> 
-                                        <th style='text-align: right;' id="totalMasculino"></th> 
-                                        <th style='text-align: right;' id="totalFemenino"></th> 
-                                        <th style='text-align: right;' id="totalGeneral"></th> 
+                                        <th style='text-align: right;' id="totalMasculino2"></th> 
+                                        <th style='text-align: right;' id="totalFemenino2"></th> 
+                                        <th style='text-align: right;' id="totalGeneral2"></th> 
                                     </tr>
                                 </tfoot>
                           </table>
-                        </div> -->
+                        </div> --> 
                           <!-------------->
                           <!-------------->
                           <!----TABLA----->
                           <!-------------->
                           <!-------------->
-                        
+                          <!-- <div class="table-responsive mx-2 text-left">
+                          <table id="myTable12" class="table table-striped nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                
+                                    <th class='never'>ID</th>  
+                                    <th style='text-align: center;'>NACIONALIDAD</th> 
+                                    <th style='text-align: center;'>MASCULINO</th>  
+                                    <th style='text-align: center;'>FEMENINO</th>  
+                                    <th style='text-align: center;'>TOTAL</th>  
+                                  
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                            <tfoot>
+                                    <tr>
+                                        <th></th> 
+                                        <th style='text-align: center;'>TOTAL:</th> 
+                                        <th style='text-align: right;' id="totalMasculino2"></th> 
+                                        <th style='text-align: right;' id="totalFemenino2"></th> 
+                                        <th style='text-align: right;' id="totalGeneral2"></th> 
+                                    </tr>
+                                </tfoot>
+                          </table>
+                        </div> -->
                           
         </div>
     </div>
