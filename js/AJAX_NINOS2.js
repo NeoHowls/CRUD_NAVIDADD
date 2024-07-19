@@ -64,8 +64,18 @@ let listarNinos = function(tipoO,Organizacion,periodo){
 
             {"data": "idOrganizacion"},//33
 
-            {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'><svg xmlns=http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'><path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/><path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/></svg></i>"}
-
+            // {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'><svg xmlns=http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'><path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/><path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/></svg></i>"}
+            {
+                "data": null,
+                "render": function(data, type, row) {
+    
+                    // editar = "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'><svg xmlns=http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'><path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/><path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/></svg></i>";
+                    editar ='<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" data-toggle="tooltip" data-placement="top" title="Editar registro" ><i class="bi bi-pencil-square icon-100"></i></button>';
+                    // eliminar ='<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" data-placement="top" title="Desactivar Organizacion"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
+                    eliminar ='<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" data-placement="top" title="Desactivar Organizacion"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
+                    return editar+eliminar;
+                }
+            }
         ] , 
 
         //ESTO DEBERIA INVOCARSE EN BASE A UN ID
@@ -111,7 +121,13 @@ let listarNinos = function(tipoO,Organizacion,periodo){
                     } */
                 ] 
             }
-        }
+        },
+        columnDefs: [
+            // Center align the header content of column 1
+           { className: "dt-head-center", targets: [ 1,2,4,5,6,7,34 ] },
+           // Center align the body content of columns 2, 3, & 4
+           { className: "dt-body-center", targets: [ 4,5,6,7 ] }
+        ]
     } );
 }
 
@@ -836,28 +852,61 @@ $("#btnNuevo").click(function(){
     });
  
 //! boton borrar
-    //Borrar
-    $(document).on("click", ".btnBorrar", function(){
-        fila = $(this);           
-        user_id = parseInt($(this).closest('tr').find('td:eq(0)').text()) ;		
-        opcion = 3; //eliminar        
-        var respuesta = confirm("¿Está seguro de borrar el registro "+user_id+"?");                
-        if (respuesta) {            
-            $.ajax({
-              url: "bd/crud.php",
-              type: "POST",
-              datatype:"json",    
-              data:  {opcion:opcion, user_id:user_id},    
-              success: function() {
-                table.row(fila.parents('tr')).remove().draw();                  
-               }
-            });	
+//Borrar/activar estado
+$(document).on("click", ".btnBorrar", function(e){
+    e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+    fila = $(this).closest('tr');           
+    id = $(this).closest('tr').find('td:eq(0)').text() ;
+    nombre = $(this).closest('tr').find('td:eq(2)').text() ;
+    // estado = $(this).closest('tr').find('td:eq(8)').text() ;
+    // let action = estado == '1' ? 'borrar_persona' : 'habilitar_persona';
+    // let confirmMessage = estado == '1' ? "¿Está seguro de Desactivar el registro de "+nombre+"?" : "¿Quieres activar el registro de  "+nombre+"?"  ;
+    let confirmMessage = "¿Está seguro de eliminar el registro a "+nombre+"?";
+    let respuesta = confirm(confirmMessage);
+    // console.log("funciona")
+    if (respuesta) {            
+        $.ajax({
+          url: "../controller/controllerN.php?op=eliminarNino",
+          type: "POST",
+          datatype:"json",    
+            data: { id:id,nombre:nombre},
+          success: function(data) {
+            table.ajax.reload(null, false);
+           },
+           error: function(xhr, status, error) {
+            console.error("Error en la operación:", error);
         }
-     });
-    
-     function cerrarModal() {
-        $('#fondo-modal').hide();
-      }
+        }).done(function(response){
+            // console.log(response);
+            respuesta = JSON.parse(response);
+            if(respuesta.length==1 && respuesta[0].error==0){
+                Swal.fire({
+                    icon: "success",
+                    title: "NIÑO ELIMINADO",
+                    width: 300,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: "FALLO AL ELIMINAR",
+                    width: 300,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+            
+        });	    	    
+    }
+ });
+
+
+//! revizar se usa??????   
+function cerrarModal() {
+$('#fondo-modal').hide();
+}
 
 //! guardar niños
 //guardar niño
@@ -900,7 +949,7 @@ $('#formNinos').submit(function(e){
     // window.alert (periodo)
 
     // alert ('comuna: '+comuna);
-    alert ('dni: '+ dni +
+    /* alert ('dni: '+ dni +
         ' nombre: '+nombre+
         ' periodo: '+periodo+
         ' sexo: '+sexo+
@@ -925,7 +974,7 @@ $('#formNinos').submit(function(e){
         ' psiquica_p: '+psiquica_p+
         ' usuario_id: '+usuario_id
 
-     );
+     ); */
      mensaje='';
 
     //EJECUTA EL AJAX
@@ -953,7 +1002,7 @@ $('#formNinos').submit(function(e){
                 alert("error");
           }
         }).done(function(response){
-             console.log(response);
+            //  console.log(response);
              respuesta = JSON.parse(response);
              for(i=0;i<respuesta.length;i++){
                 if(respuesta[i].error==1)
@@ -994,13 +1043,23 @@ $('#formNinos').submit(function(e){
              }
                 if(mensaje!='') {$('#m_discapacidad').html(respuesta[i].mensaje);}
                 // alert (mensaje);
-             if(respuesta.length>0){
-
-             }
-             else if(respuesta.length=1 && respuesta[0].error==0){
-                console.log("ingresado");
+             if(respuesta.length==1 && respuesta[0].error==0){
+                // console.log("ingresado");
                 $('#modalCRUD').modal('hide');
                 //mensaje ingresado
+
+                Swal.fire({
+                    icon: "success",
+                    title: "NIÑO INGRESADO",
+                    width: 300,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                  //const myTimeout = setTimeout(myGreeting, 1700);
+
+             }
+             else if(respuesta.length>0){
+
              }else{
                 $('#modalCRUD').modal('hide');
              }    
