@@ -44,14 +44,38 @@
   $organizacion = (isset($_POST['organizacion'])) ? $_POST['organizacion'] : '';
   $etnia = (isset($_POST['etnia'])) ? $_POST['etnia'] : '';
 
-
+/*   $fechaIngreso = date('Y-m-d H:i:s', strtotime($fechaIngreso));
+  $fechaTermino = date('Y-m-d H:i:s', strtotime($fechaTermino)); */
 
 
   
   //Armo un GET "op" donde OP signific operacion
   switch($_GET["op"]){
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
+   case "eliminarNino":
+        $ninos= new Ninos();
 
+        $respuesta = array();
+        $i=0;
+        
+        $id = $_POST['id'];
+        $datos=$ninos->eliminarNino($id);
+
+        if($ninos->getError()==0){
+          $respuesta[$i]['action']="OK";
+          $respuesta[$i]['error']=0;
+          $respuesta[$i]['mensaje']="OK";
+          $i++;
+          echo json_encode($respuesta);
+      }else{
+        $respuesta[$i]['action']="ERROR";
+        $respuesta[$i]['error']=99;
+        $respuesta[$i]['mensaje']="ERROR BD";
+        $i++;
+        echo json_encode($respuesta);
+      }
+
+    break;
    //! agregar nino 
   //  case "add_etnia":
     case "agregarNino":
@@ -78,7 +102,7 @@
                 $i++;
             }
           }
-          $resultado=$ninos->buscarDniPeriodo($dni,$periodo,1);
+          $resultado=$ninos->buscarNinoDniPeriodo($dni,$periodo,1);
           
           if(count($resultado)!=0){
               if(count($resultado)==1){
