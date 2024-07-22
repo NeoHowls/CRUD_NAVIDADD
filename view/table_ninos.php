@@ -51,7 +51,7 @@
 
 
 <?php
-    //  var_dump($_SESSION);
+    // var_dump($_SESSION);
 ?>
 <div class="container">
 		
@@ -262,7 +262,11 @@
                                 </div></label> -->
 
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="chExtrajero" name="more" value = 1>
+                                    <input class="form-check-input" type="checkbox" id="chExtrajero" name="more"
+                                    <?php if($_SESSION['tipo_usuario']==2){echo('disabled');}
+                                            
+                                    ?>
+                                    value = 1>
                                     <label class="form-check-label texto-form" for="chExtrajero">Extranjero</label>
                                 </div>
                             </div>  
@@ -286,6 +290,7 @@
                             </div>  
                         </div>
                         <div class="row">
+                        <input type="text" class="form-control" id="idNino" disabled>
                           <div class="col-lg-12" style = "text-align: center;" >   
                             <label for="" class="col-form-label">DNI/RUT</label>
                             <input type="text" class="form-control" id="dni">
@@ -341,7 +346,7 @@
                                     <?php
                                         if($_SESSION['tipo_usuario']==2 ){
                                             echo("<option disabled value=0>Seleccione Organización</option>");
-                                            echo("<option disabled value=".$_SESSION['idOrganizacion']." selected>".$_SESSION['nombreOrganizacion']."</option>");
+                                            echo("<option value=".intval($_SESSION['idOrganizacion'])." selected>".$_SESSION['nombreOrganizacion']."</option>");
                                         }else{
                                             echo("<option disabled selected value=0>Seleccione Organización</option>");
                                             foreach($datos as $key => $value){
@@ -582,6 +587,6 @@
         Organizacion = $('#organizacion_selection').val();
         // alert( periodo  );
 
-        listarNinos(tipoO,Organizacion,periodo);
+        listarNinos(tipoO,Organizacion,periodo,userTipo);
     
     </script>                   

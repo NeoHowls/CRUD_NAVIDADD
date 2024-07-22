@@ -269,11 +269,23 @@ WHERE N.idEtnia =0";
     }
 
     public function buscarNinoDniPeriodo($dni,$periodo,$estado){
-        $sql="SELECT N.dni dni, O.nombre nombreOrganizacion 
+        $sql="SELECT N.id id, N.dni dni, O.nombre nombreOrganizacion 
             FROM A_NINOS N
             JOIN A_ORGANIZACION O ON O.id=N.idOrganizacion
             WHERE N.dni=:dni AND N.periodo=:periodo AND N.estado=:estado";
         $parametros =array("dni"=>$dni,"periodo"=>$periodo,"estado"=>$estado);
+        $this->connect();
+        $query = $this->iniciar($sql, $parametros);
+
+        return $query;
+    }
+
+    public function buscarNinoIdDni($id,$dni,$periodo,$estado){
+        $sql="SELECT N.id id, N.dni dni, O.nombre nombreOrganizacion 
+            FROM A_NINOS N
+            JOIN A_ORGANIZACION O ON O.id=N.idOrganizacion
+            WHERE N.id = :id AND N.dni=:dni AND N.periodo=:periodo AND N.estado=:estado";
+        $parametros =array("id"=>$id,"dni"=>$dni,"periodo"=>$periodo,"estado"=>$estado);
         $this->connect();
         $query = $this->iniciar($sql, $parametros);
 
@@ -289,5 +301,75 @@ WHERE N.idEtnia =0";
         $query = $this->ejecutarOrden($sql, $parametros);
 
         return $query;
+    }
+
+    public function actualizarNinos($id,$dni,$nombre,$sexo,
+    $edad,$naciemiento,$nacion,$etnia,$periodo,
+    $ceguera,$sordera,$mudez,$fisica,$mental,$psiquica,
+    $descripcion,$organizacion,$usuario_id,$check_nac ,$check_dis,
+    $ceguera_p,$sordera_p ,$mudez_p,$fisica_p ,$mental_p,$psiquica_p){
+        $sql="UPDATE A_NINOS
+                SET dni = :dni,--1
+                    nombre = :nombre,--2
+                    sexo = :sexo,--3
+                    edad = :edad,--4
+                    fechaNacimiento = :naciemiento,
+                    idNacionalidad = :nacion,
+                    idEtnia = :etnia,
+                    periodo = :periodo,
+                    checkCeguera = :ceguera,
+                    checkSordera = :sordera,
+                    checkMudez = :mudez,
+                    checkFisica = :fisica,
+                    checkMental = :mental,
+                    checkPsiquica = :psiquica,
+                    descripcion = :descripcion,
+                    idOrganizacion = :organizacion,
+                    idPersonalRegistro = :usuario_id,
+                    checkExtranjero = :check_nac,
+                    checkDiscapacitado = :check_dis,
+                    porcentajeCeguera = :ceguera_p,
+                    porcentajeSordera = :sordera_p,
+                    porcentajeMudez = :mudez_p,
+                    porcentajeFisica = :fisica_p,
+                    porcentajeMental = :mental_p,
+                    porcentajePsiquica =:psiquica_p
+                WHERE id = :id";
+
+              
+
+        $parametros =array(
+            "id"=>$id,
+            "dni"=>$dni,
+            "nombre"=>$nombre,
+            "sexo"=>$sexo,
+            "edad"=>$edad,
+            "naciemiento"=>$naciemiento,
+            "nacion"=>$nacion,
+            "etnia"=>$etnia,
+            "periodo"=>$periodo,
+            "ceguera"=>$ceguera,
+            "sordera"=>$sordera, 
+            "mudez"=>$mudez,
+            "fisica"=>$fisica,
+            "mental"=>$mental,
+            "psiquica"=>$psiquica,
+            "descripcion"=>$descripcion,
+            "organizacion"=>$organizacion,
+            "usuario_id"=>$usuario_id,
+            "check_nac"=>$check_nac, 
+            "check_dis"=>$check_dis,
+            "ceguera_p"=>$ceguera_p,
+            "sordera_p"=>$sordera_p,
+            "mudez_p"=>$mudez_p,
+            "fisica_p"=>$fisica_p,
+            "mental_p"=>$mental_p,
+            "psiquica_p"=>$psiquica_p
+        );
+        // $parametros =array("periodo"=>$periodo,"periodo2"=>$periodo);
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+        
     }
 }

@@ -2,7 +2,7 @@
 let table, dataid;
 
 //todo: lista dataTable niños segun tipo, organizacion y periodo
-let listarNinos = function(tipoO,Organizacion,periodo){
+let listarNinos = function(tipoO,Organizacion,periodo,userTipo){
 
     // alert (tipoO+','+Organizacion+','+periodo);
     
@@ -68,12 +68,37 @@ let listarNinos = function(tipoO,Organizacion,periodo){
             {
                 "data": null,
                 "render": function(data, type, row) {
+
+                    $(document).ready(function () {
+                        $('[data-toggle="tooltip"]').tooltip({
+                            delay: { show: 0, hide: 0 },
+                            placement: 'top'
+                    });    
+                    });
+
+                    let checkDiscapacitado = data["checkDiscapacitado"];
+                    let checkExtranjero = data["checkExtranjero"];
+
+                    
     
                     // editar = "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'><svg xmlns=http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'><path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/><path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z'/></svg></i>";
-                    editar ='<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" data-toggle="tooltip" data-placement="top" title="Editar registro" ><i class="bi bi-pencil-square icon-100"></i></button>';
+                    editar ='<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" data-toggle="tooltip" data-placement="top" title="Editar Niño" ><i class="bi bi-pencil-square icon-100"></i></button>';
                     // eliminar ='<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" data-placement="top" title="Desactivar Organizacion"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
-                    eliminar ='<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" data-placement="top" title="Desactivar Organizacion"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
-                    return editar+eliminar;
+                    eliminar ='<button type="button" class="btn btn-danger text-light btnBorrar me-2" data-toggle="tooltip" data-placement="top" title="Eliminar Niño"><i class="bi bi-person-dash-fill icon-100"></i> </button>';
+
+                    neliminar ='<button type="button" class="btn btn-secondary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal"  data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-person-dash-fill icon-100"></i></button>';
+                    neditar = '<button type="button" class="btn btn-secondary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal"  data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-pencil-square icon-100"></i></button>';
+                    
+                    if(checkDiscapacitado==1 || checkExtranjero==1){
+                        if(userTipo==0 || userTipo==1){
+                            return editar+eliminar;
+                        }else{
+                            return neditar+neliminar;
+                        }
+                    }else{
+                        return editar+eliminar;
+                    }
+                    
                 }
             }
         ] , 
@@ -291,7 +316,7 @@ $("#btnNuevo").click(function(){
     const fecha_minima120 = `${anio_hace_120_anios}-01-01`;
 
     opcion = "agregarNino"; //alta           
-    user_id=null;
+    idNino=null;
     check_nac = 0;
     check_dis = 0;
     ceguera = 0;
@@ -505,13 +530,19 @@ $("#btnNuevo").click(function(){
     $(".modal-header").css( "background-color", "#17a2b8");
     
     $(".modal-header").css( "color", "white" );
-    $(".modal-title").text("Añadir Niño");
+    $(".modal-title").text("Añadir Niño(a)");
     $('#modalCRUD').modal('show');	    
 });
 
+function invertirFecha(fecha){
+    let [dia, mes, ano] = fecha.split("-");
+    let cambiada = `${ano}-${mes}-${dia}`;
+    return cambiada;
+}
     
-//! boton Editar
-    $(document).on("click", ".btnEditar", function(){	
+//! boton Editar carga el contenido con la tabla
+$(document).on("click", ".btnEditar", function(){
+        limpiarContenidoMensajes();	
         const periodo_fecha = document.getElementById("periodo").value
         const fecha_hace_11_anios = new Date();
         fecha_hace_11_anios.setFullYear(fecha_hace_11_anios.getFullYear() - 10);
@@ -521,14 +552,14 @@ $("#btnNuevo").click(function(){
         fecha_hace_120_anios.setFullYear(fecha_hace_120_anios.getFullYear() - 120);
         const anio_hace_120_anios = fecha_hace_120_anios.getFullYear();
         
-        /* Establecemos la fecha mínima desde enero de hace 11 años */
+        // Establecemos la fecha mínima desde enero de hace 11 años
         const fecha_minima = `${anio_hace_11_anios}-01-01`;
     
         const fecha_minima120 = `${anio_hace_120_anios}-01-01`;
-        opcion = "edit_etnia";//editar
+        opcion = "editarNino";//editar
         fila = $(this).closest("tr");	        
-        user_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
-    
+        idNino = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
+        // alert(idNino);
         dni = fila.find('td:eq(1)').text();
         nombre = fila.find('td:eq(2)').text();
         sexo = fila.find('td:eq(3)').text();
@@ -560,12 +591,17 @@ $("#btnNuevo").click(function(){
         mental_p = fila.find('td:eq(24)').text();
         psiquica_p = fila.find('td:eq(25)').text();
         // window.alert(etnia)
+        $("#idNino").val(idNino);
+
         $("#dni").val(dni);
         $("#nombre").val(nombre);
         $("#sexo").val(sexo);
         $("#edad").val(edad);
         $("#periodo").val(periodo);
         $("#descripcion").val(descripcion);
+
+        // alert(naciemiento);
+        naciemiento = invertirFecha(naciemiento);
         $("#Naciemiento").val(naciemiento);
         $("#etnia").val(etnia);
         $("#nacion").val(nacion);
@@ -847,10 +883,15 @@ $("#btnNuevo").click(function(){
       
         $(".modal-header").css("background-color", "#007bff");
         $(".modal-header").css("color", "white" );
-        $(".modal-title").text("Editar Usuario");		
+        $(".modal-title").text("Editar Niño(a)");		
         $('#modalCRUD').modal('show');		   
-    });
+});
  
+/* $(document).on("click", ".btnEditar", function(e){
+    e.preventDefault();
+    alert("editar");
+}); */
+
 //! boton borrar
 //Borrar/activar estado
 $(document).on("click", ".btnBorrar", function(e){
@@ -885,7 +926,7 @@ $(document).on("click", ".btnBorrar", function(e){
                     title: "NIÑO ELIMINADO",
                     width: 300,
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 2000
                 });
 
             }else if(respuesta.length==1 && respuesta[0].error==99){
@@ -894,7 +935,7 @@ $(document).on("click", ".btnBorrar", function(e){
                     title: "FALLO AL ELIMINAR",
                     width: 300,
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 2000
                 });
             }
             
@@ -916,6 +957,7 @@ $('#formNinos').submit(function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     //CAPTURA EL DATO DEL FORMULARIO
 
+    idNino = $.trim($('#idNino').val());
 
     dni = $.trim($('#dni').val());
     nombre = $.trim($('#nombre').val());
@@ -940,15 +982,16 @@ $('#formNinos').submit(function(e){
         edad='';
     }
 
-    // usuario_id = id_usuario;
+    usuario_id = id_usuario;
 
     // alert (id_suaurio);
-    // alert (usuario_id);
+    // alert ($('#O_ID').val());
     organizacion = $.trim($('#O_ID').val());
     // window.alert(ceguera_p+" "+sordera_p+" "+mudez_p+" "+fisica_p+" "+mental_p+" "+psiquica_p )
     // window.alert (periodo)
 
-    // alert ('comuna: '+comuna);
+    // alert ('opcion :'+opcion);
+    // alert ('idNino :'+idNino);
     /* alert ('dni: '+ dni +
         ' nombre: '+nombre+
         ' periodo: '+periodo+
@@ -984,7 +1027,7 @@ $('#formNinos').submit(function(e){
           type: "POST",
           datatype:"json", 
           //La prueba al solo la tabla ETNIA CAPTURA SOLO 2 VALORES, EL ID Y LA ETNIA, el ID es en caso que se quiera editar   
-          data:  {/* user_id:user_id, */ dni:dni, nombre:nombre, sexo:sexo, edad:edad, periodo:periodo, descripcion:descripcion, 
+          data:  {idNino:idNino, dni:dni, nombre:nombre, sexo:sexo, edad:edad, periodo:periodo, descripcion:descripcion, 
             naciemiento:naciemiento, etnia:etnia, nacion:nacion,/* comuna:comuna, */check_dis:check_dis, 
             ceguera:ceguera, sordera:sordera, mudez:mudez, fisica:fisica,
              mental:mental, psiquica:psiquica, 
@@ -1050,10 +1093,10 @@ $('#formNinos').submit(function(e){
 
                 Swal.fire({
                     icon: "success",
-                    title: "NIÑO INGRESADO",
+                    title: "NIÑO INGRESADO / ACTUALIZADO",
                     width: 300,
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 2000
                 });
                   //const myTimeout = setTimeout(myGreeting, 1700);
 
