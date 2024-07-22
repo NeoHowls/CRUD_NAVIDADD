@@ -121,6 +121,17 @@
               $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar nacionalidad</p>';
               $i++;
           }
+          $resultado=$ninos->buscarNinoDniPeriodo($dni,$periodo,1);
+          
+          if(count($resultado)!=0){
+              if(count($resultado)==1){
+                  $respuesta[$i]['action']='ERROR';
+                  $respuesta[$i]['error']=1;
+                  $respuesta[$i]['mensaje']='<p class="mensaje">RUT/DNI '.$resultado[0]['dni'].' se encuentra registrado en '. $resultado[0]['nombreOrganizacion'] .'</p>';
+                  $i++;
+                  //SELECT N.dni dni, O.nombre nombreOrganizacion FROM A_NINOS N
+              }
+          }
       }
       
       if(verificarExpresion($nombre,$enombre)==false){
@@ -286,6 +297,22 @@
               $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar nacionalidad</p>';
               $i++;
           }
+
+          $resultado=$ninos->buscarNinoIdDni($idNino,$dni,$periodo,1);
+          if(count($resultado)!=1){
+            $resultado=$ninos->buscarNinoDniPeriodo($dni,$periodo,1);
+          
+            if(count($resultado)!=0){
+                if(count($resultado)==1){
+                    $respuesta[$i]['action']='ERROR';
+                    $respuesta[$i]['error']=1;
+                    $respuesta[$i]['mensaje']='<p class="mensaje">RUT/DNI '.$resultado[0]['dni'].' se encuentra registrado en '. $resultado[0]['nombreOrganizacion'] .'</p>';
+                    $i++;
+                    //SELECT N.dni dni, O.nombre nombreOrganizacion FROM A_NINOS N
+                }
+            }
+          }
+          
       }
       
       if(verificarExpresion($nombre,$enombre)==false){
