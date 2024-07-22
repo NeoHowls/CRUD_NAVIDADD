@@ -62,6 +62,9 @@
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="organizacion.php">Organización</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="reportes.php">Reportes</a>
 					</li>';
 	}
     ?>
