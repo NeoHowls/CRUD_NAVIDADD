@@ -290,23 +290,11 @@ table2.on('draw', function () {
 initChartReportGen();
 initChartReportGen3();
 
-
-document.getElementById('select_periodo').addEventListener('change', function() {
-    let value = parseInt(this.value, 10);
-    if (isNaN(value)) {
-        alert('Por favor, seleccione un valor válido.');
-        this.value = ''; // Opcionalmente, puedes reiniciar la selección
-    }
-});
-
-
 //!BOTONES PARA GENERAR EL PDF
 document.getElementById('btnReportGen').addEventListener('click', function () {
-    var anio = document.getElementById('select_periodo').value;
-    window.open("../reportePdfGeneral.php?periodo=" + encodeURIComponent(anio));
+    window.open("../reportePdfGeneral.php");
 });
 
 document.getElementById('btnReportNat').addEventListener('click', function () {
-    var anio = document.getElementById('select_periodo').value;
-    window.open("../reportePdfNacionalidad.php?periodo=" + encodeURIComponent(anio));
+    window.open("../reportePdfNacionalidad.php");
 });

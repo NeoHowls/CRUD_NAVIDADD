@@ -85,9 +85,9 @@ let table = $('#myTable1').DataTable( {
         
                 let checkHabilitadoButton = '';
                 if (row.checkHabilitado == '1') {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-light btnDeshabilitar me-2" data-toggle="tooltip" data-placement="top" title="Deshabilitar usuario"><i class="bi bi-x-square icon-100"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-light btnDeshabilitar me-2" data-toggle="tooltip" data-placement="top" title="Deshabilitar Usuario Web"><i class="bi bi-x-square icon-100"></i> </button>';
                 } else {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-light btnAutorizar me-2" data-toggle="tooltip" data-placement="top" title="Habilitar usuario"><i class="bi bi-check-square icon-100"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-light btnAutorizar me-2" data-toggle="tooltip" data-placement="top" title="Habilitar usuario Web"><i class="bi bi-check-square icon-100"></i> </button>';
                 }
         
                 let editarButton = '';

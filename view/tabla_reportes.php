@@ -44,7 +44,6 @@
     <br>
     <div class="card">
         <div class="card-header">
-            
                           <!-------------->
                           <!-------------->
                           <!-- Reportes -->
@@ -52,22 +51,7 @@
                           <!-------------->
                               <div class="container">
                             <div class="card-custom">
-                              <h1 class="text-center">Generar Informes</h1>
-                              <div class="row">
-                              <div class="col-lg-4"></div>
-                              <div class="col-lg-4" style="text-align: center;">
-                                  <label for="select_periodo" class="col-form-label">Periodo:</label>
-                                  <select name="periodo" id="select_periodo" class="form-control">
-                                      <?php
-                                          for ($i = 2023; $i <= date("Y"); $i++) {
-                                              echo "<option value=\"$i\" " . ($i == date("Y") ? "selected" : "") . ">$i</option>";
-                                          }
-                                      ?>
-                                  </select>
-                              </div>
-
-                          <div class="col-lg-4"></div>  
-                          </div>                                
+                              <h1 class="text-center">Generar Informes</h1>                                  
                               <div class="row">
                                 <div class="col-lg-12">
                                   <h3>IMPRIMIR REPORTE GENERAL</h3>
