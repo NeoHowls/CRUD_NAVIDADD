@@ -44,7 +44,7 @@ try {
                     VCN.edad > 10 AND VCN.periodo = 2024 AND estado=1
             ) vista
             GROUP BY
-                edad,idNacionalidad, nacionalidad
+                edad, idNacionalidad, nacionalidad
             ORDER BY
                 edad";
 
@@ -73,14 +73,62 @@ try {
     $stmt2->execute();
     $datos2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
-    // Inicializar totales
-    $totalMasculino1 = 0;
-    $totalFemenino1 = 0;
-    $totalGeneral1 = 0;
+    $nacionalidades = [
+        1 => 'Chile',
+        2 => 'Argentina',
+        3 => 'Uruguay',
+        4 => 'Paraguay',
+        5 => 'Bolivia',
+        6 => 'Peru',
+        7 => 'Brasil',
+        8 => 'Ecuador',
+        9 => 'Colombia',
+        10 => 'Venezuela'
+    ];
 
-    $totalMasculino2 = 0;
-    $totalFemenino2 = 0;
-    $totalGeneral2 = 0;
+    $datosPorNacionalidad = [];
+
+    foreach ($nacionalidades as $idNacionalidad => $nombreNacionalidad) {
+        $sql = "SELECT
+                    edad,
+                    REPLACE(CAST(edad AS VARCHAR), '99', 'MAYORES DE 10 AÑOS') AS edadV,
+                    COALESCE(nacionalidad, '$nombreNacionalidad') AS nacionalidad,
+                    idNacionalidad,
+                    COALESCE(SUM(masculino), 0) AS MASCULINO,
+                    COALESCE(SUM(femenino), 0) AS FEMENINO,
+                    COALESCE(SUM(masculino) + SUM(femenino), 0) AS TOTAL
+                FROM (
+                    SELECT
+                        E.edad AS edad,
+                        VCN.nacionalidad,
+                        VCN.idNacionalidad AS idNacionalidad,
+                        VCN.masculino AS masculino,
+                        VCN.femenino AS femenino
+                    FROM
+                        (SELECT * FROM V_CONTEONINOSNACION WHERE edad <= 10 AND periodo = 2024 AND estado=1 AND idNacionalidad=$idNacionalidad) VCN
+                    RIGHT JOIN
+                        A_EDAD E ON VCN.edad = E.edad
+                    UNION ALL
+                    SELECT
+                        99 AS edad,
+                        '$nombreNacionalidad' AS nacionalidad,
+                        99 AS idNacionalidad,
+                        SUM(VCN.masculino) AS masculino,
+                        SUM(VCN.femenino) AS femenino
+                    FROM
+                        V_CONTEONINOSNACION VCN
+                    WHERE
+                        VCN.edad > 10 AND VCN.periodo = 2024 AND estado=1 AND idNacionalidad=$idNacionalidad
+                ) vista
+                GROUP BY
+                    edad, idNacionalidad, nacionalidad
+                ORDER BY
+                    edad";
+
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        $datosPorNacionalidad[$nombreNacionalidad] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     // Construir el HTML con los datos obtenidos
     ob_start();
@@ -119,6 +167,7 @@ try {
             width: 100%; 
             margin: 0 auto; 
             text-align: center;
+            page-break-after: always;
         }
         .logo-container {
             display: inline-block;
@@ -163,6 +212,9 @@ try {
         th {
             background-color: #f2f2f2;
         }
+        .page-break {
+            page-break-before: always;
+        }
     </style>
 </head>
 <body>
@@ -173,101 +225,103 @@ try {
         <br>
         <div class="logo-container">
             <?php if ($logoDataUri): ?>
-                <img src="<?php echo $logoDataUri; ?>" alt="Logo de la organización" class="logo">
-            <?php else: ?>
-                <p>Logo no encontrado</p>
+                <img src="<?php echo $logoDataUri; ?>" class="logo" alt="Logo">
             <?php endif; ?>
         </div>
         <div class="content">
-            <h2>Navidad <?php echo $anio; ?> - Municipalidad de Alto Hospicio</h2>
-            <br>
-            <br>
-            <h3>Informe por Nacionalidad</h3>
-            <?php if (!empty($datos2)): ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nacionalidad</th>
-                        <th>Masculino</th>
-                        <th>Femenino</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($datos2 as $row): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['nacionalidad']); ?></td>
-                            <td><?php echo htmlspecialchars($row['MASCULINO']); ?></td>
-                            <td><?php echo htmlspecialchars($row['FEMENINO']); ?></td>
-                            <td><?php echo htmlspecialchars($row['TOTAL']); ?></td>
-                        </tr>
-                        <?php
-                            // Acumular totales
-                            $totalMasculino2 += $row['MASCULINO'];
-                            $totalFemenino2 += $row['FEMENINO'];
-                            $totalGeneral2 += $row['TOTAL'];
-                        ?>
-                    <?php endforeach; ?>
-                    <!-- Fila de totales -->
-                    <tr>
-                        <td style="font-weight: bold;">Total</td>
-                        <td style="font-weight: bold;"><?php echo $totalMasculino2; ?></td>
-                        <td style="font-weight: bold;"><?php echo $totalFemenino2; ?></td>
-                        <td style="font-weight: bold;"><?php echo $totalGeneral2; ?></td>
-                    </tr>
-                </tbody>
-            </table>
-            <?php else: ?>
-                <p>No hay datos para mostrar.</p>
-            <?php endif; ?>
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <h3>Informe Detallado por Edad y Nacionalidad</h3>
-            <?php if (!empty($datos1)): ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Edad</th>
-                        <th>Nacionalidad</th>
-                        <th>Masculino</th>
-                        <th>Femenino</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($datos1 as $row): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['edadV']); ?></td>
-                            <td><?php echo htmlspecialchars($row['nacionalidad']); ?></td>
-                            <td><?php echo htmlspecialchars($row['MASCULINO']); ?></td>
-                            <td><?php echo htmlspecialchars($row['FEMENINO']); ?></td>
-                            <td><?php echo htmlspecialchars($row['TOTAL']); ?></td>
-                        </tr>
-                        <?php
-                            // Acumular totales
-                            $totalMasculino1 += $row['MASCULINO'];
-                            $totalFemenino1 += $row['FEMENINO'];
-                            $totalGeneral1 += $row['TOTAL'];
-                        ?>
-                    <?php endforeach; ?>
-                    <!-- Fila de totales -->
-                    <tr>
-                        <td style="font-weight: bold;">Total</td>
-                        <td></td>
-                        <td style="font-weight: bold;"><?php echo $totalMasculino1; ?></td>
-                        <td style="font-weight: bold;"><?php echo $totalFemenino1; ?></td>
-                        <td style="font-weight: bold;"><?php echo $totalGeneral1; ?></td>
-                    </tr>
-                </tbody>
-            </table>
-            <?php else: ?>
-                <p>No hay datos para mostrar.</p>
-            <?php endif; ?>
+            <h2>Informe General</h2>
         </div>
+        <?php
+            $totalMasculino2 = 0;
+            $totalFemenino2 = 0;
+            $totalGeneral2 = 0;
+        ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>NACIONALIDAD</th>
+                    <th>HOMBRES</th>
+                    <th>MUJERES</th>
+                    <th>TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($datos2 as $dato): ?>
+                    <tr>
+                        <td><?php echo $dato['nacionalidad']; ?></td>
+                        <td><?php echo $dato['MASCULINO']; ?></td>
+                        <td><?php echo $dato['FEMENINO']; ?></td>
+                        <td><?php echo $dato['TOTAL']; ?></td>
+                    </tr>
+                    <?php
+                        $totalMasculino2 += $dato['MASCULINO'];
+                        $totalFemenino2 += $dato['FEMENINO'];
+                        $totalGeneral2 += $dato['TOTAL'];
+                    ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <table>
+            <tfoot>
+                <tr>
+                    <th>TOTALES</th>
+                    <th><?php echo $totalMasculino2; ?></th>
+                    <th><?php echo $totalFemenino2; ?></th>
+                    <th><?php echo $totalGeneral2; ?></th>
+                </tr>
+            </tfoot>
+        </table>
     </div>
+    
+    <?php foreach ($datosPorNacionalidad as $nacionalidad => $datos): ?>
+        <div class="container">
+            <div class="content">
+                <h2>Informe Nacionalidad: <?php echo $nacionalidad; ?></h2>
+            </div>
+            <?php
+                $totalMasculino = 0;
+                $totalFemenino = 0;
+                $totalGeneral = 0;
+            ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>EDAD</th>
+                        <th>NACIONALIDAD</th>
+                        <th>HOMBRES</th>
+                        <th>MUJERES</th>
+                        <th>TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($datos as $dato): ?>
+                        <tr>
+                            <td><?php echo $dato['edadV']; ?></td>
+                            <td><?php echo $dato['nacionalidad']; ?></td>
+                            <td><?php echo $dato['MASCULINO']; ?></td>
+                            <td><?php echo $dato['FEMENINO']; ?></td>
+                            <td><?php echo $dato['TOTAL']; ?></td>
+                        </tr>
+                        <?php
+                            $totalMasculino += $dato['MASCULINO'];
+                            $totalFemenino += $dato['FEMENINO'];
+                            $totalGeneral += $dato['TOTAL'];
+                        ?>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <table>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">TOTALES</th>
+                        <th><?php echo $totalMasculino; ?></th>
+                        <th><?php echo $totalFemenino; ?></th>
+                        <th><?php echo $totalGeneral; ?></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    <?php endforeach; ?>
 </body>
 </html>
 
@@ -276,17 +330,11 @@ try {
 
     $dompdf = new Dompdf();
     $dompdf->loadHtml($html);
-
     $dompdf->setPaper('A4', 'portrait');
-
     $dompdf->render();
+    $dompdf->stream('informe_por_nacionalidad.pdf', ['Attachment' => false]);
 
-    $dompdf->stream('reporte.pdf', array("Attachment" => false));
-
-    $connection = null;
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+    echo "Error de conexión: " . $e->getMessage();
 }
 ?>

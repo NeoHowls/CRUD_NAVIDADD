@@ -27,10 +27,10 @@
                     <button id="btnNuevo" type="button" class="btn btn-primary text-light btnNuevo" data-toggle="tooltip" data-placement="top" title="Agregar Persona">
                         <i id="btnNuevo" class="bi bi-plus fs-4"></i>
                     </button>
-                    <button id="btnDesHabGeneral" type="button" class="btn btn-danger text-light btnDesHabGeneral" data-toggle="tooltip" data-placement="top" title="Deshabilitar registros">
+                    <button id="btnDesHabGeneral" type="button" class="btn btn-danger text-light btnDesHabGeneral" data-toggle="tooltip" data-placement="top" title="Deshabilitar Web General">
                         <i id="iconHabGeneral" class="bi bi-x-square fs-4"></i>
                     </button>
-                    <button id="btnHabGeneral" type="button" class="btn btn-success text-light btnHabGeneral" data-toggle="tooltip" data-placement="top" title="Habilitar registros">
+                    <button id="btnHabGeneral" type="button" class="btn btn-success text-light btnHabGeneral" data-toggle="tooltip" data-placement="top" title="Habilitar Web General">
                         <i id="iconHabGeneral" class="bi bi-check-square fs-4"></i>
                     </button>
                 </div>
@@ -137,7 +137,7 @@
                 </div>
             </div>
 
-            <!-- <div class="table-responsive mx-1 text-left"> -->
+             <div class="table-responsive mx-3 text-left">
                 <table id="myTable1" class="table table-striped nowrap" style="width:100%">
                     <thead>
                         <tr>
@@ -175,7 +175,7 @@
                     <tbody>
                     </tbody>
                 </table>
-            <!-- </div> -->
+             </div>
         </div>
     </div>
 </div>

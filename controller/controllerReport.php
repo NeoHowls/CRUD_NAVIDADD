@@ -12,6 +12,7 @@ $nacionalidad = (isset($_POST['nacionalidad'])) ? $_POST['nacionalidad'] : '';
 $organizacion = (isset($_POST['organizacion'])) ? $_POST['organizacion'] : '';
 $etnia = (isset($_POST['etnia'])) ? $_POST['etnia'] : '';
 
+
 switch ($_GET["op"]) {
     case "reporte":
         //define la consulta
@@ -94,6 +95,32 @@ switch ($_GET["op"]) {
             print($datos); 
             break;
 
+            case "pdf2023":
+                // Esta parte se manejará en el script que genera el PDF
+                $CONSULTA="SELECT edad,
+                       REPLACE(edad, 99, 'MAYORES DE 10 AÑOS') edadV,
+                       ISNULL(sum(masculino), 0) MASCULINO,
+                       ISNULL(sum(femenino), 0) FEMENINO,
+                       ISNULL(sum(masculino)+sum(femenino), 0) TOTAL
+                FROM (
+                    SELECT E.edad edad,
+                           VCN.masculino masculino,
+                           VCN.FEMENINO femenino
+                    FROM (SELECT * FROM V_CONTEONINOS WHERE edad <= 10 and periodo=2023 AND estado=1) VCN
+                    RIGHT JOIN A_EDAD E ON VCN.edad = E.edad
+                    UNION
+                    SELECT edad = 99,
+                           sum(masculino) MASCULINO,
+                           sum(femenino) FEMENINO
+                    FROM V_CONTEONINOS VCN
+                    WHERE VCN.edad > 10 AND VCN.periodo=2023 AND estado=1
+                ) vista
+                GROUP BY edad
+                ORDER BY edad";
+                $datos=$menu->listar($CONSULTA);
+                print($datos); 
+                break;
+
         case "nacion":
             $CONSULTA="SELECT idNacionalidad,
                         COALESCE(nacionalidad, 'SIN DATOS') AS nacionalidad,
@@ -112,7 +139,27 @@ switch ($_GET["op"]) {
                 ORDER BY idNacionalidad";
             $datos=$menu->listar($CONSULTA);
             print($datos);
-            break;    
+            break;   
+            
+            case "nacion2023":
+                $CONSULTA="SELECT idNacionalidad,
+                            COALESCE(nacionalidad, 'SIN DATOS') AS nacionalidad,
+                                    COALESCE(SUM(masculino), 0) AS MASCULINO,
+                                    COALESCE(SUM(femenino), 0) AS FEMENINO,
+                                    COALESCE(SUM(masculino) + SUM(femenino), 0) AS TOTAL
+    
+                    FROM(
+                        SELECT NA.id idNacionalidad, NA.nacionalidad nacionalidad,VP.masculino masculino, VP.femenino femenino 
+                        FROM(
+                        SELECT * FROM V_CONTEONINOSNACION
+                        WHERE periodo = 2023 AND estado=1
+                        ) VP
+                    RIGHT JOIN A_NACIONALIDAD NA ON VP.idNacionalidad=NA.id) VISTA
+                    GROUP BY idNacionalidad,nacionalidad
+                    ORDER BY idNacionalidad";
+                $datos=$menu->listar($CONSULTA);
+                print($datos);
+                break;
 
     
 }

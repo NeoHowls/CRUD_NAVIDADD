@@ -82,9 +82,9 @@ let table = $('#myTable2').DataTable( {
                 }
                 let checkHabilitadoButton = '';
                 if (row.checkHabilitado == '1') {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-light btnDeshabilitar me-2" data-toggle="tooltip" data-placement="top" title="Deshabilitar Organizacion"><i class="bi bi-x-square icon-100"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-danger text-light btnDeshabilitar me-2" data-toggle="tooltip" data-placement="top" title="Deshabilitar Web Organizacion"><i class="bi bi-x-square icon-100"></i> </button>';
                 } else {
-                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-light btnAutorizar me-2" data-toggle="tooltip" data-placement="top" title="Habilitar Organizacion"><i class="bi bi-check-square icon-100"></i> </button>';
+                    checkHabilitadoButton = '<button type="button" class="btn btn-success text-light btnAutorizar me-2" data-toggle="tooltip" data-placement="top" title="Habilitar Web Organizacion"><i class="bi bi-check-square icon-100"></i> </button>';
                 }
         
                 // Botón de editar con modal
@@ -102,12 +102,16 @@ let table = $('#myTable2').DataTable( {
                     "onclick=\"crearpdf('"+id1+"','"+nombre1+"')\">"+
                     "<i class='bi bi-filetype-pdf icon-100'></i>"+
                     "</button>"; */
-                    pdf2 = "<button type='button' class='btn btn-warning me-2 btnPdf text-light btnPdf' data-id='" + id1 + "' data-nombre='" + nombre1 + "' data-toggle='tooltip' data-placement='top' title='Imprimir informe'>" +
+                    pdf2 = "<button type='button' class='btn btn-warning me-2 btnPdf text-light btnPdf' data-id='" + id1 + "' data-nombre='" + nombre1 + "' data-toggle='tooltip' data-placement='top' title='Imprimir informe detallado.'>" +
+                        "<i class='bi bi-filetype-pdf icon-100'></i>" +
+                    "</button>";
+
+                    pdf3 = "<button type='button' class='btn btn-warning me-2 btnPdf2 text-light btnPdf2' data-id='" + id1 + "' data-nombre='" + nombre1 + "' data-toggle='tooltip' data-placement='top' title='Imprimir informe para firmar.'>" +
                         "<i class='bi bi-filetype-pdf icon-100'></i>" +
                     "</button>";
 
                 // Combinamos los botones en una sola columna
-                return estadoButton + checkHabilitadoButton + editarButton +pdf2;
+                return estadoButton + checkHabilitadoButton + editarButton +pdf2+pdf3;
             }
         }
     ] , 
@@ -427,7 +431,38 @@ $(document).on("click", ".btnHabGeneral", function(e){
     $('#fondo-modal').hide();
   }
 
-  $(document).on('click', '.btnPdf', function () {
+function mostrarBoton() {
+    const selectedYear = document.getElementById('select_periodo').value;
+    const botonInforme = document.getElementById('botonInforme');
+    
+    botonInforme.innerHTML = `
+        <button type="button" class="btn btn-warning me-2 btnAnular text-light" id="btnInforme${selectedYear}" onclick="imprimirInforme(${selectedYear})">
+            <i class='bi bi-filetype-pdf icon-100'></i> ${selectedYear} 
+        </button>
+    `;
+}
+function mostrarBoton2() {
+    const selectedYear = document.getElementById('select_periodo2').value;
+    const botonInforme2 = document.getElementById('botonInforme2');
+    
+    botonInforme2.innerHTML = `
+        <button type="button" class="btn btn-warning me-2 btnAnular text-light" id="btn2Informe${selectedYear}" onclick="imprimirInforme2(${selectedYear})">
+            <i class='bi bi-filetype-pdf icon-100'></i> ${selectedYear}
+        </button>
+    `;
+}
+
+// Llamar a la función una vez para inicializar el botón
+document.addEventListener('DOMContentLoaded', function() {
+    mostrarBoton(); // Opcional, si quieres que se muestre el botón al cargar la página.
+});
+document.addEventListener('DOMContentLoaded', function() {
+    mostrarBoton2();
+});
+
+
+//!PDF DETALLADO
+$(document).on('click', '.btnPdf', function () {
     // Capturar los datos del botón
     id1 = $(this).data("id");
     nombre1 = $(this).data("nombre");
@@ -439,8 +474,24 @@ $(document).on("click", ".btnHabGeneral", function(e){
     $('#imprimirModal').modal('show');
 });
 
+
+//!PDF CON FIRMA Y RUT PARA RETIRO
+ $(document).on('click', '.btnPdf2', function () {
+        // Capturar los datos del botón
+        id1 = $(this).data("id");
+        nombre1 = $(this).data("nombre");
+
+        // Mostrar el modal
+        $(".modal-header").css("background-color", "#17a2b8");
+        $(".modal-header").css("color", "white");
+        $(".modal-title").text("Informes por año: "+nombre1);		
+        $('#imprimirModal2').modal('show');
+    });
+
+
+ 
 $('#btnInforme2023').on('click', function() {
-    imprimirInforme(2023, id1, nombre1);
+    imprimirInforme(2023, id1, nombre1); 
 });
 
 $('#btnInforme2024').on('click', function() {
@@ -455,13 +506,40 @@ $('#btnInforme2026').on('click', function() {
     imprimirInforme(2026, id1, nombre1);
 });
 
+$('#btn2Informe2023').on('click', function() {
+    imprimirInforme2(2023, id1, nombre1); 
+});
 
-function imprimirInforme(anio, id1, nombre1) {
-    crearpdf(id1, nombre1, anio);
+$('#btn2Informe2024').on('click', function() {
+    imprimirInforme2(2024, id1, nombre1);
+});
+
+$('#btn2Informe2025').on('click', function() {
+    imprimirInforme2(2025, id1, nombre1);
+});
+
+$('#btn2Informe2026').on('click', function() {
+    imprimirInforme2(2026, id1, nombre1);
+});
+
+
+function imprimirInforme(anio) {
+    if (id1 && nombre1) {
+        crearpdf(id1, nombre1, anio);
+    }
 }
+ function imprimirInforme2(anio) {
+        if (id1 && nombre1) {
+            crearpdf2(id1, nombre1, anio);
+        }
+    }
 
 function crearpdf(id1, nombre1, anio) {
     window.open("../reportePdfOrganizacion.php?idOrg=" + id1 + "&nombre1=" + nombre1 + "&anio=" + anio);
+}
+
+function crearpdf2(id1, nombre1, anio) {
+    window.open("../reportePdfOrganizacion2.php?idOrg=" + id1 + "&nombre1=" + nombre1 + "&anio=" + anio);
 }
 
 
