@@ -667,15 +667,13 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
                 console.error("Error en la operación:", error);
             }
         }).done(function(response){ 
-            console.log(response);
-            respuesta = JSON.parse(response);
-            alert(respuesta);
-            alert(respuesta.length);
+            //console.log(response);
+            respuesta =(response);
             if(respuesta.length==1 && respuesta[0].error==0){
                 
                 Swal.fire({
                     icon: "success",
-                    title: "DESHABILITADO GENERAL PERSONAS",
+                    title: "DESHABILITADO GENERAL DE PERSONAS",
                     width: 300,
                     showConfirmButton: false,
                     timer: 2000
