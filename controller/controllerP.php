@@ -2,9 +2,14 @@
 session_start();
   //llama al MenuModel
   require_once("../model/MenuModel.php");
+
+  require_once ("../model/MODEL_PERSONA.php");
+  require_once ("../funciones.php");
   
   //declaro una variable para poder invocar a MenuModel
   $menu= new MenuModel();
+  $per = new Personas();
+
   $persona = (isset($_POST['persona'])) ? $_POST['persona'] : '';
   $user_id = (isset($_POST['user_id'])) ? $_POST['user_id'] : '';
   $dni = (isset($_POST['dni'])) ? $_POST['dni'] : '';
@@ -112,7 +117,127 @@ ORDER BY idOrganizacion";
   
     
     case "add_persona":
-      echo ($_GET["op"]);
+
+      $respuesta = array();
+      $i=0;
+      $erut = '/^[0-9]{7,8}\-[0-9kK]{1}$/';
+      $enombre = '/^[a-zA-Z ]+$/';
+      $ecorreo = '/^[a-zA-Z0-9.!#$%&*+=?^_`{|}~-]+@[a-zA-Z0-9-]+\.(?:[a-zA-Z0-9-]+)*$/';
+      $econtacto = '/^(?:\d{4}|\d{9})$/';
+
+      if(verificarExpresion($dni,$erut)==false){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=1;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Rut inválido debe incluir guión y dígito verificador</p>';
+        $i++;
+      }
+      if(verificarExpresion($dni,$erut)==true){
+        if(validadorRut($dni)==false){
+            $respuesta[$i]['action']='ERROR';
+            $respuesta[$i]['error']=1;
+            $respuesta[$i]['mensaje']='<p class="mensaje">Rut inválido debe incluir guión y dígito verificador</p>';
+            $i++;
+        }
+      }
+
+      $resultado = $per->buscarPersona($dni,1);
+      if(count($resultado)!=0){
+        if(count($resultado)==1){
+            $respuesta[$i]['action']='ERROR';
+            $respuesta[$i]['error']=1;
+            $respuesta[$i]['mensaje']='<p class="mensaje">RUT/DNI '.$resultado[0]['dni'].' se encuentra registrado</p>';
+            $i++;
+            //SELECT N.dni dni, O.nombre nombreOrganizacion FROM A_NINOS N
+        }
+    }
+
+
+      if(verificarExpresion($nombre,$enombre)==false){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=2;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar nombre</p>';
+        $i++;
+      }
+      if($direccion=='' || $direccion==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=3;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar Dirección</p>';
+        $i++;
+      }
+      if(verificarExpresion($mail,$ecorreo)==false){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=4;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar mail valido</p>';
+        $i++;
+      }
+      if($telefono=='' || $telefono==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=5;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar telefono</p>';
+        $i++;
+      }
+      if($idPerfil=='' || $idPerfil==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=6;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Perfil</p>';
+        $i++;
+      }
+      if($checkOrganizacion==1){
+        if($idOrganizacion=='' || $idOrganizacion==null){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=7;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Organización</p>';
+          $i++;
+        }
+      }
+    if(count($respuesta)==0){
+
+        $per->guardarPersona($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $usuario, $contrasena, $checkOrganizacion);
+        
+        if($per->getError()==0){
+          // $per1=new Personas();
+          $res= $per->buscarPersona($dni,1);
+          // var_dump($res);
+          if(count($res)==1 && $checkOrganizacion == 1){
+              $idPersona=$res[0]['id'];
+              $per->guardarDPO($idPersona,intval($idOrganizacion),1);
+              if($per->getError()==0){
+                  $respuesta[$i]['action']="OK";
+                  $respuesta[$i]['error']=0;
+                  $respuesta[$i]['mensaje']="OK";
+                  $i++;
+
+                  echo json_encode($respuesta);
+              }else{
+                $respuesta[$i]['action']="ERROR";
+                $respuesta[$i]['error']=99;
+                $respuesta[$i]['mensaje']="ERROR BD Persona y PDO";
+                $i++;
+                echo json_encode($respuesta);
+              }
+          }else{//!ingresa sin organizacion
+              $respuesta[$i]['action']="OK";
+              $respuesta[$i]['error']=0;
+              $respuesta[$i]['mensaje']="OK";
+              $i++;
+
+              echo json_encode($respuesta);
+          }  
+        }else{
+          $respuesta[$i]['action']="ERROR";
+          $respuesta[$i]['error']=99;
+          $respuesta[$i]['mensaje']="ERROR BD";
+          $i++;
+          echo json_encode($respuesta);
+
+        }
+    }
+    else{
+       //!errores
+        echo json_encode($respuesta);
+    }
+    /* 
+      // echo ($_GET["op"]);
       if($checkOrganizacion == 1){
         echo "funciona el if de anadir";
       //define la consulta
@@ -171,8 +296,8 @@ ORDER BY idOrganizacion";
       print($datos);
       
 
-    }
-    break;
+    }*/
+    break; 
 
         //edita 1 dato selecionable de la tabla A_ETNIA
     case "edit_persona":

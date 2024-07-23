@@ -213,7 +213,7 @@ $('#formUsuarios').submit(function(e){
     usuario = $('#usuario').val();
     contrasena = $('#contrasena').val();
     
-  
+    alert(direccion);
     
     //EJECUTA EL AJAX
     $.ajax({
@@ -225,23 +225,78 @@ $('#formUsuarios').submit(function(e){
           data:  {user_id:user_id,dni:dni,nombre:nombre,direccion:direccion,telefono:telefono,mail:mail,idPerfil:idPerfil,estado:estado,
             checkHabilitado:checkHabilitado,usuario:usuario,contrasena:contrasena,checkOrganizacion:checkOrganizacion, idOrganizacion:idOrganizacion},    
           //Si todo funiona recarga el AJAX
+          beforeSend: function(){
+            //  console.log("enviado");
+          },
+            //Si todo funiona recarga el AJAX
           success: function(data) {
             table.ajax.reload(null, false);
-            $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
-            $('[data-toggle="tooltip"]').tooltip({ // Vuelve a activar los tooltips
-                delay: { show: 0, hide: 0 },
-                placement: 'top' // O 'bottom' según donde desees mostrarlos
-            });
+           },
+           error:function(){
+                 alert("error");
            }
-        });		
+        }).done(function(response){
+            console.log(response);
+            respuesta = JSON.parse(response);
+            for(i=0;i<respuesta.length;i++){
+            if(respuesta[i].error==1)
+                {$('#m_dni').html(respuesta[i].mensaje);}
+            if(respuesta[i].error==2)
+                {$('#m_nombre').html(respuesta[i].mensaje);}
+            if(respuesta[i].error==3)
+                {$('#m_direccion').html(respuesta[i].mensaje);}
+            if(respuesta[i].error==4)
+                {$('#m_mail').html(respuesta[i].mensaje);}
+            if(respuesta[i].error==5)
+                {$('#m_telefono').html(respuesta[i].mensaje);}
+            if(respuesta[i].error==6)
+                {$('#m_perfil').html(respuesta[i].mensaje);}
+            if(respuesta[i].error==7)
+                {$('#m_organizacion').html(respuesta[i].mensaje);}
+           
+
+            }
+ 
+        });//fin done;			
         
         //EL MODAL SE DESTRUYE/ESCONDE NUEVAMENTE COMO SE LIMPIA LOS DATOS        
-    
-        $('#modalCRUD').modal('hide');		
+        /* if(respuesta.length==1 && respuesta[0].error==0){
+            console.log("correcto");
+        }else if(respuesta.length>0){
+            console.log("errores");
+        }else{
+            $('#modalCRUD').modal('hide');
+        }
+        	 */	
         									     			
 });
         
- 
+//todo: verificacion de mensaje error al seleccionar input
+//!  check Extranjeros muestra/oculta contenido
+$('#dni').on('change click', function() {
+    $('#m_dni').text('');
+});
+$('#nombre').on('change click', function() {
+    $('#m_nombre').text('');
+});
+$('#direccion').on('change click', function() {
+    $('#m_direccion').text('');
+});
+$('#mail').on('change click', function() {
+    $('#m_mail').text('');
+}); 
+$('#telefono').on('change click', function() {
+    $('#m_telefono').text('');
+});
+$('#idPerfil').on('change click', function() {
+    $('#m_perfil').text('');
+}); 
+
+$('#O_ID').on('change click', function() {
+    $('#m_organizacion').text('');
+}); 
+//!----------------------------------------------------
+//!----------------------------------------------------
 
 //para limpiar los campos antes de dar de Alta una Persona
 $(document).ready(function() {
@@ -284,6 +339,7 @@ $(document).ready(function() {
             if (selectedPerfil == 9) { // Representante
                 checkOrganizacion = 1;
                 $('#O_ID').val('').change(); // Resetear el valor del select
+                $('#m_organizacion').text('');
                 $('#O_ID option').each(function() {
                     var tipo = $(this).data('tipo');
                     if (tipo == 1 || tipo == 2 || tipo == 3) {

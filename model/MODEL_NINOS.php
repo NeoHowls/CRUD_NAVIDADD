@@ -3,7 +3,7 @@
 require_once '../config/ConexionDB.php';
 
 //todo:-------------------------------------------------------------------------------------------
-//La clase Menu Model hereda funciones de ConexionDB
+//La clase Niños Model hereda funciones de ConexionDB
 class Ninos extends ConexionBD{
 
     public function listar($CONSULTA){
