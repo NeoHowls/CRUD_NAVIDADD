@@ -115,5 +115,37 @@ class Personas extends ConexionBD{
         $query = $this->ejecutarOrden($sql);
         return $query;
     }
+
+    public function consultarNoHabilitar(){
+        $sql="SELECT idPersona 
+            FROM A_ORGANIZACION O
+            JOIN A_DETALLE_PO DPO ON O.id=DPO.idOrganizacion
+            JOIN A_PERSONA P ON DPO.idPersona=P.id
+            WHERE DPO.estado=1 AND O.estado=0 OR O.checkHabilitado=0";
+        $this->connect();
+        $query = $this->iniciar($sql);
+        return $query;
+    }
+
+    public function habilitarGeneral($string){
+        $sql1="UPDATE A_PERSONA 
+              SET checkHabilitado=1
+              WHERE idPerfil !=7 and idPerfil !=8";
+        // $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil != 7 AND idPerfil != 8 AND id NOT IN ($personasDeshabilitadasIdsStr)";
+        
+        if($string!='' || $string!=null){
+            $sql=$sql1." AND id NOT IN ($string)";
+            $parametros =array(
+                "idPersona"=>$string
+            );
+        }else{
+            $sql=$sql1;
+        }
+        
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+
+    }
 }//cierre clase
 ?>

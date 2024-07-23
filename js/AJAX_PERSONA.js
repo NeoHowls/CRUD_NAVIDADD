@@ -560,11 +560,6 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
             data: { user_id: user_id, estado: estado,checkHabilitado:checkHabilitado, dni: dni },
           success: function(data) {
             table.ajax.reload(null, false);
-            $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
-            $('[data-toggle="tooltip"]').tooltip({ // Vuelve a activar los tooltips
-                delay: { show: 0, hide: 0 },
-                placement: 'top' // O 'bottom' según donde desees mostrarlos
-            });
            },
            error: function(xhr, status, error) {
             console.error("Error en la operación:", error);
@@ -594,11 +589,6 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
             data: { user_id: user_id, checkHabilitado:checkHabilitado, dni: dni },
           success: function(data) {
             table.ajax.reload(null, false);
-            $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
-            $('[data-toggle="tooltip"]').tooltip({ // Vuelve a activar los tooltips
-                delay: { show: 0, hide: 0 },
-                placement: 'top' // O 'bottom' según donde desees mostrarlos
-            });
            },
            error: function(xhr, status, error) {
             console.error("Error en la operación:", error);
@@ -628,16 +618,34 @@ $(document).on("click", ".btnHabGeneral", function(e){
             data: { user_id: user_id, checkHabilitado:checkHabilitado, dni: dni },
             success: function(data) {
                 table.ajax.reload(null, false);
-                $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
-                $('[data-toggle="tooltip"]').tooltip({ // Vuelve a activar los tooltips
-                    delay: { show: 0, hide: 0 },
-                    placement: 'top' // O 'bottom' según donde desees mostrarlos
-                });
             },
             error: function(xhr, status, error) {
                 console.error("Error en la operación:", error);
             }
-        });	    	    
+        }).done(function(response){ 
+            //console.log(response);
+            respuesta =(response);
+            if(respuesta.length==1 && respuesta[0].error==0){
+                
+                Swal.fire({
+                    icon: "success",
+                    title: "HABILITADO GENERAL DE PERSONAS",
+                    width: 300,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: "FALLO AL HABILITAR PERSONAS",
+                    width: 300,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+            
+        });//fin done	    	    
     }
 });
 
