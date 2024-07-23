@@ -51,6 +51,7 @@
   
   //Armo un GET "op" donde OP signific operacion
   switch($_GET["op"]){
+    //! eliminar nino 
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
    case "eliminarNino":
         $ninos= new Ninos();

@@ -101,11 +101,19 @@ class Personas extends ConexionBD{
             "idOrganizacion"=>$idOrganizacion,
             "estado"=>$estado
         );
-        // $parametros =array("periodo"=>$periodo,"periodo2"=>$periodo);
         $this->connect();
         $query = $this->ejecutarOrden($sql, $parametros);
         return $query;
         
+    }
+
+    public function DeshabilitarGeneral(){
+        $sql="UPDATE A_PERSONA 
+              SET checkHabilitado=0
+              WHERE idPerfil !=7 and idPerfil !=8";
+        $this->connect();
+        $query = $this->ejecutarOrden($sql);
+        return $query;
     }
 }//cierre clase
 ?>

@@ -4,11 +4,13 @@ session_start();
   require_once("../model/MenuModel.php");
 
   require_once ("../model/MODEL_PERSONA.php");
+  require_once ("../model/MODEL_PERSONAH.php");
   require_once ("../funciones.php");
   
   //declaro una variable para poder invocar a MenuModel
   $menu= new MenuModel();
   $per = new Personas();
+  $perH= new PersonasH();
 
   $persona = (isset($_POST['persona'])) ? $_POST['persona'] : '';
   $user_id = (isset($_POST['user_id'])) ? $_POST['user_id'] : '';
@@ -27,6 +29,7 @@ session_start();
   $checkOrganizacion=intval($checkOrganizacion);
   $_SESSION["usuario"]= $usuario;
   $_SESSION["contrasena"]= $contrasena;
+  $usuarioCambio = $_SESSION["nombre"];
 
   //Armo un GET "op" donde OP signific operacion
   switch($_GET["op"]){
@@ -193,14 +196,14 @@ ORDER BY idOrganizacion";
     if(count($respuesta)==0){
 
         $per->guardarPersona($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $usuario, $contrasena, $checkOrganizacion);
-        
         if($per->getError()==0){
           // $per1=new Personas();
           $res= $per->buscarPersona($dni,1);
           // var_dump($res);
-          if(count($res)==1 && $checkOrganizacion == 1){
+          if(count($res)==1 && $checkOrganizacion == 1){//!ingresa con organizacion
               $idPersona=$res[0]['id'];
               $per->guardarDPO($idPersona,intval($idOrganizacion),1);
+              $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'Añadir Usuario Nuevo con organizacion',$usuarioCambio);
               if($per->getError()==0){
                   $respuesta[$i]['action']="OK";
                   $respuesta[$i]['error']=0;
@@ -216,6 +219,7 @@ ORDER BY idOrganizacion";
                 echo json_encode($respuesta);
               }
           }else{//!ingresa sin organizacion
+            $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'Añadir Usuario Nuevo sin organizacion',$usuarioCambio);
               $respuesta[$i]['action']="OK";
               $respuesta[$i]['error']=0;
               $respuesta[$i]['mensaje']="OK";
@@ -236,70 +240,8 @@ ORDER BY idOrganizacion";
        //!errores
         echo json_encode($respuesta);
     }
-    /* 
-      // echo ($_GET["op"]);
-      if($checkOrganizacion == 1){
-        echo "funciona el if de anadir";
-      //define la consulta
-      $CONSULTA = "INSERT INTO A_PERSONA (dni, nombre, direccion, telefono, mail, idPerfil, estado, usuario, contrasena,checkOrganizacion) 
-      VALUES ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena',1)";
-      //llamo al metodo listar y le doy la variable CONSULTA
-
-      $datos=$menu->listar($CONSULTA);
-        $CONSULTA = "SELECT * FROM A_PERSONA";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-        //imprimir los datos en JSON
-  
-      //imprimir los datos en JSON
-      
-      $CONSULTA = "SELECT id FROM A_PERSONA WHERE dni='$dni'";
-      $datos=$menu->consultar($CONSULTA);
-      $user_id=$datos[0]['id'];
-      $CONSULTA2 = "SELECT id,fechaIngreso  FROM A_ORGANIZACION WHERE id='$idOrganizacion'";
-      $datos=$menu->consultar($CONSULTA2);
-      $fechaIngreso=$datos[0]['fechaIngreso'];    
-      $fechaIngreso = date('Y-m-d H:i');
-      $dato_org=$menu->consultar($CONSULTA2);
-      
-      $CONSULTA ="INSERT INTO A_DETALLE_PO (idPersona, idOrganizacion, estado,fechaIngreso) VALUES ('$user_id','$idOrganizacion' , 1,'$fechaIngreso')";
-      $menu->listar($CONSULTA);
-
-      $usuarioCambio = $_SESSION["nombre"];
-      $CONSULTAH = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-      ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Añadir Usuario Nuevo con Organizacion')";
-      $datos=$menu->listar($CONSULTAH);
-      $CONSULTAH = "SELECT * FROM A_PERSONA_HISTORIAL";
-      $datos=$menu->listar($CONSULTAH);
-      print($datos);
-      
-
-        }else {
-          echo "funciona el else de anadir";
-          //define la consulta
-      $CONSULTA = "INSERT INTO A_PERSONA (dni, nombre, direccion, telefono, mail, idPerfil, estado, usuario, contrasena) VALUES ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena')";
-      //llamo al metodo listar y le doy la variable CONSULTA
-      $datos=$menu->listar($CONSULTA);
-        $CONSULTA = "SELECT * FROM A_PERSONA";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-        //imprimir los datos en JSON
-        print($datos);
-      //imprimir los datos en JSON 
-
-      $usuarioCambio = $_SESSION["nombre"];
-      $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-      ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Añadir Usuario Nuevo Sin Organizacion')";
-      $datos=$menu->listar($CONSULTA);
-      $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
-      $datos=$menu->listar($CONSULTA);
-      print($datos);
-      
-
-    }*/
     break; 
 
-        //edita 1 dato selecionable de la tabla A_ETNIA
     case "edit_persona":
       if($checkOrganizacion == 1){
         echo "funciona el if de editar";
@@ -579,14 +521,22 @@ case "habGeneral":
 break;
 
   case "DesHabGeneral": 
-    //define la consulta
-    $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 0 WHERE idPerfil !=7 and idPerfil !=8  ";
-    //llamo al metodo listar y le doy la variable CONSULTA
-    $datos=$menu->listar($CONSULTA);
 
-    $CONSULTA = "SELECT * FROM A_PERSONA";
-    $datos=$menu->listar($CONSULTA);
-    print($datos);
+        $datos=$per->DeshabilitarGeneral();    
+        if($per->getError()==0){
+          $respuesta[$i]['action']="OK";
+          $respuesta[$i]['error']=0;
+          $respuesta[$i]['mensaje']="OK";
+          $i++;
+          echo json_encode($respuesta);
+      }else{
+        $respuesta[$i]['action']="ERROR";
+        $respuesta[$i]['error']=99;
+        $respuesta[$i]['mensaje']="ERROR BD";
+        $i++;
+        echo json_encode($respuesta);
+      }
+
     break;
 
     case "imprimir": 

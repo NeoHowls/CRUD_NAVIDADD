@@ -272,7 +272,6 @@ $('#formUsuarios').submit(function(e){
 });
         
 //todo: verificacion de mensaje error al seleccionar input
-//!  check Extranjeros muestra/oculta contenido
 $('#dni').on('change click', function() {
     $('#m_dni').text('');
 });
@@ -660,16 +659,33 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
             data: { user_id: user_id, checkHabilitado:checkHabilitado, dni: dni },
             success: function(data) {
                 table.ajax.reload(null, false);
-                $('[data-toggle="tooltip"]').tooltip('dispose'); // Desactiva los tooltips actuales
-                $('[data-toggle="tooltip"]').tooltip({ // Vuelve a activar los tooltips
-                    delay: { show: 0, hide: 0 },
-                    placement: 'top' // O 'bottom' según donde desees mostrarlos
-                });
             },
             error: function(xhr, status, error) {
                 console.error("Error en la operación:", error);
             }
-        });	    	    
+        }).done(function(response){ 
+            // console.log(response);
+            respuesta = JSON.parse(response);
+            if(respuesta.length==1 && respuesta[0].error==0){
+                Swal.fire({
+                    icon: "success",
+                    title: "DESHABILITADO GENERAL PERSONAS",
+                    width: 300,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: "FALLO AL DESHABILITAR PERSONAS",
+                    width: 300,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+            
+        });//fin done	    	    
     }
 });
 

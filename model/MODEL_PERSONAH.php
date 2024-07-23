@@ -8,29 +8,34 @@ class PersonasH extends ConexionBD{
 
     public function guardarPersonaH(
         $dni, $nombre, $direccion, 
-        $telefono, $mail, $idPerfil, 
-        $usuario, $contrasena, $checkOrganizacion){
-        $sql="INSERT INTO A_PERSONA
+        $telefono, $mail, $idPerfil,$checkOrganizacion,
+        $usuario, $contrasena,$tipoMovimiento,$usuarioCambio){
+        $sql="INSERT INTO A_PERSONA_HISTORIAL
               (
                 dni, 
                 nombre, 
                 direccion, 
                 telefono, 
                 mail, 
-                idPerfil, 
+                idPerfil,
+                checkOrganizacion, 
                 usuario, 
                 contrasena,
-                checkOrganizacion
+                tipoMovimiento,
+                usuarioCambio
               )
         VALUES (:dni, 
                 :nombre, 
                 :direccion, 
                 :telefono, 
                 :mail, 
-                :idPerfil, 
+                :idPerfil,
+                :checkOrganizacion, 
                 :usuario, 
                 :contrasena,
-                :checkOrganizacion)";
+                :tipoMovimiento,
+                :usuarioCambio
+                )";
         $parametros =array(
             "dni"=>$dni,
             "nombre"=>$nombre,
@@ -38,11 +43,12 @@ class PersonasH extends ConexionBD{
             "telefono"=>$telefono,
             "mail"=>$mail,
             "idPerfil"=>$idPerfil,
+            "checkOrganizacion"=>$checkOrganizacion,
             "usuario"=>$usuario,
             "contrasena"=>$contrasena,
-            "checkOrganizacion"=>$checkOrganizacion
+            "tipoMovimiento"=>$tipoMovimiento,
+            "usuarioCambio"=>$usuarioCambio
         );
-        // $parametros =array("periodo"=>$periodo,"periodo2"=>$periodo);
         $this->connect();
         $query = $this->ejecutarOrden($sql, $parametros);
         return $query;
