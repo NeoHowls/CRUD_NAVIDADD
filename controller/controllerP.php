@@ -521,8 +521,10 @@ case "habGeneral":
 break;
 
   case "DesHabGeneral": 
+    $respuesta= array();
+    $i=0;
 
-        $datos=$per->DeshabilitarGeneral();    
+        $per->DeshabilitarGeneral();    
         if($per->getError()==0){
           $respuesta[$i]['action']="OK";
           $respuesta[$i]['error']=0;

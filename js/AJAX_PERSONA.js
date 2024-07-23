@@ -659,14 +659,20 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
             data: { user_id: user_id, checkHabilitado:checkHabilitado, dni: dni },
             success: function(data) {
                 table.ajax.reload(null, false);
-            },
+            }/* ,
+            error:function(){
+                alert("error")
+            } */,
             error: function(xhr, status, error) {
                 console.error("Error en la operación:", error);
             }
         }).done(function(response){ 
-            // console.log(response);
+            console.log(response);
             respuesta = JSON.parse(response);
+            alert(respuesta);
+            alert(respuesta.length);
             if(respuesta.length==1 && respuesta[0].error==0){
+                
                 Swal.fire({
                     icon: "success",
                     title: "DESHABILITADO GENERAL PERSONAS",
