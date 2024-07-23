@@ -243,11 +243,131 @@ ORDER BY idOrganizacion";
     break; 
 
     case "edit_persona":
+      $resultado = array();
+      $respuesta = array();
+      $i=0;
+      $erut = '/^[0-9]{7,8}\-[0-9kK]{1}$/';
+      $enombre = '/^[a-zA-Z ]+$/';
+      $ecorreo = '/^[a-zA-Z0-9.!#$%&*+=?^_`{|}~-]+@[a-zA-Z0-9-]+\.(?:[a-zA-Z0-9-]+)*$/';
+      $econtacto = '/^(?:\d{4}|\d{9})$/';
+
+      if(verificarExpresion($dni,$erut)==false){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=1;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Rut inválido debe incluir guión y dígito verificador</p>';
+        $i++;
+      }
+      if(verificarExpresion($dni,$erut)==true){
+        if(validadorRut($dni)==false){
+            $respuesta[$i]['action']='ERROR';
+            $respuesta[$i]['error']=1;
+            $respuesta[$i]['mensaje']='<p class="mensaje">Rut inválido debe incluir guión y dígito verificador</p>';
+            $i++;
+        }
+      }
+
+      $resultado=$per->buscarPersonaIdDni($user_id,$dni,1);
+      // var_dump($resultado);
+      if(count($resultado)!=1){
+        $resultado=$per->buscarPersona($dni,1);
+      
+        if(count($resultado)!=0){
+            if(count($resultado)==1){
+                $respuesta[$i]['action']='ERROR';
+                $respuesta[$i]['error']=1;
+                $respuesta[$i]['mensaje']='<p class="mensaje">RUT/DNI '.$resultado[0]['dni'].' se encuentra registrado </p>';
+                $i++;
+            }
+        }
+      }
+
+
+
+
+      if(verificarExpresion($nombre,$enombre)==false){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=2;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar nombre</p>';
+        $i++;
+      }
+      if($direccion=='' || $direccion==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=3;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar Dirección</p>';
+        $i++;
+      }
+      if(verificarExpresion($mail,$ecorreo)==false){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=4;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar mail valido</p>';
+        $i++;
+      }
+      if($telefono=='' || $telefono==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=5;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar telefono</p>';
+        $i++;
+      }
+      if($idPerfil=='' || $idPerfil==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=6;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Perfil</p>';
+        $i++;
+      }
+      if($checkOrganizacion==1){
+        if($idOrganizacion=='' || $idOrganizacion==null){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=7;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Organización</p>';
+          $i++;
+        }
+      }
+    if(count($respuesta)==0){
       if($checkOrganizacion == 1){
+        $per->actualizarPersona($dni,$nombre,$direccion,
+        $telefono,$mail,$idPerfil,$usuario,$contrasena,$user_id);
+        if($per->getError()==0){
+          $respuesta[$i]['action']="OK";
+          $respuesta[$i]['error']=0;
+          $respuesta[$i]['mensaje']="OK checko 1";
+          $i++;
+
+          echo json_encode($respuesta);
+        }else{
+          $respuesta[$i]['action']="ERROR";
+          $respuesta[$i]['error']=99;
+          $respuesta[$i]['mensaje']="ERROR BD";
+          $i++;
+          echo json_encode($respuesta);
+        }
+      }else{
+        $per->actualizarPersona($dni,$nombre,$direccion,
+        $telefono,$mail,$idPerfil,$usuario,$contrasena,$user_id);
+        if($per->getError()==0){
+          $respuesta[$i]['action']="OK";
+          $respuesta[$i]['error']=0;
+          $respuesta[$i]['mensaje']="OK  checko 0";
+          $i++;
+
+          echo json_encode($respuesta);
+        }else{
+          $respuesta[$i]['action']="ERROR";
+          $respuesta[$i]['error']=99;
+          $respuesta[$i]['mensaje']="ERROR BD";
+          $i++;
+          echo json_encode($respuesta);
+        }
+      }
+        
+    }else{
+      //!errores
+      echo json_encode($respuesta);
+    }
+      /* if($checkOrganizacion == 1){
         echo "funciona el if de editar";
       //define la consulta
       $CONSULTA = "UPDATE A_PERSONA SET dni = '$dni',nombre ='$nombre',direccion ='$direccion',telefono ='$telefono',mail ='$mail',
-      idPerfil ='$idPerfil',estado = '$estado',usuario ='$usuario',contrasena ='$contrasena', checkOrganizacion=1 WHERE id='$user_id'";
+      idPerfil ='$idPerfil',estado = '$estado',usuario ='$usuario',contrasena ='$contrasena' WHERE id='$user_id'";
       //llamo al metodo listar y le doy la variable CONSULTA
       $datos=$menu->listar($CONSULTA);
         $CONSULTA = "SELECT * FROM A_PERSONA";
@@ -287,7 +407,7 @@ ORDER BY idOrganizacion";
 
       }else {
         $CONSULTA1 = "UPDATE A_PERSONA SET dni = '$dni',nombre ='$nombre',direccion ='$direccion',telefono ='$telefono',mail ='$mail',idPerfil ='$idPerfil'
-        ,estado = '$estado',usuario ='$usuario',contrasena ='$contrasena',checkOrganizacion=0 WHERE id='$user_id'";
+        ,estado = '$estado',usuario ='$usuario',contrasena ='$contrasena' WHERE id='$user_id'";
         $menu->listar($CONSULTA1);
 
         $CONSULTA = "SELECT * FROM A_PERSONA";
@@ -304,7 +424,7 @@ ORDER BY idOrganizacion";
         $datos=$menu->listar($CONSULTA);
         print($datos);
 
-      }
+      } */
 
       break;
       

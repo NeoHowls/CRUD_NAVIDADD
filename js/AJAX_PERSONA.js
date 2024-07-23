@@ -1,3 +1,5 @@
+let checkOrganizacion='';
+
 
 $('#more_info').change(function() {
     if(this.checked != true){
@@ -201,6 +203,7 @@ var fila; //captura la fila, para editar o eliminar
 $('#formUsuarios').submit(function(e){                         
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     //CAPTURA EL DATO DEL FORMULARIO
+    user_id = $.trim($("#id").val());
     dni = $.trim($('#dni').val());
     nombre = $.trim($('#nombre').val());
     direccion = $.trim($('#direccion').val());
@@ -213,7 +216,7 @@ $('#formUsuarios').submit(function(e){
     usuario = $('#usuario').val();
     contrasena = $('#contrasena').val();
     
-    alert(direccion);
+    // alert("direccion "+direccion);
     
     //EJECUTA EL AJAX
     $.ajax({
@@ -285,6 +288,7 @@ $('#mail').on('change click', function() {
     $('#m_mail').text('');
 }); 
 $('#telefono').on('change click', function() {
+
     $('#m_telefono').text('');
 });
 $('#idPerfil').on('change click', function() {
@@ -456,6 +460,8 @@ $(document).on("click", ".btnEditar", function() {
     contrasena = fila.find('td:eq(10)').text();
     idOrganizacion = fila.find('td:eq(11)').text();
     
+    
+    $("#id").val(user_id);
     $("#dni").val(dni);
     $("#nombre").val(nombre);
     $("#direccion").val(direccion);
@@ -771,3 +777,10 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
          e.preventDefault();
      }
  });
+
+// Agregar el prefijo "+569" al hacer clic en el campo
+document.getElementById('telefono').addEventListener('focus', function() {
+    if (this.value === '') {
+        this.value = '+569';
+}
+});

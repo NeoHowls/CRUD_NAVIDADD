@@ -58,6 +58,7 @@
                         </div>
                         <form id="formUsuarios"  autocomplete="off">
                             <div class="modal-body" style="background: #E7E7E7">
+                            <input type="text" class="form-control" id="id" disabled>
                                 <div class="row">
                                     <div class="col-lg-12" style="text-align: center;">
                                         <div class="form-group">

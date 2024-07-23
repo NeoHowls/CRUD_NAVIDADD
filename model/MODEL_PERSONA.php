@@ -152,5 +152,52 @@ class Personas extends ConexionBD{
         return $query;
 
     }
+
+    public function actualizarPersona($dni,$nombre,$direccion,
+                                    $telefono,$mail,$idPerfil,
+                                    $usuario,$contrasena,
+                                    $user_id){
+        
+        $sql="UPDATE A_PERSONA 
+                    SET dni = '$dni',
+                    nombre ='$nombre',
+                    direccion ='$direccion',
+                    telefono ='$telefono',
+                    mail ='$mail',
+                    idPerfil ='$idPerfil',
+                    usuario ='$usuario',
+                    contrasena ='$contrasena' 
+                WHERE id='$user_id'";
+        
+        $parametros =array(
+            "dni"=>$dni,
+            "nombre"=>$nombre,
+            "direccion"=>$direccion,
+            "telefono"=>$telefono,
+            "mail"=>$mail,
+            "idPerfil"=>$idPerfil,
+            "usuario"=>$usuario,
+            "contrasena"=>$contrasena,
+            "user_id"=>$user_id
+        );
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+
+    }
+
+    public function buscarPersonaIdDni($id,$dni,$estado){
+        $sql="SELECT P.id id, P.dni dni
+            FROM A_PERSONA P
+            WHERE P.id = :id AND P.dni=:dni AND P.estado=:estado";
+            //WHERE P.id = :id AND P.dni=:dni AND P.estado=:estado
+            //WHERE P.id = ".$id." AND P.dni='".$dni."' AND P.estado=".$estado"
+        // var_dump($sql);  
+        $parametros =array("id"=>$id,"dni"=>$dni,"estado"=>$estado);
+        $this->connect();
+        $query = $this->iniciar($sql, $parametros);
+
+        return $query;
+    }
 }//cierre clase
 ?>
