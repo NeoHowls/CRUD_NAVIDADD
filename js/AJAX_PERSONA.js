@@ -634,12 +634,23 @@ $(document).on("click", ".btnHabGeneral", function(e){
                 table.ajax.reload(null, false);
             },
             error:function(){
-                alert("error")
+                alert("error");
             }
         }).done(function(response){ 
             console.log(response);
-            /*respuesta =(response);
-             if(respuesta.length==1 && respuesta[0].error==0){
+            respuesta =(response);
+            if(respuesta.length==1 && respuesta[0].bandera==2){
+                
+                Swal.fire({
+                    icon: "success",
+                    title: "PERSONAS HABILITADAS CON ORGANIZACION ACTIVA",
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            
+
+            }else  if(respuesta.length==1 && respuesta[0].error==0){
                 
                 Swal.fire({
                     icon: "success",
@@ -648,7 +659,6 @@ $(document).on("click", ".btnHabGeneral", function(e){
                     showConfirmButton: false,
                     timer: 2000
                 });
-
             }else if(respuesta.length==1 && respuesta[0].error==99){
                 Swal.fire({
                     icon: "error",
@@ -657,7 +667,7 @@ $(document).on("click", ".btnHabGeneral", function(e){
                     showConfirmButton: false,
                     timer: 2000
                 });
-            } */
+            }
             
         });//fin done	    	    
     }

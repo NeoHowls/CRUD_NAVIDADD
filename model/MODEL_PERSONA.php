@@ -121,27 +121,34 @@ class Personas extends ConexionBD{
             FROM A_ORGANIZACION O
             JOIN A_DETALLE_PO DPO ON O.id=DPO.idOrganizacion
             JOIN A_PERSONA P ON DPO.idPersona=P.id
-            WHERE DPO.estado=1 AND O.estado=0 OR O.checkHabilitado=0";
+            WHERE DPO.estado=1 AND O.checkHabilitado=0";
         $this->connect();
         $query = $this->iniciar($sql);
         return $query;
     }
 
-    public function habilitarGeneral($string){
-        $sql1="UPDATE A_PERSONA 
+    public function habilitarGeneral($idPersonas){
+        
+        $sql="UPDATE A_PERSONA 
               SET checkHabilitado=1
               WHERE idPerfil !=7 and idPerfil !=8";
-        if($string!='' || $string!=null){
-            $sql=$sql1." AND id NOT IN ($string)";
-            $parametros =array(
-                "idPersona"=>$string
-            );
+        if($idPersonas!='' || $idPersonas!=null){
+            /* echo "asdasd";
+            var_dump($idPersonas); */
+            $sql=$sql." AND id NOT IN (".$idPersonas.")";
+            // echo $sql;
+            // $parametros =array("idPersonas"=>$idPersonas);
+            $this->connect();
+            // $query = $this->ejecutarOrden($sql, $parametros);
+            $query = $this->ejecutarOrden($sql);
         }else{
-            $sql=$sql1;
+            $sql=$sql;
+            $this->connect();
+            $query = $this->ejecutarOrden($sql);
         }
         
-        $this->connect();
-        $query = $this->ejecutarOrden($sql, $parametros);
+        /* $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros); */
         return $query;
 
     }

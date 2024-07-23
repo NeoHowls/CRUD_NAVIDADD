@@ -485,9 +485,55 @@ ORDER BY idOrganizacion";
 
 
 case "habGeneral":
-  $personasDeshabilitadasIds=$per->consultarNoHabilitar(); //los personas a no habilitar
+  $personasId = array();
+    $j=0;
+  $respuesta= array();
+    $i=0;
+  $personasDeshabilitadasIds=array();
+  $datos=$per->consultarNoHabilitar(); //los personas a no habilitar
   //echo json_encode($personasDeshabilitadasIds);
-  var_dump($personasDeshabilitadasIds);
+  if(count($datos)!=0){
+    foreach($datos as $key => $value){
+      $personasId[$j]=$value['idPersona'];
+      $j++;
+    }
+    // echo json_encode(gettype($personasDeshabilitadasIds));
+    // var_dump($personasId);
+      $personasIdStr = implode(',', $personasId);
+      // var_dump($personasIdStr);
+      $per->habilitarGeneral($personasIdStr);
+      // echo json_encode($per);
+      if($per->getError()==0){
+        $respuesta[$i]['action']="OK";
+        $respuesta[$i]['error']=0;
+        $respuesta[$i]['mensaje']="OK habilitar con organizaciones no activas";
+        $respuesta[$i]['bandera']=2;
+        $i++;
+        echo json_encode($respuesta);
+      }else{
+        $respuesta[$i]['action']="ERROR";
+        $respuesta[$i]['error']=99;
+        $respuesta[$i]['mensaje']="ERROR BD";
+        $i++;
+        echo json_encode($respuesta);
+      }
+  }else{
+    $per->habilitarGeneral("");
+    if($per->getError()==0){
+      $respuesta[$i]['action']="OK";
+      $respuesta[$i]['error']=0;
+      $respuesta[$i]['mensaje']="OK habilitar con organizaciones activas";
+      $i++;
+      echo json_encode($respuesta);
+    }else{
+      $respuesta[$i]['action']="ERROR";
+      $respuesta[$i]['error']=99;
+      $respuesta[$i]['mensaje']="ERROR BD";
+      $i++;
+      echo json_encode($respuesta);
+    }
+  }
+  
   
 
   
