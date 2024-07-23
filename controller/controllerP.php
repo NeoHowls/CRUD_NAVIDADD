@@ -486,15 +486,21 @@ ORDER BY idOrganizacion";
 
 case "habGeneral":
   $personasDeshabilitadasIds=$per->consultarNoHabilitar(); //los personas a no habilitar
+  //echo json_encode($personasDeshabilitadasIds);
+  var_dump($personasDeshabilitadasIds);
   
-  if (!empty($personasDeshabilitadasIds)){
+
+  
+   /* if (!empty($personasDeshabilitadasIds)){
       $personasDeshabilitadasIdsStr = implode(',', $personasDeshabilitadasIds);
       $per->habilitarGeneral($personasDeshabilitadasIdsStr);
+      echo json_encode($personasDeshabilitadasIdsStr);
   }else{
     $per->habilitarGeneral($personasDeshabilitadasIdsStr);
-  } 
+    echo json_encode($personasDeshabilitadasIdsStr);
+  }  */ 
 
-  if($per->getError()==0){
+  /* if($per->getError()==0){
     $respuesta[$i]['action']="OK";
     $respuesta[$i]['error']=0;
     $respuesta[$i]['mensaje']="OK";
@@ -506,7 +512,7 @@ case "habGeneral":
   $respuesta[$i]['mensaje']="ERROR BD";
   $i++;
   echo json_encode($respuesta);
-}
+} */
 
   /* // Obtener todas las organizaciones deshabilitadas
   $consultaOrganizaciones = "SELECT id FROM A_ORGANIZACION WHERE estado = 0 OR checkHabilitado = 0";

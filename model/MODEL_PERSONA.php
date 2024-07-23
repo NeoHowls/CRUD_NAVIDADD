@@ -131,8 +131,6 @@ class Personas extends ConexionBD{
         $sql1="UPDATE A_PERSONA 
               SET checkHabilitado=1
               WHERE idPerfil !=7 and idPerfil !=8";
-        // $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil != 7 AND idPerfil != 8 AND id NOT IN ($personasDeshabilitadasIdsStr)";
-        
         if($string!='' || $string!=null){
             $sql=$sql1." AND id NOT IN ($string)";
             $parametros =array(

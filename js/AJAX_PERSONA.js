@@ -439,12 +439,12 @@ $(document).ready(function() {
 
 //Editar       
 
-$(document).on("click", ".btnEditar", function(){	
+$(document).on("click", ".btnEditar", function() {
     $('#usuario').prop('readonly', false);
     $('#contrasena').prop('readonly', false);	        
-    opcion = "edit_persona";//editar
+    opcion = "edit_persona"; // editar
     fila = $(this).closest("tr");	        
-    user_id = fila.find('td:eq(0)').text(); //capturo el ID		            
+    user_id = fila.find('td:eq(0)').text(); // capturo el ID		            
     dni = fila.find('td:eq(1)').text();
     nombre = fila.find('td:eq(2)').text();
     direccion = fila.find('td:eq(3)').text();
@@ -452,11 +452,9 @@ $(document).on("click", ".btnEditar", function(){
     mail = fila.find('td:eq(5)').text();
     idPerfil = fila.find('td:eq(6)').text();
     estado = fila.find('td:eq(7)').text();
-    checkHabilitado = fila.find('td:eq(8)').text();
     usuario = fila.find('td:eq(9)').text();
     contrasena = fila.find('td:eq(10)').text();
     idOrganizacion = fila.find('td:eq(11)').text();
-    checkOrganizacion = fila.find('td:eq(12)').text();
     
     $("#dni").val(dni);
     $("#nombre").val(nombre);
@@ -469,44 +467,64 @@ $(document).on("click", ".btnEditar", function(){
     $("#contrasena").val(contrasena);
     $("#O_ID").val(idOrganizacion);
     $(".modal-header").css("background-color", "#007bff");
-    $(".modal-header").css("color", "white" );
+    $(".modal-header").css("color", "white");
     $(".modal-title").text("Editar Usuario");		
     $('#modalCRUD').modal('show');
     
-    //AUTO DETECTOR DE CHECK CUANDO SE LEE LOS DATOS DEVUELTA CUANDO SE EDITA
-    //Se comprueba si la variable CHECKCREATE  1, en caso de serlo simplemente auto levanta el Check en caso de que no sea asi baja el check 
-    //
-
-
-
-// Comprueba si el Check esta ON u OFF 
-checkboxNC = document.getElementById('more_infos');
-checkboxNC.addEventListener('change', function () {
-    // Verifica si el checkbox está marcado o no
-    if (this.checked) {
-        console.log('El checkbox está activado.');
-        checkOrganizacion = 1;
-        $("#conditional_part").show();
+    // Mostrar el checkbox "Desea agregar Organización" según el valor de idOrganizacion
+    if (idOrganizacion >= 1) {
+        $('#more_infos').prop('checked', true);
+        $('#checkbox-container').show();
+        $("#conditional_parts").show();
     } else {
-        console.log('El checkbox está desactivado.');
-        checkOrganizacion = 0;
+        $('#more_infos').prop('checked', false);
+        $('#checkbox-container').hide();
+        $("#conditional_parts").hide();
     }
+    
+    // Comprobar si el perfil es "Representante" o "Providencia"
+    if (idPerfil == 9) { // Representante
+        $('#checkbox-container').show();
+        $('#more_infos').prop('checked', true).prop('disabled', true).change(); // Activa y desactiva el checkbox
+        $('#O_ID').val(idOrganizacion); // Captura la organización
+        $("#O_ID option").each(function() {
+            var tipo = $(this).data('tipo');
+            if (tipo == 1 || tipo == 2 || tipo == 3) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    } else if (idPerfil == 10) { // Providencia
+        $('#checkbox-container').show();
+        $('#more_infos').prop('checked', true).prop('disabled', true).change(); // Activa y desactiva el checkbox
+        $('#O_ID').val(idOrganizacion); // Captura la organización
+        $('#O_ID option').each(function() {
+            if ($(this).data('tipo') == 4) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    } else {
+        $('#checkbox-container').hide();
+        $('#more_infos').prop('checked', false).prop('disabled', false).change();
+        $('#conditional_parts').hide();
+    }
+
+    // Comprueba si el Check está ON u OFF
+    var checkboxNC = document.getElementById('more_infos');
+    checkboxNC.addEventListener('change', function() {
+        if (this.checked) {
+            checkOrganizacion = 1;
+            $("#conditional_parts").show();
+        } else {
+            checkOrganizacion = 0;
+            $("#conditional_parts").hide();
+        }
+    });
 });
 
-if (idOrganizacion >= 1) {
-    document.getElementById('more_infos').checked = true;
-    $("#conditional_parts").show();
-    checkOrganizacion = 1
-    console.log('El checkbox está activado@@@.');
-}
-else {
-    document.getElementById('more_infos').checked = false;
-    $("#conditional_parts").hide();
-    checkOrganizacion = 0
-    console.log('El checkbox está desactivado@@@.');
-}
-
-});
 
 window.addEventListener("keydown", (e) => {
     if (e.keyCode === 13) {
@@ -550,8 +568,6 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     let action = estado == '1' ? 'borrar_persona' : 'habilitar_persona';
     let confirmMessage = estado == '1' ? "¿Está seguro de Desactivar el registro de "+nombre+"?" : "¿Quieres activar al usuario "+nombre+"?"  ;
     let respuesta = confirm(confirmMessage);
-    console.log("funciona")
-    console.log(dni)
     if (respuesta) {            
         $.ajax({
           url: "../controller/controllerP.php?op=borrar_persona",
@@ -579,8 +595,6 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     let action = checkHabilitado == '1' ? 'borrar_persona' : 'habilitar_persona';
     let confirmMessage = checkHabilitado == '1' ? "¿Está seguro de Deshabilitar al usuario "+nombre+"?" : "¿Quieres habilitar al usuario "+nombre+"?";
     let respuesta = confirm(confirmMessage);
-    console.log("funciona")
-    console.log(dni)
     if (respuesta) {            
         $.ajax({
           url: "../controller/controllerP.php?op=Habilitar_persona",
@@ -619,13 +633,13 @@ $(document).on("click", ".btnHabGeneral", function(e){
             success: function(data) {
                 table.ajax.reload(null, false);
             },
-            error: function(xhr, status, error) {
-                console.error("Error en la operación:", error);
+            error:function(){
+                alert("error")
             }
         }).done(function(response){ 
-            //console.log(response);
-            respuesta =(response);
-            if(respuesta.length==1 && respuesta[0].error==0){
+            console.log(response);
+            /*respuesta =(response);
+             if(respuesta.length==1 && respuesta[0].error==0){
                 
                 Swal.fire({
                     icon: "success",
@@ -643,7 +657,7 @@ $(document).on("click", ".btnHabGeneral", function(e){
                     showConfirmButton: false,
                     timer: 2000
                 });
-            }
+            } */
             
         });//fin done	    	    
     }
