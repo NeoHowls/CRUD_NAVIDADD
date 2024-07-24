@@ -470,6 +470,9 @@ ORDER BY idOrganizacion";
         break;
 
   case "Habilitar_persona":
+      $resultado = array();
+      $respuesta = array();
+      $i=0;
     //!deshabilitar web persona
     if($checkHabilitado == 1){
       $per->deshabilitarWebPersona($user_id);

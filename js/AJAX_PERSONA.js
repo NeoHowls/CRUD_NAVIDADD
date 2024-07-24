@@ -661,10 +661,18 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
  $(document).on("click", ".btnAutorizar, .btnDeshabilitar", function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     fila = $(this).closest('tr');           
-    user_id = $(this).closest('tr').find('td:eq(0)').text() ;
-    nombre = $(this).closest('tr').find('td:eq(2)').text() ;
-    checkHabilitado = $(this).closest('tr').find('td:eq(8)').text() ;
-    dni = $(this).closest('tr').find('td:eq(1)').text();
+    user_id = fila.find('td:eq(0)').text(); // capturo el ID		            
+    dni = fila.find('td:eq(1)').text();
+    nombre = fila.find('td:eq(2)').text();
+    direccion = fila.find('td:eq(3)').text();
+    telefono = fila.find('td:eq(4)').text();
+    mail = fila.find('td:eq(5)').text();
+    idPerfil = fila.find('td:eq(6)').text();
+    estado = fila.find('td:eq(7)').text();
+    checkHabilitado= fila.find('td:eq(8)').text();
+    usuario = fila.find('td:eq(9)').text();
+    contrasena = fila.find('td:eq(10)').text();
+    idOrganizacion = fila.find('td:eq(11)').text();
     let action = checkHabilitado == '1' ? 'borrar_persona' : 'habilitar_persona';
     let confirmMessage = checkHabilitado == '1' ? "¿Está seguro de Deshabilitar al usuario "+nombre+"?" : "¿Quieres habilitar al usuario "+nombre+"?";
     let respuesta = confirm(confirmMessage);
