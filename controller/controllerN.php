@@ -435,21 +435,11 @@
         $tipoO = $_POST['tipoO'];
         $OrganizacionO = $_POST['Organizacion'];
         $periodo = $_POST['periodo'];
-        
-
-        
-        //llamo al metodo listar y le doy la variable CONSULTA
-        // $datos=$menu->listar($sql);
 
         $ninos= new Ninos();
-        // $datos=$ninos->listarNinos(1,1,2024);
+
         $datos=$ninos->listarNinos($tipoO,$OrganizacionO,$periodo);
 
-        /* $ninos= new Ninos();
-        $datos=$ninos->listar($sql); */
-
-        //imprimir los datos en JSON
-        // var_dump($datos);
         print($datos);
         break;
 

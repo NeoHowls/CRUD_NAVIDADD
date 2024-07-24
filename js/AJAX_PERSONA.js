@@ -19,12 +19,12 @@ $('#more_infos').change(function() {
   }
 });
 
+let listarPersonas = function(){
+    table = $('#myTable1').DataTable( {
+    destroy : true,
 
-let table = $('#myTable1').DataTable( {
-    // destroy : true,
 
-
-    pageLength: 20,
+    pageLength: 50,
     
     //TENGO QUE SEPARAR ESTO EN OTRO ARCHIVO
     "ajax":{
@@ -169,6 +169,7 @@ let table = $('#myTable1').DataTable( {
         { className: "dt-body-left", targets: [18] }
     ]
 } );
+}//fin funcion
 
 
 
@@ -764,7 +765,7 @@ $(document).on("click", ".btnimprimir", function(e){
                     title: respuesta[0].mensaje,
                     width: 400,
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 3000
                 });
             }else if(respuesta.length==1 && respuesta[0].error==99){
                 Swal.fire({
@@ -772,7 +773,7 @@ $(document).on("click", ".btnimprimir", function(e){
                     title: respuesta[0].mensaje,
                     width: 400,
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 3000
                 });
             }
             

@@ -200,3 +200,6 @@
 <script src="../datatables.js"></script>
 <script src="../js/idioma.js"></script>
 <script src="../js/AJAX_PERSONA.js"></script>
+<script>
+    listarPersonas();
+</script>

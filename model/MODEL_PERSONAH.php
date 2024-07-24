@@ -9,7 +9,60 @@ class PersonasH extends ConexionBD{
     public function guardarPersonaH(
         $dni, $nombre, $direccion, 
         $telefono, $mail, $idPerfil,$checkOrganizacion,
-        $usuario, $contrasena,$tipoMovimiento,$usuarioCambio){
+        $usuario, $contrasena,$checkHabilitado,$estado,$tipoMovimiento,$usuarioCambio){
+        $sql="INSERT INTO A_PERSONA_HISTORIAL
+              (
+                dni, 
+                nombre, 
+                direccion, 
+                telefono, 
+                mail, 
+                idPerfil,
+                checkOrganizacion, 
+                usuario, 
+                contrasena,
+                checkHabilitado,
+                estado,
+                tipoMovimiento,
+                usuarioCambio
+              )
+        VALUES (:dni, 
+                :nombre, 
+                :direccion, 
+                :telefono, 
+                :mail, 
+                :idPerfil,
+                :checkOrganizacion, 
+                :usuario, 
+                :contrasena,
+                :checkHabilitado,
+                :estado,
+                :tipoMovimiento,
+                :usuarioCambio
+                )";
+        $parametros =array(
+            "dni"=>$dni,
+            "nombre"=>$nombre,
+            "direccion"=>$direccion,
+            "telefono"=>$telefono,
+            "mail"=>$mail,
+            "idPerfil"=>$idPerfil,
+            "checkOrganizacion"=>$checkOrganizacion,
+            "usuario"=>$usuario,
+            "contrasena"=>$contrasena,
+            "checkHabilitado"=>$checkHabilitado,
+            "estado"=>$estado,
+            "tipoMovimiento"=>$tipoMovimiento,
+            "usuarioCambio"=>$usuarioCambio
+        );
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+        
+    }
+
+    public function guardarPersonaHG(
+        $tipoMovimiento,$usuarioCambio){
         $sql="INSERT INTO A_PERSONA_HISTORIAL
               (
                 dni, 
@@ -37,15 +90,15 @@ class PersonasH extends ConexionBD{
                 :usuarioCambio
                 )";
         $parametros =array(
-            "dni"=>$dni,
-            "nombre"=>$nombre,
-            "direccion"=>$direccion,
-            "telefono"=>$telefono,
-            "mail"=>$mail,
-            "idPerfil"=>$idPerfil,
-            "checkOrganizacion"=>$checkOrganizacion,
-            "usuario"=>$usuario,
-            "contrasena"=>$contrasena,
+            "dni"=>'*',
+            "nombre"=>'*',
+            "direccion"=>'*',
+            "telefono"=>0,
+            "mail"=>'*',
+            "idPerfil"=>0,
+            "checkOrganizacion"=>NULL,
+            "usuario"=>NULL,
+            "contrasena"=>NULL,
             "tipoMovimiento"=>$tipoMovimiento,
             "usuarioCambio"=>$usuarioCambio
         );

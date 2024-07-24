@@ -1,16 +1,18 @@
 <?php
 session_start();
   //llama al MenuModel
-  require_once("../model/MenuModel.php");
+  //require_once("../model/MenuModel.php");
 
   require_once ("../model/MODEL_PERSONA.php");
   require_once ("../model/MODEL_PERSONAH.php");
+  require_once ("../model/MODEL_ORG.php");
   require_once ("../funciones.php");
   
   //declaro una variable para poder invocar a MenuModel
-  $menu= new MenuModel();
+  //$menu= new MenuModel();
   $per = new Personas();
-  $perH= new PersonasH();
+  $perH = new PersonasH();
+  $perO = new Organizaciones();
 
   $persona = (isset($_POST['persona'])) ? $_POST['persona'] : '';
   $user_id = (isset($_POST['user_id'])) ? $_POST['user_id'] : '';
@@ -36,89 +38,12 @@ session_start();
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
   case "persona":
     //define la consulta
-    $CONSULTA = "SELECT 
-    P.id AS id, 
-    P.dni AS dni, 
-    P.nombre AS nombreP, 
-    P.direccion AS direccion, 
-    P.telefono AS telefono, 
-    P.mail AS mail, 
-    P.idPerfil AS idPerfil, 
-    P.estado AS estadoP,
-    CASE
-        WHEN P.estado = 0 THEN 'DESACTIVADO'
-        WHEN P.estado = 1 THEN 'ACTIVADO'
-    END AS estadoPersona,
-    P.usuario AS usuario, 
-    P.contrasena AS contrasena, 
-    P.checkHabilitado AS checkHabilitado,
-    CASE
-        WHEN P.checkHabilitado = 0 THEN 'DESHABILITADO'
-        WHEN P.checkHabilitado = 1 THEN 'HABILITADO'
-    END AS habilitado,
-    P.checkOrganizacion,
-    PO.idOrganizacion AS idOrganizacion,
-	O.tipo AS tipo,
-	CASE
-			WHEN O.tipo= NULL THEN 'asd'
-			WHEN O.tipo= 1 THEN 'JUNTA VECINAL'
-			WHEN O.tipo= 2 THEN 'COMÍTE VIVIENDA'
-			WHEN O.tipo= 3 THEN 'CONDOMINIO'
-			WHEN O.tipo= 4 THEN 'PROVIDENCIA'	
-	END AS organizacion,
-	--ISNULL(O.tipo, 'no posee') AS Org,
-    O.nombre AS NOMBRE_O,
-    ISNULL(O.nombre, 'no posee') AS NOMBRE_O,
-    PO.fechaIngreso AS fechaIngreso,
-    PO.fechaTermino AS fechaTermino,
-    PO.estado AS estado
-FROM A_PERSONA P
-JOIN A_DETALLE_PO PO ON P.id = PO.idPersona
-JOIN A_ORGANIZACION O ON PO.idOrganizacion = O.id
-WHERE PO.estado = 1
-
-UNION
-
-SELECT 
-    P.id AS id, 
-    P.dni AS dni, 
-    P.nombre AS nombreP, 
-    P.direccion AS direccion, 
-    P.telefono AS telefono, 
-    P.mail AS mail, 
-    P.idPerfil AS idPerfil, 
-    P.estado AS estadoP,
-    CASE
-        WHEN P.estado = 0 THEN 'DESACTIVADO'
-        WHEN P.estado = 1 THEN 'ACTIVADO'
-    END AS estadoPersona,
-    P.usuario AS usuario, 
-    P.contrasena AS contrasena, 
-    P.checkHabilitado AS checkHabilitado,
-    CASE
-        WHEN P.checkHabilitado = 0 THEN 'DESHABILITADO'
-        WHEN P.checkHabilitado = 1 THEN 'HABILITADO'
-    END AS habilitado,
-    P.checkOrganizacion,
-    0 AS idOrganizacion,
-	  null as tipo,
-	  'DIDECO' AS tipo,
-	  --null AS org,
-    NULL AS nombre,
-    'ADMINISTRACION' AS NOMBRE_O,
-    NULL AS fechaIngreso,
-    NULL AS fechaTermino,
-    0 AS estado
-FROM A_PERSONA P
-WHERE P.checkOrganizacion = 0
-ORDER BY idOrganizacion"; 
-    //llamo al metodo listar y le doy la variable CONSULTA
-    $datos=$menu->listar($CONSULTA);
-    //imprimir los datos en JSON
+    $datos=$per->listarPersonas();
+    // var_dump($datos);
     print($datos);
     break;
   
-    
+ //todo: agregar persona   
     case "add_persona":
 
       $respuesta = array();
@@ -204,7 +129,7 @@ ORDER BY idOrganizacion";
           if(count($res)==1 && $checkOrganizacion == 1){//!ingresa con organizacion
               $idPersona=$res[0]['id'];
               $per->guardarDPO($idPersona,intval($idOrganizacion),1);
-              $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'Añadir Usuario Nuevo con organizacion',$usuarioCambio);
+              $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'Añadir Usuario Nuevo con organizacion',$usuarioCambio);
               if($per->getError()==0){
                   $respuesta[$i]['action']="OK";
                   $respuesta[$i]['error']=0;
@@ -220,7 +145,7 @@ ORDER BY idOrganizacion";
                 echo json_encode($respuesta);
               }
           }else{//!ingresa sin organizacion
-            $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'Añadir Usuario Nuevo sin organizacion',$usuarioCambio);
+            $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'Añadir Usuario Nuevo sin organizacion',$usuarioCambio);
               $respuesta[$i]['action']="OK";
               $respuesta[$i]['error']=0;
               $respuesta[$i]['mensaje']="OK";
@@ -339,7 +264,7 @@ ORDER BY idOrganizacion";
         $telefono,$mail,$idPerfil,$usuario,$contrasena,$user_id);
         $per->actualizarPDO($user_id);
         $per->guardarDPO($user_id,intval($idOrganizacion),1);
-        $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'Editar Usuario con organizacion',$usuarioCambio);
+        $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'Editar Usuario con organizacion',$usuarioCambio);
         if($per->getError()==0){
           $respuesta[$i]['action']="OK";
           $respuesta[$i]['error']=0;
@@ -357,7 +282,7 @@ ORDER BY idOrganizacion";
       }else{
         $per->actualizarPersona($dni,$nombre,$direccion,
         $telefono,$mail,$idPerfil,$usuario,$contrasena,$user_id);
-        $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'Editar Usuario sin organizacion',$usuarioCambio);
+        $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'Editar Usuario sin organizacion',$usuarioCambio);
         if($per->getError()==0){
           $respuesta[$i]['action']="OK";
           $respuesta[$i]['error']=0;
@@ -388,7 +313,7 @@ ORDER BY idOrganizacion";
     //!desactivar persona
     if($estado == 1){
       $per->desactivarPersona($user_id);
-      $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'deshabilitar Persona WEB ',$usuarioCambio);
+      $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'deshabilitar Persona WEB ',$usuarioCambio);
         if($per->getError()==0){
           $respuesta[$i]['action']="OK";
           $respuesta[$i]['error']=0;
@@ -408,7 +333,7 @@ ORDER BY idOrganizacion";
         if($idPerfil==8){
 
               $per->activarPersona($user_id);
-              $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'habilitar Persona(DIDECO) sin organizacion WEB',$usuarioCambio);
+              $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'habilitar Persona(DIDECO) sin organizacion WEB',$usuarioCambio);
                 if($per->getError()==0){
                   $respuesta[$i]['action']="OK";
                   $respuesta[$i]['error']=0;
@@ -426,10 +351,10 @@ ORDER BY idOrganizacion";
 
         }else{
 
-              $resultado=$per->buscarCheckHabilitadoOrg($idOrganizacion);
+              $resultado=$perO->buscarCheckHabilitadoOrg($idOrganizacion);
               if($resultado[0]['checkHabilitado']==1){
                 $per->activarPersona($user_id);
-                $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'habilitar Persona con organizacion WEB',$usuarioCambio);
+                $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'habilitar Persona con organizacion WEB',$usuarioCambio);
                   if($per->getError()==0){
                     $respuesta[$i]['action']="OK";
                     $respuesta[$i]['error']=0;
@@ -453,91 +378,6 @@ ORDER BY idOrganizacion";
               }
         }
     }
-        /* echo($estado);
-        if($estado == 1){
-
-          echo "funciona el if de editar";
-          //define la consulta
-          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0, estado=0 WHERE id='$user_id' and idPerfil !=7";
-          //llamo al metodo listar y le doy la variable CONSULTA
-          $datos=$menu->listar($CONSULTA);
-            $CONSULTA = "SELECT * FROM A_PERSONA";
-            //llamo al metodo listar y le doy la variable CONSULTA
-            $datos=$menu->listar($CONSULTA);
-            //imprimir los datos en JSON
-            //print($datos);
-
-            $usuarioCambio = $_SESSION["nombre"];
-            $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-            ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Borrar persona (estado=0, checkHabilitado=0)')";
-            $datos=$menu->listar($CONSULTA);
-            $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
-            $datos=$menu->listar($CONSULTA);
-            print($datos);
-            
-          } else {
-            echo("este es el idPerfil");
-            $CONSULTA = "SELECT idPerfil FROM A_PERSONA WHERE id='$user_id'";
-            $datos = $menu->consultar($CONSULTA);
-            $perfilId = $datos[0]['idPerfil'];
-            echo($perfilId);
-        
-          if($perfilId==8){
-  
-          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=1,estado=1 WHERE id='$user_id' and idPerfil !=1";
-          //llamo al metodo listar y le doy la variable CONSULTA
-          $datos=$menu->listar($CONSULTA);
-            $CONSULTA = "SELECT * FROM A_PERSONA";
-            //llamo al metodo listar y le doy la variable CONSULTA
-            $datos=$menu->listar($CONSULTA);
-          }else { 
-            $CONSULTA = "SELECT idOrganizacion FROM A_DETALLE_PO WHERE idPersona='$user_id' AND estado=1";
-            $datos = $menu->consultar($CONSULTA);
-            $Org_id = $datos[0]['idOrganizacion'];
-    
-            $CONSULTA = "SELECT checkHabilitado FROM A_ORGANIZACION WHERE id='$Org_id'";
-            $datos = $menu->consultar($CONSULTA);
-            $Org_hab = $datos[0]['checkHabilitado'];
-            echo($Org_id);
-            echo($Org_hab);
-    
-            if ($Org_hab == 1) {
-                $CONSULTA1 = "UPDATE A_PERSONA SET checkHabilitado = 1, estado=1 WHERE id='$user_id'";
-                // Llama al método listar y le da la variable CONSULTA
-                $menu->listar($CONSULTA1);
-                $datos = $menu->listar($CONSULTA1);
-                $CONSULTA = "SELECT * FROM A_PERSONA";
-                // Llama al método listar y le da la variable CONSULTA
-                $datos = $menu->listar($CONSULTA);
-                // Imprimir los datos en JSON
-                print($datos);
-
-            $usuarioCambio = $_SESSION["nombre"];
-            $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,checkHabilitado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-            ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$checkHabilitado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Activar Persona (estado=1, checkHabilitado=1)')";
-            $datos=$menu->listar($CONSULTA);
-            $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
-            $datos=$menu->listar($CONSULTA);
-            print($datos);
-
-            } else {
-                // Enviar un mensaje JSON al frontend
-                $response = array(
-                    "status" => "error",
-                    "message" => "La organización está deshabilitada."
-                );
-                print(json_encode($response));
-            $usuarioCambio = $_SESSION["nombre"];
-            $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,checkHabilitado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-            ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$checkHabilitado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Error, la organizacion esta deshabilitada')";
-            $datos=$menu->listar($CONSULTA);
-            $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
-            $datos=$menu->listar($CONSULTA);
-            print($datos);
-            
-            }
-          }
-        } */
         break;
 
 //todo: habilitar y deshabilitar persona
@@ -548,7 +388,7 @@ ORDER BY idOrganizacion";
     //!deshabilitar web persona
     if($checkHabilitado == 1){
       $per->deshabilitarWebPersona($user_id);
-      $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'deshabilitar Persona WEB ',$usuarioCambio);
+      $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'deshabilitar Persona WEB ',$usuarioCambio);
         if($per->getError()==0){
           $respuesta[$i]['action']="OK";
           $respuesta[$i]['error']=0;
@@ -568,7 +408,7 @@ ORDER BY idOrganizacion";
         if($idPerfil==8){
           if($estado==1){
               $per->habilitarWebPersona($user_id);
-              $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'habilitar Persona(DIDECO) sin organizacion WEB',$usuarioCambio);
+              $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'habilitar Persona(DIDECO) sin organizacion WEB',$usuarioCambio);
                 if($per->getError()==0){
                   $respuesta[$i]['action']="OK";
                   $respuesta[$i]['error']=0;
@@ -592,10 +432,10 @@ ORDER BY idOrganizacion";
           }
         }else{
           if($estado==1){
-              $resultado=$per->buscarCheckHabilitadoOrg($idOrganizacion);
+              $resultado=$perO->buscarCheckHabilitadoOrg($idOrganizacion);
               if($resultado[0]['checkHabilitado']==1){
                 $per->habilitarWebPersona($user_id);
-                $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'habilitar Persona con organizacion WEB',$usuarioCambio);
+                $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'habilitar Persona con organizacion WEB',$usuarioCambio);
                   if($per->getError()==0){
                     $respuesta[$i]['action']="OK";
                     $respuesta[$i]['error']=0;
@@ -647,6 +487,7 @@ case "habGeneral":
       $personasIdStr = implode(',', $personasId);
       // var_dump($personasIdStr);
       $per->habilitarGeneral($personasIdStr);
+      $perH->guardarPersonaHG('Habilitar todas las Personas con organizaciones activas',$usuarioCambio);
       // echo json_encode($per);
       if($per->getError()==0){
         $respuesta[$i]['action']="OK";
@@ -664,6 +505,7 @@ case "habGeneral":
       }
   }else{
     $per->habilitarGeneral("");
+    $perH->guardarPersonaHG('Habilitar todas las Personas',$usuarioCambio);
     if($per->getError()==0){
       $respuesta[$i]['action']="OK";
       $respuesta[$i]['error']=0;
@@ -678,73 +520,14 @@ case "habGeneral":
       echo json_encode($respuesta);
     }
   }
-  
-  
-
-  
-   /* if (!empty($personasDeshabilitadasIds)){
-      $personasDeshabilitadasIdsStr = implode(',', $personasDeshabilitadasIds);
-      $per->habilitarGeneral($personasDeshabilitadasIdsStr);
-      echo json_encode($personasDeshabilitadasIdsStr);
-  }else{
-    $per->habilitarGeneral($personasDeshabilitadasIdsStr);
-    echo json_encode($personasDeshabilitadasIdsStr);
-  }  */ 
-
-  /* if($per->getError()==0){
-    $respuesta[$i]['action']="OK";
-    $respuesta[$i]['error']=0;
-    $respuesta[$i]['mensaje']="OK";
-    $i++;
-    echo json_encode($respuesta);
-}else{
-  $respuesta[$i]['action']="ERROR";
-  $respuesta[$i]['error']=99;
-  $respuesta[$i]['mensaje']="ERROR BD";
-  $i++;
-  echo json_encode($respuesta);
-} */
-
-  /* // Obtener todas las organizaciones deshabilitadas
-  $consultaOrganizaciones = "SELECT id FROM A_ORGANIZACION WHERE estado = 0 OR checkHabilitado = 0";
-  $resultadoOrganizaciones = $menu->consultar($consultaOrganizaciones);
-
-  if (count($resultadoOrganizaciones) > 0) {
-      $organizacion_idP = array_column($resultadoOrganizaciones, 'id');
-      
-      // Obtener las personas asociadas a organizaciones deshabilitadas
-      $consultaPersonasDeshabilitadas = "SELECT idPersona FROM A_DETALLE_PO WHERE estado =1 and idOrganizacion IN (" . implode(',', $organizacion_idP) . ")";
-      $personasDeshabilitadas = $menu->consultar($consultaPersonasDeshabilitadas);
-      $personasDeshabilitadasIds = array_column($personasDeshabilitadas, 'idPersona');
-  
-
-      // Excluir las personas con organizaciones deshabilitadas
-      if (!empty($personasDeshabilitadasIds)) {
-          $personasDeshabilitadasIdsStr = implode(',', $personasDeshabilitadasIds);
-          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil != 7 AND idPerfil != 8 AND id NOT IN ($personasDeshabilitadasIdsStr)";
-          $datos=$menu->listar($CONSULTA);
-      } else {
-          // Si no hay personas deshabilitadas, habilitar a todas las personas elegibles
-          $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil != 7 AND idPerfil != 8";
-          $datos=$menu->listar($CONSULTA);
-      }
-  } else {
-      // Si no hay organizaciones deshabilitadas, habilitar a todas las personas elegibles
-      $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado = 1 WHERE idPerfil != 7 AND idPerfil != 8";
-      $datos=$menu->listar($CONSULTA);
-  }
-
-  $CONSULTA = "SELECT * FROM A_PERSONA";
-  $datos = $menu->listar($CONSULTA);
-  print($datos); // Cambiado print_r por echo json_encode */
-
-break;
+  break;
 
   case "DesHabGeneral": 
     $respuesta= array();
     $i=0;
 
-        $per->DeshabilitarGeneral();    
+        $per->DeshabilitarGeneral();
+        $perH->guardarPersonaHG('Deshabilitar todas las Personas',$usuarioCambio);    
         if($per->getError()==0){
           $respuesta[$i]['action']="OK";
           $respuesta[$i]['error']=0;

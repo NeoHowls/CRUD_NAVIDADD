@@ -347,13 +347,20 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     }
  });
 
-  //deshabilitar/habiliar 
+  //!deshabilitar/habiliar 
 $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     fila = $(this).closest('tr');           
-    user_id = $(this).closest('tr').find('td:eq(0)').text() ;
-    nombre = $(this).closest('tr').find('td:eq(1)').text() ;
-    checkHabilitado = $(this).closest('tr').find('td:eq(7)').text() ;
+    user_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
+    nombre = fila.find('td:eq(1)').text();
+    direccion = fila.find('td:eq(2)').text();
+    tipo = fila.find('td:eq(3)').text();
+    fechaIngreso = fila.find('td:eq(4)').text();
+    checkVigente= fila.find('td:eq(5)').text();
+    numProvidencia= fila.find('td:eq(6)').text();
+    checkHabilitado=fila.find('td:eq(7)').text();
+    estado= fila.find('td:eq(8)').text();
+    aniosVigente= fila.find('td:eq(9)').text();
     let action = checkHabilitado == '1' ? 'borrar_persona' : 'habilitar_persona';
     let confirmMessage =  checkHabilitado== '1' ? "¿Está seguro que desesa deshabilitar el registro de la organizacion "+nombre+"?" : "¿Quieres habilitar el registro de la organizacion "+nombre+"?"  ;
     let respuesta = confirm(confirmMessage);
@@ -363,24 +370,47 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
           url: "../controller/controllerO.php?op=Habilitar_organizacion",
           type: "POST",
           datatype:"json",    
-            data: { user_id: user_id, checkHabilitado: checkHabilitado,nombre:nombre} ,
+            data: { user_id:user_id,nombre:nombre, direccion:direccion, tipo:tipo, fechaIngreso:fechaIngreso,aniosVigente:aniosVigente, checkVigente:checkVigente, numProvidencia:numProvidencia, checkHabilitado:checkHabilitado, estado:estado} ,
           success: function(data) {
             table.ajax.reload(null, false);
            },
            error: function(xhr, status, error) {
             console.error("Error en la operación:", error);
         }
-        });	    	    
+        }).done(function(response){ 
+            console.log(response);
+            respuesta =response;
+            // alert(respuesta.length);
+            if(respuesta.length==1 && respuesta[0].error==0){
+                
+                Swal.fire({
+                    icon: "success",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+            
+        });//fin done		    	    
     }
  });
 
- // Deshabilitar General 
+ //! Deshabilitar General--------------------------------------------------- 
 $(document).on("click", ".btnDesHabGeneral", function(e){
     e.preventDefault(); // Evita el comportamiento normal del submit, es decir, recarga total de la página
     let fila = $(this).closest('tr');           
     let user_id = fila.find('td:eq(0)').text();
     nombre = $(this).closest('tr').find('td:eq(1)').text() ;
-    let checkHabilitado = $(this).closest('tr').find('td:eq(7)').text() ;
+    let checkHabilitado = 1;
     let confirmMessage = "¿Quieres deshabilitar todos los registros?";
     let respuesta = confirm(confirmMessage);
   
@@ -389,14 +419,37 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
             url: "../controller/controllerO.php?op=DesHabGeneralO",
             type: "POST",
             dataType: "json",
-            data: { user_id: user_id, checkHabilitado:checkHabilitado,nombre:nombre},
+            data: {  user_id: user_id, checkHabilitado:checkHabilitado, nombre:nombre },
             success: function(data) {
                 table.ajax.reload(null, false);
             },
             error: function(xhr, status, error) {
                 console.error("Error en la operación:", error);
             }
-        });	    	    
+        }).done(function(response){ 
+            // console.log(response);
+            respuesta =response;
+            // alert(respuesta.length);
+            if(respuesta.length==1 && respuesta[0].error==0){
+                
+                Swal.fire({
+                    icon: "success",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+            
+        });//fin done		    	    
     }
 });
 
@@ -406,7 +459,7 @@ $(document).on("click", ".btnHabGeneral", function(e){
     let fila = $(this).closest('tr');           
     let user_id = fila.find('td:eq(0)').text();
     nombre = $(this).closest('tr').find('td:eq(1)').text() ;
-    let checkHabilitado = $(this).closest('tr').find('td:eq(7)').text() ;
+    let checkHabilitado = 0;
     let confirmMessage = "¿Quieres habilitar todos los registros?";
     let respuesta = confirm(confirmMessage);
   
@@ -422,7 +475,30 @@ $(document).on("click", ".btnHabGeneral", function(e){
             error: function(xhr, status, error) {
                 console.error("Error en la operación:", error);
             }
-        });	    	    
+        }).done(function(response){ 
+            // console.log(response);
+            respuesta =response;
+            // alert(respuesta.length);
+            if(respuesta.length==1 && respuesta[0].error==0){
+                
+                Swal.fire({
+                    icon: "success",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+            
+        });//fin done	    	    
     }
 });
 

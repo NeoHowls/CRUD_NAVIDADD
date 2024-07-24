@@ -2,6 +2,16 @@
 session_start();
   //llama al MenuModel
   require_once("../model/MenuModel.php");
+
+  require_once("../model/MODEL_ORG.php");
+  require_once("../model/MODEL_ORGH.php");
+  require_once("../model/MODEL_PERSONA.php");
+  require_once ("../funciones.php");
+
+  $org = new Organizaciones();
+  $orgH = new OrganizacionesH();
+  $per = new Personas();
+
   
   //declaro una variable para poder invocar a MenuModel
   $menu= new MenuModel();
@@ -17,6 +27,7 @@ session_start();
   $checkHabilitado = (isset($_POST['checkHabilitado'])) ? $_POST['checkHabilitado'] : '';
   $estado = (isset($_POST['estado'])) ? $_POST['estado'] : '';
   $fechaIngreso = date('Y-m-d H:i:s', strtotime($fechaIngreso));
+  $usuarioCambio = $_SESSION["nombre"];
 
   echo ($aniosVigente);
   //Armo un GET "op" donde OP signific operacion
@@ -213,9 +224,96 @@ ORDER BY tipo";
          print($datos);
 
       break;
+  //! DESHABILITA OPCION WEB DE LA PERSONA Y LA ORGANIZACION      
+  case "Habilitar_organizacion":
+    $respuesta= array();
+    $i=0;
+    $personasId = array();
+    $j=0;
+    if($checkHabilitado == 1){
+        $datos=$org->consultarDeshabilitarPorOrg($user_id);
+        if(count($datos)!=0){
+            foreach($datos as $key => $value){
+              $personasId[$j]=$value['idPersona'];
+              $j++;
+            }
+            $personasIdStr = implode(',', $personasId);
+            $per->deshabilitarPorOrganizacion($personasIdStr);
+            $org->deshabilitarWebOrg($user_id);
+            $orgH->guardarOrganizacionH($nombre, $direccion, 
+              $tipo, $fechaIngreso, $checkVigente, 
+              $numProvidencia,'Organizacion deshabilitada y Personas Correspondientes',$usuarioCambio,$checkHabilitado,$estado);
+            if($org->getError()==0 && $orgH->getError()==0){
+                $respuesta[$i]['action']="OK";
+                $respuesta[$i]['error']=0;
+                $respuesta[$i]['mensaje']="Organizacion deshabilitada y Personas Correspondientes";
+                $i++;
+                echo json_encode($respuesta);
+            }elseif($orgH->getError()!=0){
+                $respuesta[$i]['action']="ERROR";
+                $respuesta[$i]['error']=99;
+                $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
+                $i++;
+                echo json_encode($respuesta);
+            }else{
+                $respuesta[$i]['action']="ERROR";
+                $respuesta[$i]['error']=99;
+                $respuesta[$i]['mensaje']="ERROR BD";
+                $i++;
+                echo json_encode($respuesta);
+            }
+        }else{
+            $org->deshabilitarWebOrg($user_id);
+            $orgH->guardarOrganizacionH($nombre, $direccion, 
+              $tipo, $fechaIngreso, $checkVigente, 
+              $numProvidencia,'Organizacion deshabilitada',$usuarioCambio,$checkHabilitado,$estado);
+            if($org->getError()==0 && $orgH->getError()==0){
+                $respuesta[$i]['action']="OK";
+                $respuesta[$i]['error']=0;
+                $respuesta[$i]['mensaje']="Organizacion deshabilitada";
+                $i++;
+                echo json_encode($respuesta);
+            }elseif($orgH->getError()!=0){
+                $respuesta[$i]['action']="ERROR";
+                $respuesta[$i]['error']=99;
+                $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
+                $i++;
+                echo json_encode($respuesta);
+            }else{
+                $respuesta[$i]['action']="ERROR";
+                $respuesta[$i]['error']=99;
+                $respuesta[$i]['mensaje']="ERROR BD";
+                $i++;
+                echo json_encode($respuesta);
+            }
+        }
+    }else{
+        $org->habilitarWebOrg($user_id);
+        $orgH->guardarOrganizacionH($nombre, $direccion, 
+          $tipo, $fechaIngreso, $checkVigente, 
+          $numProvidencia,'Organizacion habilitadas',$usuarioCambio,$checkHabilitado,$estado);
+        if($org->getError()==0 && $orgH->getError()==0){
+            $respuesta[$i]['action']="OK";
+            $respuesta[$i]['error']=0;
+            $respuesta[$i]['mensaje']="Organizacion habilitadas";
+            $i++;
+            echo json_encode($respuesta);
+        }elseif($orgH->getError()!=0){
+            $respuesta[$i]['action']="ERROR";
+            $respuesta[$i]['error']=99;
+            $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
+            $i++;
+            echo json_encode($respuesta);
+        }else{
+            $respuesta[$i]['action']="ERROR";
+            $respuesta[$i]['error']=99;
+            $respuesta[$i]['mensaje']="ERROR BD";
+            $i++;
+            echo json_encode($respuesta);
+        }
+    }
 
-      case "Habilitar_organizacion":
-        echo($checkHabilitado);
+    /*     echo($checkHabilitado);
         if($checkHabilitado == 1){
           echo "funciona el if de habilitar organizacion";
           
@@ -271,12 +369,12 @@ ORDER BY tipo";
            $datos=$menu->listar($CONSULTA);
            print($datos);
     
-    }
+    } */
     break;
     
     case "borrar_organizacion":
-      echo($estado);
-      if($estado == 1){
+        echo($estado);
+        if($estado == 1){
         echo "funciona el if de editar";
 
         $CONSULTA ="SELECT idPersona FROM A_DETALLE_PO WHERE idOrganizacion='$user_id' and estado=1";
@@ -325,7 +423,7 @@ ORDER BY tipo";
           $datos=$menu->listar($CONSULTA1);
 
         $CONSULTA1 = "UPDATE A_ORGANIZACION SET estado = 1 WHERE id='$user_id'";
-      //llamo al metodo listar y le doy la variable CONSULTA
+        //llamo al metodo listar y le doy la variable CONSULTA
         $menu->listar($CONSULTA1);
         $datos=$menu->listar($CONSULTA1);
         $CONSULTA = "SELECT * FROM A_ORGANIZACION";
@@ -343,66 +441,101 @@ ORDER BY tipo";
             $datos=$menu->listar($CONSULTA);
             print($datos);
   
-}
-break;
-    
+      }
+    break;
+    //todo: HABILITAR GENERAL ORGANIZACION
     case "habGeneralO":
-      //define la consulta
-      $CONSULTA = "UPDATE A_ORGANIZACION SET checkHabilitado = 1";
-      //llamo al metodo listar y le doy la variable CONSULTA
-      $datos=$menu->listar($CONSULTA);
-        
-      $CONSULTA = "SELECT * FROM A_ORGANIZACION";
-      //llamo al metodo listar y le doy la variable CONSULTA
-      $datos=$menu->listar($CONSULTA);
-      //imprimir los datos en JSON
-      print($datos);
-    
-      $usuarioCambio = $_SESSION["nombre"];
-      $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
-      checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-      '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Habilitar a todas las organizaciones')";
-      $datos=$menu->listar($CONSULTA);
-      $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
-      $datos=$menu->listar($CONSULTA);
-        
-      
-      break;
-    
-      case "DesHabGeneralO": 
+      $respuesta= array();
+      $i=0;
+      $personasId = array();
+      $j=0;
+
+      $org->habilitarGeneral();
+      $orgH->guardarOrganizacionHG('Habilitar Todas las Organizaciones',$usuarioCambio,$checkHabilitado);
+      if($org->getError()==0 && $orgH->getError()==0){
+        $respuesta[$i]['action']="OK";
+        $respuesta[$i]['error']=0;
+        $respuesta[$i]['mensaje']="Habilitar Todas las Organizaciones";
+        $i++;
+        echo json_encode($respuesta);
+      }elseif($orgH->getError()!=0){
+        $respuesta[$i]['action']="ERROR";
+        $respuesta[$i]['error']=99;
+        $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
+        $i++;
+        echo json_encode($respuesta);
+      }else{
+        $respuesta[$i]['action']="ERROR";
+        $respuesta[$i]['error']=99;
+        $respuesta[$i]['mensaje']="ERROR BD";
+        $i++;
+        echo json_encode($respuesta);
+      }
+    break;
+    //todo: DESHABILITAR GENERAL ORGANIZACION
+    case "DesHabGeneralO": 
         //define la consulta
 
-        $CONSULTA ="SELECT idPersona FROM A_DETALLE_PO WHERE estado=1";
-        $datos=$menu->consultar($CONSULTA);
-        $persona_ids = array_column($datos, 'idPersona');
-        $persona_ids_string = implode(',', $persona_ids);
+        $respuesta= array();
+        $i=0;
+        $personasId = array();
+        $j=0;
 
-        if (!empty($persona_ids_string)) {
-        $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0 WHERE id IN ($persona_ids_string)";
-        $menu->listar($CONSULTA);
-        }
+        $datos=$org->consultarDeshabilitar();
+        if(count($datos)!=0){
+            foreach($datos as $key => $value){
+              $personasId[$j]=$value['idPersona'];
+              $j++;
+            }
+            $personasIdStr = implode(',', $personasId);
+            $per->deshabilitarPorOrganizacion($personasIdStr);
+            $org->DeshabilitarGeneral();
+            
+            $orgH->guardarOrganizacionHG('Deshabilitar Todas las Organizaciones',$usuarioCambio,$checkHabilitado);
 
-        $CONSULTA = "UPDATE A_ORGANIZACION SET checkHabilitado = 0";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-        $CONSULTA = "SELECT * FROM A_ORGANIZACION";
-          //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-          //print($datos);
-          //imprimir los datos en JSON
-          //print($datos);
-      
-         $usuarioCambio = $_SESSION["nombre"];
-         $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
-         checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-         '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Deshabilitar a todas las organizaciones')";
-         $datos=$menu->listar($CONSULTA);
-         $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
-         $datos=$menu->listar($CONSULTA);
-         print($datos);
-        
-      
-        break;
+            if($org->getError()==0 && $orgH->getError()==0){
+              $respuesta[$i]['action']="OK";
+              $respuesta[$i]['error']=0;
+              $respuesta[$i]['mensaje']="Todas las Organizaciones deshabilitadas y Personas Correspondientes";
+              $i++;
+              echo json_encode($respuesta);
+            }elseif($orgH->getError()!=0){
+              $respuesta[$i]['action']="ERROR";
+              $respuesta[$i]['error']=99;
+              $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
+              $i++;
+              echo json_encode($respuesta);
+            }else{
+              $respuesta[$i]['action']="ERROR";
+              $respuesta[$i]['error']=99;
+              $respuesta[$i]['mensaje']="ERROR BD";
+              $i++;
+              echo json_encode($respuesta);
+            }
+        }else{
+          $org->DeshabilitarGeneral();
+          $orgH->guardarOrganizacionHG('Deshabilitar Todas las Organizaciones',$usuarioCambio,$checkHabilitado);
+          if($org->getError()==0  && $orgH->getError()==0){
+            $respuesta[$i]['action']="OK";
+            $respuesta[$i]['error']=0;
+            $respuesta[$i]['mensaje']="Todas las organizaciones deshabilitadas";
+            $i++;
+            echo json_encode($respuesta);
+          }elseif($orgH->getError()!=0){
+            $respuesta[$i]['action']="ERROR";
+            $respuesta[$i]['error']=99;
+            $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
+            $i++;
+            echo json_encode($respuesta);
+          }else{
+            $respuesta[$i]['action']="ERROR";
+            $respuesta[$i]['error']=99;
+            $respuesta[$i]['mensaje']="ERROR BD";
+            $i++;
+            echo json_encode($respuesta);
+          }
+        }   
+    break;
   }
   
 ?>
