@@ -159,26 +159,26 @@ class Personas extends ConexionBD{
                                     $user_id){
         
         $sql="UPDATE A_PERSONA 
-                    SET dni = '$dni',
-                    nombre ='$nombre',
-                    direccion ='$direccion',
-                    telefono ='$telefono',
-                    mail ='$mail',
-                    idPerfil ='$idPerfil',
-                    usuario ='$usuario',
-                    contrasena ='$contrasena' 
-                WHERE id='$user_id'";
+                    SET dni = :dni,
+                    nombre =:nombre,
+                    direccion =:direccion,
+                    telefono =:telefono,
+                    mail =:mail,
+                    idPerfil =:idPerfil,
+                    usuario =:usuario,
+                    contrasena =:contrasena 
+                WHERE id=:user_id";
         
         $parametros =array(
-            "dni"=>$dni,
-            "nombre"=>$nombre,
-            "direccion"=>$direccion,
-            "telefono"=>$telefono,
-            "mail"=>$mail,
-            "idPerfil"=>$idPerfil,
-            "usuario"=>$usuario,
-            "contrasena"=>$contrasena,
-            "user_id"=>$user_id
+            ":dni"=>$dni,
+            ":nombre"=>$nombre,
+            ":direccion"=>$direccion,
+            ":telefono"=>$telefono,
+            ":mail"=>$mail,
+            ":idPerfil"=>$idPerfil,
+            ":usuario"=>$usuario,
+            ":contrasena"=>$contrasena,
+            ":user_id"=>$user_id
         );
         $this->connect();
         $query = $this->ejecutarOrden($sql, $parametros);
