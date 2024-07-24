@@ -630,7 +630,7 @@ $(document).on("click", ".btnimprimir", function(e){
  );    
 
 //Borrar/activar estado
-$(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
+/* $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     fila = $(this).closest('tr');           
     user_id = $(this).closest('tr').find('td:eq(0)').text() ;
@@ -654,6 +654,67 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
             console.error("Error en la operación:", error);
         }
         });	    	    
+    }
+ }); */
+//todo: Borrar/activar perona (estado)
+ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
+    e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
+    fila = $(this).closest('tr');           
+    user_id = fila.find('td:eq(0)').text(); // capturo el ID		            
+    dni = fila.find('td:eq(1)').text();
+    nombre = fila.find('td:eq(2)').text();
+    direccion = fila.find('td:eq(3)').text();
+    telefono = fila.find('td:eq(4)').text();
+    mail = fila.find('td:eq(5)').text();
+    idPerfil = fila.find('td:eq(6)').text();
+    estado = fila.find('td:eq(7)').text();
+    checkHabilitado= fila.find('td:eq(8)').text();
+    usuario = fila.find('td:eq(9)').text();
+    contrasena = fila.find('td:eq(10)').text();
+    idOrganizacion = fila.find('td:eq(11)').text();
+    let action = estado == '1' ? 'borrar_persona' : 'habilitar_persona';
+    let confirmMessage = estado == '1' ? "¿Está seguro de Desactivar el registro de "+nombre+"?" : "¿Quieres activar al usuario "+nombre+"?"  ;
+    let respuesta = confirm(confirmMessage);
+    if (respuesta) {            
+        $.ajax({
+          url: "../controller/controllerP.php?op=borrar_persona",
+          type: "POST",
+          datatype:"json",    
+            data: { 
+                user_id:user_id,dni:dni,nombre:nombre,direccion:direccion,telefono:telefono,mail:mail,idPerfil:idPerfil,estado:estado,
+            checkHabilitado:checkHabilitado,usuario:usuario,contrasena:contrasena,checkOrganizacion:checkOrganizacion, idOrganizacion:idOrganizacion
+            },
+          success: function(data) {
+            table.ajax.reload(null, false);
+           },
+           error: function(xhr, status, error) {
+            console.error("Error en la operación:", error);
+            alert(error);
+        }
+        }).done(function(response){ 
+            // console.log(response);
+            respuesta =JSON.parse(response);
+            // alert(respuesta.length);
+            if(respuesta.length==1 && respuesta[0].error==0){
+                
+                Swal.fire({
+                    icon: "success",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+            
+        });//fin done		    	    
     }
  });
 
@@ -693,26 +754,27 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
             alert(error);
         }
         }).done(function(response){ 
-            console.log(response);
-            // respuesta =(response);
-            /* if(respuesta.length==1 && respuesta[0].error==0){
+            // console.log(response);
+            respuesta =JSON.parse(response);
+            // alert(respuesta.length);
+            if(respuesta.length==1 && respuesta[0].error==0){
                 
                 Swal.fire({
                     icon: "success",
-                    title: "HABILITADO GENERAL DE PERSONAS",
-                    width: 300,
+                    title: respuesta[0].mensaje,
+                    width: 400,
                     showConfirmButton: false,
                     timer: 2000
                 });
             }else if(respuesta.length==1 && respuesta[0].error==99){
                 Swal.fire({
                     icon: "error",
-                    title: "FALLO AL HABILITAR PERSONAS",
-                    width: 300,
+                    title: respuesta[0].mensaje,
+                    width: 400,
                     showConfirmButton: false,
                     timer: 2000
                 });
-            } */
+            }
             
         });//fin done		    	    
     }

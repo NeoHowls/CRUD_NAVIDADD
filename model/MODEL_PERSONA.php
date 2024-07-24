@@ -135,7 +135,27 @@ class Personas extends ConexionBD{
         $query = $this->iniciar($sql, $parametros);
         return $query;
     }
-    
+
+    //!--------------------------------------
+    //!--------------------------------------
+    //!DESACTIVAR ACTIVAR PERSONA (BORRAR)
+
+    public function desactivarPersona($user_id){
+        $sql="UPDATE A_PERSONA SET checkHabilitado=0, estado=0 WHERE id=:user_id and idPerfil !=7";
+        $parametros =array(":user_id"=>$user_id);
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+    }
+    public function activarPersona($user_id){
+        $sql="UPDATE A_PERSONA SET checkHabilitado=1, estado=1 WHERE id=:user_id and idPerfil !=7";
+        $parametros =array(":user_id"=>$user_id);
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+    }
+
+
     //!--------------------------------------
     //!--------------------------------------
     //!HABILITAR GENERAL PERSONA WEB
