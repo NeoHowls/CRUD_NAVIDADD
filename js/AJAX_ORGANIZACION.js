@@ -360,7 +360,7 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
     numProvidencia= fila.find('td:eq(6)').text();
     checkHabilitado=fila.find('td:eq(7)').text();
     estado= fila.find('td:eq(8)').text();
-    aniosVigente= fila.find('td:eq(9)').text();
+    // aniosVigente= fila.find('td:eq(9)').text();
     let action = checkHabilitado == '1' ? 'borrar_persona' : 'habilitar_persona';
     let confirmMessage =  checkHabilitado== '1' ? "¿Está seguro que desesa deshabilitar el registro de la organizacion "+nombre+"?" : "¿Quieres habilitar el registro de la organizacion "+nombre+"?"  ;
     let respuesta = confirm(confirmMessage);
@@ -370,7 +370,7 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
           url: "../controller/controllerO.php?op=Habilitar_organizacion",
           type: "POST",
           datatype:"json",    
-            data: { user_id:user_id,nombre:nombre, direccion:direccion, tipo:tipo, fechaIngreso:fechaIngreso,aniosVigente:aniosVigente, checkVigente:checkVigente, numProvidencia:numProvidencia, checkHabilitado:checkHabilitado, estado:estado} ,
+            data: { user_id:user_id,nombre:nombre, direccion:direccion, tipo:tipo, fechaIngreso:fechaIngreso, checkVigente:checkVigente, numProvidencia:numProvidencia, checkHabilitado:checkHabilitado, estado:estado},
           success: function(data) {
             table.ajax.reload(null, false);
            },
@@ -379,8 +379,8 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
         }
         }).done(function(response){ 
             console.log(response);
-            respuesta =response;
-            // alert(respuesta.length);
+            respuesta =JSON.parse(response);
+            //alert(respuesta.length);
             if(respuesta.length==1 && respuesta[0].error==0){
                 
                 Swal.fire({
