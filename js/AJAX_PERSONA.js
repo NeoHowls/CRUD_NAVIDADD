@@ -260,8 +260,9 @@ $('#formUsuarios').submit(function(e){
             if(respuesta[i].error==7)
                 {$('#m_organizacion').html(respuesta[i].mensaje);}
             if(respuesta[i].error==8)
-                {$('#m_userPass').html(respuesta[i].mensaje);}
-            
+                {$('#m_user').html(respuesta[i].mensaje);}
+            if(respuesta[i].error==9)
+                {$('#m_pass').html(respuesta[i].mensaje);}
             }
  
         });//fin done;			
@@ -303,10 +304,10 @@ $('#O_ID').on('change click', function() {
     $('#m_organizacion').text('');
 }); 
 $('#usuario').on('change click', function() {
-    $('#m_userPass').text('');
+    $('#m_user').text('');
 });
 $('#contrasena').on('change click', function() {
-    $('#m_userPass').text('');
+    $('#m_pass').text('');
 });
 //!----------------------------------------------------
 //!----------------------------------------------------
@@ -320,7 +321,8 @@ function limpiarContenidoMensajes(){
     $('#m_telefono').text('');
     $('#m_perfil').text('');
     $('#m_organizacion').text('');
-    $('#m_userPass').text('');
+    $('#m_user').text('');
+    $('#m_pass').text('');
 }
 
 //!----------------------------------------------------

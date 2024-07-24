@@ -107,19 +107,20 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <label for="usuario" class="col-form-label text-center">Usuario:</label>
                                                 <div class="text-center">
                                                     <input type="text" class="form-control" id="usuario" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <span id='m_user'></span>
+                                            <div class="col-md-12">
                                                 <label for="contrasena" class="col-form-label text-center">Contraseña:</label>
                                                 <div class="text-center">
                                                     <input type="text" class="form-control" id="contrasena" readonly>
                                                 </div>
                                             </div>
-                                            <span id='m_userPass'></span>
+                                            <span id='m_pass'></span>
                                         </div>
                                         <div class="form-group row" id="checkbox-container" style="display: none;">
                                             <label class="col-form-label col-md-auto" for="flexSwitchCheckDefault">Desea agregar Organización:</label>

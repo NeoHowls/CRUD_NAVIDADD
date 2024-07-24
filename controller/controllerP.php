@@ -331,7 +331,7 @@ ORDER BY idOrganizacion";
       }
       if($contrasena=='' || $contrasena==null){
         $respuesta[$i]['action']='ERROR';
-        $respuesta[$i]['error']=8;
+        $respuesta[$i]['error']=9;
         $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar contrasena</p>';
         $i++;
       }
