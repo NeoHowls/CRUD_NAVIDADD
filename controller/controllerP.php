@@ -185,6 +185,7 @@ ORDER BY idOrganizacion";
         $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Perfil</p>';
         $i++;
       }
+      
       if($checkOrganizacion==1){
         if($idOrganizacion=='' || $idOrganizacion==null){
           $respuesta[$i]['action']='ERROR';
@@ -321,6 +322,18 @@ ORDER BY idOrganizacion";
           $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Organización</p>';
           $i++;
         }
+      }
+      if($usuario=='' || $usuario==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=8;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar usuario</p>';
+        $i++;
+      }
+      if($contrasena=='' || $contrasena==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=8;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar contrasena</p>';
+        $i++;
       }
     if(count($respuesta)==0){
       if($checkOrganizacion == 1){

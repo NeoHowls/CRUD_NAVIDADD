@@ -200,6 +200,9 @@ $('#dni').on('input', actualizarUsuarioYContrasena);
 
 var fila; //captura la fila, para editar o eliminar
 //submit para el Alta y Actualización
+//todo: guardar editar------------------------------------
+//todo: guardar editar------------------------------------
+//todo: guardar editar------------------------------------
 $('#formUsuarios').submit(function(e){                         
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     //CAPTURA EL DATO DEL FORMULARIO
@@ -256,8 +259,9 @@ $('#formUsuarios').submit(function(e){
                 {$('#m_perfil').html(respuesta[i].mensaje);}
             if(respuesta[i].error==7)
                 {$('#m_organizacion').html(respuesta[i].mensaje);}
-           
-
+            if(respuesta[i].error==8)
+                {$('#m_userPass').html(respuesta[i].mensaje);}
+            
             }
  
         });//fin done;			
@@ -298,6 +302,27 @@ $('#idPerfil').on('change click', function() {
 $('#O_ID').on('change click', function() {
     $('#m_organizacion').text('');
 }); 
+$('#usuario').on('change click', function() {
+    $('#m_userPass').text('');
+});
+$('#contrasena').on('change click', function() {
+    $('#m_userPass').text('');
+});
+//!----------------------------------------------------
+//!----------------------------------------------------
+
+
+function limpiarContenidoMensajes(){
+    $('#m_dni').text('');
+    $('#m_nombre').text('');
+    $('#m_direccion').text('');
+    $('#m_mail').text('');
+    $('#m_telefono').text('');
+    $('#m_perfil').text('');
+    $('#m_organizacion').text('');
+    $('#m_userPass').text('');
+}
+
 //!----------------------------------------------------
 //!----------------------------------------------------
 
@@ -357,9 +382,11 @@ $(document).ready(function() {
         }
     });
 
-    // Inicializar el formulario al hacer clic en el botón "Nuevo"
+    //todo: Inicializar el formulario al hacer clic en el botón "Nuevo"
     $("#btnNuevo").click(function() {
         // Limpiar campos
+        limpiarContenidoMensajes();
+        $("#id").val('');
         $("#dni").val('');
         $("#nombre").val('');
         $("#direccion").val('');
@@ -441,8 +468,12 @@ $(document).ready(function() {
 
 
 
-//Editar       
+//todo: Editar -------------------------------------------
+//todo: Editar ------------------------------------------- 
+//todo: Editar -------------------------------------------       
 $(document).on("click", ".btnEditar", function() {
+    limpiarContenidoMensajes();
+    // $("#dni").val('');
     $('#usuario').prop('readonly', false);
     $('#contrasena').prop('readonly', false);	        
     opcion = "edit_persona"; // editar
@@ -526,6 +557,7 @@ $(document).on("click", ".btnEditar", function() {
         $('#idPerfil option').each(function() {
             var valor = $(this).val();
             if (valor != 7 && valor != 8 && valor != '') {
+                checkOrganizacion = 0;//!segun felipe
                 $(this).hide();
             }
         });
@@ -533,6 +565,7 @@ $(document).on("click", ".btnEditar", function() {
         $('#idPerfil option').each(function() {
             var valor = $(this).val();
             if (valor != 9 && valor != 10 && valor != '') {
+                checkOrganizacion = 1;//!segun felipe
                 $(this).hide();
             }
         });

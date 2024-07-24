@@ -119,6 +119,7 @@
                                                     <input type="text" class="form-control" id="contrasena" readonly>
                                                 </div>
                                             </div>
+                                            <span id='m_userPass'></span>
                                         </div>
                                         <div class="form-group row" id="checkbox-container" style="display: none;">
                                             <label class="col-form-label col-md-auto" for="flexSwitchCheckDefault">Desea agregar Organización:</label>
@@ -174,7 +175,7 @@
                             <th class='never'>id</th><!-- 14 -->
                             <th >Dni/RUT</th><!-- 15 -->
                             <th >Nombre</th><!-- 16 -->
-                            <th class='never' >Dirección</th><!-- 17 -->
+                            <th class= "none">Dirección</th><!-- 17 -->
                             <th>Teléfono</th><!-- 18 -->
                             <th>Mail</th><!-- 19 -->
                             <th class='never' style='text-align: center;'>idPerfil</th><!-- 20 -->
