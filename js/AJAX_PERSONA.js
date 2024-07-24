@@ -442,7 +442,6 @@ $(document).ready(function() {
 
 
 //Editar       
-
 $(document).on("click", ".btnEditar", function() {
     $('#usuario').prop('readonly', false);
     $('#contrasena').prop('readonly', false);	        
@@ -516,6 +515,27 @@ $(document).on("click", ".btnEditar", function() {
         $('#checkbox-container').hide();
         $('#more_infos').prop('checked', false).prop('disabled', false).change();
         $('#conditional_parts').hide();
+    }
+
+    //! poner solo los perfiles seleccionables al editar
+    //! si es representante o providencia || administrador o dideco
+
+    $('#idPerfil option').show(); // Primero muestra todas las opciones
+    
+    if (idPerfil == 7 || idPerfil == 8) {
+        $('#idPerfil option').each(function() {
+            var valor = $(this).val();
+            if (valor != 7 && valor != 8 && valor != '') {
+                $(this).hide();
+            }
+        });
+    } else if (idPerfil == 9 || idPerfil == 10) {
+        $('#idPerfil option').each(function() {
+            var valor = $(this).val();
+            if (valor != 9 && valor != 10 && valor != '') {
+                $(this).hide();
+            }
+        });
     }
 
     // Comprueba si el Check está ON u OFF
