@@ -94,9 +94,10 @@ let table = $('#myTable1').DataTable( {
         
                 let editarButton = '';
                     if (row.checkHabilitado == '1') {
-                        editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" data-toggle="tooltip" data-placement="top" title="Editar registro" ><i class="bi bi-pencil-square icon-100"></i></button>';
+                        // editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" data-toggle="tooltip" data-placement="top" title="Editar registro" ><i class="bi bi-pencil-square icon-100"></i></button>';
+                        editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-toggle="tooltip" data-placement="top" title="Editar registro" ><i class="bi bi-pencil-square icon-100"></i></button>';
                     } else {
-                        editarButton = '<button type="button" class="btn btn-secondary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal"  data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-pencil-square icon-100"></i></button>';
+                        editarButton = '<button type="button" class="btn btn-secondary text-light btnEditar me-2" data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-pencil-square icon-100"></i></button>';
                     }
                     
                 let nombre1 = data["nombreP"];
@@ -168,6 +169,8 @@ let table = $('#myTable1').DataTable( {
         { className: "dt-body-left", targets: [18] }
     ]
 } );
+
+
 
 // Funciones para generar usuario y contraseña
 function generarUsuario(nombre) {
@@ -265,18 +268,27 @@ $('#formUsuarios').submit(function(e){
                 {$('#m_pass').html(respuesta[i].mensaje);}
             }
  
-        });//fin done;			
+        		
         
         //EL MODAL SE DESTRUYE/ESCONDE NUEVAMENTE COMO SE LIMPIA LOS DATOS        
-        /* if(respuesta.length==1 && respuesta[0].error==0){
-            console.log("correcto");
+        if(respuesta.length==1 && respuesta[0].error==0){
+            // console.log("correcto");
+            $('#modalCRUD').modal('hide');
+            Swal.fire({
+                icon: "success",
+                title: "PERSONA INGRESADO / ACTUALIZADO",
+                width: 300,
+                showConfirmButton: false,
+                timer: 2000
+            });
         }else if(respuesta.length>0){
-            console.log("errores");
+            //console.log("errores");
+            
         }else{
             $('#modalCRUD').modal('hide');
         }
-        	 */	
-        									     			
+        
+        });//fin done;										     			
 });
         
 //todo: verificacion de mensaje error al seleccionar input
@@ -645,7 +657,7 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     }
  });
 
- //deshabilitar/habilitar 
+ //! deshabilitar/habilitar 
  $(document).on("click", ".btnAutorizar, .btnDeshabilitar", function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     fila = $(this).closest('tr');           
@@ -661,7 +673,10 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
           url: "../controller/controllerP.php?op=Habilitar_persona",
           type: "POST",
           datatype:"json",    
-            data: { user_id: user_id, checkHabilitado:checkHabilitado, dni: dni },
+            data: { 
+                user_id:user_id,dni:dni,nombre:nombre,direccion:direccion,telefono:telefono,mail:mail,idPerfil:idPerfil,estado:estado,
+            checkHabilitado:checkHabilitado,usuario:usuario,contrasena:contrasena,checkOrganizacion:checkOrganizacion, idOrganizacion:idOrganizacion
+            },
           success: function(data) {
             table.ajax.reload(null, false);
            },
@@ -669,7 +684,29 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
             console.error("Error en la operación:", error);
             alert(error);
         }
-        });	    	    
+        }).done(function(response){ 
+            console.log(response);
+            // respuesta =(response);
+            /* if(respuesta.length==1 && respuesta[0].error==0){
+                
+                Swal.fire({
+                    icon: "success",
+                    title: "HABILITADO GENERAL DE PERSONAS",
+                    width: 300,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: "FALLO AL HABILITAR PERSONAS",
+                    width: 300,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            } */
+            
+        });//fin done		    	    
     }
  });
 
@@ -790,6 +827,9 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
     $('#fondo-modal').hide();
   }
 
+  function abrirModal() {
+    $('#modalCRUD').show();
+  }
  
   function crearpdf(usuario1,contrasena1,nombre1,nombreO,organizacion1){
     // alert(

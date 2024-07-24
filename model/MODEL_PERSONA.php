@@ -89,24 +89,7 @@ class Personas extends ConexionBD{
         return $query;
     }
 
-    public function guardarDPO(
-        $idPersona, $idOrganizacion, $estado){
-        $sql="INSERT INTO A_DETALLE_PO
-              (
-                idPersona, idOrganizacion, estado
-              )
-        VALUES (:idPersona, :idOrganizacion, :estado)";
-        $parametros =array(
-            "idPersona"=>$idPersona,
-            "idOrganizacion"=>$idOrganizacion,
-            "estado"=>$estado
-        );
-        $this->connect();
-        $query = $this->ejecutarOrden($sql, $parametros);
-        return $query;
-        
-    }
-
+    //!DESHABILITAR GENERAL PERSONA WEB
     public function DeshabilitarGeneral(){
         $sql="UPDATE A_PERSONA 
               SET checkHabilitado=0
@@ -127,6 +110,35 @@ class Personas extends ConexionBD{
         return $query;
     }
 
+    //!DESHABILITAR Y HABILITAR WEB
+    public function deshabilitarWebPersona($user_id){
+        $sql="UPDATE A_PERSONA SET checkHabilitado=0 WHERE id=:user_id and idPerfil !=7";
+        $parametros =array(":user_id"=>$user_id);
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+    }
+    public function habilitarWebPersona($user_id){
+        $sql="UPDATE A_PERSONA SET checkHabilitado=1 WHERE id=:user_id and idPerfil !=7";
+        $parametros =array(":user_id"=>$user_id);
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+    }
+    //todo: cambiarlo a model organizacion
+    public function buscarCheckHabilitadoOrg($idOrganizacion){
+        $sql="SELECT checkHabilitado FROM A_ORGANIZACION 
+            WHERE id=:idOrganizacion";
+        // var_dump($sql);  
+        $parametros =array("idOrganizacion"=>$idOrganizacion);
+        $this->connect();
+        $query = $this->iniciar($sql, $parametros);
+        return $query;
+    }
+    
+    //!--------------------------------------
+    //!--------------------------------------
+    //!HABILITAR GENERAL PERSONA WEB
     public function habilitarGeneral($idPersonas){
         
         $sql="UPDATE A_PERSONA 
@@ -197,6 +209,33 @@ class Personas extends ConexionBD{
         $this->connect();
         $query = $this->iniciar($sql, $parametros);
 
+        return $query;
+    }
+
+    //!GUARDAR PDO
+    public function guardarDPO(
+        $idPersona, $idOrganizacion, $estado){
+        $sql="INSERT INTO A_DETALLE_PO
+              (
+                idPersona, idOrganizacion, estado
+              )
+        VALUES (:idPersona, :idOrganizacion, :estado)";
+        $parametros =array(
+            "idPersona"=>$idPersona,
+            "idOrganizacion"=>$idOrganizacion,
+            "estado"=>$estado
+        );
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+        
+    }
+    //!ACTUALIZAR PDO
+    public function actualizarPDO($user_id){
+        $sql="UPDATE A_DETALLE_PO SET estado=0,fechaTermino=GETDATE() WHERE idPersona=:user_id";
+        $parametros =array(":user_id"=>$user_id);
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
         return $query;
     }
 }//cierre clase

@@ -244,6 +244,7 @@ ORDER BY idOrganizacion";
     break; 
 
     case "edit_persona":
+
       $resultado = array();
       $respuesta = array();
       $i=0;
@@ -252,20 +253,20 @@ ORDER BY idOrganizacion";
       $ecorreo = '/^[a-zA-Z0-9.!#$%&*+=?^_`{|}~-]+@[a-zA-Z0-9-]+\.(?:[a-zA-Z0-9-]+)*$/';
       $econtacto = '/^(?:\d{4}|\d{9})$/';
 
-      if(verificarExpresion($dni,$erut)==false){
-        $respuesta[$i]['action']='ERROR';
-        $respuesta[$i]['error']=1;
-        $respuesta[$i]['mensaje']='<p class="mensaje">Rut inválido debe incluir guión y dígito verificador</p>';
-        $i++;
-      }
-      if(verificarExpresion($dni,$erut)==true){
-        if(validadorRut($dni)==false){
-            $respuesta[$i]['action']='ERROR';
-            $respuesta[$i]['error']=1;
-            $respuesta[$i]['mensaje']='<p class="mensaje">Rut inválido debe incluir guión y dígito verificador</p>';
-            $i++;
+        if(verificarExpresion($dni,$erut)==false){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=1;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Rut inválido debe incluir guión y dígito verificador</p>';
+          $i++;
         }
-      }
+        if(verificarExpresion($dni,$erut)==true){
+          if(validadorRut($dni)==false){
+              $respuesta[$i]['action']='ERROR';
+              $respuesta[$i]['error']=1;
+              $respuesta[$i]['mensaje']='<p class="mensaje">Rut inválido debe incluir guión y dígito verificador</p>';
+              $i++;
+          }
+        }
 
       $resultado=$per->buscarPersonaIdDni($user_id,$dni,1);
       // var_dump($resultado);
@@ -281,9 +282,6 @@ ORDER BY idOrganizacion";
             }
         }
       }
-
-
-
 
       if(verificarExpresion($nombre,$enombre)==false){
         $respuesta[$i]['action']='ERROR';
@@ -339,6 +337,9 @@ ORDER BY idOrganizacion";
       if($checkOrganizacion == 1){
         $per->actualizarPersona($dni,$nombre,$direccion,
         $telefono,$mail,$idPerfil,$usuario,$contrasena,$user_id);
+        $per->actualizarPDO($user_id);
+        $per->guardarDPO($user_id,intval($idOrganizacion),1);
+        $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'Editar Usuario con organizacion',$usuarioCambio);
         if($per->getError()==0){
           $respuesta[$i]['action']="OK";
           $respuesta[$i]['error']=0;
@@ -356,6 +357,7 @@ ORDER BY idOrganizacion";
       }else{
         $per->actualizarPersona($dni,$nombre,$direccion,
         $telefono,$mail,$idPerfil,$usuario,$contrasena,$user_id);
+        $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'Editar Usuario sin organizacion',$usuarioCambio);
         if($per->getError()==0){
           $respuesta[$i]['action']="OK";
           $respuesta[$i]['error']=0;
@@ -376,68 +378,6 @@ ORDER BY idOrganizacion";
       //!errores
       echo json_encode($respuesta);
     }
-      /* if($checkOrganizacion == 1){
-        echo "funciona el if de editar";
-      //define la consulta
-      $CONSULTA = "UPDATE A_PERSONA SET dni = '$dni',nombre ='$nombre',direccion ='$direccion',telefono ='$telefono',mail ='$mail',
-      idPerfil ='$idPerfil',estado = '$estado',usuario ='$usuario',contrasena ='$contrasena' WHERE id='$user_id'";
-      //llamo al metodo listar y le doy la variable CONSULTA
-      $datos=$menu->listar($CONSULTA);
-        $CONSULTA = "SELECT * FROM A_PERSONA";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-        //imprimir los datos en JSON
-      //print($datos);
-      $CONSULTA = "SELECT id FROM A_PERSONA WHERE dni='$dni'";
-      $datos=$menu->consultar($CONSULTA);
-      $user_id=$datos[0]['id'];
-      $CONSULTA2 = "SELECT id,fechaIngreso  FROM A_ORGANIZACION WHERE id='$idOrganizacion'";
-      $datos=$menu->listar($CONSULTA2);
-      $fechaIngreso=$datos[0]['fechaIngreso'];    
-      $fechaIngreso = date('Y-m-d H:i');
-
-      $dato_org=$menu->listar($CONSULTA2);
-      echo($user_id);
-      $CONSULTA="UPDATE A_DETALLE_PO SET estado=0,fechaTermino='$fechaIngreso' WHERE idPersona='$user_id'";
-      ECHO("ESTE ES EL ECHO DE UPDATE PO");
-      echo($CONSULTA);
-      $menu->listar($CONSULTA);
-    
-
-      $CONSULTA ="INSERT INTO A_DETALLE_PO (idPersona, idOrganizacion, estado,fechaIngreso) VALUES ('$user_id','$idOrganizacion' , 1,'$fechaIngreso')";
-
-      $menu->listar($CONSULTA);
-
-       $usuarioCambio = $_SESSION["nombre"];
-       $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-       ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Editar Usuario con Organizacion')";
-       $datos=$menu->listar($CONSULTA);
-       $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
-       $datos=$menu->listar($CONSULTA);
-      print($datos);
-      
- 
-
-      }else {
-        $CONSULTA1 = "UPDATE A_PERSONA SET dni = '$dni',nombre ='$nombre',direccion ='$direccion',telefono ='$telefono',mail ='$mail',idPerfil ='$idPerfil'
-        ,estado = '$estado',usuario ='$usuario',contrasena ='$contrasena' WHERE id='$user_id'";
-        $menu->listar($CONSULTA1);
-
-        $CONSULTA = "SELECT * FROM A_PERSONA";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-        //imprimir los datos en JSON
-         print($datos);
-
-         $usuarioCambio = $_SESSION["nombre"];
-        $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-        ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Editar Usuario Dideco o Administrador')";
-        $datos=$menu->listar($CONSULTA);
-        $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
-        $datos=$menu->listar($CONSULTA);
-        print($datos);
-
-      } */
 
       break;
       
@@ -530,28 +470,73 @@ ORDER BY idOrganizacion";
         break;
 
   case "Habilitar_persona":
-
+    //!deshabilitar web persona
     if($checkHabilitado == 1){
+      $per->deshabilitarWebPersona($user_id);
+      $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'deshabilitar Persona con organizacion tabla',$usuarioCambio);
+        if($per->getError()==0){
+          $respuesta[$i]['action']="OK";
+          $respuesta[$i]['error']=0;
+          $respuesta[$i]['mensaje']="OK checko 1";
+          $i++;
 
-      echo "funciona el if de editar";
-      //define la consulta
-      $CONSULTA = "UPDATE A_PERSONA SET checkHabilitado=0 WHERE id='$user_id' and idPerfil !=7";
-      //llamo al metodo listar y le doy la variable CONSULTA
-      $datos=$menu->listar($CONSULTA);
-        $CONSULTA = "SELECT * FROM A_PERSONA";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-        //imprimir los datos en JSON
-        //print($datos);
-        $usuarioCambio = $_SESSION["nombre"];
-        $CONSULTA = "INSERT INTO A_PERSONA_HISTORIAL (dni,nombre,direccion,telefono,mail,idPerfil,estado,checkHabilitado,usuario,contrasena,usuarioCambio,fechaCambio,tipoMovimiento) values 
-        ('$dni', '$nombre', '$direccion', '$telefono', '$mail', '$idPerfil', '$estado', '$checkHabilitado', '$usuario', '$contrasena','$usuarioCambio',getdate(),'Deshabilitar Usuarios y DIDECO (checkHabilitado=0)')";
-        $datos=$menu->listar($CONSULTA);
-        $CONSULTA = "SELECT * FROM A_PERSONA_HISTORIAL";
-        $datos=$menu->listar($CONSULTA);
-        print($datos);
-        
-      } else {
+          echo json_encode($respuesta);
+        }else{
+          $respuesta[$i]['action']="ERROR";
+          $respuesta[$i]['error']=99;
+          $respuesta[$i]['mensaje']="ERROR BD";
+          $i++;
+          echo json_encode($respuesta);
+        }
+    }else{
+        if($idPerfil==8){
+          $per->habilitarWebPersona($user_id);
+          $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'habilitar Persona(DIDECO) sin organizacion tabla',$usuarioCambio);
+            if($per->getError()==0){
+              $respuesta[$i]['action']="OK";
+              $respuesta[$i]['error']=0;
+              $respuesta[$i]['mensaje']="OK checko 1";
+              $i++;
+
+              echo json_encode($respuesta);
+            }else{
+              $respuesta[$i]['action']="ERROR";
+              $respuesta[$i]['error']=99;
+              $respuesta[$i]['mensaje']="ERROR BD";
+              $i++;
+              echo json_encode($respuesta);
+            }
+        }else{
+          $resultado=$per->buscarCheckHabilitadoOrg($idOrganizacion);
+          if(count($resultado)==1){
+            $per->habilitarWebPersona($user_id);
+            $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,'habilitar Persona con organizacion tabla',$usuarioCambio);
+              if($per->getError()==0){
+                $respuesta[$i]['action']="OK";
+                $respuesta[$i]['error']=0;
+                $respuesta[$i]['mensaje']="OK checko 1";
+                $i++;
+
+                echo json_encode($respuesta);
+              }else{
+                $respuesta[$i]['action']="ERROR";
+                $respuesta[$i]['error']=99;
+                $respuesta[$i]['mensaje']="ERROR BD";
+                $i++;
+                echo json_encode($respuesta);
+              }
+          }else{
+            $respuesta[$i]['action']="ERROR";
+            $respuesta[$i]['error']=99;
+            $respuesta[$i]['mensaje']="La organización está deshabilitada";
+            $i++;
+            echo json_encode($respuesta);
+          }
+        }
+    }
+
+      //!habilitar web personas
+      /* else {
         echo("este es el idPerfil");
         $CONSULTA = "SELECT idPerfil FROM A_PERSONA WHERE id='$user_id'";
         $datos = $menu->consultar($CONSULTA);
@@ -613,7 +598,7 @@ ORDER BY idOrganizacion";
                 print($datos);
             }
         }
-      }
+      } */
         break;
 
 
