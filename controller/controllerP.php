@@ -372,7 +372,7 @@ session_start();
               }else{
                 $respuesta[$i]['action']="ERROR";
                 $respuesta[$i]['error']=99;
-                $respuesta[$i]['mensaje']="La organización está deshabilitada";
+                $respuesta[$i]['mensaje']="La organización está desactivada";
                 $i++;
                 echo json_encode($respuesta);
               }

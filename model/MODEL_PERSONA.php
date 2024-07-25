@@ -62,7 +62,7 @@ class Personas extends ConexionBD{
         return $query;
     }
 
-    //!DESHABILITAR GENERAL PERSONA WEB
+    //todo: DESHABILITAR GENERAL PERSONA WEB
     public function DeshabilitarGeneral(){
         $sql="UPDATE A_PERSONA 
               SET checkHabilitado=0
@@ -83,7 +83,7 @@ class Personas extends ConexionBD{
         return $query;
     }
 
-    //!DESHABILITAR Y HABILITAR WEB
+    //todo: DESHABILITAR Y HABILITAR WEB
     public function deshabilitarWebPersona($user_id){
         $sql="UPDATE A_PERSONA SET checkHabilitado=0 WHERE id=:user_id and idPerfil !=7";
         $parametros =array(":user_id"=>$user_id);
@@ -98,12 +98,10 @@ class Personas extends ConexionBD{
         $query = $this->ejecutarOrden($sql, $parametros);
         return $query;
     }
-    
+    //todo--------------------------------------
+    //todo--------------------------------------
 
-    //!--------------------------------------
-    //!--------------------------------------
-    //!DESACTIVAR ACTIVAR PERSONA (BORRAR)
-
+    //todo: DESACTIVAR ACTIVAR PERSONA (BORRAR)
     public function desactivarPersona($user_id){
         $sql="UPDATE A_PERSONA SET checkHabilitado=0, estado=0 WHERE id=:user_id and idPerfil !=7";
         $parametros =array(":user_id"=>$user_id);
@@ -118,11 +116,10 @@ class Personas extends ConexionBD{
         $query = $this->ejecutarOrden($sql, $parametros);
         return $query;
     }
-
-
-    //!--------------------------------------
-    //!--------------------------------------
-    //!HABILITAR GENERAL PERSONA WEB
+    //todo--------------------------------------
+    //todo--------------------------------------
+    
+    //todo: HABILITAR GENERAL PERSONA WEB
     public function habilitarGeneral($idPersonas){
         
         $sql="UPDATE A_PERSONA 
@@ -141,7 +138,8 @@ class Personas extends ConexionBD{
 
     }
 
-    //!DESHABILITAR PERSONAS POR ORGANIZACION (por que la organizacion se desabilito)
+    //todo: DESHABILITAR PERSONAS POR ORGANIZACION (por que la organizacion se desabilito)
+    //! SE USA EN EL DESHABILITAR ORG
     public function deshabilitarPorOrganizacion($idPersonas){
     
         $sql="UPDATE A_PERSONA 
@@ -152,7 +150,19 @@ class Personas extends ConexionBD{
         
         return $query;
     }
-
+    //todo: DESACTIVAR PERSONAS POR ORGANIZACION (por que la organizacion se desabilito)
+    //! SE USA EN EL DESACTIVAR ORG
+    public function desactivarPorOrganizacion($idPersonas){
+    
+        $sql="UPDATE A_PERSONA 
+                SET checkHabilitado=0, estado=0 
+                WHERE id IN (".$idPersonas.")";
+        $this->connect();
+        $query = $this->ejecutarOrden($sql);
+        
+        return $query;
+    }
+    //todo: ACTUALIZAR PERSONA
     public function actualizarPersona($dni,$nombre,$direccion,
                                     $telefono,$mail,$idPerfil,
                                     $usuario,$contrasena,
@@ -186,6 +196,7 @@ class Personas extends ConexionBD{
 
     }
 
+    //todo: BUSCAR PERSONAS (ID,DNI)
     public function buscarPersonaIdDni($id,$dni,$estado){
         $sql="SELECT P.id id, P.dni dni
             FROM A_PERSONA P
@@ -200,7 +211,7 @@ class Personas extends ConexionBD{
         return $query;
     }
 
-    //!GUARDAR PDO
+    //todo: GUARDAR PDO
     public function guardarDPO(
         $idPersona, $idOrganizacion, $estado){
         $sql="INSERT INTO A_DETALLE_PO
@@ -218,7 +229,7 @@ class Personas extends ConexionBD{
         return $query;
         
     }
-    //!ACTUALIZAR PDO
+    //todo: ACTUALIZAR PDO
     public function actualizarPDO($user_id){
         $sql="UPDATE A_DETALLE_PO SET estado=0,fechaTermino=GETDATE() WHERE idPersona=:user_id";
         $parametros =array(":user_id"=>$user_id);
@@ -227,7 +238,7 @@ class Personas extends ConexionBD{
         return $query;
     }
 
-    //!listar Persona
+    //todo: listar Persona
     public function listarPersonas(){
         $sql = "SELECT 
                 P.id AS id, 

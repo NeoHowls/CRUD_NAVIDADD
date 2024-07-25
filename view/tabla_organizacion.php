@@ -136,63 +136,58 @@
                   </button>
               </div>
           <form id="formUsuarios">    
-          <div class="modal-body" style="background: #E7E7E7">
-                  <div class="row">
-                    <div class="col-lg-12">
-                        <div class="form-group" style = "text-align: center;">
-                            <label for="" class="col-form-label">Nombre:</label>
-                            <input type="text" class="form-control" id="nombre">
-                        </div>
-                        <div class="form-group" style = "text-align: center;">
-                            <label for="" class="col-form-label">Dirección:</label>
-                            <input type="text" class="form-control" id="direccion">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-6" style = "text-align: center;">
-                                <label for="tipo" class="col-form-label">Tipo:</label>
-                                <select name="cars" id="tipo" class = "form-control">
+                <div class="modal-body" style="background: #E7E7E7">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group" style = "text-align: center;">
+                                    <label for="" class="col-form-label">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombre">
+                                </div>
+                            </div>
+                        </div><!-- cierre primera fila-->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group" style = "text-align: center;">
+                                    <label for="" class="col-form-label">Dirección:</label>
+                                    <input type="text" class="form-control" id="direccion">
+                                </div>
+                            </div>
+                        </div><!-- cierre segunda fila-->
+                        <div class="row">
+                            <div class="col-lg-12" style = "text-align: center;">
+                                    <label for="tipo" class="col-form-label">Tipo:</label>
+                                    <select name="cars" id="tipo" class = "form-control">
+                                    <option value="">Selecciona una opción</option>
+                                    <option value=1>JUNTA VECINAL</option>
+                                    <option value=2>COMÍTE VIVIENDA</option>
+                                    <option value=3>CONDOMINIO</option>
+                                    <option value=4>PROVIDENCIA</option> 
+                                    </select>
+                            </div>
+                        </div><!-- cierre tercera fila-->
+                        <!-- <div class="row">
+                            <div class="col-lg-12" style = "text-align: center;">
+                                    <label for="" class="col-form-label">Fecha Ingreso:</label>
+                                    <input type="datetime-local" class="form-control" id="fechaIngreso">
+                            </div>
+                        </div>cierre cuarta fila -->
+                        <div class="row">
+                            <div class="col-lg-12" style = "text-align: center;">
+                                <label for="aniosVigente" class="col-form-label">Años Vigente:</label>
+                                <select name="cars" id="aniosVigente" class = "form-control">
                                 <option value="">Selecciona una opción</option>
-                                  <option value=1>JUNTA VECINAL</option>
-                                  <option value=2>COMÍTE VIVIENDA</option>
-                                  <option value=3>CONDOMINIO</option>
-                                  <option value=4>PROVIDENCIA</option> 
-                                </select>
-                        </div>
-                        <div class="col-lg-6" style = "text-align: center;">
-                                <label for="" class="col-form-label">Fecha Ingreso:</label>
-                                <input type="datetime-local" class="form-control" id="fechaIngreso">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-6" style = "text-align: center;">
-                            <label for="aniosVigente" class="col-form-label">Años Vigente:</label>
-                            <select name="cars" id="aniosVigente" class = "form-control">
-                            <option value="">Selecciona una opción</option>
-                                  <option value=1>1</option>
-                                  <option value=4>4</option> 
-                                </select>
-                        </div>
-                        <div class="col-lg-6" style="text-align: center;" id="numProvidenciaGroup">
-                    <label for="numProvidencia" class="col-form-label">Número de Providencia:</label>
-                    <input type="text" class="form-control" id="numProvidencia">
+                                    <option value=1>1</option>
+                                    <option value=4>4</option> 
+                                    </select>
+                            </div>
+                        </div><!-- cierre quinta fila-->
+                        <div class="row">
+                            <div class="col-lg-12" style="text-align: center;" id="numProvidenciaGroup">
+                                <label for="numProvidencia" class="col-form-label">Número de Providencia:</label>
+                                <input type="text" class="form-control" id="numProvidencia">
+                            </div>
+                        </div><!-- cierre sexta fila-->
                 </div>
-                    </div>
-                        <!-- <div class="form-group">
-                            <label for="" class="col-form-label">Check Vigente:</label>
-                            <input type="text" class="form-control" id="checkVigente">
-                        </div> -->
-                        <!--<div class="form-group">
-                            <label for="" class="col-form-label">Habilitado:</label>
-                            <input type="text" class="form-control" id="checkHabilitado">
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-form-label">Estado:</label>
-                            <input type="text" class="form-control" id="estado">
-                        </div>-->
-                    </div>
-                      
-                  </div>
               <div class="modal-footer" style="justify-content: center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                   <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>

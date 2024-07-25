@@ -75,7 +75,7 @@ class Organizaciones extends ConexionBD{
                 --fechaIngreso, --automatico getdate
                 checkVigente, 
                 numProvidencia,
-                checkHabilitado, 
+                --checkHabilitado,--automatico 1 
                 --estado --activado 1
             ) 
         VALUES ( 
@@ -103,7 +103,7 @@ class Organizaciones extends ConexionBD{
         
     }
 
-    //!Buscar el checkHabilitado de una Org
+    //todo: Buscar el checkHabilitado de una Org
     public function buscarCheckHabilitadoOrg($idOrganizacion){
         $sql="SELECT checkHabilitado FROM A_ORGANIZACION 
             WHERE id=:idOrganizacion";
@@ -114,7 +114,7 @@ class Organizaciones extends ConexionBD{
         return $query;
     }
 
-    //!Buscar Organizacion
+    //todo: Buscar Organizacion
     public function buscarOrganizacion($nombre,$estado){
         $sql="SELECT id,nombre
             FROM A_ORGANIZACION
@@ -126,7 +126,7 @@ class Organizaciones extends ConexionBD{
         return $query;
     }
 
-    //!DESHABILITAR GENERAL WEB
+    //todo: DESHABILITAR GENERAL WEB
     public function DeshabilitarGeneral(){
         $sql="UPDATE A_ORGANIZACION 
               SET checkHabilitado=0";
@@ -134,14 +134,24 @@ class Organizaciones extends ConexionBD{
         $query = $this->ejecutarOrden($sql);
         return $query;
     }
-    //!BUSCAR ID DE PERSONAS DE DETALLEPO ACTIVAS 
+    //todo: HABILITAR GENERAL ORGANIZACION WEB
+    public function habilitarGeneral(){
+        
+        $sql="UPDATE A_ORGANIZACION SET checkHabilitado = 1";
+        $this->connect();
+        $query = $this->ejecutarOrden($sql);
+        
+        return $query;
+
+    }
+    //todo: BUSCAR ID DE PERSONAS DE DETALLEPO ACTIVAS 
     public function consultarDeshabilitar(){
         $sql="SELECT idPersona FROM A_DETALLE_PO WHERE estado=1";
         $this->connect();
         $query = $this->iniciar($sql);
         return $query;
     }
-
+    //todo: BUSCAR ID DE PERSONAS DE DETALLEPO ACTIVAS PERTENECIENTES A UNA ORG EN ESPECIFICO
     public function consultarDeshabilitarPorOrg($user_id){
         $sql="SELECT idPersona FROM A_DETALLE_PO 
             WHERE idOrganizacion=:user_id and estado=1";
@@ -153,7 +163,7 @@ class Organizaciones extends ConexionBD{
     }
 
 
-    //!DESHABILITAR Y HABILITAR WEB ORGANIZACION
+    //todo: DESHABILITAR Y HABILITAR WEB ORGANIZACION
     public function deshabilitarWebOrg($user_id){
         $sql="UPDATE A_ORGANIZACION SET checkHabilitado = 0 WHERE id=:user_id";
         $parametros =array(":user_id"=>$user_id);
@@ -168,42 +178,26 @@ class Organizaciones extends ConexionBD{
         $query = $this->ejecutarOrden($sql, $parametros);
         return $query;
     }
+    //todo--------------------------------------
+    //todo--------------------------------------
+
     
-
-    //!--------------------------------------
-    //!--------------------------------------
     //!DESACTIVAR ACTIVAR ORGANIZACION (BORRAR)
-
-    public function desactivarPersona($user_id){
-        $sql="UPDATE A_PERSONA SET checkHabilitado=0, estado=0 WHERE id=:user_id and idPerfil !=7";
+    public function desactivarOrg($user_id){
+        $sql="UPDATE A_ORGANIZACION SET checkHabilitado=0, estado=0 WHERE id=:user_id";
         $parametros =array(":user_id"=>$user_id);
         $this->connect();
         $query = $this->ejecutarOrden($sql, $parametros);
         return $query;
     }
-    public function activarPersona($user_id){
-        $sql="UPDATE A_PERSONA SET checkHabilitado=1, estado=1 WHERE id=:user_id and idPerfil !=7";
+    public function activarOrg($user_id){
+        $sql="UPDATE A_ORGANIZACION SET checkHabilitado=1, estado=1 WHERE id=:user_id";
         $parametros =array(":user_id"=>$user_id);
         $this->connect();
         $query = $this->ejecutarOrden($sql, $parametros);
         return $query;
     }
-
-
-    //!--------------------------------------
-    //!--------------------------------------
-    //todo: HABILITAR GENERAL ORGANIZACION WEB
-    public function habilitarGeneral(){
-        
-        $sql="UPDATE A_ORGANIZACION SET checkHabilitado = 1";
-        $this->connect();
-        $query = $this->ejecutarOrden($sql);
-        
-        return $query;
-
-    }
-
-
-
+    //todo--------------------------------------
+    //todo--------------------------------------
 }
 ?>

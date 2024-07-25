@@ -197,7 +197,7 @@ $('#formUsuarios').submit(function(e){
 });
         
  
-
+//todo: ANAÑIR--------------------------------------------------------------------------
 $("#btnNuevo").click(function(){
     opcion = "add_organizacion"; // Indica que se está agregando una nueva organización
     user_id = null; // Reinicia el ID del usuario a null o lo que sea adecuado en tu lógica
@@ -237,7 +237,7 @@ $("#btnNuevo").click(function(){
 });
 
 
-//Editar       
+//todo: Editar-----------------------------------------------------------------       
 $(document).on("click", ".btnEditar", function() {	        
     opcion = "edit_organizacion";//editar
 
@@ -312,7 +312,7 @@ $(document).on("click", ".btnEditar", function() {
 
 
 
-//funcion para que los formularios se puedan enviar con el enter
+//todo: funcion para que los formularios se puedan enviar con el enter
 window.addEventListener("keydown", (e) => {
     if (e.keyCode === 13) {
         e.preventDefault(); // Previene el comportamiento por defecto del Enter
@@ -320,13 +320,19 @@ window.addEventListener("keydown", (e) => {
     }
   });
 
-//Borrar/activar estado
+//todo: desacticar/activar  POR ORGANIZACION Y PERSONAL ASOCIADO
 $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     fila = $(this).closest('tr');           
-    user_id = $(this).closest('tr').find('td:eq(0)').text() ;
-    nombre = $(this).closest('tr').find('td:eq(1)').text() ;
-    estado = $(this).closest('tr').find('td:eq(8)').text() ;
+    user_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
+    nombre = fila.find('td:eq(1)').text();
+    direccion = fila.find('td:eq(2)').text();
+    tipo = fila.find('td:eq(3)').text();
+    fechaIngreso = fila.find('td:eq(4)').text();
+    checkVigente= fila.find('td:eq(5)').text();
+    numProvidencia= fila.find('td:eq(6)').text();
+    checkHabilitado=fila.find('td:eq(7)').text();
+    estado= fila.find('td:eq(8)').text();
     let action = estado == '1' ? 'borrar_persona' : 'habilitar_persona';
     let confirmMessage = estado == '1' ? "¿Está seguro de Desactivar el registro de "+nombre+"?" : "¿Quieres activar el registro de  "+nombre+"?"  ;
     let respuesta = confirm(confirmMessage);
@@ -336,18 +342,41 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
           url: "../controller/controllerO.php?op=borrar_organizacion",
           type: "POST",
           datatype:"json",    
-            data: { user_id:user_id, estado:estado,nombre:nombre},
+            data: { user_id:user_id,nombre:nombre, direccion:direccion, tipo:tipo, fechaIngreso:fechaIngreso, checkVigente:checkVigente, numProvidencia:numProvidencia, checkHabilitado:checkHabilitado, estado:estado},
           success: function(data) {
             table.ajax.reload(null, false);
            },
            error: function(xhr, status, error) {
             console.error("Error en la operación:", error);
         }
-        });	    	    
+        }).done(function(response){ 
+            //console.log(response);
+            respuesta =JSON.parse(response);
+            //alert(respuesta.length);
+            if(respuesta.length==1 && respuesta[0].error==0){
+                
+                Swal.fire({
+                    icon: "success",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+            
+        });//fin done	    	    
     }
  });
 
-  //!deshabilitar/habiliar WEB POR ORGANIZACION Y PERSONAL ASOCIADO
+  //todo: deshabilitar/habiliar WEB POR ORGANIZACION Y PERSONAL ASOCIADO
 $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     fila = $(this).closest('tr');           
@@ -404,7 +433,7 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
     }
  });
 
- //! Deshabilitar General--------------------------------------------------- 
+ //todo: Deshabilitar General--------------------------------------------------- 
 $(document).on("click", ".btnDesHabGeneral", function(e){
     e.preventDefault(); // Evita el comportamiento normal del submit, es decir, recarga total de la página
     let fila = $(this).closest('tr');           
@@ -453,7 +482,7 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
     }
 });
 
-// Habilitar General 
+//todo: Habilitar General------------------------------------------------------ 
 $(document).on("click", ".btnHabGeneral", function(e){
     e.preventDefault(); // Evita el comportamiento normal del submit, es decir, recarga total de la página
     let fila = $(this).closest('tr');           
