@@ -89,8 +89,8 @@
       $respuesta = array();
       $i=0;
       $erut = '/^[0-9]{7,8}\-[0-9kK]{1}$/';
-      $enombre = '/^[a-zA-Z ]+$/';
-
+      $enombre = '/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/';
+      //$enombre='/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g';
       $ninos= new Ninos();
       
       if($check_nac==0){
@@ -139,13 +139,18 @@
               }
           }
       }
-      
-      if(verificarExpresion($nombre,$enombre)==false){
+      if($nombre=='' || $nombre==NULL){
         $respuesta[$i]['action']='ERROR';
         $respuesta[$i]['error']=2;
         $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar nombre</p>';
         $i++;
       }
+      /* if(verificarExpresion($nombre,$enombre)==false){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=2;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar nombre</p>';
+        $i++;
+      } */
       if($periodo=='' || $periodo==0){
         $respuesta[$i]['action']='ERROR';
         $respuesta[$i]['error']=3;
@@ -265,7 +270,9 @@
       $respuesta = array();
       $i=0;
       $erut = '/^[0-9]{7,8}\-[0-9kK]{1}$/';
-      $enombre = '/^[a-zA-Z ]+$/';
+      //$enombre = '/^[a-zA-Z ]+$/';
+      $enombre = '/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/';
+      //$enombre='/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g';
 
       $ninos= new Ninos();
       // $user_id
@@ -326,13 +333,18 @@
           }
           
       }
-      
-      if(verificarExpresion($nombre,$enombre)==false){
+      if($nombre=='' || $nombre==NULL){
         $respuesta[$i]['action']='ERROR';
         $respuesta[$i]['error']=2;
         $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar nombre</p>';
         $i++;
       }
+      /* if(verificarExpresion($nombre,$enombre)==false){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=2;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar nombre</p>';
+        $i++;
+      } */
       if($periodo=='' || $periodo==0){
         $respuesta[$i]['action']='ERROR';
         $respuesta[$i]['error']=3;

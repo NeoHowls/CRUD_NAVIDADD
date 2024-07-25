@@ -939,13 +939,11 @@ $(document).on("click", ".btnBorrar", function(e){
           url: "../controller/controllerN.php?op=eliminarNino",
           type: "POST",
           datatype:"json",    
-            data: { idNino:idNino, dni:dni, nombre:nombre, sexo:sexo, edad:edad, periodo:periodo, descripcion:descripcion, 
-            naciemiento:naciemiento, etnia:etnia, nacion:nacion,/* comuna:comuna, */check_dis:check_dis, 
-            ceguera:ceguera, sordera:sordera, mudez:mudez, fisica:fisica,
-             mental:mental, psiquica:psiquica, 
-             ceguera_p:ceguera_p,sordera_p:sordera_p,mudez_p:mudez_p, 
-             fisica_p:fisica_p,mental_p:mental_p, psiquica_p:psiquica_p, 
-             check_nac:check_nac, /* id_usuario:id_usuario, */ organizacion:organizacion},
+            data: { id:id,nombre:nombre,dni:dni,sexo:sexo,edad:edad,periodo:periodo,descripcion:descripcion,naciemiento:naciemiento,
+                etnia:etnia,nacion:nacion,comuna:comuna,check_nac:check_nac,idOrganizacion:idOrganizacion,check_dis:check_dis,
+                ceguera:ceguera,ceguera:ceguera,sordera:sordera,mudez:mudez,fisica:fisica,mental:mental,psiquica:psiquica,
+                ceguera_p:ceguera_p,sordera_p:sordera_p,mudez_p:mudez_p,fisica_p:fisica_p,mental_p:mental_p,psiquica_p:psiquica_p
+            },
           success: function(data) {
             table.ajax.reload(null, false);
            },

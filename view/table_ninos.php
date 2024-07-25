@@ -290,7 +290,7 @@
                             </div>  
                         </div>
                         <div class="row">
-                        <input type="text" class="form-control" id="idNino" disabled>
+                        <input type="text" class="form-control" id="idNino" disabled style="display: none;">
                           <div class="col-lg-12" style = "text-align: center;" >   
                             <label for="" class="col-form-label">DNI/RUT</label>
                             <input type="text" class="form-control" id="dni">
