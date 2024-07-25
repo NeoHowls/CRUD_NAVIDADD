@@ -1,12 +1,11 @@
 <?php
+  session_start();
   //llama al MenuModel
   // require_once("../model/MenuModel.php");
   require_once ("../model/MODEL_NINOS.php");
-
+  require_once ("../model/MODEL_NINOSH.php");
   require_once ("../funciones.php");
-
-  session_start();
-    
+  $ninosh= new NinosH();  
   //declaro una variable para poder invocar a MenuModel
   
   $idNino = (isset($_POST['idNino'])) ? $_POST['idNino'] : '';
@@ -43,6 +42,7 @@
   $usuario_id = $_SESSION['id_persona'];
   $organizacion = (isset($_POST['organizacion'])) ? $_POST['organizacion'] : '';
   $etnia = (isset($_POST['etnia'])) ? $_POST['etnia'] : '';
+  $usuarioCambio = $_SESSION["nombre"];
 
 /*   $fechaIngreso = date('Y-m-d H:i:s', strtotime($fechaIngreso));
   $fechaTermino = date('Y-m-d H:i:s', strtotime($fechaTermino)); */
@@ -55,12 +55,18 @@
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
    case "eliminarNino":
         $ninos= new Ninos();
-
+        
         $respuesta = array();
         $i=0;
         
         $id = $_POST['id'];
         $datos=$ninos->eliminarNino($id);
+
+        $ninosh->guardarNinosH($dni,$nombre,$sexo,
+        $edad,$naciemiento,$nacion,$etnia,$periodo,
+        $ceguera,$sordera,$mudez,$fisica,$mental,$psiquica,
+        $descripcion,$organizacion,$usuario_id,$check_nac ,$check_dis,
+        $ceguera_p,$sordera_p ,$mudez_p,$fisica_p ,$mental_p,$psiquica_p,'Eliminar niño',$usuarioCambio);
 
         if($ninos->getError()==0){
           $respuesta[$i]['action']="OK";
@@ -76,9 +82,8 @@
         echo json_encode($respuesta);
       }
 
-    break;
-   //! agregar nino 
-  //  case "add_etnia":
+  break;
+  //! agregar nino 
     case "agregarNino":
 
       $respuesta = array();
@@ -228,6 +233,12 @@
         $ceguera,$sordera,$mudez,$fisica,$mental,$psiquica,
         $descripcion,$organizacion,$usuario_id,$check_nac ,$check_dis,
         $ceguera_p,$sordera_p ,$mudez_p,$fisica_p ,$mental_p,$psiquica_p);
+
+        $ninosh->guardarNinosH($dni,$nombre,$sexo,
+        $edad,$naciemiento,$nacion,$etnia,$periodo,
+        $ceguera,$sordera,$mudez,$fisica,$mental,$psiquica,
+        $descripcion,$organizacion,$usuario_id,$check_nac ,$check_dis,
+        $ceguera_p,$sordera_p ,$mudez_p,$fisica_p ,$mental_p,$psiquica_p,'Agregar niño',$usuarioCambio);
 
         if($ninos->getError()==0){
             $respuesta[$i]['action']="OK";
@@ -409,6 +420,12 @@
         $ceguera,$sordera,$mudez,$fisica,$mental,$psiquica,
         $descripcion,$organizacion,$usuario_id,$check_nac ,$check_dis,
         $ceguera_p,$sordera_p ,$mudez_p,$fisica_p ,$mental_p,$psiquica_p);
+
+        $ninosh->guardarNinosH($dni,$nombre,$sexo,
+        $edad,$naciemiento,$nacion,$etnia,$periodo,
+        $ceguera,$sordera,$mudez,$fisica,$mental,$psiquica,
+        $descripcion,$organizacion,$usuario_id,$check_nac ,$check_dis,
+        $ceguera_p,$sordera_p ,$mudez_p,$fisica_p ,$mental_p,$psiquica_p,'Actualizar niño',$usuarioCambio);
 
         if($ninos->getError()==0){
             $respuesta[$i]['action']="OK";

@@ -41,5 +41,8 @@ function test9(){
 function test10(){
     require_once ('../view/tabla_reportes.php');
 }
+function test11(){
+    require_once ('../view/tabla_nHistorial.php');
+}
 
 ?>

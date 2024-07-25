@@ -40,7 +40,7 @@
 					<li class="dropdown">
 						<a class="nav-link"class="dropbtn">Registro de Cambios</a>
                 <div class="dropdown-content">
-                    <a href="#registro-cambios-ninos">Registro cambio Niños</a>
+                    <a href="nHistorial.php">Registro cambio Niños</a>
                     <a href="pHistorial.php">Registro cambio Personas</a>
                     <a href="oHistorial.php">Registro cambio Organizacion</a>
                 </div>

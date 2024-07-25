@@ -898,7 +898,36 @@ $(document).on("click", ".btnBorrar", function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     fila = $(this).closest('tr');           
     id = $(this).closest('tr').find('td:eq(0)').text() ;
-    nombre = $(this).closest('tr').find('td:eq(2)').text() ;
+    dni = fila.find('td:eq(1)').text();
+    nombre = fila.find('td:eq(2)').text();
+    sexo = fila.find('td:eq(3)').text();
+    edad = fila.find('td:eq(5)').text();
+    periodo = fila.find('td:eq(7)').text();
+    descripcion = fila.find('td:eq(26)').text();
+    naciemiento = fila.find('td:eq(6)').text();
+    etnia = fila.find('td:eq(32)').text();
+    nacion = fila.find('td:eq(9)').text();
+    comuna = fila.find('td:eq(29)').text();
+    check_nac = fila.find('td:eq(10)').text();
+
+    idOrganizacion = fila.find('td:eq(33)').text();
+    // alert (idOrganizacion);
+
+    //CHECK DISCAPACIDAD
+    check_dis = fila.find('td:eq(19)').text();
+    ceguera = fila.find('td:eq(11)').text();
+    sordera = fila.find('td:eq(12)').text();
+    mudez = fila.find('td:eq(13)').text();
+    fisica = fila.find('td:eq(14)').text();
+    mental = fila.find('td:eq(15)').text();
+    psiquica = fila.find('td:eq(16)').text();
+
+    ceguera_p = fila.find('td:eq(20)').text();
+    sordera_p = fila.find('td:eq(21)').text();
+    mudez_p = fila.find('td:eq(22)').text();
+    fisica_p = fila.find('td:eq(23)').text();
+    mental_p = fila.find('td:eq(24)').text();
+    psiquica_p = fila.find('td:eq(25)').text();
     // estado = $(this).closest('tr').find('td:eq(8)').text() ;
     // let action = estado == '1' ? 'borrar_persona' : 'habilitar_persona';
     // let confirmMessage = estado == '1' ? "¿Está seguro de Desactivar el registro de "+nombre+"?" : "¿Quieres activar el registro de  "+nombre+"?"  ;
@@ -910,7 +939,13 @@ $(document).on("click", ".btnBorrar", function(e){
           url: "../controller/controllerN.php?op=eliminarNino",
           type: "POST",
           datatype:"json",    
-            data: { id:id,nombre:nombre},
+            data: { idNino:idNino, dni:dni, nombre:nombre, sexo:sexo, edad:edad, periodo:periodo, descripcion:descripcion, 
+            naciemiento:naciemiento, etnia:etnia, nacion:nacion,/* comuna:comuna, */check_dis:check_dis, 
+            ceguera:ceguera, sordera:sordera, mudez:mudez, fisica:fisica,
+             mental:mental, psiquica:psiquica, 
+             ceguera_p:ceguera_p,sordera_p:sordera_p,mudez_p:mudez_p, 
+             fisica_p:fisica_p,mental_p:mental_p, psiquica_p:psiquica_p, 
+             check_nac:check_nac, /* id_usuario:id_usuario, */ organizacion:organizacion},
           success: function(data) {
             table.ajax.reload(null, false);
            },
