@@ -26,7 +26,9 @@ session_start();
   $numProvidencia = (isset($_POST['numProvidencia'])) ? $_POST['numProvidencia'] : '';
   $checkHabilitado = (isset($_POST['checkHabilitado'])) ? $_POST['checkHabilitado'] : '';
   $estado = (isset($_POST['estado'])) ? $_POST['estado'] : '';
-  $fechaIngreso = date('Y-m-d H:i:s', strtotime($fechaIngreso));
+  
+  $fechaIngreso = date('Y-m-d H:i:s');
+  
   $usuarioCambio = $_SESSION["nombre"];
 
   echo ($aniosVigente);
@@ -153,12 +155,22 @@ ORDER BY tipo";
         if($tipo==4){$vigencia=1;
         }else{ $vigencia=4;}
         
+        
         if(count($respuesta)==0){
+
+            $fechaActual = date('Y-m-d H:i:s');
+            $fechaProceso = strtotime('+ '.$vigencia.' year', strtotime($fechaActual));
+            $fechaVencimiento = date ('Y-m-d H:i:s',$fechaProceso);
+            // echo($fechaVencimiento);
+
             $org->guardarOrganizacion($nombre, $direccion, $tipo, $numProvidencia);
             $resultado=$org->buscarOrganizacion($nombre,1);
             $idOrganizacion=$resultado[0]['id'];
 
-            $fechaVencimiento = date('Y-m-d H:i:s', strtotime("+{$vigencia} year", strtotime($fechaIngreso)));
+            // $fechaVencimiento = date('Y-m-d', strtotime("+{$vigencia} year", strtotime($fechaIngreso)));
+            /* $fechaActual = date('Y-m-d H:i:s');
+            $fechaVencimiento = strtotime('+ '.$vigencia.' year', strtotime($fechaActual));
+            var_dump($fechaVencimiento); */
             $org->guardarDO($idOrganizacion,$fechaVencimiento,$vigencia);
 
             $orgH->guardarOrganizacionH(

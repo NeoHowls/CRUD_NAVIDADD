@@ -388,6 +388,32 @@ $(document).on("click", ".btnEditar", function() {
             $("#aniosVigente").prop('disabled', false);
         }
     });
+
+
+    //! poner solo los perfiles seleccionables al editar
+    //! si es representante o providencia || administrador o dideco
+
+    $('#tipo option').show(); // Primero muestra todas las opciones
+    
+    if (tipo == 1 || tipo == 2 || tipo == 3) {
+        $('#tipo option').each(function() {
+            var valor = $(this).val();
+            if (valor != 1 && valor != 2 && valor != 3 && valor != '') {
+                
+                $(this).hide();
+            }
+        });
+    } else if (tipo == 4) {
+        $('#tipo option').each(function() {
+            var valor = $(this).val();
+            if (valor != 4 && valor != '') {
+                
+                $(this).hide();
+            }
+        });
+    }
+
+
 });
 
 
