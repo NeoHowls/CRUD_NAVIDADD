@@ -72,11 +72,11 @@ class Organizaciones extends ConexionBD{
                 nombre,
                 direccion, 
                 tipo, 
-                fechaIngreso, 
+                --fechaIngreso, --automatico getdate
                 checkVigente, 
                 numProvidencia,
                 checkHabilitado, 
-                estado
+                --estado --activado 1
             ) 
         VALUES ( 
                 :nombre, 
