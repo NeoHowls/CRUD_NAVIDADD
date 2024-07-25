@@ -90,9 +90,9 @@ let table = $('#myTable2').DataTable( {
                 // Botón de editar con modal
                 let editarButton = '';
                     if (row.checkHabilitado == '1') {
-                        editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" data-toggle="tooltip" data-placement="top" title="Editar registro" ><i class="bi bi-pencil-square icon-100"></i></button>';
+                        editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2"  data-toggle="tooltip" data-placement="top" title="Editar registro" ><i class="bi bi-pencil-square icon-100"></i></button>';
                     } else {
-                        editarButton = '<button type="button" class="btn btn-secondary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal"  data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-pencil-square icon-100"></i></button>';
+                        editarButton = '<button type="button" class="btn btn-secondary text-light btnEditar me-2"   data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-pencil-square icon-100"></i></button>';
                     }
 
 
@@ -160,6 +160,29 @@ let table = $('#myTable2').DataTable( {
     }
 } );
 
+
+//todo: verificacion de mensaje error al seleccionar input
+
+$('#nombre').on('change click', function() {
+    $('#m_nombre').text('');
+});
+$('#direccion').on('change click', function() {
+    $('#m_direccion').text('');
+});
+$('#tipo').on('change click', function() {
+    $('#m_tipo').text('');
+});
+$('#numProvidencia').on('change click', function() {
+    $('#m_numProvidencia').text('');
+});
+
+function limpiarMensaje(){
+    $('#m_nombre').text('');
+    $('#m_direccion').text('');
+    $('#m_tipo').text('');
+    $('#m_numProvidencia').text('');
+}
+
 var fila; //captura la fila, para editar o eliminar
 //submit para el Alta y Actualización
 $('#formUsuarios').submit(function(e){                         
@@ -168,15 +191,17 @@ $('#formUsuarios').submit(function(e){
     nombre = $.trim($('#nombre').val());
     direccion = $.trim($('#direccion').val());
     tipo = $.trim($('#tipo').val());
-    fechaIngreso = $.trim($('#fechaIngreso').val());
-    aniosVigente = $.trim($('#aniosVigente').val());
-    checkVigente = $.trim($('#checkVigente').val());
+    // fechaIngreso = $.trim($('#fechaIngreso').val());
+    // aniosVigente = $.trim($('#aniosVigente').val());
+    // checkVigente = $.trim($('#checkVigente').val());
     numProvidencia = $.trim($('#numProvidencia').val());   
-    checkHabilitado = $.trim($('#checkHabilitado').val());
-    estado = $.trim($('#estado').val());
+    // checkHabilitado = $.trim($('#checkHabilitado').val());
+    // estado = $.trim($('#estado').val());
    
-    
-    //console.log(opcion)                            
+    //alert(nombre+" "+direccion+" "+numProvidencia+" "+tipo+" "+aniosVigente);
+    //console.log(opcion)
+    // alert (user_id);
+                             
     //EJECUTA EL AJAX
     $.ajax({
         //Laa URL es similar al AJAX principaal pero en el op= capturaa la opcion del boton para ejecutar la consulta correcta
@@ -184,19 +209,79 @@ $('#formUsuarios').submit(function(e){
           type: "POST",
           datatype:"json", 
           //La prueba al solo la tabla ETNIA CAPTURA SOLO 2 VALORES, EL ID Y LA ETNIA, el ID es en caso que se quiera editar   
-          data:  {user_id:user_id,nombre:nombre, direccion:direccion, tipo:tipo, fechaIngreso:fechaIngreso,aniosVigente:aniosVigente, checkVigente:checkVigente, numProvidencia:numProvidencia, checkHabilitado:checkHabilitado, estado:estado},    
+          data:  {
+                nombre:nombre, 
+                direccion:direccion, 
+                tipo:tipo, 
+                user_id:user_id,
+                numProvidencia:numProvidencia
+            },    
           //Si todo funiona recarga el AJAX
           success: function(data) {
             table.ajax.reload(null, false);
            }
-        });		
+        }).done(function(response){ 
+            console.log(response);
+            respuesta = JSON.parse(response);
+            //console.log(respuesta);
+            for(i=0;i<respuesta.length;i++){
+            if(respuesta[i].error==1)
+                {$('#m_nombre').html(respuesta[i].mensaje);}
+            if(respuesta[i].error==2)
+                {$('#m_direccion').html(respuesta[i].mensaje);}
+            if(respuesta[i].error==3)
+                {$('#m_tipo').html(respuesta[i].mensaje);}
+            /* if(respuesta[i].error==4)
+                {$('#m_aniosVigentes').html(respuesta[i].mensaje);} */
+            if(respuesta[i].error==5)
+                {$('#m_numProvidencia').html(respuesta[i].mensaje);}
+            }
+            // alert(respuesta.length);
+            if(respuesta.length==1 && respuesta[0].error==0){
+                $('#modalCRUD').modal('hide');
+                Swal.fire({
+                    icon: "success",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+            
+        });//fin done			
         
         //EL MODAL SE DESTRUYE/ESCONDE NUEVAMENTE COMO SE LIMPIA LOS DATOS        
     
-        $('#modalCRUD').modal('hide');											     			
+        											     			
 });
         
- 
+//todo Manejar el cambio en el campo tipo (si es necesario para tu lógica)
+$("#tipo").on("change", function() {
+    if ($(this).val() === '4') {
+        $("#numProvidenciaGroup").show();
+        $("#aniosVigente").val("");
+        $('#m_numProvidencia').text('');
+        $('#numProvidencia').val('');
+        $("#aniosVigente").children('option[value="4"]').hide();
+        // $("#aniosVigente").val('1').prop('disabled', false);
+    } else {
+        $("#numProvidenciaGroup").hide();
+        $("#aniosVigente").val("");
+        $('#m_numProvidencia').text('');
+        $('#numProvidencia').val('');
+        $("#aniosVigente").children('option[value="4"]').show();
+        // $("#aniosVigente").prop('disabled', false);
+    }
+});
+
 //todo: ANAÑIR--------------------------------------------------------------------------
 $("#btnNuevo").click(function(){
     opcion = "add_organizacion"; // Indica que se está agregando una nueva organización
@@ -212,10 +297,13 @@ $("#btnNuevo").click(function(){
     $("#checkHabilitado").val('');
     $("#estado").val('');
     $("#aniosVigente").val('');
+    $("#aniosVigente").children('option[value="4"]').show();
+
+    limpiarMensaje();
 
     // Reiniciar el estado de los campos relacionados con el tipo de organización
     document.getElementById('numProvidenciaGroup').style.display = 'none';
-    document.getElementById('aniosVigente').disabled = false;
+    // document.getElementById('aniosVigente').disabled = false;
 
     // Mostrar el modal y configurar estilos y título
     $(".modal-header").css("background-color", "#17a2b8");
@@ -223,21 +311,13 @@ $("#btnNuevo").click(function(){
     $(".modal-title").text("Añadir Organización");
 
     $('#modalCRUD').modal('show');
-
-    // Manejar el cambio en el campo tipo (si es necesario para tu lógica)
-    $("#tipo").on("change", function() {
-        if ($(this).val() === '4') {
-            $("#numProvidenciaGroup").show();
-            $("#aniosVigente").val('1').prop('disabled', true);
-        } else {
-            $("#numProvidenciaGroup").hide();
-            $("#aniosVigente").prop('disabled', false);
-        }
-    });
 });
 
 
-//todo: Editar-----------------------------------------------------------------       
+
+
+
+//! Editar-----------------------------------------------------------------       
 $(document).on("click", ".btnEditar", function() {	        
     opcion = "edit_organizacion";//editar
 
@@ -253,7 +333,7 @@ $(document).on("click", ".btnEditar", function() {
     $("#aniosVigente").val('');
 
     document.getElementById('numProvidenciaGroup').style.display = 'none';
-    document.getElementById('aniosVigente').disabled = false;
+    // document.getElementById('aniosVigente').disabled = false;
 
      
 
@@ -263,22 +343,22 @@ $(document).on("click", ".btnEditar", function() {
     nombre = fila.find('td:eq(1)').text();
     direccion = fila.find('td:eq(2)').text();
     tipo = fila.find('td:eq(3)').text();
-    fechaIngreso = fila.find('td:eq(4)').text();
-    checkVigente= fila.find('td:eq(5)').text();
+    // fechaIngreso = fila.find('td:eq(4)').text();
+    // checkVigente= fila.find('td:eq(5)').text();
     numProvidencia= fila.find('td:eq(6)').text();
-    checkHabilitado=fila.find('td:eq(7)').text();
-    estado= fila.find('td:eq(8)').text();
-    aniosVigente= fila.find('td:eq(9)').text();
+    // checkHabilitado=fila.find('td:eq(7)').text();
+    // estado= fila.find('td:eq(8)').text();
+    // aniosVigente= fila.find('td:eq(9)').text();
     
     $("#nombre").val(nombre);
     $("#direccion").val(direccion);
     $("#tipo").val(tipo);
-    $("#fechaIngreso").val(fechaIngreso);
-    $("#checkVigente").val(checkVigente);
+    // $("#fechaIngreso").val(fechaIngreso);
+    // $("#checkVigente").val(checkVigente);
     $("#numProvidencia").val(numProvidencia);
-    $("#checkHabilitado").val(checkHabilitado);
-    $("#estado").val(estado);
-    $("#aniosVigente").val(aniosVigente);
+    // $("#checkHabilitado").val(checkHabilitado);
+    // $("#estado").val(estado);
+    // $("#aniosVigente").val(aniosVigente);
     
     $(".modal-header").css("background-color", "#17a2b8");
     $(".modal-header").css("color", "white");

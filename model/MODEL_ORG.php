@@ -62,46 +62,35 @@ class Organizaciones extends ConexionBD{
         return $query;
     }
 
-    //!Guardar Organizacion
+    //todo Guardar Organizacion
     public function guardarOrganizacion(
         $nombre, $direccion, 
-        $tipo, $fechaIngreso, $checkVigente, 
-        $numProvidencia, $checkHabilitado, $estado){
+        $tipo,$numProvidencia){
         $sql="INSERT INTO A_ORGANIZACION 
             (
                 nombre,
                 direccion, 
                 tipo, 
-                --fechaIngreso, --automatico getdate
-                checkVigente, 
-                numProvidencia,
-                --checkHabilitado,--automatico 1 
-                --estado --activado 1
+                numProvidencia
             ) 
         VALUES ( 
                 :nombre, 
                 :direccion, 
                 :tipo, 
-                :fechaIngreso, 
-                :checkVigente, 
-                :numProvidencia, 
-                :checkHabilitado,
-                :estado)";
+                :numProvidencia)";
         $parametros =array(
             "nombre"=>$nombre,
             "direccion"=>$direccion,
             "tipo"=>$tipo,
-            "fechaIngreso"=>$fechaIngreso,
-            "checkVigente"=>$checkVigente,
-            "numProvidencia"=>$numProvidencia,
-            "checkHabilitado"=>$checkHabilitado,
-            "estado"=>$estado
+            "numProvidencia"=>$numProvidencia
         );
         $this->connect();
         $query = $this->ejecutarOrden($sql, $parametros);
         return $query;
         
     }
+
+
 
     //todo: Buscar el checkHabilitado de una Org
     public function buscarCheckHabilitadoOrg($idOrganizacion){
@@ -120,6 +109,18 @@ class Organizaciones extends ConexionBD{
             FROM A_ORGANIZACION
             WHERE nombre = :nombre AND estado=:estado";
         $parametros =array("nombre"=>$nombre,"estado"=>$estado);
+        $this->connect();
+        $query = $this->iniciar($sql, $parametros);
+
+        return $query;
+    }
+
+    //todo: BUSCAR ORGANIZACION (ID,NOMBRE)
+    public function buscarOrganizacionIdNombre($id,$nombre,$estado){
+        $sql="SELECT id,nombre
+            FROM A_ORGANIZACION
+            WHERE id = :id AND nombre=:nombre AND estado=:estado"; 
+        $parametros =array("id"=>$id,"nombre"=>$nombre,"estado"=>$estado);
         $this->connect();
         $query = $this->iniciar($sql, $parametros);
 
@@ -182,7 +183,7 @@ class Organizaciones extends ConexionBD{
     //todo--------------------------------------
 
     
-    //!DESACTIVAR ACTIVAR ORGANIZACION (BORRAR)
+    //todo:DESACTIVAR ACTIVAR ORGANIZACION (BORRAR)
     public function desactivarOrg($user_id){
         $sql="UPDATE A_ORGANIZACION SET checkHabilitado=0, estado=0 WHERE id=:user_id";
         $parametros =array(":user_id"=>$user_id);
@@ -199,5 +200,69 @@ class Organizaciones extends ConexionBD{
     }
     //todo--------------------------------------
     //todo--------------------------------------
+
+    //todo GUARDAR DETALLE ORGANIZACION 
+    public function guardarDO($idOrganizacion,$fechaVencimiento,$aniosVigente){
+        $sql="INSERT INTO A_DETALLE_ORGANIZACION(
+                idOrganizacion, 
+                fechaVencimiento, 
+                aniosVigente,
+                estado) 
+            VALUES(
+            :idOrganizacion, 
+            :fechaVencimiento, 
+            :aniosVigente,
+            1)";
+        $parametros =array(
+            "idOrganizacion"=>$idOrganizacion,
+            "fechaVencimiento"=>$fechaVencimiento,
+            "aniosVigente"=>$aniosVigente
+        );
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+    }
+
+    //! ACTUALIZAR DETALLE ORGANIZACION 
+    public function actualizarDO($idOrganizacion,$fechaIngreso,$fechaVencimiento){
+        $sql="UPDATE A_DETALLE_ORGANIZACION 
+        SET idOrganizacion=:idOrganizacion,
+            fechaIngreso=:fechaIngreso,
+            fechaVencimiento =:fechaVencimiento
+            WHERE idOrganizacion=:user_id";
+        $parametros =array(
+            "idOrganizacion"=>$idOrganizacion,
+            "fechaIngreso"=>$fechaIngreso,
+            "fechaVencimiento"=>$fechaVencimiento
+        );
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+    }
+
+    //! ACTUALIZAR ORGANIZACION 
+    public function actualizarOrganizacion($user_id,
+        $nombre, $direccion, 
+        $tipo,$numProvidencia){
+        $sql="UPDATE A_ORGANIZACION 
+                SET nombre =:nombre,
+                direccion =:direccion,
+                tipo =:tipo,
+                numProvidencia =:numProvidencia 
+              WHERE id=:user_id";
+        $parametros =array(
+            "nombre"=>$nombre,
+            "direccion"=>$direccion,
+            "tipo"=>$tipo,
+            "numProvidencia"=>$numProvidencia,
+            "user_id"=>$user_id
+        );
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+        
+    }
+
+    
 }
 ?>

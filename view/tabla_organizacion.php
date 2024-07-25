@@ -1,4 +1,21 @@
     <style>
+        hr.linea {
+        background: #5c94f4;
+        border: 2px solid #5c94f4;
+        opacity: 1;
+        }
+        span .mensaje {
+            font-size: 15px !important;
+            color: red !important;    
+        }
+        p .mensaje {
+            font-size: 15px !important;   
+        }
+
+        .texto-form{
+            color: #111 !important;  
+        }
+        
         .btnBorrar, .btnHabilitar, .btnDeshabilitar, .btnAutorizar, .btnEditar, .btnAnular, .btnDesHabGeneral, .btnHabGeneral, .btnNuevo, .btnPdf, .btnPdf2  {
             height: 40px; /* Ajusta la altura del botón */
             line-height: 40px; /* Alinea el contenido del botón verticalmente */
@@ -142,6 +159,7 @@
                                 <div class="form-group" style = "text-align: center;">
                                     <label for="" class="col-form-label">Nombre:</label>
                                     <input type="text" class="form-control" id="nombre">
+                                    <span id='m_nombre'></span>
                                 </div>
                             </div>
                         </div><!-- cierre primera fila-->
@@ -150,6 +168,7 @@
                                 <div class="form-group" style = "text-align: center;">
                                     <label for="" class="col-form-label">Dirección:</label>
                                     <input type="text" class="form-control" id="direccion">
+                                    <span id='m_direccion'></span>
                                 </div>
                             </div>
                         </div><!-- cierre segunda fila-->
@@ -157,12 +176,13 @@
                             <div class="col-lg-12" style = "text-align: center;">
                                     <label for="tipo" class="col-form-label">Tipo:</label>
                                     <select name="cars" id="tipo" class = "form-control">
-                                    <option value="">Selecciona una opción</option>
+                                    <option value="" disabled selected>Selecciona una opción</option>
                                     <option value=1>JUNTA VECINAL</option>
                                     <option value=2>COMÍTE VIVIENDA</option>
                                     <option value=3>CONDOMINIO</option>
                                     <option value=4>PROVIDENCIA</option> 
                                     </select>
+                                    <span id='m_tipo'></span>
                             </div>
                         </div><!-- cierre tercera fila-->
                         <!-- <div class="row">
@@ -171,20 +191,22 @@
                                     <input type="datetime-local" class="form-control" id="fechaIngreso">
                             </div>
                         </div>cierre cuarta fila -->
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-lg-12" style = "text-align: center;">
                                 <label for="aniosVigente" class="col-form-label">Años Vigente:</label>
-                                <select name="cars" id="aniosVigente" class = "form-control">
-                                <option value="">Selecciona una opción</option>
+                                <select name="cars" id="aniosVigente2" class = "form-control">
+                                <option value="" disabled selected>Selecciona una opción</option>
                                     <option value=1>1</option>
                                     <option value=4>4</option> 
-                                    </select>
+                                </select>
+                                    <span id='m_aniosVigentes'></span>
                             </div>
-                        </div><!-- cierre quinta fila-->
+                        </div> --><!-- cierre quinta fila-->
                         <div class="row">
                             <div class="col-lg-12" style="text-align: center;" id="numProvidenciaGroup">
                                 <label for="numProvidencia" class="col-form-label">Número de Providencia:</label>
                                 <input type="text" class="form-control" id="numProvidencia">
+                                <span id='m_numProvidencia'></span>
                             </div>
                         </div><!-- cierre sexta fila-->
                 </div>

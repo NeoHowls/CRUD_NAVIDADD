@@ -104,126 +104,173 @@ ORDER BY tipo";
     break;
     
     case "add_organizacion":
-      // Define la consulta para insertar en A_ORGANIZACION
-      $CONSULTA = "INSERT INTO A_ORGANIZACION (nombre, direccion, tipo, fechaIngreso, checkVigente, numProvidencia,
-        checkHabilitado, estado) VALUES ('$nombre','$direccion','$tipo','$fechaIngreso',1,'$numProvidencia',1,1)";
-      echo($CONSULTA);
-      // Ejecuta la consulta para insertar en A_ORGANIZACION
-      $datos = $menu->listar($CONSULTA);
-  
-      // Obtiene el ID de la organización recién insertada
-      $CONSULTA = "SELECT id FROM A_ORGANIZACION WHERE nombre='$nombre' AND direccion='$direccion'";
-      echo($CONSULTA);
-      $datos = $menu->consultar($CONSULTA);
-      $idOrganizacion = $datos[0]['id'];
-  
-      // Calcula la fecha de vencimiento basada en los años vigentes
-      $fechaVencimiento = date('Y-m-d H:i:s', strtotime("+{$aniosVigente} year", strtotime($fechaIngreso)));
-  
-      // Define la consulta para insertar en A_DETALLE_ORGANIZACION
-      $CONSULTA = "INSERT INTO A_DETALLE_ORGANIZACION (idOrganizacion, fechaIngreso,fechaVencimiento, aniosVigente, estado) 
-                  VALUES ('$idOrganizacion', '$fechaIngreso','$fechaVencimiento', '$aniosVigente', 1)";
-      echo($CONSULTA);
-      // Ejecuta la consulta para insertar en A_DETALLE_ORGANIZACION
-      $menu->listar($CONSULTA);
-  
-      // Aquí podrías añadir la lógica para el historial si lo necesitas
-       $usuarioCambio = $_SESSION["test"];
-      $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
-      checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-      1, '$numProvidencia', 1,1,'$usuarioCambio',getdate(),'Añadir Nueva Organizacion')";
-      $datos=$menu->listar($CONSULTA);
-      $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
-      $datos=$menu->listar($CONSULTA);
-      print($datos);
-  
-      // Consulta final para obtener los datos actualizados de A_ORGANIZACION
-      $CONSULTA = "SELECT * FROM A_ORGANIZACION";
-      // Ejecuta la consulta para obtener los datos actualizados
-      $datos = $menu->listar($CONSULTA);
-      // Imprime los datos en JSON o realiza la acción necesaria
-      print($datos); 
+        $resultado = array();
+        $respuesta = array();
+        $i=0;
+
+        if($nombre=='' || $nombre==null){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=1;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar nombre</p>';
+          $i++;
+        }
+        $resultado=$org->buscarOrganizacion($nombre,1);
+        if(count($resultado)!=0){
+            if(count($resultado)==1){
+              $respuesta[$i]['action']='ERROR';
+              $respuesta[$i]['error']=1;
+              $respuesta[$i]['mensaje']='<p class="mensaje">Nombre de la Organización '.$resultado[0]['nombre'].' se encuentra registrado.</p>';
+              $i++;
+            }else{
+              $respuesta[$i]['action']='ERROR';
+              $respuesta[$i]['error']=1;
+              $respuesta[$i]['mensaje']='<p class="mensaje">Nombre de la Organización '.$resultado[0]['nombre'].' se encuentra repetida.</p>';
+              $i++;
+            }
+        }
+        if($direccion=='' || $direccion==null){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=2;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar Dirección</p>';
+          $i++;
+        }
+        if($tipo=='' || $tipo==null){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=3;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Tipo de Organización</p>';
+          $i++;
+        }
+
+        if($tipo==4){//providencia
+          if($numProvidencia=='' || $numProvidencia==null){
+            $respuesta[$i]['action']='ERROR';
+            $respuesta[$i]['error']=5;
+            $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar Numero de Providencia</p>';
+            $i++;
+          }
+        }
+        // var_dump($respuesta);
+        if($tipo==4){$vigencia=1;
+        }else{ $vigencia=4;}
         
-      
-      
-      
+        if(count($respuesta)==0){
+            $org->guardarOrganizacion($nombre, $direccion, $tipo, $numProvidencia);
+            $resultado=$org->buscarOrganizacion($nombre,1);
+            $idOrganizacion=$resultado[0]['id'];
+
+            $fechaVencimiento = date('Y-m-d H:i:s', strtotime("+{$vigencia} year", strtotime($fechaIngreso)));
+            $org->guardarDO($idOrganizacion,$fechaVencimiento,$vigencia);
+
+            $orgH->guardarOrganizacionH(
+              $nombre, $direccion,$tipo, $fechaIngreso, 1, 
+              $numProvidencia,'Agregar Organización',$usuarioCambio,1,1);
+              if($org->getError()==0 && $orgH->getError()==0){
+                $respuesta[$i]['action']="OK";
+                $respuesta[$i]['error']=0;
+                $respuesta[$i]['mensaje']="Agregar Organización";
+                $i++;
+                echo json_encode($respuesta, JSON_PRETTY_PRINT);
+            }elseif($orgH->getError()!=0){
+                $respuesta[$i]['action']="ERROR";
+                $respuesta[$i]['error']=99;
+                $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
+                $i++;
+                echo json_encode($respuesta, JSON_PRETTY_PRINT);
+            }else{
+                $respuesta[$i]['action']="ERROR";
+                $respuesta[$i]['error']=99;
+                $respuesta[$i]['mensaje']="ERROR BD";
+                $i++;
+                echo json_encode($respuesta, JSON_PRETTY_PRINT);
+            }
+        }else{
+            //!errores
+            echo json_encode($respuesta);
+        }
+
     break; 
-        //edita 1 dato selecionable de la tabla A_ETNIA
-      case "edit_organizacion":
+    //todo: EDITAR ORGANIZACION
+    case "edit_organizacion":
+      $resultado = array();
+      $respuesta = array();
+      $i=0;
 
-        if($tipo==4){
-        //define la consulta
-        $CONSULTA = "UPDATE A_ORGANIZACION SET nombre ='$nombre',direccion ='$direccion',tipo ='$tipo',fechaIngreso ='$fechaIngreso',
-        numProvidencia ='$numProvidencia' WHERE id='$user_id'";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
+      // var_dump($nombre);
+      if($nombre=='' || $nombre==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=1;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar nombre</p>';
+        $i++;
+      }
 
-        // Obtiene el ID de la organización recién insertada
-        $CONSULTA = "SELECT id FROM A_ORGANIZACION WHERE nombre='$nombre' AND direccion='$direccion'";
-        echo($CONSULTA);
-        $datos = $menu->consultar($CONSULTA);
-        $idOrganizacion = $datos[0]['id'];
-    
-        // Calcula la fecha de vencimiento basada en los años vigentes
-        $fechaVencimiento = date('Y-m-d H:i:s', strtotime("+{$aniosVigente} year", strtotime($fechaIngreso)));
-
-        $CONSULTA = "UPDATE A_DETALLE_ORGANIZACION SET idOrganizacion='$idOrganizacion', fechaIngreso='$fechaIngreso',fechaVencimiento ='$fechaVencimiento',
-        aniosVigente ='$aniosVigente' WHERE idOrganizacion='$user_id'";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-
-        $CONSULTA = "SELECT * FROM A_ORGANIZACION";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-        //imprimir los datos en JSON
-        //print($datos);
-
-        $usuarioCambio = $_SESSION["nombre"];
-         $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
-         checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-         '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
-         $datos=$menu->listar($CONSULTA);
-         $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
-         $datos=$menu->listar($CONSULTA);
-         print($datos);
+      $resultado=$org->buscarOrganizacionIdNombre($user_id,$nombre,1);
+      // var_dump($resultado);
+      if(count($resultado)!=1){
+        $resultado=$org->buscarOrganizacion($nombre,1);
+        //var_dump($resultado);
+        if(count($resultado)!=0){
+            if(count($resultado)==1){
+                $respuesta[$i]['action']='ERROR';
+                $respuesta[$i]['error']=1;
+                $respuesta[$i]['mensaje']='<p class="mensaje">Nombre '.$resultado[0]['nombre'].' se encuentra registrado </p>';
+                $i++;
+            }
         }
-        else{
-          //define la consulta
-        $CONSULTA = "UPDATE A_ORGANIZACION SET nombre ='$nombre',direccion ='$direccion',tipo ='$tipo',fechaIngreso ='$fechaIngreso'
-        WHERE id='$user_id'";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
+      }
+      if($direccion=='' || $direccion==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=2;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar Dirección</p>';
+        $i++;
+      }
+      if($tipo=='' || $tipo==null){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=3;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe seleccionar Tipo de Organización</p>';
+        $i++;
+      }
 
-        // Obtiene el ID de la organización recién insertada
-        $CONSULTA = "SELECT id FROM A_ORGANIZACION WHERE nombre='$nombre' AND direccion='$direccion'";
-        echo($CONSULTA);
-        $datos = $menu->consultar($CONSULTA);
-        $idOrganizacion = $datos[0]['id'];
-    
-        // Calcula la fecha de vencimiento basada en los años vigentes
-        $fechaVencimiento = date('Y-m-d H:i:s', strtotime("+{$aniosVigente} year", strtotime($fechaIngreso)));
-
-        $CONSULTA = "UPDATE A_DETALLE_ORGANIZACION SET idOrganizacion='$idOrganizacion', fechaIngreso='$fechaIngreso',fechaVencimiento ='$fechaVencimiento',
-        aniosVigente ='$aniosVigente' WHERE idOrganizacion='$user_id'";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-
-        $CONSULTA = "SELECT * FROM A_ORGANIZACION";
-        //llamo al metodo listar y le doy la variable CONSULTA
-        $datos=$menu->listar($CONSULTA);
-        //imprimir los datos en JSON
-        print($datos);
+      if($tipo==4){//providencia
+        if($numProvidencia=='' || $numProvidencia==null){
+          $respuesta[$i]['action']='ERROR';
+          $respuesta[$i]['error']=5;
+          $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar Numero de Providencia</p>';
+          $i++;
         }
-         $usuarioCambio = $_SESSION["nombre"];
-         $CONSULTA = "INSERT INTO A_ORGANIZACION_HISTORIAL (nombre,direccion,tipo,fechaIngreso,checkVigente,numProvidencia,
-         checkHabilitado,estado,usuarioCambio,fechaCambio,tipoMovimiento) values ('$nombre', '$direccion', '$tipo', '$fechaIngreso', 
-         '$checkVigente', '$numProvidencia', '$checkHabilitado','$estado','$usuarioCambio',getdate(),'Editar una Organizacion')";
-         $datos=$menu->listar($CONSULTA);
-         $CONSULTA = "SELECT * FROM A_ORGANIZACION_HISTORIAL"; 
-         $datos=$menu->listar($CONSULTA);
-         print($datos);
+      }
+      // var_dump($respuesta);
+      if($tipo==4){$vigencia=1;
+      }else{ $vigencia=4;}
 
-      break;
+      if(count($respuesta)==0){
+            $org->actualizarOrganizacion($user_id, $nombre, $direccion, $tipo, $numProvidencia);
+            $orgH->guardarOrganizacionH($nombre, $direccion, $tipo, $fechaIngreso, $checkVigente, 
+            $numProvidencia,'Organizacion actualizada',
+            $usuarioCambio,$checkHabilitado,$estado);
+          if($org->getError()==0 && $orgH->getError()==0){
+              $respuesta[$i]['action']="OK";
+              $respuesta[$i]['error']=0;
+              $respuesta[$i]['mensaje']="Actualizar Organización";
+              $i++;
+              echo json_encode($respuesta, JSON_PRETTY_PRINT);
+          }elseif($orgH->getError()!=0){
+              $respuesta[$i]['action']="ERROR";
+              $respuesta[$i]['error']=99;
+              $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
+              $i++;
+              echo json_encode($respuesta, JSON_PRETTY_PRINT);
+          }else{
+              $respuesta[$i]['action']="ERROR";
+              $respuesta[$i]['error']=99;
+              $respuesta[$i]['mensaje']="ERROR BD";
+              $i++;
+              echo json_encode($respuesta, JSON_PRETTY_PRINT);
+          }
+      }else{
+            //!errores
+            echo json_encode($respuesta);
+      }
+    break;
     //todo: DESHABILITA OPCION WEB DE LA PERSONA Y LA ORGANIZACION      
     case "Habilitar_organizacion":
         $respuesta= array();
