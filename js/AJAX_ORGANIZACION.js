@@ -347,7 +347,7 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     }
  });
 
-  //!deshabilitar/habiliar 
+  //!deshabilitar/habiliar WEB POR ORGANIZACION Y PERSONAL ASOCIADO
 $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
     fila = $(this).closest('tr');           
