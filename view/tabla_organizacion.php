@@ -16,7 +16,7 @@
             color: #111 !important;  
         }
         
-        .btnBorrar, .btnHabilitar, .btnDeshabilitar, .btnAutorizar, .btnEditar, .btnAnular, .btnDesHabGeneral, .btnHabGeneral, .btnNuevo, .btnPdf, .btnPdf2  {
+        .btnBorrar, .btnHabilitar, .btnDeshabilitar, .btnAutorizar, .btnEditar, .btnAnular, .btnDesHabGeneral, .btnHabGeneral, .btnNuevo, .btnPdf, .btnPdf2, .btnActualizarVigencia  {
             height: 40px; /* Ajusta la altura del botón */
             line-height: 40px; /* Alinea el contenido del botón verticalmente */
             padding: 0 5px; /* Ajusta el padding del botón */
@@ -24,7 +24,7 @@
             align-items: center;
             justify-content: center;
         }
-        .btnBorrar i, .btnHabilitar i, .btnDeshabilitar i, .btnAutorizar i, .btnEditar i, .btnAnular i, .btnDesHabGeneral i, .btnHabGeneral i, .btnNuevo i, .btnPdf i, .btnPdf2 i {
+        .btnBorrar i, .btnHabilitar i, .btnDeshabilitar i, .btnAutorizar i, .btnEditar i, .btnAnular i, .btnDesHabGeneral i, .btnHabGeneral i, .btnNuevo i, .btnPdf i, .btnPdf2 i, .btnActualizarVigencia i {
             font-size: 30px; /* Ajusta el tamaño del icono */
             padding: 0; /* Ajusta el padding del icono */
         }

@@ -110,8 +110,10 @@ let table = $('#myTable2').DataTable( {
                         "<i class='bi bi-filetype-pdf icon-100'></i>" +
                     "</button>";
 
+                    ActualizarVigencia = '<button type="button" class="btn btn-info text-light btnActualizarVigencia me-2" data-toggle="tooltip" data-placement="top" title="actualizar Vigencia"><i class="bi bi-clock-history icon-100"></i> </button>';
+
                 // Combinamos los botones en una sola columna
-                return estadoButton + checkHabilitadoButton + editarButton +pdf2+pdf3;
+                return estadoButton + checkHabilitadoButton + editarButton + pdf2 + pdf3 + ActualizarVigencia;
             }
         }
     ] , 

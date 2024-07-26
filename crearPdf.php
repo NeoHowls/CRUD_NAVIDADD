@@ -92,7 +92,7 @@ $anio = date('Y');
 			, sus datos para acceder al sistema de navidad 2024 son los siguientes:</p>
             <br>
             <p>Usuario: <span class="label"><?php echo htmlspecialchars($_GET['usuario']); ?></span></p>
-            <p>Contra&ntilde;a: <span class="label"><?php echo htmlspecialchars($_GET['contrasena']); ?></span></p>
+            <p>Contrase&ntilde;a: <span class="label"><?php echo htmlspecialchars($_GET['contrasena']); ?></span></p>
         </div>
     </div>
 </body>
