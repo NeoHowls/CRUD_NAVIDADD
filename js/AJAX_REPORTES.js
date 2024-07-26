@@ -290,11 +290,12 @@ table2.on('draw', function () {
 initChartReportGen();
 initChartReportGen3();
 
+periodo=2024;
 //!BOTONES PARA GENERAR EL PDF
 document.getElementById('btnReportGen').addEventListener('click', function () {
-    window.open("../reportePdfGeneral.php");
+    window.open("../view/reportePdfGeneral.php?periodo="+periodo);
 });
 
 document.getElementById('btnReportNat').addEventListener('click', function () {
-    window.open("../reportePdfNacionalidad.php");
+    window.open("../view/reportePdfNacionalidad.php?periodo="+periodo);
 });

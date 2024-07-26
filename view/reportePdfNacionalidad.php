@@ -1,13 +1,26 @@
 <?php
-require_once 'dompdf/autoload.inc.php';
+require_once ("../model/MODEL_REPORTE.php");
+
+require_once '../dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
 
-$host = '10.20.10.13';
+$periodo=$_GET['periodo'];
+
+$rep = new Reportes();
+
+
+
+
+
+// $reporteNE = $rep->reporteNacionalidadEtario($periodo,$nombreNacionalidad,$idNacionalidad)
+
+
+/* $host = '10.20.10.13';
 $dbname = 'BD_NAVIDAD';
 $user = 'sa';
-$password = '1';
+$password = '1'; */
 
-try {
+/* try {
     $connection = new PDO("sqlsrv:server=$host;database=$dbname", $user, $password);
     $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -50,10 +63,10 @@ try {
 
     $stmt1 = $connection->prepare($sql1);
     $stmt1->execute();
-    $datos1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+    $datos1 = $stmt1->fetchAll(PDO::FETCH_ASSOC); */
 
     // Consulta SQL para la nueva tabla
-    $sql2 = "SELECT idNacionalidad,
+    /* $sql2 = "SELECT idNacionalidad,
                     COALESCE(nacionalidad, 'SIN DATOS') AS nacionalidad,
                             COALESCE(SUM(masculino), 0) AS MASCULINO,
                             COALESCE(SUM(femenino), 0) AS FEMENINO,
@@ -71,9 +84,14 @@ try {
 
     $stmt2 = $connection->prepare($sql2);
     $stmt2->execute();
-    $datos2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+    $datos2 = $stmt2->fetchAll(PDO::FETCH_ASSOC); */
 
-    $nacionalidades = [
+    $datos2 = $rep->reporteNacionalidad($periodo);
+
+    
+    
+
+    /* $nacionalidades = [
         1 => 'Chile',
         2 => 'Argentina',
         3 => 'Uruguay',
@@ -84,12 +102,20 @@ try {
         8 => 'Ecuador',
         9 => 'Colombia',
         10 => 'Venezuela'
-    ];
+    ]; */
+
+    $nacionalidades = $rep->listarNacionalidad();
 
     $datosPorNacionalidad = [];
+    foreach ($nacionalidades as $nacion){
+        // $nacion['nacionalidad']
+        $datosPorNacionalidad[$nacion['nacionalidad']] = $rep->reporteNacionalidadEtario($periodo,$nacion['nacionalidad'],$nacion['id']);
+    }
+    // foreach ($nacionalidades as $idNacionalidad => $nombreNacionalidad) {
 
-    foreach ($nacionalidades as $idNacionalidad => $nombreNacionalidad) {
-        $sql = "SELECT
+        
+        // $datosPorNacionalidad[$nombreNacionalidad] = $rep->reporteNacionalidadEtario($periodo,$nombreNacionalidad,$idNacionalidad);
+        /* $sql = "SELECT
                     edad,
                     REPLACE(CAST(edad AS VARCHAR), '99', 'MAYORES DE 10 AÑOS') AS edadV,
                     COALESCE(nacionalidad, '$nombreNacionalidad') AS nacionalidad,
@@ -127,8 +153,8 @@ try {
 
         $stmt = $connection->prepare($sql);
         $stmt->execute();
-        $datosPorNacionalidad[$nombreNacionalidad] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+        $datosPorNacionalidad[$nombreNacionalidad] = $stmt->fetchAll(PDO::FETCH_ASSOC); */
+    // }
 
     // Construir el HTML con los datos obtenidos
     ob_start();
@@ -334,7 +360,7 @@ try {
     $dompdf->render();
     $dompdf->stream('informe_por_nacionalidad.pdf', ['Attachment' => false]);
 
-} catch (PDOException $e) {
+/* } catch (PDOException $e) {
     echo "Error de conexión: " . $e->getMessage();
-}
+} */
 ?>
