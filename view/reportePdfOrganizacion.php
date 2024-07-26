@@ -1,7 +1,17 @@
 <?php
-require_once 'dompdf/autoload.inc.php';
+session_start();
+
+require_once '../model/MODEL_REPORTE.php';
+require_once '../dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
 
+$idOrg = isset($_GET['idOrg']) ? $_GET['idOrg'] : null;
+$nombreO = isset($_GET['nombre1']) ? $_GET['nombre1'] : '';
+$periodo = isset($_GET['periodo']) ? $_GET['periodo'] : date('Y');
+
+$rep=new Reportes();
+$datos=$rep->reporteOrganizacion($idOrg,$periodo);
+/* 
 // Paso 1: Conectar a la base de datos y ejecutar consulta SQL
 $host = '10.20.10.13';
 $dbname = 'BD_NAVIDAD';
@@ -51,13 +61,13 @@ try {
         $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } else {
         throw new Exception('ID de organización no válido.');
-    }
+    } */
 
     // Paso 2: Construir el HTML con los datos obtenidos
     ob_start(); // Iniciar almacenamiento en búfer de salida
 
     // Datos para el encabezado
-    $logoPath = './images/MahoH.png';
+    $logoPath = '../images/MahoH.png';
     if (file_exists($logoPath)) {
         $logoBase64 = base64_encode(file_get_contents($logoPath));
         $logoDataUri = 'data:image/png;base64,' . $logoBase64;
@@ -150,7 +160,7 @@ try {
             <?php endif; ?>
         </div>
         <div class="content">
-            <h2>Navidad <?php echo htmlspecialchars($anio); ?> - Municipalidad de Alto Hospicio</h2>
+            <h2>Navidad <?php echo htmlspecialchars($periodo); ?> - Municipalidad de Alto Hospicio</h2>
             <br>
             <br>
             <!-- <p>id Organización: <span class="label"><?php echo htmlspecialchars($idOrg); ?></span></p> -->
@@ -212,10 +222,10 @@ try {
     $dompdf->stream('reporte.pdf', array("Attachment" => false));
 
     // Cerrar la conexión a la base de datos
-    $connection = null;
+/*     $connection = null;
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
-}
+} */
 ?>

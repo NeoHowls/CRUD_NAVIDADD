@@ -9,158 +9,22 @@ $periodo=$_GET['periodo'];
 $rep = new Reportes();
 
 
+$datos2 = $rep->reporteNacionalidad($periodo);
 
 
 
-// $reporteNE = $rep->reporteNacionalidadEtario($periodo,$nombreNacionalidad,$idNacionalidad)
+$nacionalidades = $rep->listarNacionalidad();
 
-
-/* $host = '10.20.10.13';
-$dbname = 'BD_NAVIDAD';
-$user = 'sa';
-$password = '1'; */
-
-/* try {
-    $connection = new PDO("sqlsrv:server=$host;database=$dbname", $user, $password);
-    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Consulta SQL para la primera tabla
-    $sql1 = "SELECT
-                edad,
-                REPLACE(CAST(edad AS VARCHAR), '99', 'MAYORES DE 10 AÑOS') AS edadV,
-                COALESCE(nacionalidad, 'SIN DATOS') AS nacionalidad,
-                idNacionalidad,
-                COALESCE(SUM(masculino), 0) AS MASCULINO,
-                COALESCE(SUM(femenino), 0) AS FEMENINO,
-                COALESCE(SUM(masculino) + SUM(femenino), 0) AS TOTAL
-            FROM (
-                SELECT
-                    E.edad AS edad,
-                    VCN.nacionalidad,
-                    VCN.idNacionalidad AS idNacionalidad,
-                    VCN.masculino AS masculino,
-                    VCN.femenino AS femenino
-                FROM
-                    (SELECT * FROM V_CONTEONINOSNACION WHERE edad <= 10 AND periodo = 2024 AND estado=1) VCN
-                RIGHT JOIN
-                    A_EDAD E ON VCN.edad = E.edad
-                UNION ALL
-                SELECT
-                    99 AS edad,
-                    'MULTIPLES' AS nacionalidad,
-                    99 AS idNacionalidad,
-                    SUM(VCN.masculino) AS masculino,
-                    SUM(VCN.femenino) AS femenino
-                FROM
-                    V_CONTEONINOSNACION VCN
-                WHERE
-                    VCN.edad > 10 AND VCN.periodo = 2024 AND estado=1
-            ) vista
-            GROUP BY
-                edad, idNacionalidad, nacionalidad
-            ORDER BY
-                edad";
-
-    $stmt1 = $connection->prepare($sql1);
-    $stmt1->execute();
-    $datos1 = $stmt1->fetchAll(PDO::FETCH_ASSOC); */
-
-    // Consulta SQL para la nueva tabla
-    /* $sql2 = "SELECT idNacionalidad,
-                    COALESCE(nacionalidad, 'SIN DATOS') AS nacionalidad,
-                            COALESCE(SUM(masculino), 0) AS MASCULINO,
-                            COALESCE(SUM(femenino), 0) AS FEMENINO,
-                            COALESCE(SUM(masculino) + SUM(femenino), 0) AS TOTAL
-
-            FROM(
-                SELECT NA.id idNacionalidad, NA.nacionalidad nacionalidad,VP.masculino masculino, VP.femenino femenino 
-                FROM(
-                SELECT * FROM V_CONTEONINOSNACION
-                WHERE periodo = 2024 AND estado=1
-                ) VP
-            RIGHT JOIN A_NACIONALIDAD NA ON VP.idNacionalidad=NA.id) VISTA
-            GROUP BY idNacionalidad,nacionalidad
-            ORDER BY idNacionalidad";
-
-    $stmt2 = $connection->prepare($sql2);
-    $stmt2->execute();
-    $datos2 = $stmt2->fetchAll(PDO::FETCH_ASSOC); */
-
-    $datos2 = $rep->reporteNacionalidad($periodo);
-
+$datosPorNacionalidad = [];
+foreach ($nacionalidades as $nacion){
+    $datosPorNacionalidad[$nacion['nacionalidad']] = $rep->reporteNacionalidadEtario($periodo,$nacion['nacionalidad'],$nacion['id']);
+}
     
-    
-
-    /* $nacionalidades = [
-        1 => 'Chile',
-        2 => 'Argentina',
-        3 => 'Uruguay',
-        4 => 'Paraguay',
-        5 => 'Bolivia',
-        6 => 'Peru',
-        7 => 'Brasil',
-        8 => 'Ecuador',
-        9 => 'Colombia',
-        10 => 'Venezuela'
-    ]; */
-
-    $nacionalidades = $rep->listarNacionalidad();
-
-    $datosPorNacionalidad = [];
-    foreach ($nacionalidades as $nacion){
-        // $nacion['nacionalidad']
-        $datosPorNacionalidad[$nacion['nacionalidad']] = $rep->reporteNacionalidadEtario($periodo,$nacion['nacionalidad'],$nacion['id']);
-    }
-    // foreach ($nacionalidades as $idNacionalidad => $nombreNacionalidad) {
-
-        
-        // $datosPorNacionalidad[$nombreNacionalidad] = $rep->reporteNacionalidadEtario($periodo,$nombreNacionalidad,$idNacionalidad);
-        /* $sql = "SELECT
-                    edad,
-                    REPLACE(CAST(edad AS VARCHAR), '99', 'MAYORES DE 10 AÑOS') AS edadV,
-                    COALESCE(nacionalidad, '$nombreNacionalidad') AS nacionalidad,
-                    idNacionalidad,
-                    COALESCE(SUM(masculino), 0) AS MASCULINO,
-                    COALESCE(SUM(femenino), 0) AS FEMENINO,
-                    COALESCE(SUM(masculino) + SUM(femenino), 0) AS TOTAL
-                FROM (
-                    SELECT
-                        E.edad AS edad,
-                        VCN.nacionalidad,
-                        VCN.idNacionalidad AS idNacionalidad,
-                        VCN.masculino AS masculino,
-                        VCN.femenino AS femenino
-                    FROM
-                        (SELECT * FROM V_CONTEONINOSNACION WHERE edad <= 10 AND periodo = 2024 AND estado=1 AND idNacionalidad=$idNacionalidad) VCN
-                    RIGHT JOIN
-                        A_EDAD E ON VCN.edad = E.edad
-                    UNION ALL
-                    SELECT
-                        99 AS edad,
-                        '$nombreNacionalidad' AS nacionalidad,
-                        99 AS idNacionalidad,
-                        SUM(VCN.masculino) AS masculino,
-                        SUM(VCN.femenino) AS femenino
-                    FROM
-                        V_CONTEONINOSNACION VCN
-                    WHERE
-                        VCN.edad > 10 AND VCN.periodo = 2024 AND estado=1 AND idNacionalidad=$idNacionalidad
-                ) vista
-                GROUP BY
-                    edad, idNacionalidad, nacionalidad
-                ORDER BY
-                    edad";
-
-        $stmt = $connection->prepare($sql);
-        $stmt->execute();
-        $datosPorNacionalidad[$nombreNacionalidad] = $stmt->fetchAll(PDO::FETCH_ASSOC); */
-    // }
-
     // Construir el HTML con los datos obtenidos
     ob_start();
 
     // Datos para el encabezado
-    $logoPath = './images/MahoH.png';
+    $logoPath = '../images/MahoH.png';
     if (file_exists($logoPath)) {
         $logoBase64 = base64_encode(file_get_contents($logoPath));
         $logoDataUri = 'data:image/png;base64,' . $logoBase64;
@@ -255,6 +119,7 @@ $password = '1'; */
             <?php endif; ?>
         </div>
         <div class="content">
+            <h2>Navidad <?php echo $periodo; ?> - Municipalidad de Alto Hospicio</h2>
             <h2>Informe General</h2>
         </div>
         <?php
@@ -360,7 +225,5 @@ $password = '1'; */
     $dompdf->render();
     $dompdf->stream('informe_por_nacionalidad.pdf', ['Attachment' => false]);
 
-/* } catch (PDOException $e) {
-    echo "Error de conexión: " . $e->getMessage();
-} */
+
 ?>

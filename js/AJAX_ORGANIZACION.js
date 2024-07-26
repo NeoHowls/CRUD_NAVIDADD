@@ -642,35 +642,17 @@ $(document).on("click", ".btnHabGeneral", function(e){
     $('#fondo-modal').hide();
   }
 
-function mostrarBoton() {
-    const selectedYear = document.getElementById('select_periodo').value;
-    const botonInforme = document.getElementById('botonInforme');
-    
-    botonInforme.innerHTML = `
-        <button type="button" class="btn btn-warning me-2 btnAnular text-light" id="btnInforme${selectedYear}" onclick="imprimirInforme(${selectedYear})">
-            <i class='bi bi-filetype-pdf icon-100'></i> ${selectedYear} 
-        </button>
-    `;
-}
-function mostrarBoton2() {
-    const selectedYear = document.getElementById('select_periodo2').value;
-    const botonInforme2 = document.getElementById('botonInforme2');
-    
-    botonInforme2.innerHTML = `
-        <button type="button" class="btn btn-warning me-2 btnAnular text-light" id="btn2Informe${selectedYear}" onclick="imprimirInforme2(${selectedYear})">
-            <i class='bi bi-filetype-pdf icon-100'></i> ${selectedYear}
-        </button>
-    `;
-}
 
-// Llamar a la función una vez para inicializar el botón
-document.addEventListener('DOMContentLoaded', function() {
-    mostrarBoton(); // Opcional, si quieres que se muestre el botón al cargar la página.
-});
-document.addEventListener('DOMContentLoaded', function() {
-    mostrarBoton2();
+$('#btnInformeDetallado').on('click', function () {
+    periodo=$('#select_periodo').val();
+    crearpdf(id1, nombre1, periodo);
 });
 
+
+$('#btnInformeRutFirma').on('click', function () {
+    periodo=$('#select_periodo2').val();
+    crearpdf2(id1, nombre1, periodo);
+});
 
 //!PDF DETALLADO
 $(document).on('click', '.btnPdf', function () {
@@ -700,57 +682,12 @@ $(document).on('click', '.btnPdf', function () {
     });
 
 
- 
-$('#btnInforme2023').on('click', function() {
-    imprimirInforme(2023, id1, nombre1); 
-});
-
-$('#btnInforme2024').on('click', function() {
-    imprimirInforme(2024, id1, nombre1);
-});
-
-$('#btnInforme2025').on('click', function() {
-    imprimirInforme(2025, id1, nombre1);
-});
-
-$('#btnInforme2026').on('click', function() {
-    imprimirInforme(2026, id1, nombre1);
-});
-
-$('#btn2Informe2023').on('click', function() {
-    imprimirInforme2(2023, id1, nombre1); 
-});
-
-$('#btn2Informe2024').on('click', function() {
-    imprimirInforme2(2024, id1, nombre1);
-});
-
-$('#btn2Informe2025').on('click', function() {
-    imprimirInforme2(2025, id1, nombre1);
-});
-
-$('#btn2Informe2026').on('click', function() {
-    imprimirInforme2(2026, id1, nombre1);
-});
-
-
-function imprimirInforme(anio) {
-    if (id1 && nombre1) {
-        crearpdf(id1, nombre1, anio);
-    }
-}
- function imprimirInforme2(anio) {
-        if (id1 && nombre1) {
-            crearpdf2(id1, nombre1, anio);
-        }
-    }
-
-function crearpdf(id1, nombre1, anio) {
-    window.open("../reportePdfOrganizacion.php?idOrg=" + id1 + "&nombre1=" + nombre1 + "&anio=" + anio);
+function crearpdf(id1, nombre1, periodo) {
+    window.open("../view/reportePdfOrganizacion.php?idOrg=" + id1 + "&nombre1=" + nombre1 + "&periodo=" + periodo);
 }
 
-function crearpdf2(id1, nombre1, anio) {
-    window.open("../reportePdfOrganizacion2.php?idOrg=" + id1 + "&nombre1=" + nombre1 + "&anio=" + anio);
+function crearpdf2(id1, nombre1, periodo) {
+    window.open("../view/reportePdfOrganizacionFirma.php?idOrg=" + id1 + "&nombre1=" + nombre1 + "&periodo=" + periodo);
 }
 
 

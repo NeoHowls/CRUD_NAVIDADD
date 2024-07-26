@@ -36,22 +36,8 @@ session_start();
   switch($_GET["op"]){
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
   case "organizacion":
-    //define la consulta
-    /* $CONSULTA = "SELECT  
-A_ORGANIZACION.id,
-A_ORGANIZACION.nombre,
-A_ORGANIZACION.direccion,
-A_ORGANIZACION.tipo,
-A_ORGANIZACION.fechaIngreso,
-A_ORGANIZACION.aniosVigente,
-A_ORGANIZACION.checkVigente,
-A_ORGANIZACION.numProvidencia,
-A_ORGANIZACION.checkHabilitado,
-A_ORGANIZACION.estado
-
-
-FROM [dbo].[A_ORGANIZACION]"; */
-    $CONSULTA = "SELECT O.id AS id,
+    $datos = $org->listarOrganizaciones();
+    /* $CONSULTA = "SELECT O.id AS id,
     O.nombre AS nombre,
     O.direccion AS direccion,
     O.tipo AS tipo,
@@ -100,7 +86,7 @@ SELECT O.id AS id,
 FROM A_ORGANIZACION O WHERE O.checkVigente=0
 ORDER BY tipo";
     //llamo al metodo listar y le doy la variable CONSULTA
-    $datos=$menu->listar($CONSULTA);
+    $datos=$menu->listar($CONSULTA); */
     //imprimir los datos en JSON
     print($datos);
     break;

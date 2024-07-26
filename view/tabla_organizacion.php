@@ -67,7 +67,7 @@
                                 <div class="d-flex align-items-end justify-content-center mb-3">
                                     <div class="col-lg-3 text-center">
                                         <label for="select_periodo" class="col-form-label">Periodo:</label>
-                                        <select name="periodo" id="select_periodo" class="form-control" onchange="mostrarBoton()">
+                                        <select name="periodo" id="select_periodo" class="form-control">
                                         <?php
                                             for($i=2023;$i<=date("Y");$i++){
                                             //for($i=2023;$i<=2025;$i++){
@@ -83,6 +83,9 @@
                                     </div>
                                     <div class="ms-3" id="botonInforme">
                                         <!-- Aquí se insertará el botón correspondiente al año seleccionado -->
+                                        <button type="button" class="btn btn-warning me-2 btnAnular text-light" id="btnInformeDetallado">
+                                            <i class='bi bi-filetype-pdf icon-100'></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +110,7 @@
                                 <div class="d-flex align-items-end justify-content-center mb-3">
                                     <div class="col-lg-3 text-center">
                                         <label for="select_periodo2" class="col-form-label">Periodo:</label>
-                                        <select name="periodo" id="select_periodo2" class="form-control" onchange="mostrarBoton2()">
+                                        <select name="periodo" id="select_periodo2" class="form-control">
                                         <?php
                                             for($i=2023;$i<=date("Y");$i++){
                                             //for($i=2023;$i<=2025;$i++){
@@ -123,6 +126,9 @@
                                     </div>
                                     <div class="ms-3" id="botonInforme2">
                                         <!-- Aquí se insertará el botón correspondiente al año seleccionado -->
+                                        <button type="button" class="btn btn-warning me-2 btnAnular text-light" id="btnInformeRutFirma">
+                                            <i class='bi bi-filetype-pdf icon-100'></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

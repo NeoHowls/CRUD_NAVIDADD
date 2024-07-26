@@ -8,19 +8,30 @@ let totalFemenino2 = 0;
 let totalGeneral2 = 0;
 let totalGeneralPorNacionalidad = [];
 
-// Función para actualizar un gráfico
+let periodo=2024;
+
+// $('#select_periodo')
+$('#select_periodo').on('change', function() {
+    periodo = $('#select_periodo').val();
+    actualizarGraficoGeneral(periodo);
+    actualizarGraficoGeneralNacional(periodo);
+    
+});
+
+//! Función para actualizar un gráfico--------------------------------------------------------
 function updateChart(chart, data) {
     chart.data.datasets[0].data = data;
     chart.update();
 }
-
+//!grafico general-------------------------------------------------------
 // Inicializar DataTables
 let table1 = $('#myTable11').DataTable({
     pageLength: 20,
     ajax: {
-        url: "../controller/controllerReport.php?op=pdf",
+        url: "../controller/controllerReport.php?op=pdfGeneral",
         dataSrc: "",
         type: "post",
+        data:  {periodo:periodo},
         responsive: true,
         aaSorting: []
     },
@@ -101,12 +112,14 @@ function initChartReportGen() {
             }
         }
     });
+    actualizarGraficoGeneral(periodo);
 }
-
+let actualizarGraficoGeneral = function(periodo){
 // Solicitar datos para la tabla y actualizar gráfico
 $.ajax({
-    url: "../controller/controllerReport.php?op=pdf",
+    url: "../controller/controllerReport.php?op=pdfGeneral",
     type: "post",
+    data:  {periodo:periodo},
     dataType: "json",
     success: function (data) {
         console.log('Datos recibidos:', data);
@@ -129,7 +142,7 @@ $.ajax({
     }
 });
 
-table1.on('draw', function () {
+/* table1.on('draw', function () {
     var data = table1.rows().data().toArray();
     var totalFemenino = 0, totalMasculino = 0, totalGeneral = 0;
 
@@ -144,19 +157,22 @@ table1.on('draw', function () {
     totalGeneral2 = totalGeneral;
 
     updateChart(chartReportGen, [totalFemenino2, totalMasculino2, totalGeneral2]);
-});
-
+}); */
+};
 //!-------------------------------------------------------------------------------------------------------------------------------------------
 //!-------------------------------------------------------------------------------------------------------------------------------------------
 //!-----------------------------------------------------------NACIONALIDAD--------------------------------------------------------------------
 //!-------------------------------------------------------------------------------------------------------------------------------------------
 //!-------------------------------------------------------------------------------------------------------------------------------------------
+
+//!grafico general nacionalidad -------------------------------------------------------
 let table2 = $('#myTable12').DataTable({
     pageLength: 20,
     ajax: {
-        url: "../controller/controllerReport.php?op=nacion",
+        url: "../controller/controllerReport.php?op=pdfNaciones",
         dataSrc: "",
         type: "post",
+        data:  {periodo:periodo},
         responsive: true,
         aaSorting: []
     },
@@ -247,12 +263,15 @@ function initChartReportGen3() {
             }
         }
     });
+    actualizarGraficoGeneralNacional(periodo);
 }
 
 // Solicitar datos para la tabla y actualizar gráfico
+let actualizarGraficoGeneralNacional = function(periodo){
 $.ajax({
-    url: "../controller/controllerReport.php?op=nacion",
+    url: "../controller/controllerReport.php?op=pdfNaciones",
     type: "post",
+    data:  {periodo:periodo},
     dataType: "json",
     success: function (data) {
         console.log('Datos recibidos:', data);
@@ -270,7 +289,7 @@ $.ajax({
     }
 });
 
-table2.on('draw', function () {
+/* table2.on('draw', function () {
     var data = table2.rows().data().toArray();
     var totalPorNacionalidad = [];
 
@@ -284,13 +303,13 @@ table2.on('draw', function () {
     updateChart(chartReportGen3, totalGeneralPorNacionalidad);
     chartReportGen3.data.labels = labels;
     chartReportGen3.update();
-});
-
-// Inicializar los gráficos
+}); */
+};
+//! Inicializar los gráficos
 initChartReportGen();
 initChartReportGen3();
 
-periodo=2024;
+
 //!BOTONES PARA GENERAR EL PDF
 document.getElementById('btnReportGen').addEventListener('click', function () {
     window.open("../view/reportePdfGeneral.php?periodo="+periodo);

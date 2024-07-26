@@ -116,7 +116,7 @@ $datos = $rep->pdfGeneral($periodo);
             <?php endif; ?>
         </div>
         <div class="content">
-            <h2>Navidad <?php echo $anio; ?> - Municipalidad de Alto Hospicio</h2>
+            <h2>Navidad <?php echo $periodo; ?> - Municipalidad de Alto Hospicio</h2>
             <br>
             <br>
             <h3>Informe General</h3>

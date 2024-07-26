@@ -51,7 +51,27 @@
                           <!-------------->
                               <div class="container">
                             <div class="card-custom">
-                              <h1 class="text-center">Generar Informes</h1>                                  
+                              <h1 class="text-center">Generar Informes</h1>
+                              <div class="row p-1">
+                                  <div class="col-lg-4" style = "text-align: center;"></div>    
+                                  <div class="col-lg-4" style = "text-align: center;">   
+                                    <label for="" class="col-form-label">Periodo:</label>
+                                    <select name="select_periodo" id="select_periodo" class = "form-control">
+                                        <?php
+                                            for($i=2023;$i<=date("Y");$i++){
+                                            //for($i=2023;$i<=2025;$i++){
+                                            // echo ("<option value=".$i.">".$i."</option>");
+                                            if($i==date("Y")){
+                                                echo ("<option value=".$i." selected>".$i."</option>");
+                                            }else{
+                                                echo ("<option value=".$i.">".$i."</option>");
+                                            }
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4" style = "text-align: center;"></div>  
+                              </div>                                
                               <div class="row">
                                 <div class="col-lg-12">
                                   <h3>IMPRIMIR REPORTE GENERAL</h3>
