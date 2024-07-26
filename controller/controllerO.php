@@ -1,7 +1,7 @@
 <?php
 session_start();
   //llama al MenuModel
-  require_once("../model/MenuModel.php");
+  // require_once("../model/MenuModel.php");
 
   require_once("../model/MODEL_ORG.php");
   require_once("../model/MODEL_ORGH.php");
@@ -14,7 +14,7 @@ session_start();
 
   
   //declaro una variable para poder invocar a MenuModel
-  $menu= new MenuModel();
+  // $menu= new MenuModel();
   $organizacion = (isset($_POST['organizacion'])) ? $_POST['organizacion'] : '';
   $user_id = (isset($_POST['user_id'])) ? $_POST['user_id'] : '';
   $nombre = (isset($_POST['nombre'])) ? $_POST['nombre'] : '';
@@ -499,6 +499,43 @@ session_start();
           }
         }   
     break;//! final deshabilitar general org
+
+    case "actualizarVigencia":
+
+      $respuesta= array();
+      $i=0;
+
+      if($tipo==4){$vigencia=1;
+      }else{ $vigencia=4;}
+
+      $fechaActual = date('Y-m-d H:i:s');
+      $fechaProceso = strtotime('+ '.$vigencia.' year', strtotime($fechaActual));
+      $fechaVencimiento = date ('Y-m-d H:i:s',$fechaProceso);
+      $org->actualizarDO($user_id,$fechaActual,$fechaVencimiento);
+      $org->actualizarVigencia($user_id);
+      $orgH->guardarOrganizacionH($nombre, $direccion, 
+          $tipo, $fechaIngreso, $checkVigente, 
+          $numProvidencia,'vigencia renovada',$usuarioCambio,$checkHabilitado,$estado);
+      if($org->getError()==0 && $orgH->getError()==0){
+        $respuesta[$i]['action']="OK";
+        $respuesta[$i]['error']=0;
+        $respuesta[$i]['mensaje']="Vigencia renovada por ".$vigencia." años";
+        $i++;
+        echo json_encode($respuesta);
+      }elseif($orgH->getError()!=0){
+        $respuesta[$i]['action']="ERROR";
+        $respuesta[$i]['error']=99;
+        $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
+        $i++;
+        echo json_encode($respuesta);
+      }else{
+        $respuesta[$i]['action']="ERROR";
+        $respuesta[$i]['error']=99;
+        $respuesta[$i]['mensaje']="ERROR BD";
+        $i++;
+        echo json_encode($respuesta);
+      }
+    break;
   }
   
 ?>

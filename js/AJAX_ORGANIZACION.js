@@ -112,6 +112,7 @@ let table = $('#myTable2').DataTable( {
                     "</button>";
 
                     ActualizarVigencia = '<button type="button" class="btn btn-info text-light btnActualizarVigencia me-2" data-toggle="tooltip" data-placement="top" title="actualizar Vigencia"><i class="bi bi-clock-history icon-100"></i> </button>';
+                    ActualizarVigenciaDesactivado = '<button type="button" class="btn btn-secondary text-light btnActualizarVigencia me-2" data-toggle="tooltip" data-placement="top" title="actualizar Vigencia"  disabled><i class="bi bi-clock-history icon-100"></i> </button>';
 
                 // Combinamos los botones en una sola columna
                 return estadoButton + checkHabilitadoButton + editarButton + pdf2 + pdf3 + ActualizarVigencia;
@@ -655,6 +656,62 @@ $('#btnInformeDetallado').on('click', function () {
 $('#btnInformeRutFirma').on('click', function () {
     periodo=$('#select_periodo2').val();
     crearpdf2(id1, nombre1, periodo,tipo1);
+});
+//! Actualizar vigencia-------------------------------------------
+$(document).on('click', '.btnActualizarVigencia', function (e) {
+    e.preventDefault(); // Evita el comportamiento normal del submit, es decir, recarga total de la página
+    let fila = $(this).closest('tr');
+    user_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
+    nombre = fila.find('td:eq(1)').text();
+    direccion = fila.find('td:eq(2)').text();
+    tipo = fila.find('td:eq(3)').text();
+    fechaIngreso = fila.find('td:eq(4)').text();
+    checkVigente= fila.find('td:eq(5)').text();
+    numProvidencia= fila.find('td:eq(6)').text();
+    checkHabilitado=fila.find('td:eq(7)').text();
+    estado= fila.find('td:eq(8)').text();
+   
+    let confirmMessage = "¿Quieres Actualizar la vigencia de: "+nombre+"?";
+    let respuesta = confirm(confirmMessage);
+  
+    //alert(user_id+' '+nombre+' '+vigente+' '+tipo);
+    if (respuesta) {            
+        $.ajax({
+            url: "../controller/controllerO.php?op=actualizarVigencia",
+            type: "POST",
+            dataType: "json",
+            data: { user_id:user_id,nombre:nombre, direccion:direccion, tipo:tipo, fechaIngreso:fechaIngreso, checkVigente:checkVigente, numProvidencia:numProvidencia, checkHabilitado:checkHabilitado, estado:estado},
+            success: function(data) {
+                table.ajax.reload(null, false);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la operación:", error);
+            }
+        }).done(function(response){ 
+            // console.log(response);
+            respuesta =response;
+             //alert(respuesta.length);
+            if(respuesta.length==1 && respuesta[0].error==0){
+                
+                Swal.fire({
+                    icon: "success",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+            
+        });//fin done	    	    
+    }
 });
 
 //!PDF DETALLADO

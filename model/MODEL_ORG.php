@@ -226,10 +226,10 @@ class Organizaciones extends ConexionBD{
     //! ACTUALIZAR DETALLE ORGANIZACION 
     public function actualizarDO($idOrganizacion,$fechaIngreso,$fechaVencimiento){
         $sql="UPDATE A_DETALLE_ORGANIZACION 
-        SET idOrganizacion=:idOrganizacion,
+        SET 
             fechaIngreso=:fechaIngreso,
             fechaVencimiento =:fechaVencimiento
-            WHERE idOrganizacion=:user_id";
+            WHERE idOrganizacion=:idOrganizacion";
         $parametros =array(
             "idOrganizacion"=>$idOrganizacion,
             "fechaIngreso"=>$fechaIngreso,
@@ -255,6 +255,21 @@ class Organizaciones extends ConexionBD{
             "direccion"=>$direccion,
             "tipo"=>$tipo,
             "numProvidencia"=>$numProvidencia,
+            "user_id"=>$user_id
+        );
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+        
+    }
+
+        //! ACTUALIZAR ORGANIZACION 
+        public function actualizarVigencia($user_id){
+        $sql="UPDATE A_ORGANIZACION 
+                SET checkVigente=1
+                
+              WHERE id=:user_id";
+        $parametros =array(
             "user_id"=>$user_id
         );
         $this->connect();
