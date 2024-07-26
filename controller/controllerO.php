@@ -37,56 +37,7 @@ session_start();
    //en caso que llame el controller debo usar op y la opcionen, en esta caso solo es listar
   case "organizacion":
     $datos = $org->listarOrganizaciones();
-    /* $CONSULTA = "SELECT O.id AS id,
-    O.nombre AS nombre,
-    O.direccion AS direccion,
-    O.tipo AS tipo,
-	CASE
-			WHEN O.tipo= 1 THEN 'JUNTA VECINAL'
-			WHEN O.tipo= 2 THEN 'COMÍTE VIVIENDA'
-			WHEN O.tipo= 3 THEN 'CONDOMINIO'
-			WHEN O.tipo= 4 THEN 'PROVIDENCIA'
-	END AS organizacion,
-    O.fechaIngreso AS fechaIngreso,
-    O.checkVigente AS checkVigente,
-    O.numProvidencia AS numProvidencia,
-    O.checkHabilitado AS checkHabilitado,
-    CASE
-        WHEN O.checkHabilitado = 0 THEN 'DESHABILITADA'
-        WHEN O.checkHabilitado = 1 THEN 'HABILITADA'
-    END AS habilitado,
-    O.estado AS estado,
-  DO.aniosVigente AS aniosVigente,
-  vigente = 'VIGENTE'
-FROM A_ORGANIZACION O
-JOIN A_DETALLE_ORGANIZACION DO ON O.id=idOrganizacion
-WHERE DO.estado=1 AND O.checkVigente=1
-UNION
-SELECT O.id AS id,
-    O.nombre AS nombre,
-    O.direccion AS direccion,
-    O.tipo AS tipo,
-	CASE
-			WHEN O.tipo= 1 THEN 'JUNTA VECINAL'
-			WHEN O.tipo= 2 THEN 'COMÍTE VIVIENDA'
-			WHEN O.tipo= 3 THEN 'CONDOMINIO'
-			WHEN O.tipo= 4 THEN 'PROVIDENCIA'	
-	END AS organizacion,
-    O.fechaIngreso AS fechaIngreso,
-    O.checkVigente AS checkVigente,
-    O.numProvidencia AS numProvidencia,
-    O.checkHabilitado AS checkHabilitado,
-    CASE
-        WHEN O.checkHabilitado = 0 THEN 'DESHABILITADA'
-        WHEN O.checkHabilitado = 1 THEN 'HABILITADA'
-    END AS habilitado,
-    O.estado AS estado,
-  aniosVigente=0,
-  vigente = 'NO VIGENTE'
-FROM A_ORGANIZACION O WHERE O.checkVigente=0
-ORDER BY tipo";
-    //llamo al metodo listar y le doy la variable CONSULTA
-    $datos=$menu->listar($CONSULTA); */
+    
     //imprimir los datos en JSON
     print($datos);
     break;

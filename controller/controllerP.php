@@ -80,7 +80,13 @@ session_start();
     }
 
 
-      if(verificarExpresion($nombre,$enombre)==false){
+      /* if(verificarExpresion($nombre,$enombre)==false){
+        $respuesta[$i]['action']='ERROR';
+        $respuesta[$i]['error']=2;
+        $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar nombre</p>';
+        $i++;
+      } */
+      if($nombre=='' || $nombre==null){
         $respuesta[$i]['action']='ERROR';
         $respuesta[$i]['error']=2;
         $respuesta[$i]['mensaje']='<p class="mensaje">Debe ingresar nombre</p>';

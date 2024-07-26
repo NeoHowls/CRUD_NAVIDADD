@@ -204,6 +204,8 @@ $('#chDiscapacidad').change(function() {
     if(this.checked != true){
           $("#contenidoDiscapacidad").hide();
           limpiarContenidoDiscapacidad();
+          $('#Naciemiento').val('');
+          $('#edad').val('');
      }
   else{
         $("#contenidoDiscapacidad").show();

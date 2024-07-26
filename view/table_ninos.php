@@ -363,14 +363,14 @@
                       <div class="row">
                           <div class="col-lg-12" style = "text-align: center;">
                               <label for="" class="col-form-label">Fecha Nacimiento</label>
-                              <input type="date" name='fecha'  class="form-control" id="Naciemiento">
+                              <input type="date" name='fecha'  class="form-control" id="Naciemiento" style = "text-align: center;">
                               <span id='m_nacimiento'></span>
                           </div>
                       </div>
                       <div class="row">
                           <div class="col-lg-12" style = "text-align: center;">
                               <label for="" class="col-form-label">Edad</label>
-                              <input type="number" class="form-control" id="edad">
+                              <input type="number" class="form-control" id="edad" style = "text-align: center;">
                               <span id='m_edad'></span>
                               <!-- <span id='m_nombre'></span> -->
                           </div>
