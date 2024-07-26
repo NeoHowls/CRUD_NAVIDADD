@@ -122,7 +122,7 @@ $.ajax({
     data:  {periodo:periodo},
     dataType: "json",
     success: function (data) {
-        console.log('Datos recibidos:', data);
+        //console.log('Datos recibidos:', data);
         table1.clear().rows.add(data).draw();
 
         totalFemenino2 = 0;
@@ -274,7 +274,7 @@ $.ajax({
     data:  {periodo:periodo},
     dataType: "json",
     success: function (data) {
-        console.log('Datos recibidos:', data);
+        //console.log('Datos recibidos:', data);
         table2.clear().rows.add(data).draw();
 
         totalGeneralPorNacionalidad = data.map(row => parseFloat(row.TOTAL || 0));

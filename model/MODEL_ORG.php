@@ -224,16 +224,18 @@ class Organizaciones extends ConexionBD{
     }
 
     //! ACTUALIZAR DETALLE ORGANIZACION 
-    public function actualizarDO($idOrganizacion,$fechaIngreso,$fechaVencimiento){
+    public function actualizarDO($idOrganizacion,$fechaIngreso,$fechaVencimiento,$anioVigencia){
         $sql="UPDATE A_DETALLE_ORGANIZACION 
         SET 
             fechaIngreso=:fechaIngreso,
-            fechaVencimiento =:fechaVencimiento
+            fechaVencimiento =:fechaVencimiento,
+            aniosVigente=:anioVigencia
             WHERE idOrganizacion=:idOrganizacion";
         $parametros =array(
             "idOrganizacion"=>$idOrganizacion,
             "fechaIngreso"=>$fechaIngreso,
-            "fechaVencimiento"=>$fechaVencimiento
+            "fechaVencimiento"=>$fechaVencimiento,
+            "anioVigencia"=>$anioVigencia
         );
         $this->connect();
         $query = $this->ejecutarOrden($sql, $parametros);
@@ -263,10 +265,12 @@ class Organizaciones extends ConexionBD{
         
     }
 
-        //! ACTUALIZAR ORGANIZACION 
-        public function actualizarVigencia($user_id){
+    //todo ACTUALIZAR ORGANIZACION 
+    public function actualizarVigencia($user_id){
         $sql="UPDATE A_ORGANIZACION 
-                SET checkVigente=1
+                SET checkVigente=1,
+                    estado=1,
+                    checkHabilitado=1
                 
               WHERE id=:user_id";
         $parametros =array(
@@ -278,6 +282,73 @@ class Organizaciones extends ConexionBD{
         
     }
 
+    //! ACTUALIZAR ORGANIZACION
+    
+    public function consultaOrganizacionVencida(){
+        $sql="SELECT DTO.idOrganizacion idOrganizacion
+            FROM A_DETALLE_ORGANIZACION DTO WHERE fechaVencimiento<GETDATE()";
+        $this->connect();
+        $query = $this->iniciar($sql);
+        return $query;
+    }
+
+    public function desactivarOrganizacionesVigencia($idOrganizacion){
+        // organizacion estado=0, checkHabilitado=0, checkVigente=0
+        $sql="UPDATE A_ORGANIZACION 
+                SET checkVigente=0,
+                    estado=0,
+                    checkHabilitado=0
+                
+                WHERE id=:idOrganizacion";
+        $parametros =array(
+            "idOrganizacion"=>$idOrganizacion
+        );
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+        
+    }
+    public function desactivarDTOVigencia($idOrganizacion){
+        // organizacion estado=0, checkHabilitado=0, checkVigente=0
+        $sql="UPDATE A_DETALLE_ORGANIZACION 
+                SET aniosVigente = 0
+                WHERE idOrganizacion=:idOrganizacion";
+        $parametros =array(
+            "idOrganizacion"=>$idOrganizacion
+        );
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+        
+    }
+
+    public function consultaPersonasOrganizacionVencida($idOrganizacion){
+        $sql="SELECT idPersona
+            FROM A_DETALLE_PO
+            WHERE idOrganizacion =:idOrganizacion";
+        $parametros =array(
+            "idOrganizacion"=>$idOrganizacion
+        );
+        $this->connect();
+        $query = $this->iniciar($sql,$parametros);
+        return $query;
+    }
+
+    public function desactivarPersonaVigencia($idPersona){
+        // organizacion estado=0, checkHabilitado=0, checkVigente=0
+        $sql="UPDATE A_PERSONA
+                SET 
+                    estado=0,
+                    checkHabilitado=0
+                WHERE id=:idPersona";
+        $parametros =array(
+            "idPersona"=>$idPersona
+        );
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+        
+    }
     
 }
 ?>

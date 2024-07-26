@@ -505,14 +505,18 @@ session_start();
       $respuesta= array();
       $i=0;
 
+
       if($tipo==4){$vigencia=1;
       }else{ $vigencia=4;}
 
       $fechaActual = date('Y-m-d H:i:s');
       $fechaProceso = strtotime('+ '.$vigencia.' year', strtotime($fechaActual));
       $fechaVencimiento = date ('Y-m-d H:i:s',$fechaProceso);
-      $org->actualizarDO($user_id,$fechaActual,$fechaVencimiento);
+      $org->actualizarDO($user_id,$fechaActual,$fechaVencimiento,$vigencia);
       $org->actualizarVigencia($user_id);
+
+      //!falta habilitaar estados organizacion
+
       $orgH->guardarOrganizacionH($nombre, $direccion, 
           $tipo, $fechaIngreso, $checkVigente, 
           $numProvidencia,'vigencia renovada',$usuarioCambio,$checkHabilitado,$estado);
@@ -535,6 +539,38 @@ session_start();
         $i++;
         echo json_encode($respuesta);
       }
+    break;
+
+    case "desactivarVigencia":
+      $respuesta= array();
+      $i=0;
+
+      $datos=$org->consultaOrganizacionVencida();
+      foreach($datos as $dato){
+        
+        $org->desactivarOrganizacionesVigencia($dato['idOrganizacion']);
+        $org->desactivarDTOVigencia($dato['idOrganizacion']);
+        $datos2=$org->consultaPersonasOrganizacionVencida($dato['idOrganizacion']);
+        foreach($datos2 as $dato2){
+          $org->desactivarPersonaVigencia($dato2['idPersona']);
+        }
+      }
+
+      if($org->getError()==0){
+        $respuesta[$i]['action']="OK";
+        $respuesta[$i]['error']=0;
+        $respuesta[$i]['mensaje']="Organizacione vencidas desactivadas";
+        $i++;
+        echo json_encode($respuesta);
+      }else{
+        $respuesta[$i]['action']="ERROR";
+        $respuesta[$i]['error']=99;
+        $respuesta[$i]['mensaje']="ERROR BD";
+        $i++;
+        echo json_encode($respuesta);
+      }
+
+
     break;
   }
   

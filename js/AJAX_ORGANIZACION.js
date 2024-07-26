@@ -724,6 +724,57 @@ $(document).on('click', '.btnActualizarVigencia', function (e) {
     }
 });
 
+//! DESACTIVAR VIGENCIA ORG Y PERSONA
+
+$(document).on("click", ".btnDeshabilitarTime", function(e){
+    e.preventDefault(); // Evita el comportamiento normal del submit, es decir, recarga total de la página
+    /* let fila = $(this).closest('tr');           
+    let user_id = fila.find('td:eq(0)').text();
+    nombre = $(this).closest('tr').find('td:eq(1)').text() ;
+    let checkHabilitado = 0; */
+    let confirmMessage = "¿Quieres desactivar todas las vigencia vencidas?";
+    let respuesta = confirm(confirmMessage);
+    // alert("hola");
+    if (respuesta) {            
+        $.ajax({
+            url: "../controller/controllerO.php?op=desactivarVigencia",
+            type: "POST",
+            dataType: "json",
+            
+            success: function(data) {
+                table.ajax.reload(null, false);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la operación:", error);
+            }
+        }).done(function(response){ 
+            // console.log(response);
+            respuesta =response;
+            
+            // alert(respuesta.length);
+            if(respuesta.length==1 && respuesta[0].error==0){
+                
+                Swal.fire({
+                    icon: "success",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }else if(respuesta.length==1 && respuesta[0].error==99){
+                Swal.fire({
+                    icon: "error",
+                    title: respuesta[0].mensaje,
+                    width: 400,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+            
+        });//fin done	    	    
+    }
+});
+
 //!PDF DETALLADO
 $(document).on('click', '.btnPdf', function () {
     // Capturar los datos del botón
