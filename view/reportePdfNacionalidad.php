@@ -46,12 +46,12 @@ foreach ($nacionalidades as $nacion){
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 10px;
             background-color: #ffffff;
         }
         .container {
             background-color: #fff;
-            padding: 20px;
+            padding: 5px;
             border: 2px solid #fff;
             border-radius: 10px;
             width: 100%; 
@@ -60,9 +60,9 @@ foreach ($nacionalidades as $nacion){
             page-break-after: always;
         }
         .logo-container {
-            display: inline-block;
+            display: left;
             vertical-align: top;
-            width: 50%;
+            width: 30%;
             text-align: left;
         }
         .logo {
@@ -112,7 +112,6 @@ foreach ($nacionalidades as $nacion){
         <div class="fecha-hora">
             <p><?php echo $fechaHora; ?></p>
         </div>
-        <br>
         <div class="logo-container">
             <?php if ($logoDataUri): ?>
                 <img src="<?php echo $logoDataUri; ?>" class="logo" alt="Logo">
@@ -221,7 +220,7 @@ foreach ($nacionalidades as $nacion){
 
     $dompdf = new Dompdf();
     $dompdf->loadHtml($html);
-    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->setPaper('letter', 'portrait');
     $dompdf->render();
     $dompdf->stream('informe_por_nacionalidad.pdf', ['Attachment' => false]);
 

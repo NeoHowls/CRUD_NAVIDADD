@@ -58,10 +58,10 @@ $datos = $rep->pdfGeneral($periodo);
             text-align: center;
         }
         .logo-container {
-            display: inline-block;
+            display: right;
             vertical-align: top;
-            width: 50%;
-            text-align: left;
+            width: 30%;
+            text-align: right;
         }
         .logo {
             max-width: 100%;
@@ -107,7 +107,6 @@ $datos = $rep->pdfGeneral($periodo);
         <div class="fecha-hora">
             <p><?php echo $fechaHora; ?></p>
         </div>
-        
         <div class="logo-container">
             <?php if ($logoDataUri): ?>
                 <img src="<?php echo $logoDataUri; ?>" alt="Logo de la organización" class="logo">
@@ -117,8 +116,6 @@ $datos = $rep->pdfGeneral($periodo);
         </div>
         <div class="content">
             <h2>Navidad <?php echo $periodo; ?> - Municipalidad de Alto Hospicio</h2>
-            <br>
-            <br>
             <h3>Informe General</h3>
             <?php if (!empty($datos)): ?>
             <table>
@@ -172,7 +169,7 @@ $datos = $rep->pdfGeneral($periodo);
 
     $dompdf->render();
 
-    $dompdf->stream('reporte.pdf', array("Attachment" => false));
+    $dompdf->stream('reporteGeneral.pdf', array("Attachment" => false));
 
     $connection = null;
 

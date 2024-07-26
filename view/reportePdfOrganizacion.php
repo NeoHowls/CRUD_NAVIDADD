@@ -7,61 +7,11 @@ use Dompdf\Dompdf;
 
 $idOrg = isset($_GET['idOrg']) ? $_GET['idOrg'] : null;
 $nombreO = isset($_GET['nombre1']) ? $_GET['nombre1'] : '';
+$Organizacion = isset($_GET['organizacion']) ? $_GET['organizacion'] : '';
 $periodo = isset($_GET['periodo']) ? $_GET['periodo'] : date('Y');
 
 $rep=new Reportes();
 $datos=$rep->reporteOrganizacion($idOrg,$periodo);
-/* 
-// Paso 1: Conectar a la base de datos y ejecutar consulta SQL
-$host = '10.20.10.13';
-$dbname = 'BD_NAVIDAD';
-$user = 'sa';
-$password = '1';
-
-try {
-    $connection = new PDO("sqlsrv:server=$host;database=$dbname", $user, $password);
-    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Obtener el ID de organización, nombre de organización y año enviados por GET
-    $idOrg = isset($_GET['idOrg']) ? $_GET['idOrg'] : null;
-    $nombreO = isset($_GET['nombre1']) ? $_GET['nombre1'] : '';
-    $anio = isset($_GET['anio']) ? $_GET['anio'] : date('Y');
-
-    // Validar que el ID de organización no esté vacío y sea un número entero válido
-    if (!empty($idOrg) && is_numeric($idOrg)) {
-        // Ejemplo de consulta SQL para obtener datos filtrados por ID de organización y año
-        $sql = "SELECT            
-            NN.dni,
-            NN.nombre,
-            NN.sexo, 
-            CASE
-                WHEN [sexo] = 0 THEN 'MUJER'
-                WHEN [sexo] = 1 THEN 'HOMBRE'
-            END AS sexo_vista,
-            NN.edad,
-            NN.fechaNacimiento,
-            NN.idNacionalidad,
-            NA.nacionalidad,
-            NN.idEtnia,
-            ET.etnia,
-            NN.estado,
-            NN.periodo,
-            NN.idOrganizacion
-            FROM A_NINOS NN
-            JOIN A_NACIONALIDAD NA ON NA.id=NN.idNacionalidad
-            JOIN A_ETNIA ET ON ET.id= NN.idEtnia
-            WHERE idOrganizacion = :idOrg AND periodo = :anio and NN.estado=1
-            ORDER BY edad";
-        
-        // Preparar la consulta SQL con parámetros
-        $stmt = $connection->prepare($sql);
-        $stmt->bindParam(':idOrg', $idOrg, PDO::PARAM_INT);
-        $stmt->bindParam(':anio', $anio, PDO::PARAM_INT);
-        $stmt->execute();
-        $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        throw new Exception('ID de organización no válido.');
-    } */
 
     // Paso 2: Construir el HTML con los datos obtenidos
     ob_start(); // Iniciar almacenamiento en búfer de salida
@@ -102,9 +52,9 @@ try {
             text-align: center;
         }
         .logo-container {
-            display: inline-block;
+            display: left;
             vertical-align: top;
-            width: 50%;
+            width: 30%;
             text-align: left;
         }
         .logo {
@@ -151,7 +101,6 @@ try {
         <div class="fecha-hora">
             <p><?php echo $fechaHora; ?></p>
         </div>
-        <br>
         <div class="logo-container">
             <?php if ($logoDataUri): ?>
                 <img src="<?php echo $logoDataUri; ?>" alt="Logo de la organización" class="logo">
@@ -161,11 +110,8 @@ try {
         </div>
         <div class="content">
             <h2>Navidad <?php echo htmlspecialchars($periodo); ?> - Municipalidad de Alto Hospicio</h2>
-            <br>
-            <br>
             <!-- <p>id Organización: <span class="label"><?php echo htmlspecialchars($idOrg); ?></span></p> -->
-            <h3>Informe de la organizacion: <span class="label"><?php echo htmlspecialchars($_GET['nombre1']); ?></span></h3>
-            <br>
+            <h3>Informe de la organizacion: <span class="label"><?php echo htmlspecialchars($_GET['organizacion']); ?></span> - <span class="label"><?php echo htmlspecialchars($_GET['nombre1']); ?></span></h3>
             <?php if (!empty($datos)): ?>
             <table>
                 <thead>
@@ -213,19 +159,11 @@ try {
     $dompdf->loadHtml($html);
 
     // Configurar opciones del PDF (tamaño, orientación, etc.)
-    $dompdf->setPaper('A4', 'landscape');
+    $dompdf->setPaper('letter', 'landscape');
 
     // Renderizar PDF (generar el contenido del PDF)
     $dompdf->render();
 
     // Salida del PDF al navegador
-    $dompdf->stream('reporte.pdf', array("Attachment" => false));
-
-    // Cerrar la conexión a la base de datos
-/*     $connection = null;
-} catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-} */
+    $dompdf->stream('reporteOrganizacion.pdf', array("Attachment" => false));
 ?>

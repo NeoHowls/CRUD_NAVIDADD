@@ -98,15 +98,16 @@ let table = $('#myTable2').DataTable( {
 
                     let id1 = data["id"];
                     let nombre1=data["nombre"];
+                    let tipo1=data["organizacion"];
                     /* pdf ="<button type='button' class='btn btn-warning me-2 btnAnular text-light' data-toggle='tooltip' data-placement='top' title='Imprimir informe'"+
                     "onclick=\"crearpdf('"+id1+"','"+nombre1+"')\">"+
                     "<i class='bi bi-filetype-pdf icon-100'></i>"+
                     "</button>"; */
-                    pdf2 = "<button type='button' class='btn btn-warning me-2 btnPdf text-light btnPdf' data-id='" + id1 + "' data-nombre='" + nombre1 + "' data-toggle='tooltip' data-placement='top' title='Imprimir informe detallado.'>" +
+                    pdf2 = "<button type='button' class='btn btn-warning me-2 btnPdf text-light btnPdf' data-id='" + id1 + "' data-nombre='" + nombre1 + "' data-organizacion='" + tipo1 + "' data-toggle='tooltip' data-placement='top' title='Imprimir informe detallado.'>" +
                         "<i class='bi bi-filetype-pdf icon-100'></i>" +
                     "</button>";
 
-                    pdf3 = "<button type='button' class='btn btn-warning me-2 btnPdf2 text-light btnPdf2' data-id='" + id1 + "' data-nombre='" + nombre1 + "' data-toggle='tooltip' data-placement='top' title='Imprimir informe para firmar.'>" +
+                    pdf3 = "<button type='button' class='btn btn-warning me-2 btnPdf2 text-light btnPdf2' data-id='" + id1 + "' data-nombre='" + nombre1 + "' data-organizacion='" + tipo1 + "' data-toggle='tooltip' data-placement='top' title='Imprimir informe para firmar.'>" +
                         "<i class='bi bi-filetype-pdf icon-100'></i>" +
                     "</button>";
 
@@ -647,13 +648,13 @@ $(document).on("click", ".btnHabGeneral", function(e){
 
 $('#btnInformeDetallado').on('click', function () {
     periodo=$('#select_periodo').val();
-    crearpdf(id1, nombre1, periodo);
+    crearpdf(id1, nombre1, periodo,tipo1);
 });
 
 
 $('#btnInformeRutFirma').on('click', function () {
     periodo=$('#select_periodo2').val();
-    crearpdf2(id1, nombre1, periodo);
+    crearpdf2(id1, nombre1, periodo,tipo1);
 });
 
 //!PDF DETALLADO
@@ -661,11 +662,12 @@ $(document).on('click', '.btnPdf', function () {
     // Capturar los datos del botón
     id1 = $(this).data("id");
     nombre1 = $(this).data("nombre");
+    tipo1=$(this).data("organizacion");
 
     // Mostrar el modal
     $(".modal-header").css("background-color", "#17a2b8");
     $(".modal-header").css("color", "white");
-    $(".modal-title").text("Informes por año: "+nombre1);		
+    $(".modal-title").text("Informes por año: "+tipo1+"-"+nombre1);		
     $('#imprimirModal').modal('show');
 });
 
@@ -675,21 +677,22 @@ $(document).on('click', '.btnPdf', function () {
         // Capturar los datos del botón
         id1 = $(this).data("id");
         nombre1 = $(this).data("nombre");
+        tipo1=$(this).data("organizacion");
 
         // Mostrar el modal
         $(".modal-header").css("background-color", "#17a2b8");
         $(".modal-header").css("color", "white");
-        $(".modal-title").text("Informes por año: "+nombre1);		
+        $(".modal-title").text("Informes por año: "+tipo1+"-"+nombre1);		
         $('#imprimirModal2').modal('show');
     });
 
 
-function crearpdf(id1, nombre1, periodo) {
-    window.open("../view/reportePdfOrganizacion.php?idOrg=" + id1 + "&nombre1=" + nombre1 + "&periodo=" + periodo);
+function crearpdf(id1, nombre1, periodo, tipo) {
+    window.open("../view/reportePdfOrganizacion.php?idOrg=" + id1 + "&nombre1=" + nombre1 + "&periodo=" + periodo+ "&organizacion=" + tipo);
 }
 
-function crearpdf2(id1, nombre1, periodo) {
-    window.open("../view/reportePdfOrganizacionFirma.php?idOrg=" + id1 + "&nombre1=" + nombre1 + "&periodo=" + periodo);
+function crearpdf2(id1, nombre1, periodo, tipo) {
+    window.open("../view/reportePdfOrganizacionFirma.php?idOrg=" + id1 + "&nombre1=" + nombre1 + "&periodo=" + periodo+ "&organizacion=" + tipo);
 }
 
 
