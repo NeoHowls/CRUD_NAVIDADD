@@ -97,7 +97,7 @@
                                                 <div>
                                                     <?php include_once("../controller/controller_mostrarPerfil.php") ?>
                                                     <select id="idPerfil" class="form-control">
-                                                        <option value="">Selecciona un perfil</option>
+                                                        <option value="" disabled selected>Selecciona un perfil</option>
                                                         <?php foreach($datos as $key => $value): ?>
                                                             <option value="<?= $value['id'] ?>"><?= $value['perfil'] ?></option>
                                                         <?php endforeach; ?>
