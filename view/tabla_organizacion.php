@@ -16,7 +16,7 @@
             color: #111 !important;  
         }
         
-        .btnBorrar, .btnHabilitar, .btnDeshabilitar, .btnAutorizar, .btnEditar, .btnAnular, .btnDesHabGeneral, .btnHabGeneral, .btnNuevo, .btnPdf, .btnPdf2, .btnActualizarVigencia  {
+        .btnBorrar, .btnHabilitar, .btnDeshabilitar, .btnAutorizar, .btnEditar, .btnAnular, .btnDesHabGeneral, .btnHabGeneral, .btnNuevo, .btnPdf, .btnPdf2, .btnActualizarVigencia, .btnDeshabilitarTime  {
             height: 40px; /* Ajusta la altura del botón */
             line-height: 40px; /* Alinea el contenido del botón verticalmente */
             padding: 0 5px; /* Ajusta el padding del botón */
@@ -24,7 +24,7 @@
             align-items: center;
             justify-content: center;
         }
-        .btnBorrar i, .btnHabilitar i, .btnDeshabilitar i, .btnAutorizar i, .btnEditar i, .btnAnular i, .btnDesHabGeneral i, .btnHabGeneral i, .btnNuevo i, .btnPdf i, .btnPdf2 i, .btnActualizarVigencia i {
+        .btnBorrar i, .btnHabilitar i, .btnDeshabilitar i, .btnAutorizar i, .btnEditar i, .btnAnular i, .btnDesHabGeneral i, .btnHabGeneral i, .btnNuevo i, .btnPdf i, .btnPdf2 i, .btnActualizarVigencia i , .btnDeshabilitarTime i{
             font-size: 30px; /* Ajusta el tamaño del icono */
             padding: 0; /* Ajusta el padding del icono */
         }
@@ -51,6 +51,9 @@
                 </button>  
                 <button id="btnHabGeneral" type="button" class="btn btn-success btnHabGeneral" data-toggle="tooltip" data-placement="top" title="Habilitar Web general">
                     <i id="iconHabGeneral" class="bi bi-check-square"></i> 
+               </button>
+               <button id="btnDeshabilitarTime" type="button" class="btn btn-dark btnDeshabilitarTime" data-toggle="tooltip" data-placement="top" title="Desactivar Organizaciones vencidas">
+                    <i id="iconHabGeneral" class="bi bi-stopwatch"></i> 
                </button> 
                
                
