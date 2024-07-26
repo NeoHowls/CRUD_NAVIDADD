@@ -112,10 +112,20 @@ let table = $('#myTable2').DataTable( {
                     "</button>";
 
                     ActualizarVigencia = '<button type="button" class="btn btn-info text-light btnActualizarVigencia me-2" data-toggle="tooltip" data-placement="top" title="actualizar Vigencia"><i class="bi bi-clock-history icon-100"></i> </button>';
+                    
+                    //todo: botones desactivados.
+                    estadoButtonDesactivado = '<button type="button" class="btn btn-secondary text-light btnEditar me-2"   data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-person-dash-fill icon-100"></i></button>';
+                    checkHabilitadoButtonDesactivado = '<button type="button" class="btn btn-secondary text-light btnEditar me-2"   data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-x-square icon-100"></i></button>';
+                    editarButtonDesactivado = '<button type="button" class="btn btn-secondary text-light btnEditar me-2"   data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-pencil-square icon-100"></i></button>';
                     ActualizarVigenciaDesactivado = '<button type="button" class="btn btn-secondary text-light btnActualizarVigencia me-2" data-toggle="tooltip" data-placement="top" title="actualizar Vigencia"  disabled><i class="bi bi-clock-history icon-100"></i> </button>';
 
                 // Combinamos los botones en una sola columna
-                return estadoButton + checkHabilitadoButton + editarButton + pdf2 + pdf3 + ActualizarVigencia;
+                
+                if(row.checkVigente== '1'){
+                return estadoButton + checkHabilitadoButton + editarButton + pdf2 + pdf3 + ActualizarVigenciaDesactivado;
+                }else{
+                    return estadoButtonDesactivado + checkHabilitadoButtonDesactivado + editarButton+ pdf2 + pdf3 + ActualizarVigencia;
+                }
             }
         }
     ] , 
