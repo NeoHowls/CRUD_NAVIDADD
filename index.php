@@ -263,30 +263,30 @@
 			<div class="row">
 				<div class="col-lg-12 col-sm-12 col-xs-6">
 					<div class="contact-block">
-						<form id="contactForm">
+						<form id="contactForm" autocomplete="off">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<input type="text" class="form-control mt-3" id="name" name="name" placeholder="Nombre" required data-error="Porfavor ingrese su nombre">
-										<div class="help-block with-errors"></div>
+										<input type="text" class="form-control mt-3" id="name" name="name" placeholder="Nombre" required>
+										
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<input type="email" placeholder="Correo Electronico" id="email" class="form-control mt-3" name="name" required data-error="Porfavor ingrese su correo electronico">
-										<div class="help-block with-errors"></div>
+										<input type="email" placeholder="Correo Electronico" id="email" class="form-control mt-3" name="name" required>
+										
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
-										<input type="number" placeholder="Numero telefonico" id="number" class="form-control mt-3" name="number" required data-error="Porfavor ingrese su numero telefonico" min =0 max = "999999999" onKeyPress="if(this.value.length==9) return false;"/>
-										<div class="help-block with-errors"></div>
+										<input type="number" placeholder="Numero telefonico" id="number" class="form-control mt-3" name="number" required>
+										
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
-										<textarea class="form-control mt-3" id="message" placeholder="Ingrese su mensaje" rows="8" data-error="Escriba su mensaje" required></textarea>
-										<div class="help-block with-errors"></div>
+										<textarea class="form-control mt-3" id="message" placeholder="Ingrese su mensaje" rows="8" required></textarea>
+										
 									</div>
 									<div class="submit-button text-center">
 										<button class="btn btn-common mt-3" id="submit" type="submit">Enviar</button>
