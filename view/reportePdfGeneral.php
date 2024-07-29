@@ -36,6 +36,15 @@ $datos = $rep->pdfGeneral($periodo);
         $logoDataUri = '';
     }
 
+    // Datos para el encabezado
+    $logoBanner = '../images/Escudo_de_Alto_Hospicio.png';
+    if (file_exists($logoBanner)) {
+        $logoBase64 = base64_encode(file_get_contents($logoBanner));
+        $logoDataUri2 = 'data:image/png;base64,' . $logoBase64;
+    } else {
+        $logoDataUri2 = '';
+    }
+
     date_default_timezone_set('America/Santiago');
     $fechaHora = date('d/m/Y H:i');
     $anio = date('Y');
@@ -46,7 +55,8 @@ $datos = $rep->pdfGeneral($periodo);
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="../images/Escudo_de_Alto_Hospicio.png">
+    <link rel="icon" type="image/png" href=<?php echo $logoDataUri2; ?>>
+    <!-- <img src="<?php echo $logoDataUri; ?>" alt="Logo de la organización" class="logo"> -->
     <title>Informe general</title>
     <style>
         body {

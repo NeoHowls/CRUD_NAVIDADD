@@ -246,7 +246,7 @@ $('#formUsuarios').submit(function(e){
                  alert("error");
            }
         }).done(function(response){
-            console.log(response);
+            //console.log(response);
             respuesta = JSON.parse(response);
             for(i=0;i<respuesta.length;i++){
             if(respuesta[i].error==1)
@@ -434,11 +434,11 @@ $(document).ready(function() {
         var checkboxNC = document.getElementById('more_infos');
         checkboxNC.addEventListener('change', function() {
             if (this.checked) {
-                console.log('El checkbox está activado.');
+                //console.log('El checkbox está activado.');
                 checkOrganizacion = 1;
                 $("#conditional_parts").show();
             } else {
-                console.log('El checkbox está desactivado.');
+                //console.log('El checkbox está desactivado.');
                 checkOrganizacion = 0;
                 $("#conditional_parts").hide();
             }
@@ -692,6 +692,7 @@ $(document).on("click", ".btnimprimir", function(e){
                 }
             }).done(function(response){ 
                 respuesta = JSON.parse(response);
+                // alert (response);
                 if(respuesta.length == 1 && respuesta[0].error == 0){
                     Swal.fire({
                         icon: "success",
@@ -851,7 +852,7 @@ $(document).on("click", ".btnHabGeneral", function(e){
                 alert("error");
             }
         }).done(function(response){ 
-            console.log(response);
+            //console.log(response);
             respuesta =(response);
             if(respuesta.length==1 && respuesta[0].bandera==2){
                 

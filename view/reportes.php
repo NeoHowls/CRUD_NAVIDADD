@@ -35,7 +35,7 @@
     <script src="../js/chart.js"></script>
 
     <link rel="stylesheet" type="text/css" href="../datatables.css">
-    <script src="../js/jqueryBooststrap.js"></script>
+    <script src="../js/jqueryBootstrap.js"></script>
     <script src="../js/dataTables1-10-24.js"></script>
 
     

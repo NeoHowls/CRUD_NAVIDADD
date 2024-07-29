@@ -383,7 +383,7 @@ session_start();
                             $i++;
                             echo json_encode($respuesta);
                           }
-                        }
+                        }else{
                         $per->activarPersonaOrgDeshabilitada($user_id);
                         $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'habilitar Persona con organizacion WEB',$usuarioCambio);
                           if($per->getError()==0){
@@ -400,6 +400,7 @@ session_start();
                             $i++;
                             echo json_encode($respuesta);
                           }
+                      }
                       }else{
                           $respuesta[$i]['action']="ERROR";
                           $respuesta[$i]['error']=99;
