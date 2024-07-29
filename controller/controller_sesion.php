@@ -120,7 +120,7 @@ if($datos === TRUE){ ;
   
   title: "Oops...",
   width: 300,
-  imageUrl: "https://navidad.es/wp-content/uploads/2009/10/santa-se-quema-en-chimenea.gif",
+  imageUrl: "images/santa-se-quema-en-chimenea.gif",
   imageWidth: 400,
   imageHeight: 200,
   text: "usuario incorrecto",

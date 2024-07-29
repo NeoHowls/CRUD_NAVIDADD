@@ -20,7 +20,7 @@
     <link rel="stylesheet" href= ../style/font/bootstrap-icons.min.css >
     
   <!-- Incluir jQuery y Popper.js (necesario para Bootstrap) -->
-  <script src="../js/jqueryBooststrap.js"></script>
+  <script src="../js/jqueryBootstrap.js"></script>
      <script src="../js/popper.js"></script>
   <!-- Incluir Bootstrap JS (opcional) -->
   <script src="../js/bootstrapOP.js"></script>

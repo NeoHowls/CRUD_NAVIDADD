@@ -455,9 +455,23 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
     estado= fila.find('td:eq(8)').text();
     let action = estado == '1' ? 'borrar_persona' : 'habilitar_persona';
     let confirmMessage = estado == '1' ? "¿Está seguro de Desactivar el registro de "+nombre+"?" : "¿Quieres activar el registro de  "+nombre+"?"  ;
-    let respuesta = confirm(confirmMessage);
-    console.log("funciona")
-    if (respuesta) {            
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: confirmMessage,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "No, cancelar",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {            
         $.ajax({
           url: "../controller/controllerO.php?op=borrar_organizacion",
           type: "POST",
@@ -493,8 +507,15 @@ $(document).on("click", ".btnBorrar, .btnHabilitar", function(e){
             }
             
         });//fin done	    	    
-    }
- });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "La acción ha sido cancelada.",
+                icon: "error"
+            });
+        }
+    });
+});
 
   //todo: deshabilitar/habiliar WEB POR ORGANIZACION Y PERSONAL ASOCIADO
 $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
@@ -512,9 +533,23 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
     // aniosVigente= fila.find('td:eq(9)').text();
     let action = checkHabilitado == '1' ? 'borrar_persona' : 'habilitar_persona';
     let confirmMessage =  checkHabilitado== '1' ? "¿Está seguro que desesa deshabilitar el registro de la organizacion "+nombre+"?" : "¿Quieres habilitar el registro de la organizacion "+nombre+"?"  ;
-    let respuesta = confirm(confirmMessage);
-  
-    if (respuesta) {            
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: confirmMessage,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "No, cancelar",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {            
         $.ajax({
           url: "../controller/controllerO.php?op=Habilitar_organizacion",
           type: "POST",
@@ -550,8 +585,15 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
             }
             
         });//fin done		    	    
-    }
- });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "La acción ha sido cancelada.",
+                icon: "error"
+            });
+        }
+    });
+});
 
  //todo: Deshabilitar General--------------------------------------------------- 
 $(document).on("click", ".btnDesHabGeneral", function(e){
@@ -561,9 +603,23 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
     nombre = $(this).closest('tr').find('td:eq(1)').text() ;
     let checkHabilitado = 1;
     let confirmMessage = "¿Quieres deshabilitar todos los registros?";
-    let respuesta = confirm(confirmMessage);
-  
-    if (respuesta) {            
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: confirmMessage,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "No, cancelar",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {            
         $.ajax({
             url: "../controller/controllerO.php?op=DesHabGeneralO",
             type: "POST",
@@ -599,7 +655,14 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
             }
             
         });//fin done		    	    
-    }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "La acción ha sido cancelada.",
+                icon: "error"
+            });
+        }
+    });
 });
 
 //todo: Habilitar General------------------------------------------------------ 
@@ -610,9 +673,23 @@ $(document).on("click", ".btnHabGeneral", function(e){
     nombre = $(this).closest('tr').find('td:eq(1)').text() ;
     let checkHabilitado = 0;
     let confirmMessage = "¿Quieres habilitar todos los registros?";
-    let respuesta = confirm(confirmMessage);
-  
-    if (respuesta) {            
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: confirmMessage,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "No, cancelar",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {             
         $.ajax({
             url: "../controller/controllerO.php?op=habGeneralO",
             type: "POST",
@@ -648,7 +725,14 @@ $(document).on("click", ".btnHabGeneral", function(e){
             }
             
         });//fin done	    	    
-    }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "La acción ha sido cancelada.",
+                icon: "error"
+            });
+        }
+    });
 });
 
 
@@ -682,10 +766,23 @@ $(document).on('click', '.btnActualizarVigencia', function (e) {
     estado= fila.find('td:eq(8)').text();
    
     let confirmMessage = "¿Quieres Actualizar la vigencia de: "+nombre+"?";
-    let respuesta = confirm(confirmMessage);
-  
-    //alert(user_id+' '+nombre+' '+vigente+' '+tipo);
-    if (respuesta) {            
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: confirmMessage,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "No, cancelar",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {           
         $.ajax({
             url: "../controller/controllerO.php?op=actualizarVigencia",
             type: "POST",
@@ -721,7 +818,14 @@ $(document).on('click', '.btnActualizarVigencia', function (e) {
             }
             
         });//fin done	    	    
-    }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "La acción ha sido cancelada.",
+                icon: "error"
+            });
+        }
+    });
 });
 
 //! DESACTIVAR VIGENCIA ORG Y PERSONA
@@ -732,10 +836,24 @@ $(document).on("click", ".btnDeshabilitarTime", function(e){
     let user_id = fila.find('td:eq(0)').text();
     nombre = $(this).closest('tr').find('td:eq(1)').text() ;
     let checkHabilitado = 0; */
-    let confirmMessage = "¿Quieres desactivar todas las vigencia vencidas?";
-    let respuesta = confirm(confirmMessage);
-    // alert("hola");
-    if (respuesta) {            
+    let confirmMessage = "¿Quieres desactivar todas las Organizaciones vencidas?";
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: confirmMessage,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "No, cancelar",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {            
         $.ajax({
             url: "../controller/controllerO.php?op=desactivarVigencia",
             type: "POST",
@@ -772,7 +890,14 @@ $(document).on("click", ".btnDeshabilitarTime", function(e){
             }
             
         });//fin done	    	    
-    }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "La acción ha sido cancelada.",
+                icon: "error"
+            });
+        }
+    });
 });
 
 //!PDF DETALLADO

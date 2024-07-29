@@ -46,6 +46,7 @@ $datos = $rep->pdfGeneral($periodo);
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../images/Escudo_de_Alto_Hospicio.png">
     <title>Informe general</title>
     <style>
         body {

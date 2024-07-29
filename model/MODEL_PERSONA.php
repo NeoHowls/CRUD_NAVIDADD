@@ -83,6 +83,15 @@ class Personas extends ConexionBD{
         return $query;
     }
 
+    public function consultarNoHabilitarDesactivada(){
+        $sql="SELECT id
+        FROM A_PERSONA
+        WHERE estado=0";
+        $this->connect();
+        $query = $this->iniciar($sql);
+        return $query;
+    }
+
     //todo: DESHABILITAR Y HABILITAR WEB
     public function deshabilitarWebPersona($user_id){
         $sql="UPDATE A_PERSONA SET checkHabilitado=0 WHERE id=:user_id and idPerfil !=7";
@@ -111,6 +120,13 @@ class Personas extends ConexionBD{
     }
     public function activarPersona($user_id){
         $sql="UPDATE A_PERSONA SET checkHabilitado=1, estado=1 WHERE id=:user_id and idPerfil !=7";
+        $parametros =array(":user_id"=>$user_id);
+        $this->connect();
+        $query = $this->ejecutarOrden($sql, $parametros);
+        return $query;
+    }
+    public function activarPersonaOrgDeshabilitada($user_id){
+        $sql="UPDATE A_PERSONA SET estado=1 WHERE id=:user_id and idPerfil !=7";
         $parametros =array(":user_id"=>$user_id);
         $this->connect();
         $query = $this->ejecutarOrden($sql, $parametros);

@@ -933,10 +933,24 @@ $(document).on("click", ".btnBorrar", function(e){
     // estado = $(this).closest('tr').find('td:eq(8)').text() ;
     // let action = estado == '1' ? 'borrar_persona' : 'habilitar_persona';
     // let confirmMessage = estado == '1' ? "¿Está seguro de Desactivar el registro de "+nombre+"?" : "¿Quieres activar el registro de  "+nombre+"?"  ;
-    let confirmMessage = "¿Está seguro de eliminar el registro a "+nombre+"?";
-    let respuesta = confirm(confirmMessage);
-    // console.log("funciona")
-    if (respuesta) {            
+    let confirmMessage = "¿Está seguro de eliminar del registro a "+nombre+"?";
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: confirmMessage,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "No, cancelar",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {            
         $.ajax({
           url: "../controller/controllerN.php?op=eliminarNino",
           type: "POST",
@@ -975,8 +989,15 @@ $(document).on("click", ".btnBorrar", function(e){
             }
             
         });	    	    
-    }
- });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "La acción ha sido cancelada.",
+                icon: "error"
+            });
+        }
+    });
+});
 
 
 //! revizar se usa??????   

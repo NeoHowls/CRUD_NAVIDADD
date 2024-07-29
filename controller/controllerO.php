@@ -413,27 +413,59 @@ session_start();
       $personasId = array();
       $j=0;
 
-      $org->habilitarGeneral();
-      $orgH->guardarOrganizacionHG('Habilitar Todas las Organizaciones',$usuarioCambio,$checkHabilitado);
-      if($org->getError()==0 && $orgH->getError()==0){
-        $respuesta[$i]['action']="OK";
-        $respuesta[$i]['error']=0;
-        $respuesta[$i]['mensaje']="Habilitar Todas las Organizaciones";
-        $i++;
-        echo json_encode($respuesta);
-      }elseif($orgH->getError()!=0){
-        $respuesta[$i]['action']="ERROR";
-        $respuesta[$i]['error']=99;
-        $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
-        $i++;
-        echo json_encode($respuesta);
-      }else{
-        $respuesta[$i]['action']="ERROR";
-        $respuesta[$i]['error']=99;
-        $respuesta[$i]['mensaje']="ERROR BD";
-        $i++;
-        echo json_encode($respuesta);
-      }
+      $datos=$org->consultarNoHabilitarDesactivada(); //!los Organizaciones a no habilitar porque tienen estado =0
+        if(count($datos)!=0){
+          foreach($datos as $key => $value){
+            $organizacionesId[$j]=$value['id'];
+            $j++;
+          }
+        $organizacionesIdStr = implode(',', $organizacionesId);
+        $org->habilitarGeneralOrgDesactivadas($organizacionesIdStr);
+        $orgH->guardarOrganizacionHG('Habilitar Todas las Organizaciones Activas',$usuarioCambio,$checkHabilitado);
+          if($org->getError()==0 && $orgH->getError()==0){
+            $respuesta[$i]['action']="OK";
+            $respuesta[$i]['error']=0;
+            $respuesta[$i]['mensaje']="Habilitar Todas las Organizaciones";
+            $i++;
+            echo json_encode($respuesta);
+          }elseif($orgH->getError()!=0){
+            $respuesta[$i]['action']="ERROR";
+            $respuesta[$i]['error']=99;
+            $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
+            $i++;
+            echo json_encode($respuesta);
+          }else{
+            $respuesta[$i]['action']="ERROR";
+            $respuesta[$i]['error']=99;
+            $respuesta[$i]['mensaje']="ERROR BD";
+            $i++;
+            echo json_encode($respuesta);
+          }
+        }else{
+            $org->habilitarGeneral();
+            $orgH->guardarOrganizacionHG('Habilitar Todas las Organizaciones',$usuarioCambio,$checkHabilitado);
+            if($org->getError()==0 && $orgH->getError()==0){
+              $respuesta[$i]['action']="OK";
+              $respuesta[$i]['error']=0;
+              $respuesta[$i]['mensaje']="Habilitar Todas las Organizaciones";
+              $i++;
+              echo json_encode($respuesta);
+            }elseif($orgH->getError()!=0){
+              $respuesta[$i]['action']="ERROR";
+              $respuesta[$i]['error']=99;
+              $respuesta[$i]['mensaje']="ERROR BD HISTORIAL";
+              $i++;
+              echo json_encode($respuesta);
+            }else{
+              $respuesta[$i]['action']="ERROR";
+              $respuesta[$i]['error']=99;
+              $respuesta[$i]['mensaje']="ERROR BD";
+              $i++;
+              echo json_encode($respuesta);
+            }
+        }
+      
+     
     break;//! final habilitar general org
     //todo: DESHABILITAR GENERAL ORGANIZACION
     case "DesHabGeneralO": 

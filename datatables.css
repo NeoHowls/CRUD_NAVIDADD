@@ -13176,3 +13176,10 @@ table.dataTable.table-bordered td.dtr-control.dtr-hidden + * {
 }
 
 
+.swal2-styled.swal2-confirm {
+  margin-right: 10px !important; 
+}
+
+.swal2-styled.swal2-cancel {
+  margin-left: 10px !important;
+}

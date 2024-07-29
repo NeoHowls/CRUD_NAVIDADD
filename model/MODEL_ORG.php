@@ -103,6 +103,25 @@ class Organizaciones extends ConexionBD{
         return $query;
     }
 
+     //todo: Buscar el checkHabilitado de una Org
+     public function buscarEstadoyCheckHabilitadoOrg($idOrganizacion){
+        $sql="SELECT estado,checkHabilitado FROM A_ORGANIZACION 
+            WHERE id=:idOrganizacion";
+        // var_dump($sql);  
+        $parametros =array("idOrganizacion"=>$idOrganizacion);
+        $this->connect();
+        $query = $this->iniciar($sql, $parametros);
+        return $query;
+    }
+    public function consultarNoHabilitarDesactivada(){
+        $sql="SELECT id
+        FROM A_ORGANIZACION
+        WHERE estado=0";
+        $this->connect();
+        $query = $this->iniciar($sql);
+        return $query;
+    }
+
     //todo: Buscar Organizacion
     public function buscarOrganizacion($nombre,$estado){
         $sql="SELECT id,nombre
@@ -142,6 +161,22 @@ class Organizaciones extends ConexionBD{
         $this->connect();
         $query = $this->ejecutarOrden($sql);
         
+        return $query;
+
+    }
+    public function habilitarGeneralOrgDesactivadas($idOrganizaciones){
+        
+        $sql="UPDATE A_ORGANIZACION 
+              SET checkHabilitado=1";
+        if($idOrganizaciones!='' || $idOrganizaciones!=null){
+            $sql=$sql." AND id NOT IN (".$idOrganizaciones.")";
+            $this->connect();
+            $query = $this->ejecutarOrden($sql);
+        }else{
+            $sql=$sql;
+            $this->connect();
+            $query = $this->ejecutarOrden($sql);
+        }
         return $query;
 
     }

@@ -313,37 +313,24 @@ session_start();
       break;
 //todo: desactivar/activar persona----------------------------------------------      
       case "borrar_persona":
-        $resultado = array();
-      $respuesta = array();
-      $i=0;
-    //!desactivar persona
-    if($estado == 1){
-      $per->desactivarPersona($user_id);
-      $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'deshabilitar Persona WEB ',$usuarioCambio);
-        if($per->getError()==0){
-          $respuesta[$i]['action']="OK";
-          $respuesta[$i]['error']=0;
-          $respuesta[$i]['mensaje']="Desactivar Persona";
-          $i++;
-
-          echo json_encode($respuesta);
-        }else{
-          $respuesta[$i]['action']="ERROR";
-          $respuesta[$i]['error']=99;
-          $respuesta[$i]['mensaje']="ERROR BD";
-          $i++;
-          echo json_encode($respuesta);
-        }
-    //!activar persona
-    }else{
-        if($idPerfil==8){
-
-              $per->activarPersona($user_id);
-              $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'habilitar Persona(DIDECO) sin organizacion WEB',$usuarioCambio);
+              $resultado = array();
+              $respuesta = array();
+              $i=0;
+            //!desactivar persona
+            if($idPerfil==7){
+              $respuesta[$i]['action']="ERROR";
+              $respuesta[$i]['error']=99;
+              $respuesta[$i]['mensaje']="No se puede desactivar a este usuario";
+              $i++;
+              echo json_encode($respuesta);
+            }else{
+            if($estado == 1){
+              $per->desactivarPersona($user_id);
+              $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'deshabilitar Persona WEB ',$usuarioCambio);
                 if($per->getError()==0){
                   $respuesta[$i]['action']="OK";
                   $respuesta[$i]['error']=0;
-                  $respuesta[$i]['mensaje']="Activar Persona(DIDECO)";
+                  $respuesta[$i]['mensaje']="Desactivar Persona";
                   $i++;
 
                   echo json_encode($respuesta);
@@ -354,37 +341,75 @@ session_start();
                   $i++;
                   echo json_encode($respuesta);
                 }
+            //!activar persona
+            }else{
+                if($idPerfil==8){
 
-        }else{
+                      $per->activarPersona($user_id);
+                      $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'habilitar Persona(DIDECO) sin organizacion WEB',$usuarioCambio);
+                        if($per->getError()==0){
+                          $respuesta[$i]['action']="OK";
+                          $respuesta[$i]['error']=0;
+                          $respuesta[$i]['mensaje']="Activar Persona(DIDECO)";
+                          $i++;
 
-              $resultado=$perO->buscarCheckHabilitadoOrg($idOrganizacion);
-              if($resultado[0]['checkHabilitado']==1){
-                $per->activarPersona($user_id);
-                $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'habilitar Persona con organizacion WEB',$usuarioCambio);
-                  if($per->getError()==0){
-                    $respuesta[$i]['action']="OK";
-                    $respuesta[$i]['error']=0;
-                    $respuesta[$i]['mensaje']="Activar Persona";
-                    $i++;
+                          echo json_encode($respuesta);
+                        }else{
+                          $respuesta[$i]['action']="ERROR";
+                          $respuesta[$i]['error']=99;
+                          $respuesta[$i]['mensaje']="ERROR BD";
+                          $i++;
+                          echo json_encode($respuesta);
+                        }
 
-                    echo json_encode($respuesta);
-                  }else{
-                    $respuesta[$i]['action']="ERROR";
-                    $respuesta[$i]['error']=99;
-                    $respuesta[$i]['mensaje']="ERROR BD";
-                    $i++;
-                    echo json_encode($respuesta);
-                  }
-              }else{
-                $respuesta[$i]['action']="ERROR";
-                $respuesta[$i]['error']=99;
-                $respuesta[$i]['mensaje']="La organización está desactivada";
-                $i++;
-                echo json_encode($respuesta);
-              }
-        }
-    }
-        break;
+                }else{
+
+                      $resultado=$perO->buscarEstadoyCheckHabilitadoOrg($idOrganizacion);
+                      if($resultado[0]['estado']==1){
+                        if($resultado[0]['checkHabilitado']==1){
+                        $per->activarPersona($user_id);
+                        $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'habilitar Persona con organizacion WEB',$usuarioCambio);
+                          if($per->getError()==0){
+                            $respuesta[$i]['action']="OK";
+                            $respuesta[$i]['error']=0;
+                            $respuesta[$i]['mensaje']="Activar Persona";
+                            $i++;
+
+                            echo json_encode($respuesta);
+                          }else{
+                            $respuesta[$i]['action']="ERROR";
+                            $respuesta[$i]['error']=99;
+                            $respuesta[$i]['mensaje']="ERROR BD";
+                            $i++;
+                            echo json_encode($respuesta);
+                          }
+                        }
+                        $per->activarPersonaOrgDeshabilitada($user_id);
+                        $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'habilitar Persona con organizacion WEB',$usuarioCambio);
+                          if($per->getError()==0){
+                            $respuesta[$i]['action']="OK";
+                            $respuesta[$i]['error']=0;
+                            $respuesta[$i]['mensaje']="Activar Persona";
+                            $i++;
+
+                            echo json_encode($respuesta);
+                          }else{
+                            $respuesta[$i]['action']="ERROR";
+                            $respuesta[$i]['error']=99;
+                            $respuesta[$i]['mensaje']="ERROR BD";
+                            $i++;
+                            echo json_encode($respuesta);
+                          }
+                      }else{
+                          $respuesta[$i]['action']="ERROR";
+                          $respuesta[$i]['error']=99;
+                          $respuesta[$i]['mensaje']="La organización está desactivada";
+                          $i++;
+                          echo json_encode($respuesta);
+                        }
+                }
+            }}
+      break;
 
 //todo: habilitar y deshabilitar persona
   case "Habilitar_persona":
@@ -392,23 +417,31 @@ session_start();
       $respuesta = array();
       $i=0;
     //!deshabilitar web persona
+    if($idPerfil==7){
+      $respuesta[$i]['action']="ERROR";
+      $respuesta[$i]['error']=99;
+      $respuesta[$i]['mensaje']="No se puede deshabilitar a este usuario";
+      $i++;
+      echo json_encode($respuesta);
+    }else{
     if($checkHabilitado == 1){
-      $per->deshabilitarWebPersona($user_id);
-      $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'deshabilitar Persona WEB ',$usuarioCambio);
-        if($per->getError()==0){
-          $respuesta[$i]['action']="OK";
-          $respuesta[$i]['error']=0;
-          $respuesta[$i]['mensaje']="Deshabilitar Persona WEB";
-          $i++;
+          $per->deshabilitarWebPersona($user_id);
+          $perH->guardarPersonaH($dni, $nombre, $direccion, $telefono, $mail, $idPerfil, $checkOrganizacion, $usuario, $contrasena,$checkHabilitado,$estado,'deshabilitar Persona WEB ',$usuarioCambio);
+            if($per->getError()==0){
+              $respuesta[$i]['action']="OK";
+              $respuesta[$i]['error']=0;
+              $respuesta[$i]['mensaje']="Deshabilitar Persona WEB";
+              $i++;
 
-          echo json_encode($respuesta);
-        }else{
-          $respuesta[$i]['action']="ERROR";
-          $respuesta[$i]['error']=99;
-          $respuesta[$i]['mensaje']="ERROR BD";
-          $i++;
-          echo json_encode($respuesta);
-        }
+              echo json_encode($respuesta);
+            }else{
+              $respuesta[$i]['action']="ERROR";
+              $respuesta[$i]['error']=99;
+              $respuesta[$i]['mensaje']="ERROR BD";
+              $i++;
+              echo json_encode($respuesta);
+            }
+      
     //!habilitar web persona
     }else{
         if($idPerfil==8){
@@ -418,7 +451,7 @@ session_start();
                 if($per->getError()==0){
                   $respuesta[$i]['action']="OK";
                   $respuesta[$i]['error']=0;
-                  $respuesta[$i]['mensaje']="Habilitar Persona(DIDECO) sin organizacion WEB";
+                  $respuesta[$i]['mensaje']="Habilitar Persona(DIDECO) WEB";
                   $i++;
 
                   echo json_encode($respuesta);
@@ -471,61 +504,81 @@ session_start();
             echo json_encode($respuesta);
            }
         }
-    }
-        break;
-
-
-case "habGeneral":
-  $personasId = array();
-    $j=0;
-  $respuesta= array();
-    $i=0;
-  $personasDeshabilitadasIds=array();
-  $datos=$per->consultarNoHabilitar(); //los personas a no habilitar
-  //echo json_encode($personasDeshabilitadasIds);
-  if(count($datos)!=0){
-    foreach($datos as $key => $value){
-      $personasId[$j]=$value['idPersona'];
-      $j++;
-    }
-    // echo json_encode(gettype($personasDeshabilitadasIds));
-    // var_dump($personasId);
-      $personasIdStr = implode(',', $personasId);
-      // var_dump($personasIdStr);
-      $per->habilitarGeneral($personasIdStr);
-      $perH->guardarPersonaHG('Habilitar todas las Personas con organizaciones activas',$usuarioCambio);
-      // echo json_encode($per);
-      if($per->getError()==0){
-        $respuesta[$i]['action']="OK";
-        $respuesta[$i]['error']=0;
-        $respuesta[$i]['mensaje']="OK habilitar con organizaciones no activas";
-        $respuesta[$i]['bandera']=2;
-        $i++;
-        echo json_encode($respuesta);
-      }else{
-        $respuesta[$i]['action']="ERROR";
-        $respuesta[$i]['error']=99;
-        $respuesta[$i]['mensaje']="ERROR BD";
-        $i++;
-        echo json_encode($respuesta);
       }
-  }else{
-    $per->habilitarGeneral("");
-    $perH->guardarPersonaHG('Habilitar todas las Personas',$usuarioCambio);
-    if($per->getError()==0){
-      $respuesta[$i]['action']="OK";
-      $respuesta[$i]['error']=0;
-      $respuesta[$i]['mensaje']="OK habilitar con organizaciones activas";
-      $i++;
-      echo json_encode($respuesta);
-    }else{
-      $respuesta[$i]['action']="ERROR";
-      $respuesta[$i]['error']=99;
-      $respuesta[$i]['mensaje']="ERROR BD";
-      $i++;
-      echo json_encode($respuesta);
     }
-  }
+  break;
+
+
+  case "habGeneral":
+      $personasId = array();
+        $j=0;
+      $respuesta= array();
+        $i=0;
+      $personasDeshabilitadasIds=array();
+      $datos=$per->consultarNoHabilitar(); //!los personas a no habilitar
+      if(count($datos)!=0){
+        foreach($datos as $key => $value){
+          $personasId[$j]=$value['idPersona'];
+          $j++;
+        }
+          $personasIdStr = implode(',', $personasId);
+          $per->habilitarGeneral($personasIdStr);
+          $perH->guardarPersonaHG('Habilitar todas las Personas con organizaciones activas',$usuarioCambio);
+          if($per->getError()==0){
+            $respuesta[$i]['action']="OK";
+            $respuesta[$i]['error']=0;
+            $respuesta[$i]['mensaje']="Habilitar todas las Personas con organizaciones activas";
+            $respuesta[$i]['bandera']=2;
+            $i++;
+            echo json_encode($respuesta);
+          }else{
+            $respuesta[$i]['action']="ERROR";
+            $respuesta[$i]['error']=99;
+            $respuesta[$i]['mensaje']="ERROR BD";
+            $i++;
+            echo json_encode($respuesta);
+          }
+      }else{
+        $datos=$per->consultarNoHabilitarDesactivada(); //!los personas a no habilitar porque tienen estado =0
+        if(count($datos)!=0){
+          foreach($datos as $key => $value){
+            $personasId[$j]=$value['id'];
+            $j++;
+          }
+        $personasIdStr = implode(',', $personasId);
+        $per->habilitarGeneral($personasIdStr);
+        $perH->guardarPersonaHG('Habilitar todas las Personas',$usuarioCambio);
+          if($per->getError()==0){
+            $respuesta[$i]['action']="OK";
+            $respuesta[$i]['error']=0;
+            $respuesta[$i]['mensaje']="Habilitar todas las Personas activas";
+            $i++;
+            echo json_encode($respuesta);
+          }else{
+            $respuesta[$i]['action']="ERROR";
+            $respuesta[$i]['error']=99;
+            $respuesta[$i]['mensaje']="ERROR BD";
+            $i++;
+            echo json_encode($respuesta);
+          }
+        }else{
+          $per->habilitarGeneral("");
+          $perH->guardarPersonaHG('Habilitar todas las Personas',$usuarioCambio);
+          if($per->getError()==0){
+            $respuesta[$i]['action']="OK";
+            $respuesta[$i]['error']=0;
+            $respuesta[$i]['mensaje']="Habilitar todas las Personas";
+            $i++;
+            echo json_encode($respuesta);
+          }else{
+            $respuesta[$i]['action']="ERROR";
+            $respuesta[$i]['error']=99;
+            $respuesta[$i]['mensaje']="ERROR BD";
+            $i++;
+            echo json_encode($respuesta);
+          }
+        }
+      }
   break;
 
   case "DesHabGeneral": 
@@ -575,7 +628,7 @@ case "habGeneral":
 
       // include_once("../crearPdf.php");
       
-      break;
+  break;
   }
   
 ?>
