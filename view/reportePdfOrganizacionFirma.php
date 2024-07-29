@@ -1,9 +1,13 @@
 <?php
 session_start();
-
+use Dompdf\Dompdf;
+if (!isset($_SESSION["id_persona"]) || empty($_SESSION["id_persona"])) {
+    header("Location:../index.php");
+  }
+  else{
 require_once '../model/MODEL_REPORTE.php';
 require_once '../dompdf/autoload.inc.php';
-use Dompdf\Dompdf;
+
 
 $idOrg = isset($_GET['idOrg']) ? $_GET['idOrg'] : null;
 $nombreO = isset($_GET['nombre1']) ? $_GET['nombre1'] : '';
@@ -181,4 +185,5 @@ $datos=$rep->reporteOrganizacion($idOrg,$periodo);
 
     // Salida del PDF al navegador
     $dompdf->stream('reporteOrganizacionFirma.pdf', array("Attachment" => false));
+}
 ?>

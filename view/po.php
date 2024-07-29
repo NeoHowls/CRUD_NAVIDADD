@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if (!isset($_SESSION["id_persona"]) || empty($_SESSION["id_persona"])) {
+      header("Location:../index.php");
+    }
+    else{
+?>
 <!--AUTOCOMPLETAR NOT FOUND,-->
 <!doctype html>
 <html lang="en">
@@ -9,15 +16,13 @@
 	<link rel="stylesheet" href= ../js/jquery-3.7.0.js >
     <link rel="stylesheet" href= ../style/styles.css >
     <link rel="stylesheet" href="../datatables.css" >
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/sweetalert.js"></script>
     <style>
         /* estilos */
     </style>
 
 
-    <?php
-    session_start();
-    ?>
+    
 
     <title>Navidad</title>
     
@@ -50,4 +55,8 @@ include_once("./nav_bar.php");
     
   </body>
 </html>
-    
+<?php
+
+    }
+   
+?>   

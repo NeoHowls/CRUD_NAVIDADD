@@ -1,8 +1,14 @@
 <?php
+session_start();
+use Dompdf\Dompdf;
+if (!isset($_SESSION["id_persona"]) || empty($_SESSION["id_persona"])) {
+    header("Location:../index.php");
+  }
+  else{
 require_once ("../model/MODEL_REPORTE.php");
 
 require_once '../dompdf/autoload.inc.php';
-use Dompdf\Dompdf;
+
 
 $periodo=$_GET['periodo'];
 
@@ -224,5 +230,5 @@ foreach ($nacionalidades as $nacion){
     $dompdf->render();
     $dompdf->stream('informe_por_nacionalidad.pdf', ['Attachment' => false]);
 
-
+}
 ?>

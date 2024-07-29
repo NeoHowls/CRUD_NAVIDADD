@@ -35,6 +35,6 @@ final class Counters extends ContentPart
 
     public function __toString(): string
     {
-        return "counters($this->name, \"$this->string\", $this->style)";
+        return sprintf('counters(%s, "%s", %s)', $this->name, $this->string, $this->style);
     }
 }

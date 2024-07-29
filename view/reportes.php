@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if (!isset($_SESSION["id_persona"]) || empty($_SESSION["id_persona"])) {
+      header("Location:../index.php");
+    }
+    else{
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -20,16 +27,16 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="../style/styles.css">
     
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/sweetalert.js"></script>
     <!-- DataTables JS -->
     <script src="../datatables.js"></script>
 
     <!-- Chart.js -->
     <script src="../js/chart.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="../datatables.css">
+    <script src="../js/jqueryBooststrap.js"></script>
+    <script src="../js/dataTables1-10-24.js"></script>
 
     
     
@@ -49,7 +56,6 @@
     
 
     
-    <?php session_start(); ?>
     
     <title>Navidad</title>
 
@@ -128,3 +134,8 @@ h1.text-center {
       
   </body>
 </html>
+<?php
+
+    }
+   
+?>

@@ -17,14 +17,14 @@
 	  <link rel="stylesheet" href= ../js/jquery-3.7.0.js >
     <link rel="stylesheet" href= ../style/styles.css >
     <link rel="stylesheet" href="../datatables.css" >
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/sweetalert.js"></script>
     <link rel="stylesheet" href= ../style/font/bootstrap-icons.min.css >
     
      <!-- Incluir jQuery y Popper.js (necesario para Bootstrap) -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+     <script src="../js/jqueryBooststrap.js"></script>
+     <script src="../js/popper.js"></script>
   <!-- Incluir Bootstrap JS (opcional) -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="../js/bootstrapOP.js"></script> 
 
   <script>
       // Script para mostrar el Tooltip al pasar el cursor sobre el botón
