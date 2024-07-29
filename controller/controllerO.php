@@ -587,6 +587,9 @@ session_start();
           $org->desactivarPersonaVigencia($dato2['idPersona']);
         }
       }
+      $orgH->guardarOrganizacionH($nombre, $direccion, 
+      $tipo, $fechaIngreso, $checkVigente, 
+      $numProvidencia,'vigencia revocada a las organizaciones vencidas',$usuarioCambio,$checkHabilitado,$estado);
 
       if($org->getError()==0){
         $respuesta[$i]['action']="OK";
