@@ -11,7 +11,7 @@
             color: #111 !important;  
         }
         
-        .btnBorrar, .btnHabilitar, .btnDeshabilitar, .btnAutorizar, .btnEditar, .btnAnular, .btnDesHabGeneral, .btnHabGeneral, .btnNuevo  {
+        .btnBorrar, .btnHabilitar, .btnDeshabilitar, .btnAutorizar, .btnEditar, .btnAnular, .btnDesHabGeneral, .btnHabGeneral, .btnNuevo, .swal2-confirm, .swal2-cancel  {
             height: 40px; /* Ajusta la altura del botón */
             line-height: 40px; /* Alinea el contenido del botón verticalmente */
             padding: 0 5px; /* Ajusta el padding del botón */
@@ -19,10 +19,20 @@
             align-items: center;
             justify-content: center;
         }
-        .btnBorrar i, .btnHabilitar i, .btnDeshabilitar i, .btnAutorizar i, .btnEditar i, .btnAnular i, .btnDesHabGeneral i, .btnHabGeneral i, .btnNuevo i {
+        .btnBorrar i, .btnHabilitar i, .btnDeshabilitar i, .btnAutorizar i, .btnEditar i, .btnAnular i, .btnDesHabGeneral i, .btnHabGeneral i, .btnNuevo i, .swal2-confirm i, .swal2-cancel i {
             font-size: 30px; /* Ajusta el tamaño del icono */
             padding: 0; /* Ajusta el padding del icono */
         }
+
+        /* .swal2-confirm {
+            margin-right: 10px !important; 
+            padding: 5px !important;
+        }
+        
+        .swal2-cancel {
+            margin-left: 10px !important;
+            padding: 5px !important;
+        } */
     </style>
 <div class="container">
     <br>
