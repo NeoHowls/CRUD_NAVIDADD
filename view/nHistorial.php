@@ -38,11 +38,8 @@ include_once("./nav_bar.php");
 
 	
 	  require_once '../controller/controller_vista.php';
-      $nu = 11;
-	  //permisos
-	  if($nu == 11){
-        test11();
-      }
+    tablaNinosHistorial();
+      
       
       ?>
     <!-- -->

@@ -58,22 +58,7 @@ include_once("./nav_bar.php");
 
 	
 	  require_once '../controller/controller_vista.php';
-      $nu = 3;
-	  //permisos
-	  if($nu == 1){
-        test();
-      }
-
-	  //etnia
-      elseif($nu == 2){
-		test2();
-		
-      }
-      elseif($nu == 3){
-		test3();
-		
-      }
-
+		tablaPersonas();
       
       ?>
     <!-- -->

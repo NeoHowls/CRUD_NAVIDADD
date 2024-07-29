@@ -47,22 +47,9 @@ include_once("./nav_bar.php");
 
 	
 	  require_once '../controller/controller_vista.php';
-    //var_dump($_SESSION);
-      $nu = 3;
-	  //permisos
-	  if($nu == 1){
-        test();
-      }
-
-	  //etnia
-      elseif($nu == 2){
-		test3();
+		tablaNinos();
 		
-      }
-      elseif($nu == 3){
-		test9();
-		
-      }
+      
 
       
       ?>

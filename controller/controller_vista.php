@@ -1,47 +1,38 @@
 <?php
 
-function test() {
-    require_once('./view/test_2.php');
-
-}
-
-function test2(){
-    require_once ('./view/table_ninos.php');
-}
-
-function test3(){
+function tablaPersonas(){
     require_once ('../view/tabla_personas.php');
 }
 
-function test4(){
+function tablaOrg(){
     require_once ('../view/tabla_organizacion.php');
 }
 
 
-function test5(){
+function tablaDPO(){
     require_once ('../view/tabla_PO.php');
 }
 
-function test6(){
+function tablaPersonasHistorial(){
     require_once ('../view/tabla_PHistorial.php');
 }
 
-function test7(){
+function tablaOrgHistorial(){
     require_once ('../view/tabla_OHistorial.php');
 }
 
-function test8(){
+function tablaPerfiles(){
     require_once ('../view/tabla_usuario.php');
 }
 
-function test9(){
+function tablaNinos(){
     require_once ('../view/table_ninos.php');
 }
 
-function test10(){
+function tablaReportes(){
     require_once ('../view/tabla_reportes.php');
 }
-function test11(){
+function tablaNinosHistorial(){
     require_once ('../view/tabla_nHistorial.php');
 }
 

@@ -121,11 +121,8 @@ h1.text-center {
     
         <?php 
           require_once '../controller/controller_vista.php';
-          $nu = 11;
-          // Condiciones para mostrar diferentes reportes
-          if ($nu == 11) {
-            test10();
-          } 
+          tablaReportes();
+          
         ?>
       
   </body>
