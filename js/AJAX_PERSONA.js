@@ -653,7 +653,7 @@ $(document).on("click", ".btnimprimir", function(e){
             confirmButton: "btn btn-success",
             cancelButton: "btn btn-danger"
         },
-        buttonsStyling: false
+        buttonsStyling: true
     });
 
     swalWithBootstrapButtons.fire({
@@ -828,7 +828,7 @@ $(document).on("click", ".btnHabGeneral", function(e){
             confirmButton: "btn btn-success",
             cancelButton: "btn btn-danger"
         },
-        buttonsStyling: false
+        buttonsStyling: true
     });
 
     swalWithBootstrapButtons.fire({
@@ -908,7 +908,7 @@ $(document).on("click", ".btnDesHabGeneral", function(e){
             confirmButton: "btn btn-success",
             cancelButton: "btn btn-danger"
         },
-        buttonsStyling: false
+        buttonsStyling: true
     });
 
     swalWithBootstrapButtons.fire({
