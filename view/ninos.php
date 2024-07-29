@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if (!isset($_SESSION["id_persona"]) || empty($_SESSION["id_persona"])) {
+      header("Location:../index.php");
+    }
+    else{
+?>
 <!--AUTOCOMPLETAR NOT FOUND,-->
 <!doctype html>
 <html lang="en">
@@ -20,10 +27,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-    <?php
-    session_start();
-    
-    ?>
+
 
     <title>Navidad</title>
     
@@ -56,7 +60,7 @@ include_once("./nav_bar.php");
     <!-- -->
     </div>
 	
-    </divfffff>
+    
     
 
     
@@ -64,3 +68,8 @@ include_once("./nav_bar.php");
   </body>
  
 </html>
+<?php
+
+    }
+   
+?>

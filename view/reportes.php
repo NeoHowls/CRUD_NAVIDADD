@@ -20,6 +20,7 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="../style/styles.css">
     
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- DataTables JS -->
     <script src="../datatables.js"></script>
 

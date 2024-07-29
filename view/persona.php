@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if (!isset($_SESSION["id_persona"]) || empty($_SESSION["id_persona"])) {
+      header("Location:../index.php");
+    }
+    else{
+?>
 <!--AUTOCOMPLETAR NOT FOUND,-->
 <!doctype html>
 <html lang="en">
@@ -35,10 +42,6 @@
     </style>
 
 
-    <?php
-    session_start();
-    ?>
-
     <title>Navidad</title>
     
   </head>
@@ -64,10 +67,15 @@ include_once("./nav_bar.php");
     <!-- -->
     </div>
 	
-    </div>
+    
     
 
     
     
   </body>
 </html>
+<?php
+
+    }
+   
+?>

@@ -78,6 +78,7 @@
 
 							<script>
 								function myFunction() {
+									// alert("cerrar");
 									Swal.fire({
 									icon: "warning",
 									title: "SALIENDO",
@@ -89,11 +90,11 @@
 									const myTimeout = setTimeout(myGreeting, 1700);
 
 									function myGreeting() {
-										window.location.href="./cerrar.php"
+										window.location.href="./cerrar.php";
 								}
 								}
 							</script>
-						</li>
+						<!-- </li> -->
 					
 				
 					</ul>

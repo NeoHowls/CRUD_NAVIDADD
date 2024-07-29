@@ -1,11 +1,16 @@
 <?php
-// session_start();
+session_start();
+use Dompdf\Dompdf;
+if (!isset($_SESSION["id_persona"]) || empty($_SESSION["id_persona"])) {
+  header("Location:../index.php");
+}
+else{
 
 // require_once '../model/MODEL_REPORTE.php';
 require_once ("../model/MODEL_REPORTE.php");
 
 require_once '../dompdf/autoload.inc.php';
-use Dompdf\Dompdf;
+
 
 $periodo=$_GET['periodo'];
 // echo $periodo;
@@ -173,4 +178,5 @@ $datos = $rep->pdfGeneral($periodo);
 
     $connection = null;
 
+}
 ?>
