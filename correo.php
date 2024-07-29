@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 
-function enviarCorreo($correlativo,$rut_personal,$codigo_area){
+function enviarCorreo($nombre,$correo,$telefono,$mensaje){
     //Load Composer's autoloader
     // require 'vendor/autoload.php';
     require 'PHPMailer/Exception.php';
@@ -24,23 +24,27 @@ function enviarCorreo($correlativo,$rut_personal,$codigo_area){
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'mail.maho.cl';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'asistencia@maho.cl';                     //SMTP username
-        $mail->Password   = 'M4h02005';                               //SMTP password
+        $mail->Username   = 'abaeza@maho.cl';                     //SMTP username
+        $mail->Password   = 'A.baeza2024SNC';                               //SMTP password
         $mail->SMTPSecure = 'ssl';            //Enable implicit TLS encryption
         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
         //Indicamos cual es nuestra dirección de correo y el nombre que 
         //queremos que vea el usuario que lee nuestro correo
-        $mail->setFrom('asistencia@maho.cl', 'Navidad MAHO.');
+        $mail->setFrom('abaeza@maho.cl', 'Navidad MAHO');
         //Indicamos cual es la dirección de destino del correo
-        // $mail->addAddress('jarroyo@maho.cl', 'Juan Pablito Arroyo');     //Add a recipient
+        $mail->addAddress('abaeza@maho.cl', 'Navidad MAHO');     //Add a recipient
         // $mail->addAddress($correo, $nombre);     //Add a recipient
-        // $mail->addAddress('abaeza@maho.cl', 'Alessandro');               //Name is optional
+        $mail->addAddress($correo,'Navidad MAHO');               //Name is optional
 
         //!:-----------------------------------------------------------------
 
-         $mensaje = "mensaje";
+         $mensaje = '<strong>Navidad MAHO</strong><br><br>'.
+                         'Nombre : '.$nombre.'<br>'.
+                         'Correo : '.$correo.'<br>'.
+                         'Telefono : '.$telefono.'<br>'.
+                         'Mensaje : '.$mensaje.'<br>';
 
         //!:-----------------------------------------------------------------
         
@@ -54,7 +58,7 @@ function enviarCorreo($correlativo,$rut_personal,$codigo_area){
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->CharSet = 'UTF-8';
-        $mail->Subject = 'Asistencia Finalizada N°'.$cor;
+        $mail->Subject = 'Navidad MAHO';
         $mail->Body = $mensaje;
         /* $mail->Body    = '<strong>Sistema de Asistencia</strong><br><br>'.
                          'Solicitud N°'.$cor.'<br>'.

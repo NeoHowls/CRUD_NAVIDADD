@@ -268,28 +268,29 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<input type="text" class="form-control mt-3" id="name" name="name" placeholder="Nombre" required>
+										<span id="m_nombre"></span>
 										
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<input type="email" placeholder="Correo Electronico" id="email" class="form-control mt-3" name="name" required>
-										
+										<span id="m_mail"></span>
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
 										<input type="number" placeholder="Numero telefonico" id="number" class="form-control mt-3" name="number" required>
-										
+										<span id="m_telefono"></span>
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
 										<textarea class="form-control mt-3" id="message" placeholder="Ingrese su mensaje" rows="8" required></textarea>
-										
+										<span id="m_mensaje"></span>
 									</div>
 									<div class="submit-button text-center">
-										<button class="btn btn-common mt-3" id="submit" type="submit">Enviar</button>
+										<button class="btn btn-common mt-3" id="submitCorreo" type="submit" >Enviar</button>
 										<div id="msgSubmit" class="h3 text-center hidden"></div>
 										<div class="clearfix"></div>
 									</div>
@@ -324,6 +325,8 @@
 	 
 	
 	<script src="js/slider-index.js"></script>
+	<!-- <script src="../js/sweetalert.js"></script> -->
+    <!-- <link rel="stylesheet" href= ../style/font/bootstrap-icons.min.css > -->
 	
 
 
@@ -337,6 +340,85 @@
 	<script type="text/javascript" src="./datatables.js"></script>
     <script type="text/javascript" src="./js/idioma.js"></script>
     <script type="text/javascript" src="./js/INICIAR_SESION.js"></script>
+
+	<script>
+		$("#submitCorreo").on( "click", function(e) {
+			e.preventDefault();
+			let nombre=$.trim($("#name").val());
+			let mail=$.trim($("#email").val());
+			let telefono=$.trim($("#number").val());
+			let mensaje=$.trim($("#message").val());
+
+			// alert(nombre+" "+mail+" "+telefono+" "+mensaje);
+
+			$.ajax({
+				url: "./controller/controllerCorreo.php?op=enviarCorreo",
+				type: "POST",
+				datatype:"json",    
+					data: { nombre:nombre,mail:mail,telefono:telefono,mensaje:mensaje
+					},
+				success: function(data) {
+					// table.ajax.reload(null, false);
+				},
+				error: function(xhr, status, error) {
+					console.error("Error en la operación:", error);
+				}
+				}).done(function(response){
+					// console.log(response);
+					respuesta = JSON.parse(response);
+					for(i=0;i<respuesta.length;i++){
+						if(respuesta[i].error==1)
+							{$('#m_nombre').html(respuesta[i].mensaje);}
+						if(respuesta[i].error==2)
+							{$('#m_mail').html(respuesta[i].mensaje);}
+						if(respuesta[i].error==3)
+							{$('#m_telefono').html(respuesta[i].mensaje);}
+						if(respuesta[i].error==4)
+							{$('#m_mensaje').html(respuesta[i].mensaje);}
+					}
+					if(respuesta.length==1 && respuesta[0].error==0){
+						limpiarFormulario();
+						Swal.fire({
+							icon: "success",
+							title: "Correo Enviado",
+							width: 300,
+							showConfirmButton: false,
+							timer: 2000
+						});
+
+					}else if(respuesta.length==1 && respuesta[0].error==99){
+						Swal.fire({
+							icon: "error",
+							title: "FALLO AL Enviar Correo",
+							width: 300,
+							showConfirmButton: false,
+							timer: 2000
+						});
+					}
+					
+				});	
+		});
+
+		function limpiarFormulario(){
+			nombre= $("#name").val('');
+			mail= $("#email").val('');
+			telefono= $("#number").val('');
+			mensaje= $("#message").val('');
+		}
+
+		$('#name').on('change click', function() {
+			$('#m_nombre').text('');
+		});
+		$('#email').on('change click', function() {
+			$('#m_mail').text('');
+		});
+		$('#number').on('change click', function() {
+			$('#m_telefono').text('');
+		});
+		$('#message').on('change click', function() {
+			$('#m_mensaje').text('');
+		});
+	</script>
 
 
 	
