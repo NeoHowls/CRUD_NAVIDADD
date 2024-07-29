@@ -7,6 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="images/Escudo_de_Alto_Hospicio.png">
 	<title>¡Feliz Navidad!</title>
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/pogo-slider.min.css">
@@ -15,7 +16,8 @@
 	<!-- Styles CSS -->
 	<link rel="stylesheet" href="css/styles.css">
 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+	<script src="js/sweetalert.js"></script>
 </head>
 
 <body>
@@ -65,9 +67,9 @@
 			</div>
 			<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 				<ul class="navbar-nav ms-auto">
-					<li class="nav-item">
+					<!-- <li class="nav-item">
 						<a class="nav-link" href="#">Inicio</a>
-					</li>
+					</li> -->
 					<li class="nav-item">
 						<a class="nav-link" href="#about-us">Sobre Nosotros</a>
 					</li>
@@ -79,7 +81,7 @@
 					</li>
 					
 					
-					<ul class="navbar-nav ml-auto">
+					<!-- <ul class="navbar-nav ml-auto">
 					<div class="dropdown">
 						<button class="dropbtn">Dropdown
 						<i class="fa fa-caret-down"></i>
@@ -90,7 +92,7 @@
 						<a href="#">Link 3</a>
 						</div>
 		
-</ul>
+					</ul> -->
 					<li class="nav-item">
 					<a class="btn btn-danger nav-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 						Inicio Sesión
@@ -320,11 +322,9 @@
 
 	<script src="js/jquery.magnific-popup.min.js"></script>
 
-	<script src="js/jquery.pogo-slider.min.js"></script>
-	
-	 
-	
-	<script src="js/slider-index.js"></script>
+	<!-- <script src="js/jquery.pogo-slider.min.js"></script>
+	<script src="js/slider-index.js"></script> -->
+
 	<!-- <script src="../js/sweetalert.js"></script> -->
     <!-- <link rel="stylesheet" href= ../style/font/bootstrap-icons.min.css > -->
 	

@@ -235,7 +235,7 @@ $('#formUsuarios').submit(function(e){
             table.ajax.reload(null, false);
            }
         }).done(function(response){ 
-            console.log(response);
+            //console.log(response);
             respuesta = JSON.parse(response);
             //console.log(respuesta);
             for(i=0;i<respuesta.length;i++){
@@ -562,7 +562,7 @@ $(document).on("click", ".btnDeshabilitar, .btnAutorizar", function(e){
             console.error("Error en la operación:", error);
         }
         }).done(function(response){ 
-            console.log(response);
+            //console.log(response);
             respuesta =JSON.parse(response);
             //alert(respuesta.length);
             if(respuesta.length==1 && respuesta[0].error==0){

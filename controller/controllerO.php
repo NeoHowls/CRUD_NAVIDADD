@@ -591,7 +591,7 @@ session_start();
       if($org->getError()==0){
         $respuesta[$i]['action']="OK";
         $respuesta[$i]['error']=0;
-        $respuesta[$i]['mensaje']="Organizacione vencidas desactivadas";
+        $respuesta[$i]['mensaje']="Organizaciones Vencidas Desactivadas";
         $i++;
         echo json_encode($respuesta);
       }else{

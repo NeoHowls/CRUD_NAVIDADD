@@ -169,7 +169,7 @@ class Organizaciones extends ConexionBD{
         $sql="UPDATE A_ORGANIZACION 
               SET checkHabilitado=1";
         if($idOrganizaciones!='' || $idOrganizaciones!=null){
-            $sql=$sql." AND id NOT IN (".$idOrganizaciones.")";
+            $sql=$sql." WHERE id NOT IN (".$idOrganizaciones.")";
             $this->connect();
             $query = $this->ejecutarOrden($sql);
         }else{
