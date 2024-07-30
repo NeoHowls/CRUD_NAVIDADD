@@ -324,6 +324,7 @@ $("#btnNuevo").click(function(){
     $(".modal-header").css("color", "white");
     $(".modal-title").text("Añadir Organización");
 
+    $('#tipo option').show();
     $('#modalCRUD').modal('show');
 });
 

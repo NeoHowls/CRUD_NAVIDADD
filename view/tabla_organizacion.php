@@ -247,17 +247,17 @@
                     <th class ='never'>Vigente</th>
 
                     <th class ='never'>id</th>
-                    <th>Nombre</th>
-                    <th>Dirección</th>
-                    <th>Organización</th>
+                    <th style='text-align: center;'>Nombre</th>
+                    <th style='text-align: center;'>Dirección</th>
+                    <th style='text-align: center;'>Organización</th>
                     <th class ='never'>Fecha Ingreso</th>
                     <th class ='never'>checkVigente</th>
                     <th class ='never'>numProvidencia</th>
-                    <th>Habilitada</th>
+                    <th style='text-align: center;'>Habilitada</th>
                     <th class ='never'>estado</th>
                     <th class ='never'>Años Vigente</th>
-                    <th>Vigente</th>
-                    <th class='all'>acciones</th>
+                    <th style='text-align: center;'>Vigente</th>
+                    <th class='all'  style='text-align: center;'>Acciones</th>
                     
                 
                 </tr>

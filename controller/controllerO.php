@@ -26,8 +26,10 @@ session_start();
   $numProvidencia = (isset($_POST['numProvidencia'])) ? $_POST['numProvidencia'] : '';
   $checkHabilitado = (isset($_POST['checkHabilitado'])) ? $_POST['checkHabilitado'] : '';
   $estado = (isset($_POST['estado'])) ? $_POST['estado'] : '';
-  
-  $fechaIngreso = date('Y-m-d H:i:s');
+/*  funciona en mi base 
+  $fechaIngreso = date('Y-m-d H:i:s'); */
+
+  $fechaIngreso = date('d-m-Y H:i:s');
   
   $usuarioCambio = $_SESSION["nombre"];
 
@@ -95,21 +97,24 @@ session_start();
         
         if(count($respuesta)==0){
 
+            /* funciona en mi base
             $fechaActual = date('Y-m-d H:i:s');
             $fechaProceso = strtotime('+ '.$vigencia.' year', strtotime($fechaActual));
-            $fechaVencimiento = date ('Y-m-d H:i:s',$fechaProceso);
+            $fechaVencimiento = date ('Y-m-d H:i:s',$fechaProceso); */
+
+            $fechaActual = date('d-m-Y H:i:s');
+            $fechaProceso = strtotime('+ '.$vigencia.' year', strtotime($fechaActual));
+            $fechaVencimiento = date ('d-m-Y H:i:s',$fechaProceso);
             // echo($fechaVencimiento);
 
             $org->guardarOrganizacion($nombre, $direccion, $tipo, $numProvidencia);
             $resultado=$org->buscarOrganizacion($nombre,1);
+            // // var_dump($resultado);
             $idOrganizacion=$resultado[0]['id'];
 
-            // $fechaVencimiento = date('Y-m-d', strtotime("+{$vigencia} year", strtotime($fechaIngreso)));
-            /* $fechaActual = date('Y-m-d H:i:s');
-            $fechaVencimiento = strtotime('+ '.$vigencia.' year', strtotime($fechaActual));
-            var_dump($fechaVencimiento); */
+            // echo( $idOrganizacion.','.$fechaVencimiento.','.$vigencia);
             $org->guardarDO($idOrganizacion,$fechaVencimiento,$vigencia);
-
+            // var_dump($org);
             $orgH->guardarOrganizacionH(
               $nombre, $direccion,$tipo, $fechaIngreso, 1, 
               $numProvidencia,'Agregar Organización',$usuarioCambio,1,1);
@@ -541,9 +546,14 @@ session_start();
       if($tipo==4){$vigencia=1;
       }else{ $vigencia=4;}
 
+      /* funciona en mi base
       $fechaActual = date('Y-m-d H:i:s');
       $fechaProceso = strtotime('+ '.$vigencia.' year', strtotime($fechaActual));
-      $fechaVencimiento = date ('Y-m-d H:i:s',$fechaProceso);
+      $fechaVencimiento = date ('Y-m-d H:i:s',$fechaProceso); */
+
+      $fechaActual = date('d-m-Y H:i:s');
+      $fechaProceso = strtotime('+ '.$vigencia.' year', strtotime($fechaActual));
+      $fechaVencimiento = date ('d-m-Y H:i:s',$fechaProceso);
       $org->actualizarDO($user_id,$fechaActual,$fechaVencimiento,$vigencia);
       $org->actualizarVigencia($user_id);
 

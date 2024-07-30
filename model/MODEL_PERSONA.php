@@ -280,7 +280,6 @@ class Personas extends ConexionBD{
                 PO.idOrganizacion AS idOrganizacion,
                 O.tipo AS tipo,
                 CASE
-                        WHEN O.tipo= NULL THEN 'asd'
                         WHEN O.tipo= 1 THEN 'JUNTA VECINAL'
                         WHEN O.tipo= 2 THEN 'COMÍTE VIVIENDA'
                         WHEN O.tipo= 3 THEN 'CONDOMINIO'
@@ -322,7 +321,7 @@ class Personas extends ConexionBD{
                 P.checkOrganizacion,
                 0 AS idOrganizacion,
                 null as tipo,
-                'DIDECO' AS tipo,
+                'ADM/DIDECO' AS organizacion,
                 --null AS org,
                 NULL AS nombre,
                 'ADMINISTRACION' AS NOMBRE_O,
