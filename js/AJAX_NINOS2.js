@@ -1,6 +1,20 @@
 //todo: crea variables de datatable
 let table, dataid;
 
+let ceguera = 0;
+let sordera = 0;
+let mudez = 0;
+let fisica = 0;
+let mental = 0;
+let psiquica = 0;
+
+let ceguera_p = 0;
+let sordera_p = 0;
+let mudez_p = 0;
+let fisica_p = 0;
+let mental_p = 0;
+let psiquica_p =0;
+
 //todo: lista dataTable niños segun tipo, organizacion y periodo
 let listarNinos = function(tipoO,Organizacion,periodo,userTipo){
 
@@ -209,6 +223,10 @@ $('#chDiscapacidad').change(function() {
      }
   else{
         $("#contenidoDiscapacidad").show();
+        limpiarContenidoDiscapacidad();
+
+        $('#Naciemiento').val('');
+        $('#edad').val('');
   }
 });
 
@@ -297,6 +315,75 @@ $('#nacion').on('change click', function() {
 });
 //!-----------------------------------------------------------
 //!-----------------------------------------------------------
+
+$('#ceguera').on('change', function() {
+let isChecked = $('#ceguera').is(':checked');
+// alert(isChecked);
+    if($('#ceguera').is(':checked')){
+        $('#ceguera_percil').val(0);
+        $('#ceguera_percil').attr('disabled', false);
+        ceguera = 1;
+    }else{
+        $('#ceguera_percil').val(0);
+        $('#ceguera_percil').attr('disabled', true);
+        ceguera = 0;
+    }
+});
+$('#sordera').on('change', function() {
+let isChecked = $('#sordera').is(':checked');
+// alert(isChecked);
+    if($('#sordera').is(':checked')){
+        $('#sordera_percil').val(0);
+        $('#sordera_percil').attr('disabled', false);
+    }else{
+        $('#sordera_percil').val(0);
+        $('#sordera_percil').attr('disabled', true);
+    }
+});
+$('#mudez').on('change', function() {
+    let isChecked = $('#mudez').is(':checked');
+    // alert(isChecked);
+    if($('#mudez').is(':checked')){
+        $('#mudez_percil').val(0);
+        $('#mudez_percil').attr('disabled', false);
+    }else{
+        $('#mudez_percil').val(0);
+        $('#mudez_percil').attr('disabled', true);
+    }
+});
+$('#fisica').on('change', function() {
+let isChecked = $('#fisica').is(':checked');
+    // alert(isChecked);
+    if($('#fisica').is(':checked')){
+        $('#fisica_percil').val(0);
+        $('#fisica_percil').attr('disabled', false);
+    }else{
+        $('#fisica_percil').val(0);
+        $('#fisica_percil').attr('disabled', true);
+    }
+});
+$('#mental').on('change', function() {
+let isChecked = $('#mental').is(':checked');
+    // alert(isChecked);
+    if($('#mental').is(':checked')){
+        $('#mental_percil').val(0);
+        $('#mental_percil').attr('disabled', false);
+    }else{
+        $('#mental_percil').val(0);
+        $('#mental_percil').attr('disabled', true);
+    }
+});
+$('#psiquica').on('change', function() {
+let isChecked = $('#psiquica').is(':checked');
+    // alert(isChecked);
+    if($('#psiquica').is(':checked')){
+        $('#psiquica_percil').val(0);
+        $('#psiquica_percil').attr('disabled', false);
+    }else{
+        $('#psiquica_percil').val(0);
+        $('#psiquica_percil').attr('disabled', true);
+    }
+});
 
 
 //! boton niño nuevo, limpia formulario y restablece contenido
@@ -957,7 +1044,7 @@ $(document).on("click", ".btnBorrar", function(e){
           datatype:"json",    
             data: { id:id,nombre:nombre,dni:dni,sexo:sexo,edad:edad,periodo:periodo,descripcion:descripcion,naciemiento:naciemiento,
                 etnia:etnia,nacion:nacion,comuna:comuna,check_nac:check_nac,idOrganizacion:idOrganizacion,check_dis:check_dis,
-                ceguera:ceguera,ceguera:ceguera,sordera:sordera,mudez:mudez,fisica:fisica,mental:mental,psiquica:psiquica,
+                ceguera:ceguera,sordera:sordera,mudez:mudez,fisica:fisica,mental:mental,psiquica:psiquica,
                 ceguera_p:ceguera_p,sordera_p:sordera_p,mudez_p:mudez_p,fisica_p:fisica_p,mental_p:mental_p,psiquica_p:psiquica_p
             },
           success: function(data) {
