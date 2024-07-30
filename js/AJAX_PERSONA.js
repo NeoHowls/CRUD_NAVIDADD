@@ -417,6 +417,8 @@ $(document).ready(function() {
         $('#usuario').prop('readonly', true);
         $('#contrasena').prop('readonly', true);
 
+        $('#checkbox-container').hide();
+        $('#idPerfil option').show();
         opcion = "add_persona"; // alta
         user_id = null;
         idOrganizacion = 0;

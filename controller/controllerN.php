@@ -60,27 +60,28 @@
         $i=0;
         
         $id = $_POST['id'];
-        $datos=$ninos->eliminarNino($id);
+        
 
         $ninosh->guardarNinosH($dni,$nombre,$sexo,
         $edad,$naciemiento,$nacion,$etnia,$periodo,
         $ceguera,$sordera,$mudez,$fisica,$mental,$psiquica,
         $descripcion,$organizacion,$usuario_id,$check_nac ,$check_dis,
         $ceguera_p,$sordera_p ,$mudez_p,$fisica_p ,$mental_p,$psiquica_p,'Eliminar niño',$usuarioCambio);
+        $datos=$ninos->eliminarNino($id);
 
         if($ninos->getError()==0){
           $respuesta[$i]['action']="OK";
           $respuesta[$i]['error']=0;
-          $respuesta[$i]['mensaje']="OK";
+          $respuesta[$i]['mensaje']="Niño eliminado";
           $i++;
           echo json_encode($respuesta);
-      }else{
+        }else{
         $respuesta[$i]['action']="ERROR";
         $respuesta[$i]['error']=99;
         $respuesta[$i]['mensaje']="ERROR BD";
         $i++;
         echo json_encode($respuesta);
-      }
+        }
 
   break;
   //! agregar nino 
@@ -248,7 +249,7 @@
         if($ninos->getError()==0){
             $respuesta[$i]['action']="OK";
             $respuesta[$i]['error']=0;
-            $respuesta[$i]['mensaje']="OK";
+            $respuesta[$i]['mensaje']="Niño Agregado";
             $i++;
             echo json_encode($respuesta);
         }else{
@@ -442,7 +443,7 @@
         if($ninos->getError()==0){
             $respuesta[$i]['action']="OK";
             $respuesta[$i]['error']=0;
-            $respuesta[$i]['mensaje']="OK";
+            $respuesta[$i]['mensaje']="Niño Actualizado";
             $i++;
             echo json_encode($respuesta);
         }else{

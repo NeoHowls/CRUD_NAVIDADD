@@ -972,7 +972,7 @@ $(document).on("click", ".btnBorrar", function(e){
             if(respuesta.length==1 && respuesta[0].error==0){
                 Swal.fire({
                     icon: "success",
-                    title: "NIÑO ELIMINADO",
+                    title: respuesta[0].mensaje,
                     width: 300,
                     showConfirmButton: false,
                     timer: 2000
@@ -1149,7 +1149,7 @@ $('#formNinos').submit(function(e){
 
                 Swal.fire({
                     icon: "success",
-                    title: "NIÑO INGRESADO / ACTUALIZADO",
+                    title: respuesta[0].mensaje,
                     width: 300,
                     showConfirmButton: false,
                     timer: 2000

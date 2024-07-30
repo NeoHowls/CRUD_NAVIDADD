@@ -19,7 +19,7 @@
                 <th class = "never">checkMental</th>
                 <th class = "never">checkPsiquica</th>
                 <th class = "never">descripcion</th>
-                <th class = "never">idOrganizacion</th>
+                <th>idOrganizacion</th>
                 <th class = "never">idPersonalRegistro</th>
                 <th class = "never">fechaRegistro</th>
                 <th class = "never">checkExtranjero</th>

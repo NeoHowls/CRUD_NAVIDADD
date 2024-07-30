@@ -293,9 +293,10 @@ WHERE N.idEtnia =0";
     }
 
     public function eliminarNino($id){
-        $sql="UPDATE A_NINOS
+        /* $sql="UPDATE A_NINOS
                 SET estado = 0
-                WHERE id=:id";
+                WHERE id=:id"; */
+        $sql="DELETE FROM A_NINOS WHERE id=:id";
         $parametros =array("id"=>$id);
         $this->connect();
         $query = $this->ejecutarOrden($sql, $parametros);

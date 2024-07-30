@@ -124,14 +124,14 @@ if($datos === TRUE){ ;
   imageWidth: 400,
   imageHeight: 200,
   text: "usuario incorrecto",
-  didOpen: () =>{
+  /* didOpen: () =>{
     Swal.getPopup().addEventListener('keydown',(e)=>{
       if(e.key===13){
         Swal.close();
       }
     })
     
-  }
+  } */
 });
 
   </script>
