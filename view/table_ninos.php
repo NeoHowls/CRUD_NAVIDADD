@@ -191,7 +191,7 @@
                 <th class = "never">sexo</th><!-- 3 -->
                 <th>Sexo</th><!-- 4 sexo_vista-->
                 <th>Edad</th><!-- 5 -->
-                <th>Fecha Nacimiento</th><!-- 6 -->
+                <th  class = "none">Fecha Nacimiento</th><!-- 6 -->
                 <th>Periodo</th><!-- 7 -->
                 
                 <th class = "never">fechaRegistro</th><!-- 8 -->
@@ -217,8 +217,8 @@
                 <th class = "none">% Psiquica</th><!-- 25 -->
                 <th class = "none">Descripción</th><!-- 26 -->
                 <th class = "none">Etnia</th><!-- 27 -->
-                <th class = "none">Nacionalidad</th><!-- 28 -->
-                <th class = "none">Organizació</th><!-- 29 NOMBRE_ORGANIZACION-->
+                <th>Nacionalidad</th><!-- 28 -->
+                <th>Organización</th><!-- 29 NOMBRE_ORGANIZACION-->
                 <th class = "never">tipo</th><!-- 30 -->
                 <th class = "none" >Tipo Organización</th><!-- 31 -->
                 <th class  = "never">idEtnia</th><!-- 32 -->
