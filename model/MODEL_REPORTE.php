@@ -18,10 +18,10 @@ class Reportes extends ConexionBD{
                 FROM (SELECT * FROM V_CONTEONINOSDISCAPACITADOS WHERE periodo=:periodo AND estado=1) VCN
                 RIGHT JOIN A_EDAD_DISCAPACIDAD E ON VCN.edad = E.edad
                 
-            ) vista WHERE vista.edad<=(SELECT MAX(edad) FROM V_CONTEONINOSDISCAPACITADOS WHERE estado=1)
+            ) vista WHERE vista.edad<=(SELECT MAX(edad) FROM V_CONTEONINOSDISCAPACITADOS WHERE periodo=:periodo2 AND estado=1)
             GROUP BY edad
             ORDER BY edad";
-        $parametros =array(":periodo"=>$periodo);
+        $parametros =array(":periodo"=>$periodo,":periodo2"=>$periodo);
         $this->connect();
         $query = $this->ejecutaConsulta($sql, $parametros);
         
@@ -42,10 +42,10 @@ class Reportes extends ConexionBD{
                 FROM (SELECT * FROM V_CONTEONINOSDISCAPACITADOS WHERE periodo=:periodo AND estado=1) VCN
                 RIGHT JOIN A_EDAD_DISCAPACIDAD E ON VCN.edad = E.edad
                 
-            ) vista WHERE vista.edad<=(SELECT MAX(edad) FROM V_CONTEONINOSDISCAPACITADOS WHERE estado=1)
+            ) vista WHERE vista.edad<=(SELECT MAX(edad) FROM V_CONTEONINOSDISCAPACITADOS WHERE periodo=:periodo2 AND estado=1)
             GROUP BY edad
             ORDER BY edad";
-        $parametros =array(":periodo"=>$periodo);
+        $parametros =array(":periodo"=>$periodo,":periodo2"=>$periodo);
         $this->connect();
         $query = $this->iniciar($sql, $parametros);
         
