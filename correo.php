@@ -24,17 +24,17 @@ function enviarCorreo($nombre,$correo,$telefono,$mensaje){
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'mail.maho.cl';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'abaeza@maho.cl';                     //SMTP username
-        $mail->Password   = 'A.baeza2024SNC';                               //SMTP password
+        $mail->Username   = 'churtado@maho.cl';                     //SMTP username
+        $mail->Password   = 'C.hurtado2024DIDECO';                               //SMTP password
         $mail->SMTPSecure = 'ssl';            //Enable implicit TLS encryption
         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
         //Indicamos cual es nuestra dirección de correo y el nombre que 
         //queremos que vea el usuario que lee nuestro correo
-        $mail->setFrom('abaeza@maho.cl', 'Navidad MAHO');
+        $mail->setFrom('churtado@maho.cl', 'Navidad MAHO');
         //Indicamos cual es la dirección de destino del correo
-        $mail->addAddress('abaeza@maho.cl', 'Navidad MAHO');     //Add a recipient
+        $mail->addAddress('churtado@maho.cl', 'Navidad MAHO');     //Add a recipient
         // $mail->addAddress($correo, $nombre);     //Add a recipient
         $mail->addAddress($correo,'Navidad MAHO');               //Name is optional
 
