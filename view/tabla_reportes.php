@@ -93,7 +93,7 @@
                                   </button>
                                 </div>
                                 <div class="col-lg-12 chart-container">
-                                  <canvas id="chartReportGenD"></canvas>
+                                  <canvas id="chartReportGenDiscapacidad"></canvas>
                                 </div>
                               </div>
                               <div class="row">
@@ -123,12 +123,11 @@
                           <!-------------->
                           <!-------------->
                            <!-- <div class="table-responsive mx-2 text-left">
-                          <table id="myTable11" class="table table-striped nowrap table-centered" style="width:100%">
+                          <table id="myTable13" class="table table-striped nowrap table-centered" style="width:100%">
                             <thead>
                                 <tr>
                                 
-                                    <th class='never'>EDAD</th>  
-                                    <th style='text-align: center;'>RANGO ETARIO</th> 
+                                    <th>EDAD</th>   
                                     <th style='text-align: center;'>MASCULINO</th>  
                                     <th style='text-align: center;'>FEMENINO</th>  
                                     <th style='text-align: center;'>TOTAL</th>  

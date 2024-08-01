@@ -5,7 +5,7 @@ require_once ("../model/MODEL_REPORTE.php");
 
 $rep = new Reportes();
 
-// $periodo=2024;
+//$periodo=2024;
 $periodo=$_POST['periodo'];
 
 switch ($_GET["op"]) {
