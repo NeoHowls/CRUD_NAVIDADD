@@ -132,7 +132,7 @@ $datos = $rep->pdfGeneralDiscapacidad($periodo);
         </div>
         <div class="content">
             <h2>Navidad <?php echo $periodo; ?> - Municipalidad de Alto Hospicio</h2>
-            <h3>Informe General</h3>
+            <h3>Informe General Discapacidad</h3>
             <?php if (!empty($datos)): ?>
             <table>
                 <thead>

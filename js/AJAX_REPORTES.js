@@ -206,9 +206,9 @@ let chartReportGen3;
 function initChartReportGen3() {
     const ctx2 = document.getElementById('chartReportGen3').getContext('2d');
     chartReportGen3 = new Chart(ctx2, {
-        type: 'bar',
+        type: 'pie',
         data: {
-            labels: [],
+            labels:[],
             datasets: [{
                 label: 'Cantidad',
                 data: [],
@@ -355,6 +355,7 @@ function initChartReportGenDiscapacidad() {
             }]
         },
         options: {
+            // indexAxis: 'y',
             scales: {
                 y: {
                     beginAtZero: true
