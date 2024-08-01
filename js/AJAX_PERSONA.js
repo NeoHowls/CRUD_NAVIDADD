@@ -93,7 +93,7 @@ let listarPersonas = function(){
                 }
         
                 let editarButton = '';
-                    if (row.checkHabilitado == '1' && row.idPerfil!=7) {
+                    if (row.checkHabilitado == '1' && row.idPerfil!='7') {
                         // editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-bs-toggle="modal" data-bs-target="#myModal" data-toggle="tooltip" data-placement="top" title="Editar registro" ><i class="bi bi-pencil-square icon-100"></i></button>';
                         editarButton = '<button type="button" class="btn btn-primary text-light btnEditar me-2" data-toggle="tooltip" data-placement="top" title="Editar registro" ><i class="bi bi-pencil-square icon-100"></i></button>';
                     } else {

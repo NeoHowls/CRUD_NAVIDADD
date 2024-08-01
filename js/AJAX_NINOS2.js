@@ -19,7 +19,7 @@ let psiquica_p =0;
 let listarNinos = function(tipoO,Organizacion,periodo,userTipo){
 
     // alert (tipoO+','+Organizacion+','+periodo);
-    
+    // alert (userTipo);
     table = $('#myTable').DataTable( {
         destroy : true,
 
@@ -103,8 +103,8 @@ let listarNinos = function(tipoO,Organizacion,periodo,userTipo){
                     neliminar ='<button type="button" class="btn btn-secondary text-light btnEditar me-2"  data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-person-dash-fill icon-100"></i></button>';
                     neditar = '<button type="button" class="btn btn-secondary text-light btnEditar me-2"   data-toggle="tooltip" data-placement="top" title="No se puede editar"  disabled><i class="bi bi-pencil-square icon-100"></i></button>';
                     
-                    if(checkDiscapacitado==1 || checkExtranjero==1){
-                        if(userTipo==0 || userTipo==1){
+                    if(checkDiscapacitado=='1' || checkExtranjero=='1'){
+                        if(userTipo=='0' || userTipo=='1'){
                             return editar+eliminar;
                         }else{
                             return neditar+neliminar;
@@ -208,9 +208,9 @@ function listarOrganizacion(tipo){
         let tipoS = $('#tipo').val();
         let organizacionS = $('#organizacion_selection').val();
         let periodoS = $('#select_periodo').val();
-        // alert(tipoS);
+        // alert(userTipo);
         // table.destroy();
-        listarNinos(tipoS,organizacionS,periodoS);
+        listarNinos(tipoS,organizacionS,periodoS,userTipo);
     });
 
 //todo: check Discapacidad muestra/oculta contenido

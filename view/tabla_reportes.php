@@ -74,7 +74,7 @@
                               </div>                                
                               <div class="row">
                                 <div class="col-lg-12">
-                                  <h3>IMPRIMIR REPORTE GENERAL</h3>
+                                  <h3>GENERAR REPORTE GENERAL</h3>
                                   <button id="btnReportGen" type="button" class="btn btn-warning text-light btnReportGen" data-toggle="tooltip" data-placement="top" title="Imprimir Reporte General">
                                     <i id="iconReportGen" class="bi bi-filetype-pdf fs-3"></i>
                                   </button>
@@ -87,7 +87,19 @@
                               <div class="row">
                                 <div class="col-lg-12">
                                 <div><br></br></div> 
-                                  <h3>IMPRIMIR REPORTE NACIONALIDAD</h3>
+                                  <h3>GENERAR REPORTE GENERAL DE DISCAPACIDAD</h3>
+                                  <button id="btnReportDis" type="button" class="btn btn-warning text-light btnReportGen" data-toggle="tooltip" data-placement="top" title="Imprimir Reporte General de Discapacidad">
+                                    <i id="iconReportDis" class="bi bi-filetype-pdf fs-3"></i>
+                                  </button>
+                                </div>
+                                <div class="col-lg-12 chart-container">
+                                  <canvas id="chartReportGenD"></canvas>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-12">
+                                <div><br></br></div> 
+                                  <h3>GENERAR REPORTE NACIONALIDAD</h3>
                                   <button id="btnReportNat" type="button" class="btn btn-warning text-light btnReportGen" data-toggle="tooltip" data-placement="top" title="Imprimir Reporte Nacionalidad">
                                     <i id="iconReportNat" class="bi bi-filetype-pdf fs-3"></i>
                                   </button>

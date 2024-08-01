@@ -21,6 +21,12 @@ switch ($_GET["op"]) {
 
             print($datos);
             break;
+
+        case "pdfGeneralDiscapacidad":
+            $datos = $rep->pdfGeneralDiscapacidadJSON($periodo);
+
+            print($datos);
+            break;
              
 }
 

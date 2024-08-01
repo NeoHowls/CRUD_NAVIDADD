@@ -14,6 +14,7 @@ let periodo=2024;
 $('#select_periodo').on('change', function() {
     periodo = $('#select_periodo').val();
     actualizarGraficoGeneral(periodo);
+    actualizarGraficoGeneralD(periodo);
     actualizarGraficoGeneralNacional(periodo);
     
 });
@@ -89,7 +90,7 @@ function initChartReportGen() {
         data: {
             labels: ['FEMENINO', 'MASCULINO', 'TOTAL'],
             datasets: [{
-                label: '# of Votes',
+                label: 'Cantidad',
                 data: [totalFemenino2, totalMasculino2, totalGeneral2],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.5)',
@@ -142,22 +143,6 @@ $.ajax({
     }
 });
 
-/* table1.on('draw', function () {
-    var data = table1.rows().data().toArray();
-    var totalFemenino = 0, totalMasculino = 0, totalGeneral = 0;
-
-    data.forEach(function (row) {
-        totalFemenino += parseFloat(row.FEMENINO || 0);
-        totalMasculino += parseFloat(row.MASCULINO || 0);
-        totalGeneral += parseFloat(row.TOTAL || 0);
-    });
-
-    totalFemenino2 = totalFemenino;
-    totalMasculino2 = totalMasculino;
-    totalGeneral2 = totalGeneral;
-
-    updateChart(chartReportGen, [totalFemenino2, totalMasculino2, totalGeneral2]);
-}); */
 };
 //!-------------------------------------------------------------------------------------------------------------------------------------------
 //!-------------------------------------------------------------------------------------------------------------------------------------------
@@ -226,7 +211,7 @@ function initChartReportGen3() {
         data: {
             labels: [],
             datasets: [{
-                label: '# of Totals',
+                label: 'Cantidad',
                 data: [],
                 backgroundColor: [
                     'rgba(255, 69, 0, 0.5)',     // Orange Red
@@ -288,25 +273,140 @@ $.ajax({
         console.error('Error en la solicitud:', error);
     }
 });
-
-/* table2.on('draw', function () {
-    var data = table2.rows().data().toArray();
-    var totalPorNacionalidad = [];
-
-    data.forEach(function (row) {
-        totalPorNacionalidad.push(parseFloat(row.TOTAL || 0));
-    });
-
-    totalGeneralPorNacionalidad = totalPorNacionalidad;
-    let labels = data.map(row => row.nacionalidad);
-
-    updateChart(chartReportGen3, totalGeneralPorNacionalidad);
-    chartReportGen3.data.labels = labels;
-    chartReportGen3.update();
-}); */
 };
+
+//!-------------------------------------------------------------------------------------------------------------------------------------------
+//!-------------------------------------------------------------------------------------------------------------------------------------------
+//!-----------------------------------------------------------GENERAL DISCAPACIDAD--------------------------------------------------------------------
+//!-------------------------------------------------------------------------------------------------------------------------------------------
+//!-------------------------------------------------------------------------------------------------------------------------------------------
+
+//!grafico general-------------------------------------------------------
+// Inicializar DataTables
+let tableD = $('#myTable13').DataTable({
+    pageLength: 20,
+    ajax: {
+        url: "../controller/controllerReport.php?op=pdfGeneralDiscapacidad",
+        dataSrc: "",
+        type: "post",
+        data:  {periodo:periodo},
+        responsive: true,
+        aaSorting: []
+    },
+    columns: [
+        { "data": "edad" },
+        { "data": "MASCULINO" },
+        { "data": "FEMENINO" },
+        { "data": "TOTAL" }
+    ],
+    language: idioma_espanol,
+    responsive: true,
+    aaSorting: [],
+    pagingType: 'simple',
+    dom: 'Bfrtip',
+    buttons: [
+        {
+            extend: 'copyHtml5',
+            text: 'COPIAR',
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4]
+            }
+        },
+        {
+            extend: 'excelHtml5',
+            text: 'EXCEL',
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4]
+            }
+        },
+        {
+            extend: 'pdfHtml5',
+            text: 'PDF',
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4]
+            }
+        },
+        {
+            extend: 'colvis',
+            text: 'COLUMNAS',
+            columns: [0, 1, 2, 3, 4]
+        }
+    ],
+    columnDefs: [
+        { className: "dt-head-center", targets: [1, 2, 3, 4] },
+        { className: "dt-body-center", targets: [1, 2, 3, 4] }
+    ]
+    
+});
+
+let chartReportGenD;
+function initChartReportGenD() {
+    const ctx1 = document.getElementById('chartReportGenD').getContext('2d');
+    chartReportGen = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['FEMENINO', 'MASCULINO', 'TOTAL'],
+            datasets: [{
+                label: 'Cantidad',
+                data: [totalFemenino2, totalMasculino2, totalGeneral2],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    actualizarGraficoGeneralD(periodo);
+}
+let actualizarGraficoGeneralD = function(periodo){
+// Solicitar datos para la tabla y actualizar gráfico
+$.ajax({
+    url: "../controller/controllerReport.php?op=pdfGeneralDiscapacidad",
+    type: "post",
+    data:  {periodo:periodo},
+    dataType: "json",
+    success: function (data) {
+        //console.log('Datos recibidos:', data);
+        table1.clear().rows.add(data).draw();
+
+        totalFemenino2 = 0;
+        totalMasculino2 = 0;
+        totalGeneral2 = 0;
+
+        data.forEach(function (row) {
+            totalFemenino2 += parseFloat(row.FEMENINO || 0);
+            totalMasculino2 += parseFloat(row.MASCULINO || 0);
+            totalGeneral2 += parseFloat(row.TOTAL || 0);
+        });
+
+        updateChart(chartReportGenD, [totalFemenino2, totalMasculino2, totalGeneral2]);
+    },
+    error: function (xhr, status, error) {
+        console.error('Error en la solicitud:', error);
+    }
+});
+
+};
+
+
+
 //! Inicializar los gráficos
 initChartReportGen();
+initChartReportGenD();
 initChartReportGen3();
 
 
@@ -314,6 +414,11 @@ initChartReportGen3();
 document.getElementById('btnReportGen').addEventListener('click', function () {
     window.open("../view/reportePdfGeneral.php?periodo="+periodo);
 });
+
+document.getElementById('btnReportDis').addEventListener('click', function () {
+    window.open("../view/reportePdfGeneralDiscapacitados.php?periodo="+periodo);
+});
+
 
 document.getElementById('btnReportNat').addEventListener('click', function () {
     window.open("../view/reportePdfNacionalidad.php?periodo="+periodo);

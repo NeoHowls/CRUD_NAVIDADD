@@ -5,15 +5,54 @@ require_once '../config/ConexionDB.php';
 //todo:-------------------------------------------------------------------------------------------
 //La clase Personas Model hereda funciones de ConexionDB
 class Reportes extends ConexionBD{
-    /* public function listar($CONSULTA){
-        //$sql = "SELECT * FROM A_ETNIA";
-        //Realizo la conexion paara comunicarme con la bdd
+
+    public function pdfGeneralDiscapacidadJSON($periodo){
+        $sql = "SELECT edad,
+                   ISNULL(sum(masculino), 0) MASCULINO,
+                   ISNULL(sum(femenino), 0) FEMENINO,
+                   ISNULL(sum(masculino)+sum(femenino), 0) TOTAL
+            FROM (
+                SELECT E.edad edad,
+                       VCN.masculino masculino,
+                       VCN.FEMENINO femenino
+                FROM (SELECT * FROM V_CONTEONINOSDISCAPACITADOS WHERE periodo=:periodo AND estado=1) VCN
+                RIGHT JOIN A_EDAD_DISCAPACIDAD E ON VCN.edad = E.edad
+                
+            ) vista WHERE vista.edad<=(SELECT MAX(edad) FROM V_CONTEONINOSDISCAPACITADOS WHERE estado=1)
+            GROUP BY edad
+            ORDER BY edad";
+        $parametros =array(":periodo"=>$periodo);
         $this->connect();
-        //configuro la consulta 
-        $query = $this->ejecutaConsulta($CONSULTA);
-        //retorno la consulta hacia controller.php
+        $query = $this->ejecutaConsulta($sql, $parametros);
+        
         return $query;
-    } */
+   
+    }
+
+    public function pdfGeneralDiscapacidad($periodo){
+
+        $sql="SELECT edad,
+                   ISNULL(sum(masculino), 0) MASCULINO,
+                   ISNULL(sum(femenino), 0) FEMENINO,
+                   ISNULL(sum(masculino)+sum(femenino), 0) TOTAL
+            FROM (
+                SELECT E.edad edad,
+                       VCN.masculino masculino,
+                       VCN.FEMENINO femenino
+                FROM (SELECT * FROM V_CONTEONINOSDISCAPACITADOS WHERE periodo=:periodo AND estado=1) VCN
+                RIGHT JOIN A_EDAD_DISCAPACIDAD E ON VCN.edad = E.edad
+                
+            ) vista WHERE vista.edad<=(SELECT MAX(edad) FROM V_CONTEONINOSDISCAPACITADOS WHERE estado=1)
+            GROUP BY edad
+            ORDER BY edad";
+        $parametros =array(":periodo"=>$periodo);
+        $this->connect();
+        $query = $this->iniciar($sql, $parametros);
+        
+        return $query;
+
+    }
+
     public function pdfGeneralJSON($periodo){
 
         $sql="SELECT edad,
