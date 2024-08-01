@@ -14,7 +14,6 @@ let periodo=2024;
 $('#select_periodo').on('change', function() {
     periodo = $('#select_periodo').val();
     actualizarGraficoGeneral(periodo);
-    actualizarGraficoGeneralD(periodo);
     actualizarGraficoGeneralNacional(periodo);
     
 });
@@ -281,132 +280,12 @@ $.ajax({
 //!-------------------------------------------------------------------------------------------------------------------------------------------
 //!-------------------------------------------------------------------------------------------------------------------------------------------
 
-//!grafico general-------------------------------------------------------
-// Inicializar DataTables
-let tableD = $('#myTable13').DataTable({
-    pageLength: 20,
-    ajax: {
-        url: "../controller/controllerReport.php?op=pdfGeneralDiscapacidad",
-        dataSrc: "",
-        type: "post",
-        data:  {periodo:periodo},
-        responsive: true,
-        aaSorting: []
-    },
-    columns: [
-        { "data": "edad" },
-        { "data": "MASCULINO" },
-        { "data": "FEMENINO" },
-        { "data": "TOTAL" }
-    ],
-    language: idioma_espanol,
-    responsive: true,
-    aaSorting: [],
-    pagingType: 'simple',
-    dom: 'Bfrtip',
-    buttons: [
-        {
-            extend: 'copyHtml5',
-            text: 'COPIAR',
-            exportOptions: {
-                columns: [0, 1, 2, 3, 4]
-            }
-        },
-        {
-            extend: 'excelHtml5',
-            text: 'EXCEL',
-            exportOptions: {
-                columns: [0, 1, 2, 3, 4]
-            }
-        },
-        {
-            extend: 'pdfHtml5',
-            text: 'PDF',
-            exportOptions: {
-                columns: [0, 1, 2, 3, 4]
-            }
-        },
-        {
-            extend: 'colvis',
-            text: 'COLUMNAS',
-            columns: [0, 1, 2, 3, 4]
-        }
-    ],
-    columnDefs: [
-        { className: "dt-head-center", targets: [1, 2, 3, 4] },
-        { className: "dt-body-center", targets: [1, 2, 3, 4] }
-    ]
-    
-});
 
-let chartReportGenD;
-function initChartReportGenD() {
-    const ctx1 = document.getElementById('chartReportGenD').getContext('2d');
-    chartReportGen = new Chart(ctx1, {
-        type: 'bar',
-        data: {
-            labels: ['FEMENINO', 'MASCULINO', 'TOTAL'],
-            datasets: [{
-                label: 'Cantidad',
-                data: [totalFemenino2, totalMasculino2, totalGeneral2],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    actualizarGraficoGeneralD(periodo);
-}
-let actualizarGraficoGeneralD = function(periodo){
-// Solicitar datos para la tabla y actualizar gráfico
-$.ajax({
-    url: "../controller/controllerReport.php?op=pdfGeneralDiscapacidad",
-    type: "post",
-    data:  {periodo:periodo},
-    dataType: "json",
-    success: function (data) {
-        //console.log('Datos recibidos:', data);
-        table1.clear().rows.add(data).draw();
-
-        totalFemenino2 = 0;
-        totalMasculino2 = 0;
-        totalGeneral2 = 0;
-
-        data.forEach(function (row) {
-            totalFemenino2 += parseFloat(row.FEMENINO || 0);
-            totalMasculino2 += parseFloat(row.MASCULINO || 0);
-            totalGeneral2 += parseFloat(row.TOTAL || 0);
-        });
-
-        updateChart(chartReportGenD, [totalFemenino2, totalMasculino2, totalGeneral2]);
-    },
-    error: function (xhr, status, error) {
-        console.error('Error en la solicitud:', error);
-    }
-});
-
-};
 
 
 
 //! Inicializar los gráficos
 initChartReportGen();
-initChartReportGenD();
 initChartReportGen3();
 
 
