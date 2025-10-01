@@ -16,10 +16,10 @@ class ConexionBD{
 
     public function  __construct()
     {
-        $this->host = '10.20.10.6';
-         $this->db = 'BD_NAVIDAD';
-        $this->user = 'abaeza';
-        $this->password ='abaeza';
+        $this->host = '';
+         $this->db = '';
+        $this->user = '';
+        $this->password ='';
         $this->error= '';
 
         /* $this->host = '10.20.10.13';
